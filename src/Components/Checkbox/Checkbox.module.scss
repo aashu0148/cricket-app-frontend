@@ -1,0 +1,60 @@
+@import "@/styles/variables";
+
+.container {
+  width: fit-content;
+  display: flex;
+  gap: $spacing-xs;
+  align-items: center;
+
+  .button {
+    outline: none;
+    cursor: pointer;
+    border-radius: 5px;
+    height: 22px;
+    width: 22px;
+    background-color: $bg-200;
+    border: 1px solid $bg-300;
+    transition: 200ms;
+    padding: 1px;
+
+    &.checked {
+      background-color: $primary;
+      border-color: $primary;
+
+      span {
+        svg {
+          color: $white;
+        }
+      }
+    }
+
+    span {
+      display: flex;
+      align-items: center;
+
+      svg {
+        height: 100%;
+        width: 100%;
+        color: $color-label;
+      }
+    }
+  }
+
+  .label {
+    width: fit-content;
+    font-size: $text-md;
+    font-weight: 400;
+    cursor: pointer;
+  }
+
+  @media (max-width: $breakpoint-md) {
+    .button {
+      height: 20px;
+      width: 20px;
+    }
+
+    .label {
+      font-size: $text-sm;
+    }
+  }
+}

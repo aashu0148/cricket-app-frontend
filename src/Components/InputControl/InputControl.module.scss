@@ -1,0 +1,305 @@
+@import "@/styles/variables";
+
+.basicInput {
+  outline: none;
+  padding: 10px 18px;
+  width: 100%;
+  border: 1px solid transparent;
+  background-color: $bg-100;
+  color: $color-title;
+  border-radius: 5px;
+  font-size: 1rem;
+  margin: 3px 0;
+  transition: 300ms;
+
+  &:hover {
+    border: 1px solid $bg-200;
+  }
+
+  &:focus-within {
+    border: 1px solid $primary;
+    background-color: $bg;
+  }
+
+  &::placeholder,
+  input::placeholder {
+    color: $color-label;
+  }
+
+  &:disabled {
+    background-color: $bg-200;
+    border: 1px solid $bg-200;
+    color: $color-label;
+  }
+
+  @media (max-width: 768px) {
+    font-size: $text-sm;
+  }
+}
+
+.basicInputError {
+  border: 1px solid $red;
+
+  &:hover,
+  &:focus {
+    border: 1px solid $red;
+  }
+}
+
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  position: relative;
+  z-index: 8;
+
+  &:has(.selectContainer) {
+    z-index: 10;
+  }
+
+  .label {
+    font-size: $text-md;
+    line-height: 22px;
+    font-weight: 400;
+    color: $color-label;
+
+    span {
+      font-size: 0.875rem;
+    }
+  }
+
+  .inputContainer {
+    position: relative;
+    width: 100%;
+    height: fit-content;
+    margin: 0;
+    padding: 0px;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+
+    &:has(input:disabled) {
+      background-color: $bg-200;
+    }
+
+    input:disabled + .numericControl {
+      background-color: $bg-200;
+      pointer-events: none;
+    }
+
+    &.required {
+      border-color: $primary-2;
+    }
+
+    .numericControl {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 4px 2px;
+      height: 100%;
+      align-items: center;
+
+      .controlIcon {
+        user-select: none;
+        cursor: n-resize;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 18px;
+        width: 18px;
+
+        &:hover {
+          svg {
+            fill: $black;
+          }
+        }
+
+        svg {
+          fill: $color-desc;
+          height: 100%;
+          width: 100%;
+          transition: 200ms;
+        }
+      }
+
+      .controlIcon.down {
+        cursor: s-resize;
+      }
+    }
+
+    .text {
+      font-size: $text-md;
+      line-height: 1.2;
+      font-weight: 500;
+      padding: 3px;
+      padding-left: 15px;
+    }
+
+    input {
+      flex: 1;
+      margin: 0;
+      font-size: $text-md;
+      line-height: 1;
+      font-weight: 400;
+      padding: $spacing-xs $spacing-sm;
+      height: 100%;
+      width: 100%;
+      outline: none;
+      border-color: transparent;
+      border-radius: 5px;
+      background-color: transparent;
+
+      &::placeholder {
+        color: $color-label;
+      }
+
+      &:disabled {
+        background-color: $bg-200;
+      }
+    }
+
+    input[type="color"] {
+      --webkit-appearance: none;
+      border: none;
+      height: 30px;
+      border-radius: 5px;
+      padding: 5px;
+    }
+    input[type="color"]::-webkit-color-swatch-wrapper {
+      padding: 0;
+    }
+    input[type="color"]::-webkit-color-swatch {
+      border: none;
+    }
+
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    .passwordInput {
+      padding-right: 31px;
+    }
+
+    .icon {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .eye {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      cursor: pointer;
+      height: 18px;
+      width: 18px;
+      transform: translateY(-50%);
+
+      svg {
+        height: 100%;
+        width: 100%;
+        color: $color-desc;
+      }
+    }
+
+    @media (max-width: $breakpoint-md) {
+      margin: 0;
+
+      input {
+        font-size: $text-sm;
+        line-height: 1.1;
+        padding: $spacing-xs $spacing-2xs;
+        height: 35px;
+      }
+
+      .passwordInput {
+        padding-right: 20px;
+      }
+    }
+  }
+
+  .hint {
+    font-size: $text-sm;
+    line-height: 18px;
+    font-style: italic;
+    font-weight: 500;
+  }
+
+  .rippleBox {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+
+    .ripple {
+      height: 8px;
+      width: 8px;
+    }
+
+    .text {
+      font-size: 12px;
+      line-height: 12px;
+      font-weight: 600;
+      min-height: 0;
+      color: $primary-2;
+    }
+  }
+
+  .errorMsg {
+    color: red;
+    font-weight: 600;
+    font-size: 0.875rem;
+    padding-left: 3px;
+  }
+
+  .floatingError {
+    position: absolute;
+    bottom: -20px;
+  }
+}
+
+.selectContainer {
+  margin: 3px 0;
+  z-index: 8;
+}
+
+@media (max-width: $breakpoint-md) {
+  .container {
+    .label {
+      font-size: 0.875rem;
+    }
+  }
+}
+
+.smallInput,
+.smallSelect {
+  gap: 2px;
+
+  .label {
+    font-size: $text-sm;
+    font-weight: 500;
+    color: $color-desc;
+  }
+
+  .inputContainer,
+  .selectContainer {
+    height: 39px;
+    margin: 0;
+    gap: 0;
+
+    input {
+      padding: 5px 10px;
+      font-size: $text-sm;
+    }
+  }
+
+  .inputContainer + .hint {
+    color: $color-desc;
+    font-style: normal;
+    font-size: 12px;
+    line-height: 12px;
+  }
+}

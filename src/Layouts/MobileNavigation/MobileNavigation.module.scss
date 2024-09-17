@@ -1,0 +1,75 @@
+@import "@/styles/variables";
+
+.container {
+  border-top: 1px solid $bg-200;
+  background-color: $bg;
+  padding: $spacing-xxs $spacing-sm;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: $spacing-xs;
+
+  .nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+
+    &.selected {
+      .icon {
+        svg {
+          fill: $primary;
+        }
+      }
+
+      .text {
+        color: $primary;
+        font-weight: 600;
+      }
+    }
+
+    .icon {
+      svg {
+        height: 20px;
+        width: 20px;
+        fill: $color-label;
+      }
+    }
+
+    .text {
+      font-size: $text-sm;
+      text-align: center;
+      font-weight: 500;
+      color: $color-label;
+    }
+  }
+
+  .profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .image {
+      display: flex;
+      align-items: center;
+
+      img {
+        height: 32px;
+        width: 32px;
+        border-radius: 50%;
+        border: 1px solid $bg-200;
+        object-fit: cover;
+      }
+    }
+
+    .name {
+      max-width: 70px;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      font-size: $text-sm;
+      font-weight: 500;
+      color: $color-title;
+    }
+  }
+}

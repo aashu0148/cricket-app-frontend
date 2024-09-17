@@ -1,0 +1,83 @@
+@import "@/styles/variables";
+
+.row {
+  width: 100%;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  row-gap: 15px;
+
+  & > div {
+    flex: 1;
+  }
+}
+
+.col {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.footer {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  row-gap: 10px;
+  align-items: center;
+  gap: 20px;
+}
+
+.modal-container {
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+  padding: $spacing-md;
+}
+
+.spacious-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $spacing-sm;
+  row-gap: $spacing-xs;
+  flex-wrap: wrap;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+
+  .title {
+    font-size: $text-lg;
+    font-weight: 500;
+    color: $color-title;
+  }
+}
+
+@media (max-width: $breakpoint-md) {
+  .page-container {
+    gap: $spacing-sm;
+    padding: $spacing-sm;
+  }
+
+  .row {
+    flex-direction: column;
+  }
+
+  .col {
+    row-gap: 15px;
+  }
+}
+
+@media (max-width: $breakpoint-sm) {
+}

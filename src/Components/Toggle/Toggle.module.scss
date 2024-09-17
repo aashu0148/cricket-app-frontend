@@ -1,0 +1,43 @@
+@import "@/styles/variables";
+
+.container {
+  --size: 30px;
+
+  &.big {
+    --size: 45px;
+  }
+
+  width: calc(var(--size) * 2);
+  height: var(--size);
+  border-radius: 40px;
+  border: 1px solid $bg-200;
+  cursor: pointer;
+  position: relative;
+  transition: 300ms;
+
+  &.active {
+    background-color: $green;
+    border-color: $green;
+
+    .ball {
+      left: calc(100% - var(--size) + 2px);
+    }
+  }
+
+  &.disabled {
+    background-color: $bg-300;
+    border-color: $bg-300;
+  }
+
+  .ball {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    height: 100%;
+    aspect-ratio: 1/1;
+    background-color: $bg;
+    border-radius: 50%;
+    transition: 300ms;
+  }
+}

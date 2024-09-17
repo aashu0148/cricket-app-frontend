@@ -1,0 +1,131 @@
+@import "@/styles/variables";
+
+.chip {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 6px 16px;
+  border-radius: 40px;
+  background-color: $bg-200;
+  color: $color-title;
+  cursor: pointer;
+  font-size: $text-md;
+  line-height: 22px;
+  border: 1px solid $bg-200;
+  width: fit-content;
+  transition: 300ms;
+  position: relative;
+
+  .selectBox {
+    position: absolute;
+    height: calc(100% + 5px);
+    width: 100%;
+    top: -3px;
+    left: 0px;
+
+    & > div {
+      margin: 0;
+    }
+  }
+
+  .icon {
+    display: flex;
+    align-items: center;
+
+    svg {
+      height: 18px;
+      width: 18px;
+    }
+  }
+
+  &:hover {
+    border-color: $primary;
+    background-color: $bg;
+  }
+
+  &.static {
+    cursor: default;
+
+    &:hover {
+      background-color: $bg-200;
+      border-color: $bg-200;
+    }
+  }
+
+  &.redChip {
+    border-color: $red;
+    background-color: $red-100;
+    color: $red;
+
+    &:hover {
+      background-color: $red-100;
+      border-color: $red;
+    }
+
+    .icon {
+      svg {
+        color: $red;
+      }
+    }
+  }
+
+  &.greenChip {
+    border-color: $green;
+    background-color: $green-100;
+    color: $green;
+
+    &:hover {
+      background-color: $green-100;
+      border-color: $green;
+    }
+
+    .icon {
+      svg {
+        color: $green;
+      }
+    }
+  }
+
+  &.yellowChip {
+    border-color: $yellow;
+    background-color: $yellow-100;
+    color: #ffb64d;
+
+    &:hover {
+      border-color: $yellow;
+      background-color: $yellow-100;
+    }
+
+    .icon {
+      svg {
+        color: $yellow;
+      }
+    }
+  }
+
+  &.selected {
+    border-color: $primary;
+    background-color: $primary;
+    color: $white;
+
+    .icon {
+      svg {
+        color: $white;
+      }
+    }
+  }
+
+  &.small {
+    padding: 4px 8px;
+    font-size: $text-sm;
+    line-height: 16px;
+    font-weight: 500;
+
+    .icon {
+      svg {
+        height: 15px;
+        width: 15px;
+      }
+    }
+  }
+}

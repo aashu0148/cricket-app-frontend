@@ -1,0 +1,205 @@
+@import "@/styles/variables";
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+div {
+  color: $color-title;
+}
+
+.headings {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  .heading {
+    font-size: 32px;
+    line-height: 38px;
+    text-align: center;
+    color: $color-title;
+    font-weight: bold;
+  }
+
+  .shoulder {
+    font-size: $text-md;
+    line-height: 25px;
+    color: $color-desc;
+    text-align: center;
+    font-weight: 500;
+  }
+}
+
+.gradient-button {
+  background: $gradient-1;
+  color: white;
+}
+
+.gradient-text {
+  width: fit-content;
+  background: $gradient-1;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.shoulder {
+  font-size: $text-md;
+  line-height: 1.5;
+  color: $color-desc;
+  font-weight: 500;
+}
+
+.heading {
+  font-size: $text-xl;
+  font-weight: 500;
+  line-height: 1.4;
+  color: $color-heading;
+}
+
+.heading-big {
+  font-size: $text-3xl;
+  font-weight: 500;
+  line-height: 1.4;
+  color: $color-heading;
+  min-height: fit-content;
+}
+
+.title {
+  font-size: $text-lg;
+  line-height: 1.4;
+  font-weight: 600;
+  color: $color-title;
+}
+
+.text-box {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+}
+
+.label {
+  font-size: $text-md;
+  line-height: 1.4;
+  color: $color-label;
+}
+
+.text {
+  font-size: $text-md;
+  line-height: 1.4;
+  color: $color-title;
+}
+
+.desc {
+  font-size: $text-sm;
+  line-height: 1.45;
+  color: $color-desc;
+}
+
+.link {
+  width: fit-content;
+  position: relative;
+  cursor: pointer;
+  z-index: 5;
+  color: $primary;
+
+  &::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    bottom: 0px;
+    left: 50%;
+    background-color: $primary;
+    width: 0;
+    transition: 200ms;
+    transform: translateX(-50%);
+  }
+
+  &:hover::before {
+    width: 100%;
+  }
+}
+
+.text-button {
+  cursor: pointer;
+  transition: 300ms;
+  color: $primary;
+  font-size: $text-md;
+  width: fit-content;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.delete-button {
+  width: fit-content;
+  font-size: $text-sm;
+  color: $red;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+@media (max-width: $breakpoint-md) {
+  .headings {
+    gap: 16px;
+
+    .heading {
+      font-size: $text-xl;
+      line-height: 32px;
+    }
+
+    .shoulder {
+      font-size: $text-sm;
+      line-height: 20px;
+    }
+  }
+
+  .heading {
+    font-size: $text-lg;
+  }
+
+  .shoulder {
+    font-size: $text-sm;
+    line-height: 20px;
+  }
+
+  .heading-big {
+    font-size: $text-xl;
+  }
+
+  .label {
+    font-size: $text-sm;
+  }
+
+  .title {
+    font-size: $text-md;
+  }
+
+  .text {
+    font-size: $text-sm;
+  }
+
+  .link {
+    font-size: $text-sm;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: $breakpoint-sm) {
+  .headings {
+    gap: 12px;
+
+    .heading {
+      font-size: $text-lg;
+      line-height: 28px;
+    }
+  }
+}

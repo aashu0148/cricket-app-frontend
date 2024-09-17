@@ -1,0 +1,64 @@
+@import "@/styles/variables";
+
+.container {
+  width: 100%;
+  padding: $spacing-md;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: $spacing-xs;
+  justify-content: center;
+
+  .loaderContainer {
+    height: 40px;
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .loader {
+    width: 100px;
+    height: 40px;
+    --g: radial-gradient(
+        farthest-side,
+        #0000 calc(95% - 3px),
+        #2c8be2 calc(100% - 3px) 98%,
+        #0000 101%
+      )
+      no-repeat;
+    background: var(--g), var(--g), var(--g);
+    background-size: 25px 25px;
+    animation: bounce 1s infinite alternate;
+  }
+  @keyframes bounce {
+    0% {
+      background-position: 0 50%, 50% 50%, 100% 50%;
+    }
+    20% {
+      background-position: 0 0, 50% 50%, 100% 50%;
+    }
+    40% {
+      background-position: 0 100%, 50% 0, 100% 50%;
+    }
+    60% {
+      background-position: 0 50%, 50% 100%, 100% 0;
+    }
+    80% {
+      background-position: 0 50%, 50% 50%, 100% 100%;
+    }
+    100% {
+      background-position: 0 50%, 50% 50%, 100% 50%;
+    }
+  }
+
+  @media (max-width: $breakpoint-md) {
+    .loader {
+      width: 80px;
+      height: 30px;
+
+      background-size: 20px 20px;
+    }
+  }
+}

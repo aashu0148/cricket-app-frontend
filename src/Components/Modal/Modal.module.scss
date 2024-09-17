@@ -1,0 +1,142 @@
+@import "@/styles/variables.scss";
+
+.container {
+  position: fixed;
+  left: 0;
+  top: 0;
+  padding: 40px;
+  padding-bottom: 100px;
+  width: 100%;
+  min-height: 100vh;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  z-index: 200000;
+
+  .inner {
+    margin: auto;
+    position: relative;
+    height: fit-content;
+    min-height: 200px;
+    width: fit-content;
+    min-width: 500px;
+    background-color: $bg;
+    border-radius: 5px;
+    animation: scaleUp 500ms;
+    transform-origin: center center;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.45);
+
+    .close {
+      position: absolute;
+      right: 5px;
+      top: 5px;
+      z-index: 10;
+      padding: 5px;
+      border-radius: 5px;
+      cursor: pointer;
+      background-color: $bg-200;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 26px;
+      width: 26px;
+    }
+  }
+
+  @keyframes scaleUp {
+    from {
+      transform: scale(0);
+    }
+
+    to {
+      transform: scale(1);
+    }
+  }
+
+  .preventAnimation {
+    animation: none;
+  }
+}
+
+.mobileContainer {
+  height: 100vh;
+  width: 100%;
+  position: fixed;
+  top: auto;
+  left: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  z-index: 200;
+  padding-bottom: 61px;
+
+  @keyframes moveup {
+    from {
+      transform: translateY(100%);
+    }
+
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  .inner {
+    position: relative;
+    width: 100vw;
+    height: fit-content;
+    min-height: 200px;
+    max-height: 75%;
+    background-color: $bg;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    animation: moveup 0.5s forwards;
+    overflow-y: auto;
+
+    .modalTitle {
+      position: sticky;
+      top: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      padding-bottom: 5px;
+      background-color: $bg;
+      z-index: 1200;
+
+      .heading {
+        font-size: 1rem;
+        font-weight: bold;
+      }
+
+      svg {
+        height: 20px;
+        width: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.modalWithTitle {
+  .inner {
+    padding-top: 0 !important;
+  }
+}
+
+.close_btn {
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 10;
+  border: none;
+}
