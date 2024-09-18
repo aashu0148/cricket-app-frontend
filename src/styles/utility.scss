@@ -1,5 +1,33 @@
 @import "@/styles/variables";
 
+// keyframes
+@keyframes waves {
+  0% {
+    background-position: -468px 0;
+  }
+  100% {
+    background-position: 468px 0;
+  }
+}
+@keyframes ripple {
+  0% {
+    box-shadow: 0 0 0 2px rgba(255, 145, 77, 0.481);
+  }
+
+  100% {
+    box-shadow: 0 0 0 calc(var(--size) + 5px) rgba(255, 255, 255, 0);
+  }
+}
+@keyframes ripple-colored {
+  0% {
+    box-shadow: 0 0 0 2px rgba(var(--rgb), 0.481);
+  }
+
+  100% {
+    box-shadow: 0 0 0 calc(var(--size) + 5px) rgba(255, 255, 255, 0);
+  }
+}
+
 .spinner-container {
   min-height: 600px;
   width: 100%;
@@ -76,15 +104,6 @@
 }
 
 .skeleton-loading {
-  @keyframes waves {
-    0% {
-      background-position: -468px 0;
-    }
-    100% {
-      background-position: 468px 0;
-    }
-  }
-
   border-radius: 5px;
   background: rgba(130, 130, 130, 0.2);
   background: linear-gradient(
@@ -118,16 +137,6 @@
 }
 
 .ripple {
-  @keyframes ripple {
-    0% {
-      box-shadow: 0 0 0 2px rgba(255, 145, 77, 0.481);
-    }
-
-    100% {
-      box-shadow: 0 0 0 calc(var(--size) + 5px) rgba(255, 255, 255, 0);
-    }
-  }
-
   &::before {
     animation: ripple 1.5s linear infinite 1s;
   }
@@ -139,16 +148,6 @@
 
 .custom-ripple {
   background-color: rgba(var(--rgb), 1);
-
-  @keyframes ripple-colored {
-    0% {
-      box-shadow: 0 0 0 2px rgba(var(--rgb), 0.481);
-    }
-
-    100% {
-      box-shadow: 0 0 0 calc(var(--size) + 5px) rgba(255, 255, 255, 0);
-    }
-  }
 
   &::before,
   &::after {
