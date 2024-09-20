@@ -1,0 +1,10 @@
+@import  "@/styles/variables";
+
+.navbar {
+  display: flex;
+  gap: $spacing-xs;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-sm $spacing-md;
+  z-index: 20;
+}

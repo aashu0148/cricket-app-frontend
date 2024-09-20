@@ -1,6 +1,6 @@
 import React from "react";
+import styles from "./Navbar.module.scss";
 import { useNavigate } from "react-router-dom";
-
 import Button from "@/Components/Button/Button";
 import Logo from "./Logo";
 
@@ -11,11 +11,14 @@ function Navbar({ className = "" }) {
 
   return (
     <div
-      className={`flex gap-5 items-center justify-between px-8 py-3 z-20 ${
-        className || ""
-      }`}
+      className={styles.navbar || className}
     >
       <Logo />
+      <div>
+        HOME
+        ABOUT 
+        FEATURES
+      </div>
 
       <Button onClick={(e) => handleAppNavigation(e, navigate, "/auth")}>
         Get started

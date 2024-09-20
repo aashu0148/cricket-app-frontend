@@ -1,0 +1,101 @@
+@import "@/styles/variables";
+
+.container {
+  min-height: fit-content;
+  min-width: fit-content;
+  width: 100%;
+  padding: 20px 40px;
+  display: flex;
+  box-sizing: border-box;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid $grey-200;
+  z-index: 1;
+}
+
+.nonHorizontal {
+  background: linear-gradient(to bottom, $blue 50%, $grey-200 50%);
+  background-size: 100% 200%;
+  background-position: bottom;
+  transition: background-position 0.5s ease;
+
+  .icon {
+    font-size: 50px;
+    color: $blue;
+    transition: color 0.1s ease;
+  }
+
+  &:hover {
+    background-position: top;
+    border: 1px solid $blue;
+
+    .icon {
+      color: $white;
+    }
+
+    h1 {
+      color: $white;
+    }
+
+    p {
+      color: $white;
+    }
+  }
+}
+
+.horizontal3D {
+  background: $grey-200;
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  height: auto;
+  .icon {
+    font-size: 50px;
+    color: $blue;
+    transition: color 0.1s ease;
+  }
+
+  span {
+    position: absolute;
+    width: 25%;
+    height: 100%;
+    background-color: $blue;
+    transform: translateY(150%);
+    border-radius: 50%;
+    left: calc((var(--n) - 1) * 25%);
+    transition: 0.5s;
+    transition-delay: calc((var(--n) - 1) * 0.1s);
+    z-index: -1;
+  }
+
+  &:hover {
+    .icon {
+      color: $white;
+    }
+
+    span {
+      transform: translateY(0) scale(2);
+    }
+
+    span:nth-child(1) {
+      --n: 1;
+      transition-delay: 0s;
+    }
+
+    span:nth-child(2) {
+      --n: 2;
+      transition-delay: 0.1s;
+    }
+
+    span:nth-child(3) {
+      --n: 3;
+      transition-delay: 0.2s;
+    }
+
+    span:nth-child(4) {
+      --n: 4;
+      transition-delay: 0.3s;
+    }
+  }
+}

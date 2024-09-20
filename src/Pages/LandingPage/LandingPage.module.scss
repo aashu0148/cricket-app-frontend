@@ -1,1 +1,160 @@
 @import "@/styles/variables";
+* {
+  padding: 0%;
+  margin: 0%;
+}
+.container {
+  overflow: auto;
+  padding: 0% 4%;
+  min-height: fit-content;
+}
+
+.heroSection {
+  height: 100vh;
+  width: 100vw;
+  padding: 0px $spacing-lg;
+  gap: $spacing-lg;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.heroSection__left {
+  flex: 1;
+  h1 {
+    font-size: $text-6xl;
+    line-height: 1.2;
+  }
+  p {
+    font-size: $text-lg;
+  }
+  .heroSection__buttonContainer {
+    display: flex;
+    margin-top: $spacing-sm;
+    gap: $spacing-xs;
+  }
+}
+
+.heroSection__right {
+  flex: 1;
+  height: 70vh;
+  width: 100%;
+  background-position: cover;
+  background-size: contain;
+  img {
+    height: 80%;
+    width: 80%;
+  }
+}
+
+.cardSection {
+  display: flex;
+  width: 100%;
+  gap: $spacing-lg;
+}
+
+.aboutSection {
+  margin-top: $spacing-2xl;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .aboutSectionContent {
+    width: 65%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    h1 {
+      font-size: $text-4xl;
+    }
+    p {
+      margin-top: $spacing-sm;
+      font-size: $text-lg;
+      text-align: center;
+    }
+  }
+}
+
+.featuresSection {
+  margin-top: $spacing-2xl;
+}
+.featuresSection_Cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: $spacing-lg;
+  gap: $spacing-lg;
+}
+
+.testimonial_carousel {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: $spacing-lg;
+  span {
+    z-index: -1;
+    cursor: pointer;
+    font-size: $text-4xl;
+    color: $grey-300;
+    &:hover {
+      color: $blue;
+    }
+  }
+  .testimonial_carousel_between {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .testimonial_stars {
+      display: flex;
+      gap: $spacing-xs;
+    }
+    h2 {
+      margin-top: $spacing-lg;
+    }
+    .testimonial_profile {
+      margin-top: $spacing-sm;
+      height: 100px;
+      width: 100px;
+      border-radius: 50%;
+      img {
+        height: 100%;
+        width: 100%;
+      }
+    }
+  }
+  &:hover {
+    span {
+      z-index: 23;
+    }
+  }
+}
+
+.faqSection {
+  .faqSection_Below {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: $spacing-sm;
+    height: 60vh;
+    .faqSection_Accordion {
+      flex: 3;
+    }
+    .faqSection_image {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      img{
+        height: 100%;
+        width: 100%;
+        mix-blend-mode: multiply;
+        background-position: 100%;
+        background-repeat: no-repeat;
+        background-size: contain;
+      }
+    }
+  }
+}
