@@ -10,6 +10,11 @@
   gap: $spacing-xs;
   justify-content: center;
 
+  &.fullPage {
+    min-height: 100vh;
+    height: 100%;
+  }
+
   .loaderContainer {
     height: 40px;
     width: 100px;

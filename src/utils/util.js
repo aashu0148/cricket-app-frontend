@@ -99,8 +99,22 @@ export function formatSecondsToHrMinSec(seconds) {
   return `${hours}hr ${minutes}min ${remainingSeconds}s`;
 }
 
-export const handleLogout = async () => {
+export const getAppToken = () => {
+  return localStorage.getItem("cric-token");
+};
+
+export const setAppToken = (token) => {
+  localStorage.setItem("cric-token", token);
+  return true;
+};
+
+export const removeAppToken = () => {
   localStorage.removeItem("cric-token");
+  return true;
+};
+
+export const handleLogout = async () => {
+  removeAppToken();
 
   if (!window.location.href.includes("auth")) window.location.replace("/auth");
 };
@@ -122,7 +136,7 @@ export const fetchWrapper = async ({
   };
 
   if (!isPublic) {
-    const token = localStorage.getItem("cric-token");
+    const token = getAppToken();
     if (!token) {
       handleLogout();
       toast.error("Not logged in!");

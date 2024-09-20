@@ -53,3 +53,16 @@ export const updateUserDetails = async (payload) => {
     },
   });
 };
+
+export const checkIfUserAdmin = async () => {
+  const path = `/user/is-admin`;
+
+  return await makeApiCall({
+    functionName: "checkIfUserAdmin",
+    defaultErrorMessage: "Failed to check for admin",
+    preventToast: true,
+    fetchWrapperOptions: {
+      path,
+    },
+  });
+};
