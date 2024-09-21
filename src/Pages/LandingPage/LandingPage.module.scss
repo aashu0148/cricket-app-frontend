@@ -5,11 +5,14 @@
   padding: 0% 4%;
   min-height: fit-content;
 }
+p {
+  color: #646464 !important;
+  line-height: 2;
+}
 
 .heroSection {
   height: 100vh;
   width: 100vw;
-  padding: 0px $spacing-lg;
   gap: $spacing-lg;
   display: flex;
   justify-content: center;
@@ -18,9 +21,11 @@
 
 .heroSection__left {
   flex: 1;
-
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-lg;
   h1 {
-    font-size: $text-6xl;
+    font-size: $text-5xl;
     line-height: 1.2;
   }
   p {
@@ -28,8 +33,11 @@
   }
   .heroSection__buttonContainer {
     display: flex;
-    margin-top: $spacing-sm;
-    gap: $spacing-xs;
+    gap: $spacing-sm;
+    .heroSection__button {
+      height: 4rem;
+      font-size: $text-xl;
+    }
   }
 }
 
@@ -61,11 +69,11 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: $spacing-sm;
     h1 {
       font-size: $text-4xl;
     }
     p {
-      margin-top: $spacing-sm;
       font-size: $text-lg;
       text-align: center;
     }
@@ -85,12 +93,12 @@
     flex: 2;
     width: 60%;
     padding: $spacing-xl;
-      
+
     h1 {
       font-size: $text-4xl;
     }
     p {
-      margin-top: $spacing-md;
+      margin-top: $spacing-sm;
       font-size: $text-lg;
     }
   }
@@ -169,8 +177,7 @@
   flex-direction: column;
   .faqSection_Below {
     width: 70%;
-    height: 60vh;
-    margin-top: $spacing-lg;
+    margin-top: $spacing-xl;
     .faqSection_accordion {
       display: flex;
       flex-direction: column;
@@ -211,4 +218,45 @@
       }
     }
   }
+}
+
+.contactUsSection {
+  margin-top: $spacing-2xl;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  .contactUsSection_details {
+    width: 80%;
+    margin-top: $spacing-xl;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: $spacing-sm;
+    .iconsContainer {
+      display: flex;
+      gap: $spacing-sm;
+      .contactUsSection_iconWrapper {
+        height: 3rem;
+        width: 3rem;
+        border-radius: 50%;
+        background-color: $primary;
+        transition: background-color 100ms ease;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+      }
+    }
+  }
+}
+
+.footer {
+  margin-top: $spacing-2xl;
+  height: 5rem;
+  background-color: $grey-200;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

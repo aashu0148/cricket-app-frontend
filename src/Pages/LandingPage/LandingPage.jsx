@@ -1,5 +1,14 @@
 import React, { useState } from "react";
-import { ArrowDown, ChevronDown, ChevronUp, Star } from "react-feather";
+import {
+  ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+  ChevronUp,
+  Facebook,
+  Instagram,
+  Linkedin,
+  Twitter,
+} from "react-feather";
 import Navbar from "@/Components/Navbar/Navbar";
 import { features, details, testimonials, FAQs } from "./landingCopy";
 import styles from "./LandingPage.module.scss";
@@ -14,6 +23,13 @@ import { faQuoteLeft, faStar } from "@fortawesome/free-solid-svg-icons";
 function LandingPage() {
   const [openIndex, setOpenIndex] = useState(null);
   const [activeIndexTestimonial, setActiveIndexTestimonial] = useState(0);
+  const contactUsIcons = [
+    <Facebook />,
+    <Linkedin />,
+    <Twitter />,
+    <Instagram />,
+  ];
+  // ************************************************************* Functions *****************************************************************
 
   const handlePrev = () => {
     if (!testimonials) return;
@@ -39,6 +55,9 @@ function LandingPage() {
   return (
     <div className={`page-container ${styles.container}`}>
       <Navbar className={styles.navbar} />
+
+      {/* ************************************************************* Hero Section **************************************************/}
+
       <div className={styles.heroSection}>
         <div className={styles.heroSection__left}>
           <h1>Best Mobile App Template For Your Business</h1>
@@ -48,8 +67,10 @@ function LandingPage() {
             vel eum facere quasi.
           </p>
           <div className={styles.heroSection__buttonContainer}>
-            <Button>Google Play</Button>
-            <Button>Download on App Store</Button>
+            <Button className={styles.heroSection__button}>Google Play</Button>
+            <Button className={styles.heroSection__button}>
+              Download on App Store
+            </Button>
           </div>
         </div>
         <div className={styles.heroSection__right}>
@@ -65,6 +86,8 @@ function LandingPage() {
           />
         ))}
       </div>
+
+      {/* ************************************************************** About Section **************************************************/}
 
       <div className={styles.aboutSection}>
         <div className={styles.generalHeading}>
@@ -85,13 +108,11 @@ function LandingPage() {
             <p>
               Lorem ipsum dolor sit amet consectetur, adipisicing elit. Non ab
               quibusdam velit voluptatem, nulla, id maxime natus, optio
-              consequuntur
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Non ab
-              quibusdam velit voluptatem, nulla, id maxime natus, optio
-              consequuntur
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Non ab
-              quibusdam velit voluptatem, nulla, id maxime natus, optio
-              consequuntur
+              consequuntur Lorem ipsum dolor sit amet consectetur, adipisicing
+              elit. Non ab quibusdam velit voluptatem, nulla, id maxime natus,
+              optio consequuntur Lorem ipsum dolor sit amet consectetur,
+              adipisicing elit. Non ab quibusdam velit voluptatem, nulla, id
+              maxime natus, optio consequuntur
             </p>
           </div>
           <div className={styles.aboutSection_right}>
@@ -99,6 +120,8 @@ function LandingPage() {
           </div>
         </div>
       </div>
+
+      {/* ************************************************************** Feature Section **************************************************/}
 
       <div className={styles.featuresSection}>
         <div className={styles.generalHeading}>
@@ -115,6 +138,7 @@ function LandingPage() {
         <div className={styles.featuresSection_Cards}>
           {features?.map((item) => (
             <Card
+              horizontal
               icon={item.icon}
               mainText={item.mainText}
               subText={item.subText}
@@ -122,6 +146,8 @@ function LandingPage() {
           ))}
         </div>
       </div>
+
+      {/* ************************************************************** Testimonial Section **************************************************/}
 
       <div className={styles.testimonialSection}>
         <div className={styles.generalHeading}>
@@ -136,10 +162,12 @@ function LandingPage() {
           </div>
         </div>
         <div className={styles.testimonial_carousel}>
-          <span onClick={() => handlePrev()}>{"<"}</span>
+          <span onClick={() => handlePrev()}>
+            <ChevronLeft size={"35px"} />
+          </span>
 
           <div className={styles.testimonial_carousel_between}>
-            <FontAwesomeIcon icon={faQuoteLeft} size="3x" color="#37d0a4"/>
+            <FontAwesomeIcon icon={faQuoteLeft} size="3x" color="#37d0a4" />
             <div className={styles.testimonial_profile}>
               <img src={testimonials[activeIndexTestimonial].photo} />
             </div>
@@ -156,9 +184,13 @@ function LandingPage() {
             <p>{testimonials[activeIndexTestimonial].review}</p>
           </div>
 
-          <span onClick={() => handleNext()}>{">"}</span>
+          <span onClick={() => handleNext()}>
+            <ChevronRight size={"35px"} />
+          </span>
         </div>
       </div>
+
+      {/* ************************************************************** FAQ Section **************************************************/}
 
       <div className={styles.faqSection}>
         <div className={styles.generalHeading}>
@@ -193,6 +225,38 @@ function LandingPage() {
             ))}
           </div>
         </div>
+      </div>
+
+      {/* ************************************************************** Contact Us Section **************************************************/}
+
+      <div className={styles.contactUsSection}>
+        <div className={styles.generalHeading}>
+          <div className={styles.generalHeadingContent}>
+            <h1>Contact Us</h1>
+            <LineAnimate className="mb-3" />
+            <p>
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Non ab
+              quibusdam velit voluptatem, nulla, id maxime natus, optio
+              consequuntur
+            </p>
+          </div>
+        </div>
+        <div className={styles.contactUsSection_details}>
+          <h1>Contact with us by Your Phone Number or Email Address</h1>
+          <h3>+1-485-456-0102 Or hello@colugo.com</h3>
+          <div className={styles.iconsContainer}>
+            {contactUsIcons.map((item, index) => (
+              <div key={index} className={styles.contactUsSection_iconWrapper}>
+                {item}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* ************************************************ Footer ************************************************************ */}
+      <div className={styles.footer}>
+        <h3>© Colugo is Proudly Owned by HiBootstrp</h3>
       </div>
     </div>
   );

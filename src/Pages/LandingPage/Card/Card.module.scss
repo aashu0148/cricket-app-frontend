@@ -10,8 +10,14 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: $spacing-sm;
   border: 1px solid $grey-200;
+  border-radius: 12px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
   z-index: 1;
+  h1 {
+    font-size: $text-xl;
+  }
 }
 
 .nonHorizontal {
@@ -39,63 +45,69 @@
     }
 
     p {
-      color: $white;
+      color: $white !important;
     }
   }
 }
 
 .horizontal3D {
-  background: $grey-200;
+  background-color: $grey-200;
   position: relative;
+  transition: 0.5s ease-in-out;
   cursor: pointer;
-  overflow: hidden;
-  height: auto;
-  .icon {
-    font-size: 50px;
-    color: $primary;
-    transition: color 0.1s ease;
-  }
-
-  span {
-    position: absolute;
-    width: 25%;
-    height: 100%;
-    background-color: $primary;
-    transform: translateY(150%);
+  .iconWrapper {
+    height: 3.5rem;
+    width: 3.5rem;
     border-radius: 50%;
-    left: calc((var(--n) - 1) * 25%);
-    transition: 0.5s;
-    transition-delay: calc((var(--n) - 1) * 0.1s);
+    background-color: $primary;
     z-index: -1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 100ms ease;
   }
-
+  .icon {
+    color: $white;
+    transition: color 100ms ease;
+  }
+  .horizontalDiv {
+    position: absolute;
+    width: 0%;
+    background-color: $primary;
+    height: 100%;
+    z-index: -12;
+    border-radius: 12px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  }
   &:hover {
+    transform: translateY(-3%);
+    border: 2px solid $white;
+    .horizontalDiv {
+      animation: animate 500ms;
+      animation-fill-mode: forwards;
+    }
+    .iconWrapper {
+      background-color: $white;
+    }
     .icon {
+      color: $primary;
+    }
+
+    h1 {
       color: $white;
     }
 
-    span {
-      transform: translateY(0) scale(2);
+    p {
+      color: $white !important;
     }
+  }
+}
 
-    span:nth-child(1) {
-      --n: 1;
-      transition-delay: 0s;
-    }
-
-    span:nth-child(2) {
-      --n: 2;
-      transition-delay: 0.1s;
-    }
-
-    span:nth-child(3) {
-      --n: 3;
-      transition-delay: 0.2s;
-    }
-
-    span:nth-child(4) {
-      --n: 4;
-      transition-delay: 0.3s;
-    }
+@keyframes animate {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
   }
 }

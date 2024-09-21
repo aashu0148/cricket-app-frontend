@@ -11,19 +11,16 @@ export default function Card({ horizontal = false, icon, mainText, subText }) {
     >
       <div className={styles.iconWrapper}>
         <span className={styles.icon}>
-          <FontAwesomeIcon icon={icon} size="0.5x" />
+          <FontAwesomeIcon
+            icon={icon}
+            
+            style={{ fontSize: horizontal ? "24px" : "0.5x" }}
+          />
         </span>
       </div>
       <h1>{mainText}</h1>
       <p>{subText}</p>
-      {horizontal && (
-        <>
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-        </>
-      )}
+      {horizontal && <div className={styles.horizontalDiv}></div>}
     </div>
   );
 }
