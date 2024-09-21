@@ -96,7 +96,7 @@
     font-size: $text-4xl;
     color: $grey-300;
     &:hover {
-      color: $blue;
+      color: $primary;
     }
   }
   .testimonial_carousel_between {
@@ -154,7 +154,7 @@
         position: relative;
         span {
           position: absolute;
-          background-color: $blue;
+          background-color: $primary;
           right: 0%;
           bottom: 0%;
           width: $spacing-xl;
