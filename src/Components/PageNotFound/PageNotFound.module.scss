@@ -8,9 +8,11 @@
   gap: $spacing-xs;
   justify-content: center;
   align-items: center;
+
   h1 {
-    font-size: $text-5xl;
+    font-size: $text-4xl;
     text-align: center;
+
     @media (max-width: 640px) {
       font-size: $text-2xl;
     }
@@ -20,9 +22,7 @@
     text-align: center;
     margin-bottom: $spacing-sm;
     @media (max-width: 640px) {
-      font-size: $text-sm
+      font-size: $text-sm;
     }
   }
 }
-//for all space- spacing variable, font varioable and color
-//navbar aur button ki scss likhni h fron tailwind

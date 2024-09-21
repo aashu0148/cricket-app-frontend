@@ -12,6 +12,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 const generalCopy = {
+  hero: {
+    mainHeading: "",
+  },
   about: {
     shoulder:
       "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Non ab quibusdam velit voluptatem, nulla, id maxime natus, optio consequuntur",

@@ -44,6 +44,7 @@
     font-weight: 500;
     line-height: 1;
     transition: 200ms;
+    white-space: nowrap;
   }
 
   @media (max-width: $breakpoint-md) {

@@ -25,13 +25,17 @@ import Button from "@/Components/Button/Button";
 import Card from "./Card/Card";
 import LineAnimate from "@/Components/LineAnimate/LineAnimate";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faQuoteLeft, faStar } from "@fortawesome/free-solid-svg-icons";
+import { faQuoteLeft } from "@fortawesome/free-solid-svg-icons";
 
 function Hero() {
   return (
     <div className={styles.heroSection}>
       <div className={styles.heroSection__left}>
-        <h1>Best Mobile App Template For Your Business</h1>
+        <h1>
+          Best Mobile App
+          <span className="gradient-text"> Template </span>
+          For Your Business
+        </h1>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officiis
           reprehenderit fugiat rem quod assumenda, optio, tempore ab hic omnis

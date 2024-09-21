@@ -110,6 +110,10 @@ function App() {
               </PrivateRoute>
             }
           >
+            <Route
+              path={applicationRoutes.dashboard}
+              element={<h1>Hello</h1>}
+            />
             {/* all routes of normal users will be defined here */}
             {/* <Route path="/tournament" element={<PageNotFound />} /> */}
           </Route>
