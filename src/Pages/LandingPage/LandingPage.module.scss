@@ -50,13 +50,12 @@
   gap: $spacing-lg;
 }
 
-.aboutSection {
-  margin-top: $spacing-2xl;
+.generalHeading {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  .aboutSectionContent {
+  .generalHeadingContent {
     width: 65%;
     display: flex;
     flex-direction: column;
@@ -73,6 +72,34 @@
   }
 }
 
+.aboutSection {
+  margin-top: $spacing-2xl;
+  .aboutSection_below {
+    margin-top: $spacing-lg;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex: 1;
+  }
+  .aboutSection_left {
+    flex: 2;
+    width: 60%;
+    padding: $spacing-xl;
+      
+    h1 {
+      font-size: $text-4xl;
+    }
+    p {
+      margin-top: $spacing-md;
+      font-size: $text-lg;
+    }
+  }
+  .aboutSection_right {
+    flex: 1;
+    float: right;
+  }
+}
+
 .featuresSection {
   margin-top: $spacing-2xl;
 }
@@ -83,53 +110,59 @@
   gap: $spacing-lg;
 }
 
-.testimonial_carousel {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: $spacing-lg;
-  span {
-    z-index: -1;
-    cursor: pointer;
-    font-size: $text-4xl;
-    color: $grey-300;
-    &:hover {
-      color: $primary;
-    }
-  }
-  .testimonial_carousel_between {
-    width: 40%;
+.testimonialSection {
+  margin-top: $spacing-2xl;
+  .testimonial_carousel {
+    width: 100%;
+    height: 22rem;
+    overflow: hidden;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    .testimonial_stars {
-      display: flex;
-      gap: $spacing-xs;
-    }
-    h2 {
-      margin-top: $spacing-sm;
-    }
-    .testimonial_profile {
-      margin-top: $spacing-sm;
-      height: 100px;
-      width: 100px;
-      border-radius: 50%;
-      img {
-        height: 100%;
-        width: 100%;
+    margin-top: $spacing-lg;
+    span {
+      z-index: -1;
+      cursor: pointer;
+      font-size: $text-4xl;
+      color: $grey-300;
+      &:hover {
+        color: $primary;
       }
     }
-  }
-  &:hover {
-    span {
-      z-index: 23;
+    .testimonial_carousel_between {
+      width: 40%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      .testimonial_stars {
+        display: flex;
+        gap: $spacing-xs;
+      }
+      h2 {
+        margin-top: $spacing-sm;
+      }
+      .testimonial_profile {
+        margin-top: $spacing-sm;
+        height: 100px;
+        width: 100px;
+        border-radius: 50%;
+        img {
+          height: 100%;
+          width: 100%;
+        }
+      }
+    }
+    &:hover {
+      span {
+        z-index: 23;
+      }
     }
   }
 }
 
 .faqSection {
+  margin-top: $spacing-2xl;
   display: flex;
   justify-content: center;
   align-items: center;

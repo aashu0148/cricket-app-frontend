@@ -4,6 +4,7 @@ import Navbar from "@/Components/Navbar/Navbar";
 import { features, details, testimonials, FAQs } from "./landingCopy";
 import styles from "./LandingPage.module.scss";
 import image from "../../assets/images/batsman.png";
+import aboutImage from "@/assets/images/aboutSection.png";
 import Button from "@/Components/Button/Button";
 import Card from "./Card/Card";
 import LineAnimate from "@/Components/LineAnimate/LineAnimate";
@@ -64,21 +65,44 @@ function LandingPage() {
           />
         ))}
       </div>
+
       <div className={styles.aboutSection}>
-        <div className={styles.aboutSectionContent}>
-          <h1>About Our App</h1>
-          <LineAnimate className="mb-3" />
-          <p>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Non ab
-            quibusdam velit voluptatem, nulla, id maxime natus, optio
-            consequuntur
-          </p>
+        <div className={styles.generalHeading}>
+          <div className={styles.generalHeadingContent}>
+            <h1>About Our App</h1>
+            <LineAnimate className="mb-3" />
+            <p>
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Non ab
+              quibusdam velit voluptatem, nulla, id maxime natus, optio
+              consequuntur
+            </p>
+          </div>
+        </div>
+        <div className={styles.aboutSection_below}>
+          <div className={styles.aboutSection_left}>
+            <h1>Our process is simple, Our App is powerful</h1>
+            <LineAnimate className="mb-3" />
+            <p>
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Non ab
+              quibusdam velit voluptatem, nulla, id maxime natus, optio
+              consequuntur
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Non ab
+              quibusdam velit voluptatem, nulla, id maxime natus, optio
+              consequuntur
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Non ab
+              quibusdam velit voluptatem, nulla, id maxime natus, optio
+              consequuntur
+            </p>
+          </div>
+          <div className={styles.aboutSection_right}>
+            <img src={aboutImage} />
+          </div>
         </div>
       </div>
 
       <div className={styles.featuresSection}>
-        <div className={styles.aboutSection}>
-          <div className={styles.aboutSectionContent}>
+        <div className={styles.generalHeading}>
+          <div className={styles.generalHeadingContent}>
             <h1>Awesome Features</h1>
             <LineAnimate className="mb-3" />
             <p>
@@ -100,8 +124,8 @@ function LandingPage() {
       </div>
 
       <div className={styles.testimonialSection}>
-        <div className={styles.aboutSection}>
-          <div className={styles.aboutSectionContent}>
+        <div className={styles.generalHeading}>
+          <div className={styles.generalHeadingContent}>
             <h1>Testimonials</h1>
             <LineAnimate className="mb-3" />
             <p>
@@ -115,7 +139,7 @@ function LandingPage() {
           <span onClick={() => handlePrev()}>{"<"}</span>
 
           <div className={styles.testimonial_carousel_between}>
-            <FontAwesomeIcon icon={faQuoteLeft} size="3x" />
+            <FontAwesomeIcon icon={faQuoteLeft} size="3x" color="#37d0a4"/>
             <div className={styles.testimonial_profile}>
               <img src={testimonials[activeIndexTestimonial].photo} />
             </div>
@@ -125,11 +149,11 @@ function LandingPage() {
               })
                 .fill("")
                 .map((_, index) => (
-                  <FontAwesomeIcon icon={faStar} key={index} color="green" />
+                  <FontAwesomeIcon icon={faStar} key={index} color="#D0A437" />
                 ))}
             </div>
             <h2>{testimonials[activeIndexTestimonial].name}</h2>
-            <div>{testimonials[activeIndexTestimonial].review}</div>
+            <p>{testimonials[activeIndexTestimonial].review}</p>
           </div>
 
           <span onClick={() => handleNext()}>{">"}</span>
@@ -137,8 +161,8 @@ function LandingPage() {
       </div>
 
       <div className={styles.faqSection}>
-        <div className={styles.aboutSection}>
-          <div className={styles.aboutSectionContent}>
+        <div className={styles.generalHeading}>
+          <div className={styles.generalHeadingContent}>
             <h1>Frequently Asked Questions</h1>
             <LineAnimate className="mb-3" />
             <p>
