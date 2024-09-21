@@ -24,3 +24,9 @@
     left: 100%;
   }
 }
+
+@media (max-width: $breakpoint-md) {
+  .line {
+    width: 70px;
+  }
+}

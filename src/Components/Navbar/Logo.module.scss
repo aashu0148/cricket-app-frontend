@@ -49,23 +49,23 @@
 
   @media (max-width: $breakpoint-md) {
     .image {
-      height: 30px;
-      width: 30px;
+      height: 25px;
+      width: 25px;
     }
 
     &.large {
       .image {
-        height: 40px;
-        width: 40px;
+        height: 35px;
+        width: 35px;
       }
 
       .text {
-        font-size: $text-2xl;
+        font-size: $text-xl;
       }
     }
 
     .text {
-      font-size: $text-xl;
+      font-size: $text-lg;
     }
   }
 }

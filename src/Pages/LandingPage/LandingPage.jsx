@@ -10,7 +10,13 @@ import {
   Star,
   Twitter,
 } from "react-feather";
+import { useNavigate } from "react-router-dom";
+
 import Navbar from "@/Components/Navbar/Navbar";
+import Shapes from "./Shapes";
+import Card from "./Card/Card";
+import Button from "@/Components/Button/Button";
+
 import {
   features,
   details,
@@ -18,31 +24,62 @@ import {
   FAQs,
   generalCopy,
 } from "./landingCopy";
-import styles from "./LandingPage.module.scss";
-import image from "../../assets/images/batsman.png";
-import aboutImage from "@/assets/images/aboutSection.png";
-import Button from "@/Components/Button/Button";
-import Card from "./Card/Card";
+import image from "@/assets/images/batsman.png";
+import aboutImage from "@/assets/images/about-us.png";
 import LineAnimate from "@/Components/LineAnimate/LineAnimate";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faQuoteLeft } from "@fortawesome/free-solid-svg-icons";
+import { quoteIcon } from "@/utils/svgs";
+import { handleAppNavigation } from "@/utils/util";
+import { applicationRoutes } from "@/utils/constants";
+
+import styles from "./LandingPage.module.scss";
+import { useSelector } from "react-redux";
 
 function Hero() {
+  const navigate = useNavigate();
+  const isMobileView = useSelector((s) => s.root.isMobileView);
+
   return (
     <div className={styles.heroSection}>
+      <Shapes
+        shapeStyles={{
+          circle: {
+            top: isMobileView ? "10%" : "20%",
+            right: "100px",
+          },
+          half: {
+            top: isMobileView ? "-20px" : "10%",
+            left: "5px",
+          },
+          triangle: {
+            top: "3%",
+            right: isMobileView ? "30px" : "300px",
+          },
+          plus: {
+            top: "10px",
+            left: "40%",
+          },
+        }}
+      />
       <div className={styles.heroSection__left}>
         <h1>
-          Best Mobile App
-          <span className="gradient-text"> Template </span>
-          For Your Business
+          Create Your <span className="gradient-text">Dream Team</span> and
+          Dominate Fantasy Cricket!
         </h1>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officiis
-          reprehenderit fugiat rem quod assumenda, optio, tempore ab hic omnis
-          vel eum facere quasi.
+          Join the ultimate fantasy cricket experience with real-time scoring,
+          custom draft leagues, and in-depth player stats. Build your team,
+          compete with friends, and climb the leaderboard. Your strategy, your
+          game—make every match count!
         </p>
         <div className={styles.heroSection__buttonContainer}>
-          <Button className={styles.heroSection__button}>Google Play</Button>
+          <Button
+            className={styles.heroSection__button}
+            onClick={(e) =>
+              handleAppNavigation(e, navigate, applicationRoutes.auth)
+            }
+          >
+            Get Started
+          </Button>
         </div>
       </div>
       <div className={styles.heroSection__right}>
@@ -53,12 +90,14 @@ function Hero() {
 }
 
 function About() {
+  const isMobileView = useSelector((s) => s.root.isMobileView);
+
   return (
     <div className={styles.aboutSection}>
       <div className={styles.generalHeading}>
         <div className={styles.generalHeadingContent}>
           <div className="flex-col-xxs align-center">
-            <h1>About Our App</h1>
+            <h1>About </h1>
             <LineAnimate className="mb-3" />
           </div>
 
@@ -67,7 +106,7 @@ function About() {
       </div>
       <div className={styles.aboutSection_below}>
         <div className={styles.aboutSection_left}>
-          <div className="flex-col-xxs">
+          <div className={`flex-col-xxs ${isMobileView && "align-center"}`}>
             <h2>{generalCopy.about.heading}</h2>
             <LineAnimate className="mb-3" />
           </div>
@@ -83,19 +122,31 @@ function About() {
 }
 
 function Features() {
+  const isMobileView = useSelector((s) => s.root.isMobileView);
+
   return (
     <div className={styles.featuresSection}>
+      <Shapes
+        hidePlus
+        hideCircle
+        shapeStyles={{
+          half: {
+            top: isMobileView ? "5%" : "4%",
+            left: isMobileView ? "3%" : "15%",
+          },
+          triangle: {
+            top: "5%",
+            right: isMobileView ? "50px" : "300px",
+          },
+        }}
+      />
       <div className={styles.generalHeading}>
         <div className={styles.generalHeadingContent}>
           <div className="flex-col-xxs align-center">
             <h1>Awesome Features</h1>
             <LineAnimate className="mb-3" />
           </div>
-          <p>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Non ab
-            quibusdam velit voluptatem, nulla, id maxime natus, optio
-            consequuntur
-          </p>
+          <p>{generalCopy.features.shoulder}</p>
         </div>
       </div>
       <div className={styles.featuresSection_Cards}>
@@ -114,6 +165,8 @@ function Features() {
 }
 
 function Testimonials() {
+  const isMobileView = useSelector((s) => s.root.isMobileView);
+
   const [activeIndexTestimonial, setActiveIndexTestimonial] = useState(0);
 
   const handlePrev = () => {
@@ -135,17 +188,27 @@ function Testimonials() {
 
   return (
     <div className={styles.testimonialSection}>
+      <Shapes
+        hideHalf
+        hideCircle
+        shapeStyles={{
+          triangle: {
+            top: "3%",
+            right: isMobileView ? "20px" : "300px",
+          },
+          plus: {
+            top: isMobileView ? "-10px" : "10%",
+            left: isMobileView ? "5px" : "5%",
+          },
+        }}
+      />
       <div className={styles.generalHeading}>
         <div className={styles.generalHeadingContent}>
           <div className="flex-col-xxs align-center">
             <h1>Testimonials</h1>
             <LineAnimate className="mb-3" />
           </div>
-          <p>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Non ab
-            quibusdam velit voluptatem, nulla, id maxime natus, optio
-            consequuntur
-          </p>
+          <p>{generalCopy.testimonials.shoulder}</p>
         </div>
       </div>
       <div className={styles.testimonial_carousel}>
@@ -154,7 +217,7 @@ function Testimonials() {
         </span>
 
         <div className={styles.testimonial_carousel_between}>
-          <FontAwesomeIcon icon={faQuoteLeft} className={styles.quoteIcon} />
+          <div className={styles.quote}>{quoteIcon}</div>
           <div className={styles.testimonial_stars}>
             {Array.from({
               length: testimonials[activeIndexTestimonial].stars,
@@ -191,11 +254,7 @@ function FaQ() {
             <h1>Frequently Asked Questions</h1>
             <LineAnimate className="mb-3" />
           </div>
-          <p>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Non ab
-            quibusdam velit voluptatem, nulla, id maxime natus, optio
-            consequuntur
-          </p>
+          <p>{generalCopy.faq.shoulder}</p>
         </div>
       </div>
       <div className={styles.faqSection_Below}>
@@ -203,8 +262,12 @@ function FaQ() {
           {FAQs?.map((item, index) => (
             <React.Fragment key={index}>
               <div className={styles.faqSection_question}>
-                {item.question}
-                <span onClick={() => handleAccordion(index)}>
+                <p className={styles.text}>{item.question}</p>
+
+                <span
+                  className={styles.icon}
+                  onClick={() => handleAccordion(index)}
+                >
                   {openIndex === index ? (
                     <ChevronUp size={"35px"} color="white" />
                   ) : (
@@ -235,18 +298,14 @@ function ContactUs() {
     <div className={styles.contactUsSection}>
       <div className={styles.generalHeading}>
         <div className={styles.generalHeadingContent}>
-          <h1>Contact Us</h1>
-          <LineAnimate className="mb-3" />
-          <p>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Non ab
-            quibusdam velit voluptatem, nulla, id maxime natus, optio
-            consequuntur
-          </p>
+          <div className="flex-col-xxs align-center">
+            <h1>Contact Us</h1>
+            <LineAnimate />
+          </div>
+          <p>{generalCopy.contact.shoulder}</p>
         </div>
       </div>
       <div className={styles.contactUsSection_details}>
-        <h1>Contact with us by Your Phone Number or Email Address</h1>
-        <h3>+1-485-456-0102 Or hello@colugo.com</h3>
         <div className={styles.iconsContainer}>
           {contactUsIcons.map((item, index) => (
             <div key={index} className={styles.contactUsSection_iconWrapper}>
@@ -270,6 +329,7 @@ function LandingPage() {
         {details.map((item, index) => (
           <Card
             key={index}
+            style={{ maxWidth: "300px" }}
             icon={item.icon}
             mainText={item.mainText}
             subText={item.subText}
