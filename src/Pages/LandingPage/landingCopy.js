@@ -1,4 +1,15 @@
-import { faCamera, faClock, faCloudBolt, faCode, faDownload, faEye, faHeart, faHome, faKey, faStar } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCamera,
+  faClock,
+  faCloudBolt,
+  faCode,
+  faDownload,
+  faEye,
+  faHeart,
+  faHome,
+  faKey,
+  faStar,
+} from "@fortawesome/free-solid-svg-icons";
 
 const details = [
   {
@@ -78,7 +89,8 @@ const performancePoints = [
 const testimonials = [
   {
     stars: 5,
-    review: "This product changed my life! . Video testimonials and an eye-catching testimonial carousel widget show endless possibilities for potential clients. Video testimonials and an eye-catching testimonial carousel widget show endless possibilities for potential clients. Video testimonials and an eye-catching testimonial carousel widget show endless possibilities for potential clients. Video testimonials and an eye-catching testimonial carousel widget show endless possibilities for potential clients.",
+    review:
+      "This product changed my life! . Video testimonials and an eye-catching testimonial carousel widget show endless possibilities for potential clients. Video testimonials and an eye-catching testimonial carousel widget show endless possibilities for potential clients. Video testimonials and an eye-catching testimonial carousel widget show endless possibilities for potential clients. Video testimonials and an eye-catching testimonial carousel widget show endless possibilities for potential clients.",
     name: "Alice Johnson",
     photo:
       "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png",
@@ -99,4 +111,19 @@ const testimonials = [
   },
 ];
 
-export { features, details, performancePoints, testimonials };
+const FAQs = [
+  {
+    question: "What is your Name?",
+    answer: "My name is Nikita Pandey",
+  },
+  {
+    question: "What are u currently pursuing?",
+    answer: "I am currently pursuing MSc(PMCs)",
+  },
+  {
+    question: "Are u all fine?",
+    answer: "No I am not fine",
+  },
+];
+
+export { features, details, performancePoints, testimonials, FAQs };

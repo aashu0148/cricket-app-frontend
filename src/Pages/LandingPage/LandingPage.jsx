@@ -1,13 +1,7 @@
 import React, { useState } from "react";
-import { Star } from "react-feather";
+import { ArrowDown, ChevronDown, ChevronUp, Star } from "react-feather";
 import Navbar from "@/Components/Navbar/Navbar";
-import {
-  features,
-  details,
-  performancePoints,
-  testimonials,
-} from "./landingCopy";
-import faqImage from "@/assets/images/faqImage.jpg"
+import { features, details, testimonials, FAQs } from "./landingCopy";
 import styles from "./LandingPage.module.scss";
 import image from "../../assets/images/gradient-ipl-cricket-illustration_23-2149205212.avif";
 import Button from "@/Components/Button/Button";
@@ -17,17 +11,28 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faQuoteLeft, faStar } from "@fortawesome/free-solid-svg-icons";
 
 function LandingPage() {
+  const [openIndex, setOpenIndex] = useState(null);
   const [activeIndexTestimonial, setActiveIndexTestimonial] = useState(0);
 
   const handlePrev = () => {
     if (!testimonials) return;
-    if (activeIndexTestimonial === 0) return;
+    if (activeIndexTestimonial === 0) {
+      setActiveIndexTestimonial(testimonials.length - 1);
+      return;
+    }
     setActiveIndexTestimonial((prev) => prev - 1);
   };
   const handleNext = () => {
     if (!testimonials) return;
-    if (activeIndexTestimonial === testimonials.length - 1) return;
+    if (activeIndexTestimonial === testimonials.length - 1) {
+      setActiveIndexTestimonial(0);
+      return;
+    }
     setActiveIndexTestimonial((prev) => prev + 1);
+  };
+
+  const handleAccordion = (index) => {
+    setOpenIndex((prevIndex) => (prevIndex === index ? null : index));
   };
 
   return (
@@ -86,7 +91,6 @@ function LandingPage() {
         <div className={styles.featuresSection_Cards}>
           {features?.map((item) => (
             <Card
-              horizontal
               icon={item.icon}
               mainText={item.mainText}
               subText={item.subText}
@@ -145,12 +149,24 @@ function LandingPage() {
           </div>
         </div>
         <div className={styles.faqSection_Below}>
-          <div className={styles.faqSection_Accordion}>
-<div className=""></div>
-
-          </div>
-          <div className={styles.faqSection_image}>
-            <img src={faqImage}></img>
+          <div className={styles.faqSection_accordion}>
+            {FAQs?.map((item, index) => (
+              <>
+                <div className={styles.faqSection_question} key={index}>
+                  {item.question}
+                  <span onClick={() => handleAccordion(index)}>
+                    {openIndex === index ? (
+                      <ChevronUp size={"35px"} color="white" />
+                    ) : (
+                      <ChevronDown size={"35px"} color="white" />
+                    )}
+                  </span>
+                </div>
+                {openIndex === index && (
+                  <p className={styles.faqSection_answer}>{item.answer}</p>
+                )}
+              </>
+            ))}
           </div>
         </div>
       </div>
