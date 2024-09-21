@@ -90,7 +90,7 @@ const testimonials = [
   {
     stars: 5,
     review:
-      "This product changed my life! . Video testimonials and an eye-catching testimonial carousel widget show endless possibilities for potential clients. Video testimonials and an eye-catching testimonial carousel widget show endless possibilities for potential clients. Video testimonials and an eye-catching testimonial carousel widget show endless possibilities for potential clients. Video testimonials and an eye-catching testimonial carousel widget show endless possibilities for potential clients.",
+      "This product changed my life! . Video testimonials and an eye-catching testimonial carousel widget show endless possibilities for potential clients. Video testimonials and an .",
     name: "Alice Johnson",
     photo:
       "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png",
