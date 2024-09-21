@@ -11,6 +11,16 @@ import {
   faStar,
 } from "@fortawesome/free-solid-svg-icons";
 
+const generalCopy = {
+  about: {
+    shoulder:
+      "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Non ab quibusdam velit voluptatem, nulla, id maxime natus, optio consequuntur",
+    heading: "Our process is simple, Our App is powerful",
+    description:
+      "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Non ab quibusdam velit voluptatem, nulla, id maxime natus, optio consequuntur Lorem ipsum dolor sit amet consectetur, adipisicing elit. Non ab quibusdam velit voluptatem, nulla, id maxime natus, optio consequuntur Lorem ipsum dolor sit amet consectetur, adipisicing elit. Non ab quibusdam velit voluptatem, nulla, id maxime natus, optio consequuntur",
+  },
+};
+
 const details = [
   {
     mainText: "1,020",
@@ -73,19 +83,6 @@ const features = [
   },
 ];
 
-const performancePoints = [
-  {
-    value: "High",
-    title: "Performance",
-    description: "Excellent performance metrics.",
-    actionDetails: {
-      title: "Learn More",
-      description: "More details about performance.",
-      image: "", // Add a valid image URL if needed
-    },
-  },
-];
-
 const testimonials = [
   {
     stars: 5,
@@ -126,4 +123,4 @@ const FAQs = [
   },
 ];
 
-export { features, details, performancePoints, testimonials, FAQs };
+export { generalCopy, features, details, testimonials, FAQs };

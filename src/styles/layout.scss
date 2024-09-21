@@ -12,6 +12,22 @@
   }
 }
 
+.flex-col-xxs {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xxs;
+}
+
+.flex-col-xs {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+}
+
+.align-center {
+  align-items: center;
+}
+
 .col {
   width: 100%;
   display: flex;

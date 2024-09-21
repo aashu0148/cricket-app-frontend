@@ -4,37 +4,45 @@
   min-height: fit-content;
   min-width: fit-content;
   width: 100%;
-  padding: 20px 40px;
+  padding: $spacing-md;
   display: flex;
   box-sizing: border-box;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: $spacing-sm;
-  border: 1px solid $grey-200;
-  border-radius: 12px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  border: 1px solid $bg-200;
+  background-color: $bg;
+  border-radius: 6px;
+  box-shadow: 0 0 1.25rem rgba(108, 118, 134, 0.1);
   z-index: 1;
+  transition: 300ms;
+
   h1 {
     font-size: $text-xl;
+  }
+
+  .subText {
+    text-align: center;
   }
 }
 
 .nonHorizontal {
-  background: linear-gradient(to bottom, $primary 50%, $grey-200 50%);
+  background: linear-gradient(to bottom, $primary 50%, $bg 50%);
   background-size: 100% 200%;
   background-position: bottom;
   transition: background-position 0.5s ease;
+  transition: 300ms;
 
   .icon {
     font-size: 50px;
     color: $primary;
-    transition: color 0.1s ease;
+    transition: 100ms;
   }
 
   &:hover {
     background-position: top;
-    border: 1px solid $primary;
+    border-color: $primary;
 
     .icon {
       color: $white;
@@ -44,17 +52,45 @@
       color: $white;
     }
 
-    p {
+    .subText {
       color: $white !important;
     }
   }
 }
 
 .horizontal3D {
-  background-color: $grey-200;
+  background-color: $bg;
   position: relative;
-  transition: 0.5s ease-in-out;
+  transition: 500ms ease-in-out;
   cursor: pointer;
+  border: 2px solid transparent;
+
+  &:hover {
+    transform: translateY(-10px);
+    border-color: $white;
+
+    .horizontalDiv {
+      animation: animate 500ms;
+      animation-fill-mode: forwards;
+      animation-delay: 50ms;
+    }
+    .iconWrapper {
+      background-color: $white;
+    }
+    .icon {
+      color: $primary;
+    }
+
+    h1 {
+      color: $white;
+    }
+
+    .subText {
+      color: $white;
+      text-align: center;
+    }
+  }
+
   .iconWrapper {
     height: 3.5rem;
     width: 3.5rem;
@@ -78,28 +114,6 @@
     z-index: -12;
     border-radius: 12px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-  }
-  &:hover {
-    transform: translateY(-3%);
-    border: 2px solid $white;
-    .horizontalDiv {
-      animation: animate 500ms;
-      animation-fill-mode: forwards;
-    }
-    .iconWrapper {
-      background-color: $white;
-    }
-    .icon {
-      color: $primary;
-    }
-
-    h1 {
-      color: $white;
-    }
-
-    p {
-      color: $white !important;
-    }
   }
 }
 

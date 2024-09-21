@@ -100,13 +100,13 @@ svg {
   --var-spacing-2xl: 60px;
 
   --var-shadow-100: 0px 0px 5px rgba(0, 0, 0, 0.15);
-  --var-shadow-200: 1px 1px 4px rgba(0, 0, 0, 0.15);
+  --var-shadow-200: 0 0 1.25rem rgba(108, 118, 134, 0.1);
   --var-shadow-lifted-100: 1px 1px 35px 0px rgba(0, 0, 0, 0.08);
   --var-shadow-lifted-200: 1px 1px 24px 2px rgba(0, 0, 0, 0.06);
 
-  --var-primary: #37d0a4;
+  --var-primary: #11c9bb;
   --var-primary-100: #f4faff;
-  --var-primary-2: #D0A437;
+  --var-primary-2: #d0a437;
   --gradient-1: linear-gradient(to right, $primary, $primary-2);
 
   color-scheme: light;
