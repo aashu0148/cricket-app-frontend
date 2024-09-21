@@ -1,0 +1,22 @@
+<svg
+    width="100"
+    height="100"
+    viewBox="0 0 100 100"
+    xmlns="http://www.w3.org/2000/svg"
+    fill="#2c8be2"
+>
+    <g xmlns="http://www.w3.org/2000/svg">
+        <rect x="7.193" y="21.403" fill-rule="evenodd" clip-rule="evenodd" width="8.827"
+            height="78.597"></rect>
+        <path fill-rule="evenodd" clip-rule="evenodd"
+            d="M64.184,17.359c5.943,0,10.766,4.875,10.766,10.884   c0,6.006-4.822,10.883-10.766,10.883c-5.94,0-10.759-4.877-10.759-10.883C53.425,22.233,58.243,17.359,64.184,17.359"></path>
+        <polygon fill-rule="evenodd" clip-rule="evenodd"
+            points="11.786,10.641 11.786,15.722 16.021,15.722 20.373,17.896 31.375,17.896    35.731,15.722 39.963,15.722 39.963,10.641 35.731,10.641 31.375,8.587 20.373,8.587 16.021,10.641  "></polygon>
+        <rect x="35.731" y="21.403" fill-rule="evenodd" clip-rule="evenodd" width="8.949"
+            height="78.597"></rect>
+        <polygon fill-rule="evenodd" clip-rule="evenodd"
+            points="56.527,0 55.32,4.838 59.552,5.927 63.18,8.948 73.938,11.73    78.538,10.641 82.77,11.612 83.977,6.773 79.745,5.806 76.117,2.664 65.354,0 60.759,0.971  "></polygon>
+        <polygon fill-rule="evenodd" clip-rule="evenodd"
+            points="84.219,21.885 62.815,97.586 71.4,100 92.807,24.424  "></polygon>
+    </g>
+</svg>
