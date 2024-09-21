@@ -3,7 +3,7 @@ import { ArrowDown, ChevronDown, ChevronUp, Star } from "react-feather";
 import Navbar from "@/Components/Navbar/Navbar";
 import { features, details, testimonials, FAQs } from "./landingCopy";
 import styles from "./LandingPage.module.scss";
-import image from "../../assets/images/gradient-ipl-cricket-illustration_23-2149205212.avif";
+import image from "../../assets/images/batsman.png";
 import Button from "@/Components/Button/Button";
 import Card from "./Card/Card";
 import LineAnimate from "@/Components/LineAnimate/LineAnimate";

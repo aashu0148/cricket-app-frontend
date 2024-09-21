@@ -37,11 +37,10 @@
   flex: 1;
   height: 70vh;
   width: 100%;
-  background-position: cover;
-  background-size: contain;
   img {
-    height: 80%;
-    width: 80%;
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
   }
 }
 
