@@ -6,6 +6,7 @@ import Button from "@/Components/Button/Button";
 
 import { applicationRoutes } from "@/utils/constants";
 import { backendApiUrl, googleClientId } from "@/utils/configs";
+import { setAppToken } from "@/utils/util";
 
 import styles from "./AuthPage.module.scss";
 
@@ -45,7 +46,7 @@ function AuthPage() {
     const accessToken = searchParams.get("accessToken");
 
     if (accessToken) {
-      localStorage.setItem("cric-token", accessToken);
+      setAppToken(accessToken);
 
       if (fallback && fallback !== "null") window.location.replace(fallback);
       else window.location.replace(query ? `/?${query}` : "/");

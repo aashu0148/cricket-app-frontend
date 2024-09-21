@@ -9,12 +9,13 @@ import PrivateRoute from "@/Components/PrivateRoute/PrivateRoute";
 import AppLayout from "./Layouts/AppLayout/AppLayout";
 import LandingPage from "./Pages/LandingPage/LandingPage";
 import AuthPage from "./Pages/AuthPage/AuthPage";
+import PageLoader from "./Components/PageLoader/PageLoader";
 
 // Utils
 import { getCurrentUser } from "./apis/user";
 import actionTypes from "./store/actionTypes";
 import { applicationRoutes } from "./utils/constants";
-import PageLoader from "./Components/PageLoader/PageLoader";
+import { getAppToken } from "./utils/util";
 
 function App() {
   const userDetails = useSelector((state) => state.user);
@@ -24,7 +25,7 @@ function App() {
   const [appLoaded, setAppLoaded] = useState(false);
 
   const handleUserDetection = async () => {
-    const token = localStorage.getItem("cric-token");
+    const token = getAppToken();
     if (!token) {
       setAppLoaded(true);
       return;
@@ -88,6 +89,15 @@ function App() {
           <Route path={applicationRoutes.auth} element={<AuthPage />} />
 
           {userDetails._id ? "" : <Route path="/" element={<LandingPage />} />}
+
+          <Route
+            path="/admin"
+            element={
+              <PrivateRoute>
+                <AppLayout adminLayout />
+              </PrivateRoute>
+            }
+          ></Route>
 
           <Route
             element={

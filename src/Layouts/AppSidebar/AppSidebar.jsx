@@ -17,10 +17,20 @@ import { dashboardIcon } from "@/utils/svgs";
 import styles from "./AppSidebar.module.scss";
 
 const debounce = getDebounceFunc();
-function AppSidebar({ className = "", onRouteClick }) {
+function AppSidebar({ useAdminRoutes = false, className = "", onRouteClick }) {
   const userDetails = useSelector((state) => state.user);
 
-  const allSections = [
+  const adminSections = [
+    {
+      icon: dashboardIcon,
+      value: "dashboard",
+      label: "Admin Dashboard",
+      link: applicationRoutes.dashboard,
+      class: "route-dashboard",
+    },
+  ].filter((item) => item);
+
+  const userSections = [
     {
       icon: dashboardIcon,
       value: "dashboard",
@@ -29,6 +39,8 @@ function AppSidebar({ className = "", onRouteClick }) {
       class: "route-dashboard",
     },
   ].filter((item) => item);
+
+  const allSections = useAdminRoutes ? adminSections : userSections;
 
   const navigate = useNavigate();
   const isMobileView = useSelector((state) => state.root.isMobileView);
