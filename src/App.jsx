@@ -15,7 +15,7 @@ import PageLoader from "./Components/PageLoader/PageLoader";
 import { getCurrentUser } from "./apis/user";
 import actionTypes from "./store/actionTypes";
 import { applicationRoutes } from "./utils/constants";
-import { getAppToken } from "./utils/util";
+import { getAppToken, removeAppToken } from "./utils/util";
 
 function App() {
   const userDetails = useSelector((state) => state.user);
@@ -34,6 +34,7 @@ function App() {
     let res = await getCurrentUser();
     setAppLoaded(true);
     if (!res) {
+      removeAppToken();
       return;
     }
 

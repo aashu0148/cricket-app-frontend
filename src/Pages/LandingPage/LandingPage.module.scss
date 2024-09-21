@@ -1,8 +1,5 @@
 @import "@/styles/variables";
-* {
-  padding: 0%;
-  margin: 0%;
-}
+
 .container {
   overflow: auto;
   padding: 0% 4%;
@@ -21,6 +18,7 @@
 
 .heroSection__left {
   flex: 1;
+
   h1 {
     font-size: $text-6xl;
     line-height: 1.2;
@@ -98,7 +96,7 @@
     font-size: $text-4xl;
     color: $grey-300;
     &:hover {
-      color: $blue;
+      color: $primary;
     }
   }
   .testimonial_carousel_between {
@@ -148,15 +146,15 @@
       .faqSection_question {
         height: 3rem;
         box-sizing: border-box;
-        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);      
-          width: 100%;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        width: 100%;
         min-height: fit-content;
         padding: 1rem;
         border-radius: 12px;
         position: relative;
         span {
           position: absolute;
-          background-color: $blue;
+          background-color: $primary;
           right: 0%;
           bottom: 0%;
           width: $spacing-xl;
@@ -170,10 +168,11 @@
           font-weight: $text-4xl;
         }
       }
-      .faqSection_answer{
+      .faqSection_answer {
         height: 5rem;
         box-sizing: border-box;
-        box-shadow: 0px 4px 8px rgba(10, 21, 176, 0.2);        width: 100%;
+        box-shadow: 0px 4px 8px rgba(10, 21, 176, 0.2);
+        width: 100%;
         min-height: fit-content;
         padding: 1rem;
         border-radius: 12px;

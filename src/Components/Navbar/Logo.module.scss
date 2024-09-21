@@ -3,7 +3,7 @@
 .logo {
   display: flex;
   gap: $spacing-xs;
-  align-items: center;
+  align-items: flex-end;
   cursor: pointer;
 
   &.large {
@@ -39,7 +39,7 @@
   }
 
   .text {
-    font-size: $text-2xl;
+    font-size: $text-xl;
     font-weight: 500;
     line-height: 1;
     transition: 200ms;

@@ -4,9 +4,9 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-  // font-family: "Josefin Sans", sans-serif;
+  // font-family: "Baloo 2", sans-serif;
+  font-family: "Josefin Sans", sans-serif;
   font-optical-sizing: auto;
-  font-family: "Baloo 2", sans-serif;
   -webkit-tap-highlight-color: transparent;
   transition: color 300ms, background 300ms, background-color 300ms,
     opacity 300ms;
@@ -65,7 +65,7 @@ svg {
   --var-green-200: #daffeb;
   --var-green-300: #adffce;
   --var-yellow: #efe925;
-  --var-blue : #3a5ae2;
+  --var-blue: #3a5ae2;
   --var-yellow-100: #fefff2;
   --var-light-blue: #abd5fe;
   --var-color-heading: #040406;

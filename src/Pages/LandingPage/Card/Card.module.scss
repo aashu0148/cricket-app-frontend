@@ -15,20 +15,20 @@
 }
 
 .nonHorizontal {
-  background: linear-gradient(to bottom, $blue 50%, $grey-200 50%);
+  background: linear-gradient(to bottom, $primary 50%, $grey-200 50%);
   background-size: 100% 200%;
   background-position: bottom;
   transition: background-position 0.5s ease;
 
   .icon {
     font-size: 50px;
-    color: $blue;
+    color: $primary;
     transition: color 0.1s ease;
   }
 
   &:hover {
     background-position: top;
-    border: 1px solid $blue;
+    border: 1px solid $primary;
 
     .icon {
       color: $white;
@@ -52,7 +52,7 @@
   height: auto;
   .icon {
     font-size: 50px;
-    color: $blue;
+    color: $primary;
     transition: color 0.1s ease;
   }
 
@@ -60,7 +60,7 @@
     position: absolute;
     width: 25%;
     height: 100%;
-    background-color: $blue;
+    background-color: $primary;
     transform: translateY(150%);
     border-radius: 50%;
     left: calc((var(--n) - 1) * 25%);
