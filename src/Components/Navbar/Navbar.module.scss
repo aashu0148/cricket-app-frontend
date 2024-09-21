@@ -1,6 +1,7 @@
-@import  "@/styles/variables";
+@import "@/styles/variables";
 
 .navbar {
+  background-color: $bg;
   display: flex;
   gap: $spacing-xs;
   align-items: center;

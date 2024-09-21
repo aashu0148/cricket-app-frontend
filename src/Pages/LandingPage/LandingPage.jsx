@@ -150,10 +150,7 @@ function Testimonials() {
         </span>
 
         <div className={styles.testimonial_carousel_between}>
-          <FontAwesomeIcon icon={faQuoteLeft} size="3x" color="#37d0a4" />
-          <div className={styles.testimonial_profile}>
-            <img src={testimonials[activeIndexTestimonial].photo} />
-          </div>
+          <FontAwesomeIcon icon={faQuoteLeft} className={styles.quoteIcon} />
           <div className={styles.testimonial_stars}>
             {Array.from({
               length: testimonials[activeIndexTestimonial].stars,
@@ -163,8 +160,8 @@ function Testimonials() {
                 <Star key={index} />
               ))}
           </div>
-          <h2>{testimonials[activeIndexTestimonial].name}</h2>
           <p>{testimonials[activeIndexTestimonial].review}</p>
+          <h2>{testimonials[activeIndexTestimonial].name}</h2>
         </div>
 
         <span onClick={() => handleNext()}>

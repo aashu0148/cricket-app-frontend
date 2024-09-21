@@ -1,7 +1,6 @@
 @import "@/styles/variables";
 
 .container {
-  overflow: auto;
   padding: 0% 4%;
   min-height: fit-content;
 }
@@ -10,6 +9,15 @@ p {
 }
 h1 {
   line-height: 1.1;
+}
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  padding: $spacing-sm 0;
+  background-color: $bg-100;
+  border: 1px solid $bg-100;
 }
 
 .heroSection {
@@ -151,6 +159,14 @@ h1 {
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      gap: $spacing-sm;
+
+      .quoteIcon {
+        height: 40px;
+        width: 40px;
+        color: $primary;
+      }
+
       .testimonial_stars {
         display: flex;
         gap: $spacing-xs;
@@ -161,22 +177,13 @@ h1 {
         }
       }
       h2 {
-        margin-top: $spacing-sm;
+        font-size: $text-xl;
       }
       p {
         text-align: center;
       }
-      .testimonial_profile {
-        margin-top: $spacing-sm;
-        height: 100px;
-        width: 100px;
-        border-radius: 50%;
-        img {
-          height: 100%;
-          width: 100%;
-        }
-      }
     }
+
     &:hover {
       span {
         z-index: 23;
@@ -237,7 +244,8 @@ h1 {
 }
 
 .contactUsSection {
-  margin-top: $spacing-2xl;
+  padding: $spacing-md;
+  margin-top: $spacing-xl;
   display: flex;
   justify-content: center;
   align-items: center;
