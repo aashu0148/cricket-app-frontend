@@ -4,8 +4,9 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-  font-family: "Josefin Sans", sans-serif;
+  // font-family: "Josefin Sans", sans-serif;
   font-optical-sizing: auto;
+  font-family: "Baloo 2", sans-serif;
   -webkit-tap-highlight-color: transparent;
   transition: color 300ms, background 300ms, background-color 300ms,
     opacity 300ms;
@@ -64,6 +65,7 @@ svg {
   --var-green-200: #daffeb;
   --var-green-300: #adffce;
   --var-yellow: #efe925;
+  --var-blue : #3a5ae2;
   --var-yellow-100: #fefff2;
   --var-light-blue: #abd5fe;
   --var-color-heading: #040406;
@@ -73,8 +75,8 @@ svg {
   --var-color-button: #fefefe;
   --var-bg: #fefefe;
   --var-bg-100: #fafafa;
-  --var-bg-200: #f3f0f3;
-  --var-bg-300: #bcbcbc;
+  --var-bg-200: #f3f3f3;
+  --var-bg-300: #cec9c9;
 
   --var-text-xxs: 10px;
   --var-text-xs: 12px;
@@ -86,6 +88,7 @@ svg {
   --var-text-3xl: 36px;
   --var-text-4xl: 48px;
   --var-text-5xl: 60px;
+  --var-text-6xl: 70px;
 
   --var-spacing-xxs: 4px;
   --var-spacing-xs: 8px;

@@ -1,0 +1,61 @@
+@import "@/styles/variables";
+
+.button {
+    outline: none;
+    width: fit-content;
+    background: $gradient-1;
+    color: $white;
+    border: 2px solid $white;
+    cursor: pointer;
+    border-radius: 0.5rem; 
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    transition: transform 0.2s;
+    font-size: 1rem;
+
+    &.small {
+        padding: 0.25rem 0.75rem;
+        font-size: 0.875rem;
+    }
+
+    &.red {
+        background-color: $red;
+        color:$white;
+        border: 2px solid $red;
+    }
+
+    &.outline {
+        background: none;
+        border: 2px solid $primary;
+        color:$black;
+    }
+
+    &.cancel {
+        background: none;
+        border: 2px solid $bg-100;
+        color:$black;
+    }
+
+    &.disabled {
+        background: none;
+        background-color: $bg-200;
+        color:$black;
+        border: 2px solid $bg-200;
+        cursor: not-allowed;
+        &.active {
+            transform: none;
+        }
+    }
+
+    &.gradient-button {
+        background: $gradient-1 
+    }
+
+    @media (max-width: 640px) {
+        & {
+            padding: 0.25rem 0.75rem;
+        }
+    }
+}

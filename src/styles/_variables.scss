@@ -1,11 +1,15 @@
 $white: var(--var-white);
 $black: var(--var-black);
+$blue : var(--var-blue);
 $red: var(--var-red);
 $red-100: var(--var-red-100);
 $red-200: var(--var-red-200);
 $green: var(--var-green);
 $green-100: var(--var-green-100);
 $green-200: var(--var-green-200);
+$grey-100: var(--var-bg-100);
+$grey-200: var(--var-bg-200);
+$grey-300 : var(--var-bg-300);
 $green-300: var(--var-green-300);
 $yellow: var(--var-yellow);
 $yellow-100: var(--var-yellow-100);
@@ -30,6 +34,7 @@ $text-2xl: var(--var-text-2xl);
 $text-3xl: var(--var-text-3xl);
 $text-4xl: var(--var-text-4xl);
 $text-5xl: var(--var-text-5xl);
+$text-6xl : var(--var-text-6xl);
 
 $spacing-xxs: var(--var-spacing-xxs);
 $spacing-xs: var(--var-spacing-xs);

@@ -97,7 +97,10 @@ function App() {
                 <AppLayout adminLayout />
               </PrivateRoute>
             }
-          ></Route>
+          >
+            {/* all routes of admin will be defined here */}
+            {/* <Route path="/tournament" element={<PageNotFound />} /> */}
+          </Route>
 
           <Route
             element={
@@ -105,7 +108,10 @@ function App() {
                 <AppLayout />
               </PrivateRoute>
             }
-          ></Route>
+          >
+            {/* all routes of normal users will be defined here */}
+            {/* <Route path="/tournament" element={<PageNotFound />} /> */}
+          </Route>
 
           <Route path="/*" element={<PageNotFound />} />
         </Routes>
