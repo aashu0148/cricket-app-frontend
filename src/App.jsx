@@ -16,6 +16,7 @@ import { getCurrentUser } from "./apis/user";
 import actionTypes from "./store/actionTypes";
 import { applicationRoutes } from "./utils/constants";
 import { getAppToken, removeAppToken } from "./utils/util";
+import AllTournaments from "./Pages/Admin/AllTournaments/AllTournaments";
 
 function App() {
   const userDetails = useSelector((state) => state.user);
@@ -89,8 +90,12 @@ function App() {
         <Routes>
           <Route path={applicationRoutes.auth} element={<AuthPage />} />
 
-          {userDetails._id ? "" : <Route path="/" element={<LandingPage />} />}
-
+          {!userDetails._id ? (
+            ""
+          ) : (
+            <Route path="/" element={<AllTournaments />} />
+          )}
+          <Route path="/landing" element={<LandingPage />} />
           <Route
             path="/admin"
             element={

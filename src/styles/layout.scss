@@ -3,14 +3,17 @@
 .row {
   width: 100%;
   display: flex;
-  gap: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
   align-items: center;
-  row-gap: 15px;
+  row-gap: 10px;
 
   & > div {
-    flex: 1;
+    flex: 1 1 200px;
+    min-width: 100px; 
   }
 }
+
 
 .flex-col-xxs {
   display: flex;
