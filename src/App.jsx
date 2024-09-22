@@ -91,7 +91,7 @@ function App() {
         <Routes>
           <Route path={applicationRoutes.auth} element={<AuthPage />} />
 
-          {!userDetails._id ? "" : <Route path="/" element={<LandingPage />} />}
+          {userDetails._id ? "" : <Route path="/" element={<LandingPage />} />}
 
           <Route
             path="/admin"
