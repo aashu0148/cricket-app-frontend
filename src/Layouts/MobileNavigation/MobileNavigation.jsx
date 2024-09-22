@@ -8,24 +8,21 @@ import { handleAppNavigation } from "@/utils/util";
 import { dashboardIcon } from "@/utils/svgs";
 
 import styles from "./MobileNavigation.module.scss";
+import { useRoutesContext } from "../RoutesContext/RoutesContext";
 
-function MobileNavigation({ className = "", onRouteClick }) {
+function MobileNavigation({
+  useAdminRoutes = false,
+  className = "",
+  onRouteClick,
+}) {
   const userDetails = useSelector((s) => s.user);
   const navigate = useNavigate();
 
-  const allRoutes = [
-    {
-      icon: dashboardIcon,
-      value: "home",
-      label: "Home",
-      link: applicationRoutes.dashboard,
-      class: "route-home",
-    },
-  ];
+  const { routes } = useRoutesContext();
 
   return (
     <div className={`${styles.container} ${className}`}>
-      {allRoutes.map((item) => (
+      {routes.map((item) => (
         <div
           className={`${styles.nav} ${item.class || ""} ${
             window.location.pathname === item.link ? styles.selected : ""
