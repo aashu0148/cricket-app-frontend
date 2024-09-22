@@ -94,6 +94,23 @@ export const halfMoon = (
   </svg>
 );
 
+export const halfCircle = (
+  <svg
+    fill="currentColor"
+    xmlns="http://www.w3.org/2000/svg"
+    width="80px"
+    height="80px"
+    viewBox="0 0 108.226 108.226"
+  >
+    <g>
+      <path
+        d="M27.087,108.226V0c14.806,0,27.515,5.297,38.13,15.889c10.613,10.596,15.921,23.335,15.921,38.225
+		c0,14.93-5.308,27.682-15.921,38.254C54.603,102.939,41.894,108.226,27.087,108.226z"
+      />
+    </g>
+  </svg>
+);
+
 export const plus = (
   <svg
     width="30px"
