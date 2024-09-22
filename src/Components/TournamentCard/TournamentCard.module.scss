@@ -1,0 +1,129 @@
+@import "@/styles/variables";
+
+.card {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-lg;
+  background-color: $bg-200;
+  border-radius: 10px;
+  box-shadow: $shadow-200;
+  padding: $spacing-md;
+
+  .header {
+    .title {
+      font-size: $text-2xl;
+      color: $color-title;
+    }
+
+    .season,
+    .dates {
+      font-size: $text-sm;
+      color: $color-desc;
+
+      span {
+        font: inherit;
+        font-weight: 600;
+      }
+    }
+  }
+
+  .section {
+    .matchCards,
+    .squadCards {
+      width: fit-content;
+      height: 360px;
+      overflow-x: auto;
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      gap: $spacing-sm;
+    }
+
+    .squadCards {
+      height: 320px;
+
+      .card {
+        width: auto;
+        background-color: $bg-100;
+        border-radius: 10px;
+        padding: $spacing-sm;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: $spacing-sm;
+
+        .image {
+          img {
+            width: 120px;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 5px;
+          }
+        }
+
+        .name {
+          font-size: $text-md;
+          font-weight: 500;
+          text-align: center;
+        }
+      }
+    }
+
+    .matchCard {
+      flex: 1;
+      height: fit-content;
+      background-color: $bg-100;
+      border-radius: 10px;
+      padding: $spacing-sm;
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-sm;
+
+      .date {
+        text-align: center;
+        font-size: $text-sm;
+        color: $color-desc;
+        font-weight: 600;
+      }
+
+      .matchTeams {
+        display: flex;
+        align-items: center;
+        gap: $spacing-md;
+
+        .team {
+          display: flex;
+          flex-direction: column;
+          gap: $spacing-xs;
+          align-items: center;
+
+          img {
+            height: 35px;
+            width: 55px;
+            border-radius: 5px;
+            overflow: hidden;
+            object-fit: cover;
+          }
+
+          .name {
+            font-size: $text-sm;
+            text-align: center;
+            font-weight: 600;
+          }
+        }
+
+        .vs {
+          font-weight: bold;
+          font-size: $text-lg;
+        }
+      }
+
+      .matchStatus {
+        text-align: center;
+        font-size: $text-xs;
+        color: $color-desc;
+      }
+    }
+  }
+}

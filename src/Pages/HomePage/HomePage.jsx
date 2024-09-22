@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import PageLoader from "@/Components/PageLoader/PageLoader";
+import TournamentCard from "@/Components/TournamentCard/TournamentCard";
 
 import { getOngoingUpcomingTournaments } from "@/apis/tournament";
 import { getJoinedLeagues } from "@/apis/leagues";
@@ -32,12 +33,20 @@ function HomePage() {
     fetchTournaments();
   }, []);
 
-  console.log({ allTournaments, joinedLeagues });
-
   return loading ? (
     <PageLoader fullPage />
   ) : (
-    <div className={`page-container ${styles.container}`}>HomePage</div>
+    <div className={`page-container ${styles.container}`}>
+      <section className={styles.section}>
+        <p className="heading">Available Tournaments</p>
+
+        <div className={`cards`}>
+          {allTournaments.map((tournament) => (
+            <TournamentCard key={tournament._id} tournamentData={tournament} />
+          ))}
+        </div>
+      </section>
+    </div>
   );
 }
 
