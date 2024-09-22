@@ -1,6 +1,6 @@
 import React from "react";
 
-import { circleShape, halfMoon, plus, triangle } from "@/utils/svgs";
+import { circleShape, halfCircle, plus, triangle } from "@/utils/svgs";
 
 import styles from "./LandingPage.module.scss";
 
@@ -34,7 +34,7 @@ function Shapes({
               : {}),
           }}
         >
-          {halfMoon}
+          {halfCircle}
         </div>
       )}
       {!hideTriangle && (
