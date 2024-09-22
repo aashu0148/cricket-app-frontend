@@ -35,7 +35,7 @@ function AuthPage() {
     window.google.accounts.id.initialize({
       client_id: googleClientId,
       ux_mode: "redirect",
-      login_uri: googleRedirectUrl,
+      login_uri: googleRedirectUrl + search,
     });
     window.google.accounts.id.renderButton(
       document.getElementById("g_id_signin"),
