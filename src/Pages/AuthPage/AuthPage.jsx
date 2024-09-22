@@ -12,6 +12,7 @@ import { setAppToken } from "@/utils/util";
 import styles from "./AuthPage.module.scss";
 
 function AuthPage() {
+  const isGsiInitialized = useRef(false);
   const googleSignInButtonRef = useRef();
   const navigate = useNavigate();
   const userDetails = useSelector((state) => state.user);
@@ -21,24 +22,29 @@ function AuthPage() {
   const [loading, setLoading] = useState(true);
 
   const initializeGsi = (fallback = "") => {
-    if (!window.google) return;
+    if (!window.google || isGsiInitialized.current) return;
 
     const href = window.location.href;
     const queryParams = href.split("?")[1] || "";
 
-    const googleRedirectUrl = `${backendApiUrl}/user/google-login?origin=${window.location.origin}&fallback=${fallback}&query=${queryParams}`;
+    const googleRedirectUrl = `${backendApiUrl}/user/google-login`;
+    // const search = `?origin=${window.location.origin}&fallback=${
+    //   fallback || ""
+    // }&query=${queryParams}`;
+    const search = `?origin=${window.location.origin}`;
 
     setTimeout(() => setLoading(false), 1200);
 
     window.google.accounts.id.initialize({
       client_id: googleClientId,
       ux_mode: "redirect",
-      login_uri: googleRedirectUrl,
+      login_uri: googleRedirectUrl + search,
     });
     window.google.accounts.id.renderButton(
       document.getElementById("g_id_signin"),
       { theme: "outline", size: "large", width: 390 }
     );
+    isGsiInitialized.current = true;
   };
 
   useEffect(() => {

@@ -36,7 +36,7 @@ function App() {
     let res = await getCurrentUser();
     setAppLoaded(true);
     if (!res) {
-      removeAppToken();
+      // removeAppToken();
       return;
     }
 

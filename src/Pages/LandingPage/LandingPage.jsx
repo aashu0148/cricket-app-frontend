@@ -41,6 +41,7 @@ function Hero() {
   return (
     <div className={styles.heroSection}>
       <Shapes
+        hideRing
         shapeStyles={{
           circle: {
             top: isMobileView ? "10%" : "20%",
@@ -127,6 +128,7 @@ function Features() {
   return (
     <div className={styles.featuresSection}>
       <Shapes
+        hideRing
         hidePlus
         hideCircle
         shapeStyles={{
@@ -196,9 +198,13 @@ function Testimonials() {
             top: "3%",
             right: isMobileView ? "20px" : "300px",
           },
-          plus: {
+          ring: {
             top: isMobileView ? "-10px" : "10%",
             left: isMobileView ? "5px" : "5%",
+          },
+          plus: {
+            top: isMobileView ? "-10px" : "10%",
+            right: isMobileView ? "5px" : "5%",
           },
         }}
       />
