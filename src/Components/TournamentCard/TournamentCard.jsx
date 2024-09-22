@@ -81,38 +81,40 @@ function TournamentCard({ tournamentData = {} }) {
         </div>
       </div>
 
-      <div className={styles.section}>
-        <h3 className={`heading`}>Squads:</h3>
+      {allSquads.length ? (
+        <>
+          <div className={styles.section}>
+            <h3 className={`heading`}>Squads:</h3>
 
-        {allSquads.length ? (
-          <div
-            className={styles.squadCards}
-            style={{
-              height: allSquads.length < 8 ? "fit-content" : "",
-              flexDirection: allSquads.length < 8 ? "row" : "",
-            }}
-          >
-            {allSquads.map((squad) => (
-              <div key={squad.objectId} className={styles.card}>
-                <div className={styles.image}>
-                  <Img isEspnImage src={squad.teamImage} alt={squad.name} />
+            <div
+              className={styles.squadCards}
+              style={{
+                height: allSquads.length < 8 ? "fit-content" : "",
+                flexDirection: allSquads.length < 8 ? "row" : "",
+              }}
+            >
+              {allSquads.map((squad) => (
+                <div key={squad.objectId} className={styles.card}>
+                  <div className={styles.image}>
+                    <Img isEspnImage src={squad.teamImage} alt={squad.name} />
+                  </div>
+
+                  <p className={styles.name}>{squad.title}</p>
                 </div>
-
-                <p className={styles.name}>{squad.title}</p>
-              </div>
-            ))}
-            {new Array(4).fill(1).map((_, i) => (
-              <div
-                key={i}
-                className={styles.card}
-                style={{ opacity: 0, padding: 0, pointerEvents: "none" }}
-              />
-            ))}
+              ))}
+              {new Array(4).fill(1).map((_, i) => (
+                <div
+                  key={i}
+                  className={styles.card}
+                  style={{ opacity: 0, padding: 0, pointerEvents: "none" }}
+                />
+              ))}
+            </div>
           </div>
-        ) : (
-          <p>Not yet announced</p>
-        )}
-      </div>
+        </>
+      ) : (
+        ""
+      )}
     </div>
   );
 }
