@@ -1,10 +1,22 @@
 import { makeApiCall } from "@/utils/util";
 
-export const getAllTournaments = async () => {
-  const path = "/tournaments";
+export const getAllTournaments = async (ids = []) => {
+  const path = `/tournaments?tournamentIds=${ids.length ? ids.join(",") : ""}`;
 
   return await makeApiCall({
     functionName: "getAllTournaments",
+    defaultErrorMessage: "Failed to get Tournaments",
+    fetchWrapperOptions: {
+      path,
+    },
+  });
+};
+
+export const getOngoingUpcomingTournaments = async () => {
+  const path = "/tournaments/ongoing-upcoming";
+
+  return await makeApiCall({
+    functionName: "getOngoingUpcomingTournaments",
     defaultErrorMessage: "Failed to get Tournaments",
     fetchWrapperOptions: {
       path,

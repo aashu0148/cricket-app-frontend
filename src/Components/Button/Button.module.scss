@@ -16,6 +16,10 @@
   font-size: 1rem;
   justify-content: center;
 
+  &:active {
+    transform: translateY(1px);
+  }
+
   &.small {
     padding: 0.25rem 0.75rem;
     font-size: 0.875rem;
