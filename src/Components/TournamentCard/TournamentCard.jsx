@@ -11,10 +11,10 @@ function TournamentCard({ tournamentData = {} }) {
   const { allSquads, longName, season, startDate, endDate, allMatches } =
     tournamentData;
 
-  console.log(tournamentData);
-
   return (
     <div className={styles.card}>
+      {tournamentData.ongoing && <p className={styles.tag}>Ongoing</p>}
+
       <div className={`flex-col-xxs ${styles.header}`}>
         <div className="spacious-head">
           <h2 className={styles.title}>{longName}</h2>

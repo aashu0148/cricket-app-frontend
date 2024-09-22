@@ -9,6 +9,19 @@
   border-radius: 10px;
   box-shadow: $shadow-200;
   padding: $spacing-md;
+  position: relative;
+
+  .tag {
+    position: absolute;
+    top: 0;
+    left: 30px;
+    transform: translateY(-50%);
+    padding: $spacing-xxs $spacing-sm;
+    border-radius: 10px;
+    background: $gradient-1;
+    color: $white;
+    font-size: $text-md;
+  }
 
   .header {
     .title {
