@@ -111,6 +111,60 @@ export const halfCircle = (
   </svg>
 );
 
+export const ring = (
+  <svg
+    viewBox="0 0 24 24"
+    width="24"
+    height="24"
+    stroke="currentColor"
+    fill="none"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <circle strokeWidth={0.5} cx="12" cy="12" r="10"></circle>
+    <circle strokeWidth={0.5} cx="12" cy="12" r="8"></circle>
+    {/*  Square on top  */}
+    <rect
+      x="11"
+      y="1"
+      width="3"
+      height="3"
+      strokeWidth={0.5}
+      fill="white"
+    ></rect>
+
+    {/*  Square on bottom  */}
+    <rect
+      x="11"
+      y="20"
+      width="3"
+      height="3"
+      strokeWidth={0.5}
+      fill="white"
+    ></rect>
+
+    {/*  Square on left  */}
+    <rect
+      x="1"
+      y="11"
+      width="3"
+      height="3"
+      strokeWidth={0.5}
+      fill="white"
+    ></rect>
+
+    {/*  Square on right  */}
+    <rect
+      x="20"
+      y="11"
+      width="3"
+      height="3"
+      strokeWidth={0.5}
+      fill="white"
+    ></rect>
+  </svg>
+);
+
 export const plus = (
   <svg
     width="30px"

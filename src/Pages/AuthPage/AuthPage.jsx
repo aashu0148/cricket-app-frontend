@@ -28,7 +28,10 @@ function AuthPage() {
     const queryParams = href.split("?")[1] || "";
 
     const googleRedirectUrl = `${backendApiUrl}/user/google-login`;
-    const search = `?origin=${window.location.origin}&fallback=${fallback}&query=${queryParams}`;
+    // const search = `?origin=${window.location.origin}&fallback=${
+    //   fallback || ""
+    // }&query=${queryParams}`;
+    const search = `?origin=${window.location.origin}`;
 
     setTimeout(() => setLoading(false), 1200);
 
