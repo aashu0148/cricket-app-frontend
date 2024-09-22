@@ -20,7 +20,7 @@
     border-radius: 10px;
     background: $gradient-1;
     color: $white;
-    font-size: $text-md;
+    font-size: $text-sm;
   }
 
   .header {
@@ -105,6 +105,7 @@
         display: flex;
         align-items: center;
         gap: $spacing-md;
+        justify-content: center;
 
         .team {
           display: flex;
