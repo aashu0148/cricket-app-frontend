@@ -14,7 +14,7 @@ function PageNotFound() {
     <div className={styles.page}>
       <h1>Page not found</h1>
       <p>You have reached application borders. There is nothing here {":("}</p>
-      <Button withArrow onClick={() => navigate(applicationRoutes.dashboard)}>
+      <Button withArrow onClick={() => navigate(applicationRoutes.home)}>
         Home
       </Button>
     </div>

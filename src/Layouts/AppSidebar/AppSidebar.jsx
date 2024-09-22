@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { LogOut } from "react-feather";
+import { Home, LogOut } from "react-feather";
 import { useNavigate } from "react-router-dom";
 
 import Logo from "@/Components/Navbar/Logo";
@@ -23,7 +23,7 @@ function AppSidebar({ useAdminRoutes = false, className = "", onRouteClick }) {
   const adminSections = [
     {
       icon: dashboardIcon,
-      value: "dashboard",
+      value: applicationRoutes.home,
       label: "Admin Dashboard",
       link: applicationRoutes.dashboard,
       class: "route-dashboard",
@@ -32,10 +32,10 @@ function AppSidebar({ useAdminRoutes = false, className = "", onRouteClick }) {
 
   const userSections = [
     {
-      icon: dashboardIcon,
-      value: "dashboard",
-      label: "Dashboard",
-      link: applicationRoutes.dashboard,
+      icon: <Home />,
+      value: applicationRoutes.home,
+      label: "Home",
+      link: applicationRoutes.home,
       class: "route-dashboard",
     },
   ].filter((item) => item);
@@ -114,7 +114,7 @@ function AppSidebar({ useAdminRoutes = false, className = "", onRouteClick }) {
               />
             </div>
 
-            <p className={styles.name}>{userDetails.name}</p>
+            <p className={styles.name}>{userDetails.name}dtfbsatrfgrt</p>
           </div>
 
           <div className={styles.right}>

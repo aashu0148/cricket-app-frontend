@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 import Button from "@/Components/Button/Button";
+import Logo from "@/Components/Navbar/Logo";
 
 import { applicationRoutes } from "@/utils/constants";
 import { backendApiUrl, googleClientId } from "@/utils/configs";
@@ -72,10 +73,17 @@ function AuthPage() {
 
   return (
     <div className={styles.container}>
+      <div className={styles.logo}>
+        <Logo />
+      </div>
       <div className={styles.box}>
-        <p className={styles.title}>Hello there!</p>
+        <p className={styles.title}>Join the Game</p>
 
-        <p className={styles.desc}>Lets get started with Cric Maestro</p>
+        <p className={styles.desc}>
+          Sign in with Google to start drafting your dream cricket team and
+          compete in exciting fantasy leagues. Quick, easy, and secure access to
+          the ultimate cricket fantasy experience awaits!
+        </p>
 
         <Button
           onClick={() =>
@@ -92,7 +100,7 @@ function AuthPage() {
             id="g_id_signin"
             data-width={isMobileView ? 350 : 410}
           />
-          Google login
+          Sign in with Google
         </Button>
       </div>
     </div>
