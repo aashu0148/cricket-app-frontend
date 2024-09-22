@@ -12,7 +12,7 @@ import {
 } from "@/utils/util";
 import { applicationRoutes } from "@/utils/constants";
 import userProfileIcon from "@/assets/profile-icon.png";
-import { dashboardIcon } from "@/utils/svgs";
+import { dashboardIcon, tournament } from "@/utils/svgs";
 
 import styles from "./AppSidebar.module.scss";
 
@@ -22,11 +22,10 @@ function AppSidebar({ useAdminRoutes = false, className = "", onRouteClick }) {
 
   const adminSections = [
     {
-      icon: dashboardIcon,
-      value: applicationRoutes.home,
-      label: "Admin Dashboard",
-      link: applicationRoutes.dashboard,
-      class: "route-dashboard",
+      icon: tournament,
+      value: applicationRoutes.adminTournament,
+      label: "All Tournaments",
+      link: applicationRoutes.adminTournament,
     },
   ].filter((item) => item);
 

@@ -91,12 +91,8 @@ function App() {
         <Routes>
           <Route path={applicationRoutes.auth} element={<AuthPage />} />
 
-          {!userDetails._id ? (
-            ""
-          ) : (
-            <Route path="/" element={<AllTournaments />} />
-          )}
-          <Route path="/landing" element={<LandingPage />} />
+          {!userDetails._id ? "" : <Route path="/" element={<LandingPage />} />}
+
           <Route
             path="/admin"
             element={
@@ -105,8 +101,11 @@ function App() {
               </PrivateRoute>
             }
           >
+            <Route
+              path={applicationRoutes.adminTournament}
+              element={<AllTournaments />}
+            />
             {/* all routes of admin will be defined here */}
-            {/* <Route path="/tournament" element={<PageNotFound />} /> */}
           </Route>
 
           <Route

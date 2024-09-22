@@ -4,7 +4,7 @@ import Logo from "../Navbar/Logo";
 
 import styles from "./PageLoader.module.scss";
 
-function PageLoader(fullPage = false) {
+function PageLoader({fullPage = false}) {
   return (
     <div className={`${fullPage ? styles.fullPage : ""} ${styles.container}`}>
       <div className={styles.loader} />

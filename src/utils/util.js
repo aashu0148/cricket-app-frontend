@@ -4,6 +4,7 @@ import { backendApiUrl } from "./configs";
 import { getCurrentUser } from "@/apis/user";
 import store from "@/store";
 import actionTypes from "@/store/actionTypes";
+import { espnOrigin } from "./constants";
 
 export const handleNumericInputKeyDown = (event) => {
   let key = event.key;
@@ -330,4 +331,13 @@ export const refreshUserDetailsFromBackend = async () => {
     type: actionTypes.USER_LOGIN,
     user: { ...user, subscription },
   });
+};
+
+export const getMatchScoreCardUrl = ({
+  tournamentSlug,
+  tournamentObjectId,
+  matchSlug,
+  matchObjectId,
+}) => {
+  return `${espnOrigin}/series/${tournamentSlug}-${tournamentObjectId}/${matchSlug}-${matchObjectId}/full-scorecard`;
 };

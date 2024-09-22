@@ -1,8 +1,11 @@
+export const espnOrigin = "https://espncricinfo.com";
+
 export const applicationRoutes = {
   home: "/",
   landing: "/",
   auth: "/auth",
   profile: "/profile",
+  adminTournament : "/admin/tournament",
 };
 
 const commonColors = {
