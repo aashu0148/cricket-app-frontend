@@ -48,7 +48,7 @@ function HomePage() {
       <section className={styles.section}>
         <p className="heading">Available Tournaments</p>
 
-        <div className={`cards`}>
+        <div className={`cards ${styles.cards}`}>
           {allTournaments.map((tournament) => (
             <TournamentCard key={tournament._id} tournamentData={tournament} />
           ))}

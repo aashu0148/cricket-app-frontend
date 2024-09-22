@@ -73,8 +73,9 @@ function TournamentCard({ tournamentData = {} }) {
               </div>
             ))}
 
-          {new Array(4).fill(1).map((_i) => (
+          {new Array(4).fill(1).map((_, i) => (
             <div
+              key={i}
               className={styles.matchCard}
               style={{ opacity: 0, padding: 0, pointerEvents: "none" }}
             />
@@ -102,8 +103,9 @@ function TournamentCard({ tournamentData = {} }) {
                 <p className={styles.name}>{squad.title}</p>
               </div>
             ))}
-            {new Array(4).fill(1).map((_i) => (
+            {new Array(4).fill(1).map((_, i) => (
               <div
+                key={i}
                 className={styles.card}
                 style={{ opacity: 0, padding: 0, pointerEvents: "none" }}
               />
