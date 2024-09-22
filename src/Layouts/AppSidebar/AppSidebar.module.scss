@@ -22,14 +22,13 @@
   }
 
   .logo {
+    width: 100%;
+    gap: 0;
+    justify-content: center;
     padding: $spacing-md $spacing-2xs;
 
-    & > div {
-      height: 42px;
-      width: 42px;
-    }
-
     p {
+      width: 0;
       opacity: 0;
     }
   }
@@ -42,9 +41,10 @@
 
     .section {
       display: flex;
-      gap: $spacing-xs;
-      align-items: flex-end;
-      padding: 12px 23px;
+      gap: 0;
+      align-items: center;
+      justify-content: center;
+      padding: $spacing-2xs $spacing-sm;
       cursor: pointer;
       background-color: $bg;
       border-bottom: 1px solid $bg-200;
@@ -74,7 +74,7 @@
         background-color: $bg-100;
 
         .icon svg {
-          fill: $primary;
+          color: $primary;
         }
 
         .text {
@@ -91,7 +91,7 @@
 
         .icon {
           svg {
-            fill: $primary;
+            color: $primary;
           }
         }
       }
@@ -100,14 +100,15 @@
         z-index: 10;
 
         svg {
-          height: 24px;
-          width: 24px;
-          fill: $color-label;
+          height: 26px;
+          width: 26px;
+          color: $color-label;
           transition-property: height, width;
         }
       }
 
       .text {
+        width: 0;
         z-index: 10;
         font-size: $text-lg;
         line-height: 1;
@@ -137,8 +138,6 @@
         cursor: pointer;
 
         .image {
-          height: 42px;
-          width: 42px;
           display: flex;
           align-items: center;
           padding: 1px;
@@ -146,8 +145,8 @@
           border-radius: 50%;
 
           img {
-            height: 100%;
-            width: 100%;
+            height: 42px;
+            width: 42px;
             object-fit: cover;
             border-radius: 50%;
           }
@@ -157,6 +156,10 @@
           font-size: $text-lg;
           font-weight: 500;
           opacity: 0;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          width: 130px;
         }
       }
 
@@ -194,25 +197,21 @@
   align-items: flex-start;
 
   .logo {
-    padding: $spacing-sm $spacing-2xs;
-
-    & > div {
-      height: 36px;
-      width: 36px;
-    }
+    gap: $spacing-sm;
+    justify-content: flex-start;
 
     p {
+      width: 100%;
       opacity: 1;
     }
   }
 
   .sections {
-    margin-top: 22px;
     gap: 0;
-    padding: $spacing-xs;
 
     .section {
-      padding: $spacing-2xs $spacing-sm;
+      justify-content: flex-start;
+      gap: $spacing-sm;
 
       &.selected {
         &::before {
@@ -224,7 +223,7 @@
         }
 
         .icon svg {
-          fill: $white;
+          color: $white;
         }
 
         .text {
@@ -240,6 +239,7 @@
       }
 
       .text {
+        width: 100%;
         opacity: 1;
       }
     }
@@ -250,7 +250,7 @@
 
     .profile {
       .left {
-        .image {
+        .image img {
           height: 38px;
           width: 38px;
         }

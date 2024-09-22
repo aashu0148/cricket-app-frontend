@@ -6,6 +6,14 @@
   align-items: center;
   height: 100vh;
   width: 100vw;
+  background-color: $bg-100;
+  position: relative;
+
+  .logo {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+  }
 
   .box {
     width: 550px;
@@ -16,20 +24,18 @@
     flex-direction: column;
     gap: 35px;
     align-items: center;
-    background-color: $bg-100;
-    box-shadow: $shadow-200;
+    background-color: $primary-100;
+    box-shadow: $shadow-100;
 
     .title {
-      font-size: 38px;
+      font-size: $text-2xl;
       font-weight: bold;
-      line-height: 45px;
       text-align: center;
       color: $color-title;
     }
 
     .desc {
-      font-size: 18px;
-      line-height: 28px;
+      font-size: $text-lg;
       text-align: center;
       color: $color-desc;
     }
@@ -58,22 +64,20 @@
     padding: 20px;
 
     .box {
-      padding: 30px 20px;
+      padding: $spacing-md $spacing-sm;
       display: flex;
-      gap: 25px;
+      gap: $spacing-md;
 
       .title {
-        font-size: 24px;
-        line-height: 35px;
+        font-size: $text-xl;
       }
 
       .desc {
-        font-size: 16px;
-        line-height: 24px;
+        font-size: $text-md;
       }
 
       button {
-        font-size: 16px;
+        font-size: $text-md;
         font-weight: 400;
       }
     }

@@ -10,6 +10,7 @@ import AppLayout from "./Layouts/AppLayout/AppLayout";
 import LandingPage from "./Pages/LandingPage/LandingPage";
 import AuthPage from "./Pages/AuthPage/AuthPage";
 import PageLoader from "./Components/PageLoader/PageLoader";
+import HomePage from "./Pages/HomePage/HomePage";
 
 // Utils
 import { getCurrentUser } from "./apis/user";
@@ -116,7 +117,7 @@ function App() {
             }
           >
             {/* all routes of normal users will be defined here */}
-            {/* <Route path="/tournament" element={<PageNotFound />} /> */}
+            <Route path={applicationRoutes.home} element={<HomePage />} />
           </Route>
 
           <Route path="/*" element={<PageNotFound />} />

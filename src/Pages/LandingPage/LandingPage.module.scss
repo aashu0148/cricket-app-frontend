@@ -1,286 +1,631 @@
 @import "@/styles/variables";
 
-.container {
-  padding: 0% 4%;
-  min-height: fit-content;
-}
-p {
-  color: $color-label;
-}
-h1 {
-  line-height: 1.1;
-}
+.shapes {
+  z-index: -1;
+  --dx: 130px;
 
-.navbar {
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  padding: $spacing-sm 0;
-  background-color: $bg-100;
-  border: 1px solid $bg-100;
-}
-
-.heroSection {
-  min-height: calc(100vh - 80px);
-  height: fit-content;
-  width: 100%;
-  gap: $spacing-lg;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.heroSection__left {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: $spacing-lg;
-
-  h1 {
-    font-size: $text-5xl;
-    line-height: 1.3;
-    color: $color-title;
-  }
-  p {
-    font-size: $text-lg;
-  }
-  .heroSection__buttonContainer {
+  .shape {
+    pointer-events: none;
     display: flex;
-    gap: $spacing-sm;
+    align-items: center;
+    width: fit-content;
+    height: fit-content;
+    position: absolute;
+    animation: clockwise 40s linear infinite;
 
-    .heroSection__button {
-      padding: $spacing-sm $spacing-md;
-      font-size: $text-lg;
+    svg {
+      height: 30px;
+      width: 30px;
+    }
+
+    &.half {
+      animation: rotate 10s linear infinite;
+
+      svg {
+        height: 60px;
+        width: 60px;
+        fill: $primary;
+        color: $primary;
+      }
+    }
+
+    &.plus {
+      animation-delay: 1s;
+
+      svg {
+        height: 50px;
+        width: 50px;
+        color: $primary-2;
+      }
+    }
+
+    &.triangle {
+      animation-name: antiClockwise;
+      animation-delay: 2s;
+
+      svg {
+        color: $primary-2;
+      }
+    }
+
+    &.circle {
+      animation-delay: 3;
+
+      svg {
+        height: 18px;
+        width: 18px;
+        color: #e2159e;
+      }
+    }
+  }
+  @keyframes clockwise {
+    0% {
+      transform: translate(0, 0);
+    }
+    25% {
+      transform: translate(calc(var(--dx)), 0); /* Move right */
+    }
+    50% {
+      transform: translate(calc(var(--dx)), calc(var(--dx))); /* Move down */
+    }
+    75% {
+      transform: translate(0, calc(var(--dx))); /* Move left */
+    }
+    100% {
+      transform: translate(0, 0); /* Back to start */
+    }
+  }
+
+  @keyframes antiClockwise {
+    0% {
+      transform: translate(0, 0);
+    }
+    25% {
+      transform: translate(calc(-1 * var(--dx)), 0); /* Move left */
+    }
+    50% {
+      transform: translate(
+        calc(-1 * var(--dx)),
+        calc(-1 * var(--dx))
+      ); /* Move up */
+    }
+    75% {
+      transform: translate(0, calc(-1 * var(--dx))); /* Move right */
+    }
+    100% {
+      transform: translate(0, 0); /* Back to start */
+    }
+  }
+
+  @keyframes rotate {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
     }
   }
 }
 
-.heroSection__right {
-  flex: 1;
-  height: 70vh;
-  width: 100%;
-  img {
-    height: 100%;
-    width: 100%;
-    object-fit: contain;
+.container {
+  width: 1600px;
+  max-width: 100%;
+  margin: 0 auto;
+  position: relative;
+  padding: 0% 4%;
+  min-height: fit-content;
+  gap: $spacing-xl;
+
+  & > div {
+    z-index: 10;
+    position: relative;
   }
-}
 
-.cardSection {
-  display: flex;
-  width: 100%;
-  gap: $spacing-lg;
-}
+  p {
+    color: $color-label;
+  }
+  h1 {
+    line-height: 1.1;
+  }
 
-.generalHeading {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  .generalHeadingContent {
-    width: 65%;
+  .navbar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    padding: $spacing-sm 0;
+    background-color: $bg-100;
+    border: 1px solid $bg-100;
+  }
+
+  .heroSection {
+    position: relative;
+    min-height: calc(100vh - 160px);
+    height: fit-content;
+    width: 100%;
+    gap: $spacing-lg;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 5;
+  }
+
+  .heroSection__left {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-lg;
+
+    h1 {
+      font-size: $text-4xl;
+      line-height: 1.3;
+      color: $color-title;
+    }
+    p {
+      font-size: $text-lg;
+    }
+    .heroSection__buttonContainer {
+      display: flex;
+      gap: $spacing-sm;
+
+      .heroSection__button {
+        padding: $spacing-sm $spacing-md;
+        font-size: $text-lg;
+      }
+    }
+  }
+
+  .heroSection__right {
+    flex: 1;
+    height: 70vh;
+    width: 100%;
+    img {
+      height: 100%;
+      width: 100%;
+      object-fit: contain;
+    }
+  }
+
+  .cardSection {
+    display: flex;
+    width: 100%;
+    gap: $spacing-xl;
+    justify-content: center;
+  }
+
+  .generalHeading {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: $spacing-sm;
-    h1 {
-      font-size: $text-4xl;
-    }
-    p {
-      font-size: $text-lg;
-      text-align: center;
-    }
-  }
-}
-
-.aboutSection {
-  margin-top: $spacing-2xl;
-
-  .aboutSection_below {
-    margin-top: $spacing-sm;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex: 1;
-  }
-  .aboutSection_left {
-    flex: 2;
-    width: 60%;
-    padding: $spacing-xl;
-
-    h2 {
-      font-size: $text-3xl;
-    }
-    p {
-      margin-top: $spacing-sm;
-      font-size: $text-lg;
-      line-height: 1.7;
-    }
-  }
-  .aboutSection_right {
-    flex: 1;
-    float: right;
-  }
-}
-
-.featuresSection {
-  margin-top: $spacing-2xl;
-}
-.featuresSection_Cards {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  margin-top: $spacing-lg;
-  gap: $spacing-lg;
-}
-
-.testimonialSection {
-  margin-top: $spacing-2xl;
-  .testimonial_carousel {
-    width: 100%;
-    height: 22rem;
-    overflow: hidden;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: $spacing-lg;
-    span {
-      z-index: -1;
-      cursor: pointer;
-      font-size: $text-4xl;
-      color: $grey-300;
-      &:hover {
-        color: $primary;
-      }
-    }
-    .testimonial_carousel_between {
-      width: 40%;
+    .generalHeadingContent {
+      width: 650px;
+      max-width: 100%;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       gap: $spacing-sm;
 
-      .quoteIcon {
-        height: 40px;
-        width: 40px;
-        color: $primary;
-      }
-
-      .testimonial_stars {
-        display: flex;
-        gap: $spacing-xs;
-
-        svg {
-          color: $yellow;
-          fill: $yellow;
-        }
-      }
-      h2 {
-        font-size: $text-xl;
+      h1 {
+        text-align: center;
+        font-size: $text-4xl;
       }
       p {
+        font-size: $text-lg;
         text-align: center;
       }
     }
+  }
 
-    &:hover {
-      span {
-        z-index: 23;
+  .aboutSection {
+    margin-top: $spacing-2xl;
+
+    .aboutSection_below {
+      margin-top: $spacing-sm;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex: 1;
+    }
+    .aboutSection_left {
+      flex: 1;
+      padding: $spacing-xl;
+
+      h2 {
+        font-size: $text-2xl;
+      }
+      p {
+        margin-top: $spacing-sm;
+        font-size: $text-lg;
+        line-height: 1.7;
+      }
+    }
+    .aboutSection_right {
+      flex: 1;
+
+      img {
+        width: min(100%, 600px);
+        object-fit: contain;
       }
     }
   }
-}
 
-.faqSection {
-  margin-top: $spacing-2xl;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  .faqSection_Below {
-    width: 70%;
+  .featuresSection {
+    position: relative;
+    z-index: 10;
+    margin-top: $spacing-2xl;
+  }
+  .featuresSection_Cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin-top: $spacing-lg;
+    gap: $spacing-lg;
+  }
+
+  .testimonialSection {
+    margin-top: $spacing-2xl;
+    .testimonial_carousel {
+      width: 100%;
+      min-height: 300px;
+      overflow: hidden;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      span {
+        z-index: -1;
+        cursor: pointer;
+        font-size: $text-4xl;
+        color: $grey-300;
+        &:hover {
+          color: $primary;
+        }
+      }
+      .testimonial_carousel_between {
+        width: 40%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: $spacing-sm;
+
+        .quote {
+          svg {
+            color: $primary;
+            height: 60px;
+            width: 60px;
+          }
+        }
+
+        .testimonial_stars {
+          display: flex;
+          gap: $spacing-xs;
+
+          svg {
+            fill: $primary-2;
+            color: $primary-2;
+          }
+        }
+        h2 {
+          font-size: $text-xl;
+        }
+        p {
+          text-align: center;
+        }
+      }
+
+      &:hover {
+        span {
+          z-index: 23;
+        }
+      }
+    }
+  }
+
+  .faqSection {
+    margin-top: $spacing-2xl;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    .faqSection_Below {
+      width: 70%;
+      margin-top: $spacing-xl;
+      .faqSection_accordion {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-sm;
+
+        .faqSection_question {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          box-shadow: $shadow-100;
+          width: 100%;
+          border-radius: 10px;
+
+          .text {
+            color: $color-title;
+            padding: $spacing-2xs;
+          }
+
+          .icon {
+            background-color: $primary;
+            padding: $spacing-2xs;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-top-right-radius: inherit;
+            border-bottom-right-radius: inherit;
+            cursor: pointer;
+
+            svg {
+              height: 22px;
+              width: 22px;
+            }
+          }
+        }
+        .faqSection_answer {
+          width: 100%;
+          padding: $spacing-xs $spacing-sm;
+        }
+      }
+    }
+  }
+
+  .contactUsSection {
+    padding: $spacing-md;
     margin-top: $spacing-xl;
-    .faqSection_accordion {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    .contactUsSection_details {
+      width: 80%;
+      margin-top: $spacing-xl;
       display: flex;
       flex-direction: column;
+      justify-content: center;
+      align-items: center;
       gap: $spacing-sm;
-      .faqSection_question {
-        height: 3rem;
-        box-sizing: border-box;
-        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-        width: 100%;
-        min-height: fit-content;
-        padding: 1rem;
-        border-radius: 12px;
-        position: relative;
-        span {
-          position: absolute;
+      .iconsContainer {
+        display: flex;
+        gap: $spacing-sm;
+        .contactUsSection_iconWrapper {
+          height: 3rem;
+          width: 3rem;
+          border-radius: 50%;
           background-color: $primary;
-          right: 0%;
-          bottom: 0%;
-          width: $spacing-xl;
-          height: 100%;
+          transition: background-color 100ms ease;
           display: flex;
           justify-content: center;
           align-items: center;
-          border-top-right-radius: 12px;
-          border-bottom-right-radius: 12px;
-          cursor: pointer;
-          font-weight: $text-4xl;
+          color: $white;
         }
       }
-      .faqSection_answer {
-        height: 5rem;
-        box-sizing: border-box;
-        box-shadow: 0px 4px 8px rgba(10, 21, 176, 0.2);
-        width: 100%;
-        min-height: fit-content;
-        padding: 1rem;
-        border-radius: 12px;
-      }
     }
   }
-}
 
-.contactUsSection {
-  padding: $spacing-md;
-  margin-top: $spacing-xl;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  .contactUsSection_details {
-    width: 80%;
-    margin-top: $spacing-xl;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: $spacing-sm;
-    .iconsContainer {
-      display: flex;
+  @media (max-width: $breakpoint-md) {
+    gap: $spacing-lg;
+
+    .shapes {
+      z-index: -1;
+      --dx: 60px;
+
+      .shape {
+        svg {
+          height: 20px;
+          width: 20px;
+        }
+
+        &.half {
+          animation: rotate 10s linear infinite;
+
+          svg {
+            height: 40px;
+            width: 40px;
+          }
+        }
+
+        &.plus {
+          svg {
+            height: 35px;
+            width: 35px;
+          }
+        }
+
+        &.circle {
+          svg {
+            height: 16px;
+            width: 16px;
+          }
+        }
+      }
+    }
+
+    .heroSection {
+      position: relative;
+      min-height: calc(100vh - 100px);
+      flex-direction: column;
+      gap: $spacing-md;
+      align-items: flex-start;
+    }
+
+    .heroSection__left {
       gap: $spacing-sm;
-      .contactUsSection_iconWrapper {
-        height: 3rem;
-        width: 3rem;
-        border-radius: 50%;
-        background-color: $primary;
-        transition: background-color 100ms ease;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: $white;
+
+      h1 {
+        font-size: $text-2xl;
+      }
+
+      p {
+        font-size: $text-md;
+      }
+
+      .heroSection__buttonContainer {
+        .heroSection__button {
+          padding: $spacing-xs $spacing-sm;
+          font-size: $text-md;
+        }
+      }
+    }
+
+    .heroSection__right {
+      height: fit-content;
+
+      img {
+        height: 400px;
+      }
+    }
+
+    .cardSection {
+      flex-direction: column;
+      align-items: center;
+      gap: $spacing-sm;
+    }
+
+    .generalHeading {
+      width: 100%;
+
+      .generalHeadingContent {
+        gap: $spacing-2xs;
+
+        h1 {
+          font-size: $text-2xl;
+        }
+
+        p {
+          font-size: $text-sm;
+        }
+      }
+    }
+
+    .aboutSection {
+      margin-top: $spacing-xl;
+
+      .aboutSection_below {
+        margin-top: $spacing-xs;
+        flex-direction: column-reverse;
+        align-items: flex-start;
+      }
+
+      .aboutSection_left {
+        padding: $spacing-sm;
+
+        h2 {
+          text-align: center;
+          font-size: $text-xl;
+        }
+
+        p {
+          font-size: $text-sm;
+          margin-top: $spacing-xs;
+          line-height: 1.5;
+          text-align: center;
+        }
+      }
+    }
+
+    .featuresSection {
+      margin-top: $spacing-xl;
+    }
+
+    .featuresSection_Cards {
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-sm;
+    }
+
+    .testimonialSection {
+      margin-top: $spacing-xl;
+
+      .testimonial_carousel {
+        .testimonial_carousel_between {
+          width: 100%;
+          gap: $spacing-2xs;
+
+          .quote {
+            svg {
+              color: $primary;
+              height: 50px;
+              width: 50px;
+            }
+          }
+
+          .testimonial_stars {
+            display: flex;
+            gap: $spacing-xs;
+
+            svg {
+              fill: $primary-2;
+              color: $primary-2;
+            }
+          }
+          h2 {
+            font-size: $text-lg;
+          }
+          p {
+            text-align: center;
+            font-size: $text-sm;
+          }
+        }
+      }
+    }
+
+    .faqSection {
+      margin-top: $spacing-xl;
+      flex-direction: column;
+
+      .faqSection_Below {
+        width: 100%;
+        margin-top: $spacing-lg;
+
+        .faqSection_accordion {
+          .faqSection_question {
+            .text {
+              padding: $spacing-xs;
+              font-size: $text-sm;
+            }
+
+            .icon {
+              align-self: stretch;
+              padding: $spacing-xs;
+
+              svg {
+                height: 18px;
+                width: 18px;
+              }
+            }
+          }
+
+          .faqSection_answer {
+            padding: $spacing-xxs $spacing-xs;
+          }
+        }
+      }
+    }
+
+    .contactUsSection {
+      .contactUsSection_details {
+        width: 100%;
+
+        .iconsContainer {
+          display: flex;
+          gap: $spacing-sm;
+
+          .contactUsSection_iconWrapper {
+            width: fit-content;
+            height: fit-content;
+            padding: $spacing-xs;
+
+            svg {
+              height: 18px;
+              width: 18px;
+            }
+          }
+        }
       }
     }
   }
-}
-
-.footer {
-  margin-top: $spacing-2xl;
-  height: 5rem;
-  background-color: $grey-200;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }

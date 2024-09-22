@@ -14,71 +14,86 @@ import {
 const generalCopy = {
   about: {
     shoulder:
-      "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Non ab quibusdam velit voluptatem, nulla, id maxime natus, optio consequuntur",
-    heading: "Our process is simple, Our App is powerful",
+      "Join the ultimate fantasy cricket experience, tailored for true fans of the game.",
+    heading: "Draft Smart, Play Hard, Win Big!",
     description:
-      "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Non ab quibusdam velit voluptatem, nulla, id maxime natus, optio consequuntur Lorem ipsum dolor sit amet consectetur, adipisicing elit. Non ab quibusdam velit voluptatem, nulla, id maxime natus, optio consequuntur Lorem ipsum dolor sit amet consectetur, adipisicing elit. Non ab quibusdam velit voluptatem, nulla, id maxime natus, optio consequuntur",
+      "Our app revolutionizes fantasy cricket with a unique snake draft system, ensuring each player is exclusive to a team. Compete with up to 10 teams in your league, with your best XI delivering the points. From IPL to major international tournaments, our app is designed to give you a competitive edge while offering detailed player stats, dynamic draft features, and an unmatched gaming experience.",
+  },
+  features: {
+    shoulder:
+      "Unleash the power of a competitive fantasy cricket league. Built for serious players.",
+  },
+  testimonials: {
+    shoulder:
+      "Hear from fantasy cricket champions who have played and won big with us.",
+  },
+  faq: {
+    shoulder:
+      "Get answers to your questions and make the most of your fantasy cricket experience.",
+  },
+  contact: {
+    shoulder: "Reach out to us with any questions, feedback, or support needs.",
   },
 };
 
 const details = [
   {
     mainText: "1,020",
-    subText: "Users",
+    subText: "Active Leagues",
     icon: faHome,
   },
   {
-    mainText: "2,340",
-    subText: "Happy Clients",
+    mainText: "5,000+",
+    subText: "Satisfied Fantasy Players",
     icon: faHeart,
   },
   {
-    mainText: "12,020",
-    subText: "Reviews",
+    mainText: "15,000+",
+    subText: "Positive Reviews",
     icon: faStar,
   },
-  {
-    mainText: "102,230",
-    subText: "Downloads",
-    icon: faDownload,
-  },
+  // {
+  //   mainText: "50,000+",
+  //   subText: "App Downloads",
+  //   icon: faDownload,
+  // },
 ];
 
 const features = [
   {
-    mainText: "High Resolution",
+    mainText: "Live Scoring Updates",
     subText:
-      "Lorem ipsum dolor sit amet, con se ctetur adipiscing elit. In sagittis eg esta ante, sed viverra nunc tinci dunt nec elei fend et tiram.",
+      "Stay updated with real-time scoring and player performance tracking during every match.",
     icon: faClock,
   },
   {
-    mainText: "Unique Design",
+    mainText: "Custom Draft System",
     subText:
-      "Lorem ipsum dolor sit amet, con se ctetur adipiscing elit. In sagittis eg esta ante, sed viverra nunc tinci dunt nec elei fend et tiram.",
+      "Create your fantasy team with a unique snake draft, ensuring no two users pick the same player.",
     icon: faCloudBolt,
   },
   {
-    mainText: "Full Responsive",
+    mainText: "User-Friendly Design",
     subText:
-      "Lorem ipsum dolor sit amet, con se ctetur adipiscing elit. In sagittis eg esta ante, sed viverra nunc tinci dunt nec elei fend et tiram.",
+      "Designed with simplicity in mind, our app ensures an easy and intuitive experience for all users.",
     icon: faKey,
   },
   {
-    mainText: "Clean Codes",
+    mainText: "Clean Interface",
     subText:
-      "Lorem ipsum dolor sit amet, con se ctetur adipiscing elit. In sagittis eg esta ante, sed viverra nunc tinci dunt nec elei fend et tiram.",
+      "Navigate effortlessly with an intuitive interface designed for smooth user experience.",
     icon: faCode,
   },
   {
-    mainText: "Retina Ready",
+    mainText: "Player Stats at a Glance",
     subText:
-      "Lorem ipsum dolor sit amet, con se ctetur adipiscing elit. In sagittis eg esta ante, sed viverra nunc tinci dunt nec elei fend et tiram.",
+      "Access player profiles with historical performance stats to make informed selections.",
     icon: faEye,
   },
   {
-    mainText: "Unlimited Features",
+    mainText: "Exciting Contests",
     subText:
-      "Lorem ipsum dolor sit amet, con se ctetur adipiscing elit. In sagittis eg esta ante, sed viverra nunc tinci dunt nec elei fend et tiram.",
+      "Join leagues with friends or compete with global users in unlimited fantasy cricket contests.",
     icon: faCamera,
   },
 ];
@@ -87,39 +102,38 @@ const testimonials = [
   {
     stars: 5,
     review:
-      "This product changed my life! . Video testimonials and an eye-catching testimonial carousel widget show endless possibilities for potential clients. Video testimonials and an .",
+      "This fantasy app is the best I’ve ever used! It’s intuitive, the drafts are fun, and the stats are so detailed!",
     name: "Alice Johnson",
-    photo:
-      "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png",
-  },
-  {
-    stars: 3,
-    review: "Absolutely fantastic service!",
-    name: "Bob Smith",
-    photo:
-      "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png",
   },
   {
     stars: 4,
-    review: "I highly recommend this to everyone!",
+    review:
+      "Great app for cricket lovers! Drafting players has never been this exciting.",
+    name: "Bob Smith",
+  },
+  {
+    stars: 4,
+    review:
+      "I love how easy it is to use, and the live scoring updates are a big plus!",
     name: "Carol Williams",
-    photo:
-      "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png",
   },
 ];
 
 const FAQs = [
   {
-    question: "What is your Name?",
-    answer: "My name is Nikita Pandey",
+    question: "What is Fantasy Cricket?",
+    answer:
+      "Fantasy Cricket allows users to create virtual teams based on real-life players. Points are scored based on the player's performance in real matches.",
   },
   {
-    question: "What are u currently pursuing?",
-    answer: "I am currently pursuing MSc(PMCs)",
+    question: "How do I join a league?",
+    answer:
+      "You can join a league by signing up, selecting a tournament, and entering the draft with other users.",
   },
   {
-    question: "Are u all fine?",
-    answer: "No I am not fine",
+    question: "How are points calculated?",
+    answer:
+      "Points are awarded based on a player's actual performance in matches—runs, wickets, catches, and more.",
   },
 ];
 

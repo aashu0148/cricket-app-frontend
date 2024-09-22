@@ -105,9 +105,10 @@ svg {
   --var-shadow-lifted-200: 1px 1px 24px 2px rgba(0, 0, 0, 0.06);
 
   --var-primary: #11c9bb;
-  --var-primary-100: #f4faff;
-  --var-primary-2: #d0a437;
-  --gradient-1: linear-gradient(to right, $primary, $primary-2);
+  --var-primary-100: #effffe;
+  --var-primary-200: #dafffd;
+  --var-primary-2: #7bc911;
+  --gradient-1: linear-gradient(to right, #11c9bb, #7bc911);
 
   color-scheme: light;
 }

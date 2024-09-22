@@ -1,5 +1,5 @@
 export const applicationRoutes = {
-  dashboard: "/",
+  home: "/",
   landing: "/",
   auth: "/auth",
   profile: "/profile",
