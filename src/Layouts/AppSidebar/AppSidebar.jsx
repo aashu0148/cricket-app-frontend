@@ -37,6 +37,12 @@ function AppSidebar({ useAdminRoutes = false, className = "", onRouteClick }) {
       link: applicationRoutes.home,
       class: "route-dashboard",
     },
+    {
+      icon: tournament,
+      value: applicationRoutes.tournaments,
+      label: "Tournaments",
+      link: applicationRoutes.tournaments,
+    },
   ].filter((item) => item);
 
   const allSections = useAdminRoutes ? adminSections : userSections;

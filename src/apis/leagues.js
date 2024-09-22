@@ -124,3 +124,29 @@ export const getJoinedLeagues = async () => {
     },
   });
 };
+
+// 10. Get Joined Leagues
+export const getJoinedActiveLeagues = async () => {
+  const path = "/leagues/joined/active";
+
+  return await makeApiCall({
+    functionName: "getJoinedActiveLeagues",
+    defaultErrorMessage: "Failed to get Joined Leagues",
+    fetchWrapperOptions: {
+      path,
+    },
+  });
+};
+
+// 11. Get Joinable Leagues of Tournament
+export const getJoinableLeaguesOfTournament = async (tournamentId) => {
+  const path = `/leagues/tournament/${tournamentId}`;
+
+  return await makeApiCall({
+    functionName: "getJoinableLeaguesOfTournament",
+    defaultErrorMessage: "Failed to get Leagues",
+    fetchWrapperOptions: {
+      path,
+    },
+  });
+};

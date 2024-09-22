@@ -4,8 +4,9 @@ export const applicationRoutes = {
   home: "/",
   landing: "/",
   auth: "/auth",
+  tournaments: "/tournaments",
   profile: "/profile",
-  adminTournament : "/admin/tournament",
+  adminTournament: "/admin/tournament",
 };
 
 const commonColors = {

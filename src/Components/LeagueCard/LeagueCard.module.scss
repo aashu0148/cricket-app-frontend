@@ -1,0 +1,98 @@
+@import "@/styles/variables";
+
+.container {
+  padding: $spacing-md;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-lg;
+  border-radius: 10px;
+  background-color: $bg-200;
+
+  .title {
+    font-size: $text-xl;
+    color: $color-title;
+  }
+
+  .privateTag {
+    background: $gradient-1;
+    background: $primary-2;
+    padding: $spacing-xxs $spacing-xs;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: $spacing-xxs;
+
+    svg {
+      height: 15px;
+      width: 15px;
+      color: $white;
+    }
+
+    p {
+      color: $white;
+      font-size: $text-sm;
+      font-weight: 600;
+      text-transform: lowercase;
+    }
+  }
+
+  .tournament {
+    color: $color-desc;
+    font-size: $text-md;
+
+    span {
+      color: $primary-2;
+      font: inherit;
+      font-weight: 700;
+    }
+  }
+
+  .desc {
+    font-size: $text-sm;
+    font-weight: 500;
+  }
+
+  .information {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+
+    label {
+      font-size: $text-sm;
+      color: $color-label;
+      font-weight: 500;
+    }
+
+    p {
+      font-size: $text-sm;
+      color: $color-title;
+      font-weight: 500;
+    }
+  }
+
+  .bottom {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $spacing-xs;
+
+    .date {
+      display: flex;
+      gap: $spacing-xxs;
+      align-items: center;
+
+      svg {
+        height: 16px;
+        width: 16px;
+        color: $color-title;
+      }
+
+      p {
+        font-size: $text-sm;
+        font-weight: 500;
+        color: $color-title;
+      }
+    }
+  }
+}

@@ -74,7 +74,7 @@ function AuthPage() {
   }, []);
 
   useEffect(() => {
-    if (userDetails._id) navigate(applicationRoutes.dashboard);
+    if (userDetails._id) navigate(applicationRoutes.home);
   }, []);
 
   return (

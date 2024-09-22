@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 
 import PageLoader from "@/Components/PageLoader/PageLoader";
 import TournamentCard from "@/Components/TournamentCard/TournamentCard";
+import LeagueCard from "@/Components/LeagueCard/LeagueCard";
 
 import { getOngoingUpcomingTournaments } from "@/apis/tournament";
-import { getJoinedLeagues } from "@/apis/leagues";
+import { getJoinedActiveLeagues } from "@/apis/leagues";
 
 import styles from "./HomePage.module.scss";
 
@@ -26,14 +27,14 @@ function HomePage() {
       new Date(a.startDate) < new Date(b.startDate) ? -1 : 1
     );
 
-    setAllTournaments(result);
+    setAllTournaments(result.slice(0, 3));
   }
 
   async function fetchJoinedLeagues() {
-    const res = await getJoinedLeagues();
+    const res = await getJoinedActiveLeagues();
     if (!res) return;
 
-    setJoinedLeagues(res?.data);
+    setJoinedLeagues(res.data);
   }
 
   useEffect(() => {
@@ -45,6 +46,28 @@ function HomePage() {
     <PageLoader fullPage />
   ) : (
     <div className={`page-container ${styles.container}`}>
+      <section className={styles.section}>
+        <p className="heading">Joined Leagues</p>
+
+        <div className={`cards ${styles.cards}`}>
+          {joinedLeagues.map((league) => (
+            <LeagueCard
+              key={league._id}
+              className={styles.leagueCard}
+              leagueData={league}
+            />
+          ))}
+
+          {new Array(3).fill(1).map((_, i) => (
+            <div
+              key={i}
+              className={styles.leagueCard}
+              style={{ padding: 0, opacity: 0, pointerEvents: "none" }}
+            />
+          ))}
+        </div>
+      </section>
+
       <section className={styles.section}>
         <p className="heading">Available Tournaments</p>
 

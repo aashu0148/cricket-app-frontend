@@ -33,11 +33,9 @@ function TournamentCard({ tournamentData = {} }) {
         <h3 className={`heading`}>Matches:</h3>
 
         <div
-          className={styles.matchCards}
-          style={{
-            height: allMatches.length < 10 ? "fit-content" : "",
-            flexDirection: allMatches.length < 10 ? "row" : "",
-          }}
+          className={`${styles.matchCards} ${
+            allMatches.length < 10 ? styles.rowCards : ""
+          }`}
         >
           {allMatches
             .sort((a, b) =>
