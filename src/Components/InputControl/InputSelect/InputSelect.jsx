@@ -38,20 +38,20 @@ function InputSelect({
     }),
     option: (provided, { isDisabled, isSelected, isFocused }) => ({
       ...provided,
-      color: isSelected || isFocused ? "#fff" : colors.black,
+      color: isSelected ? "#fff" : colors.title,
       backgroundColor: isSelected
         ? colors.primary
         : isFocused
-        ? colors.lightPrimary
+        ? colors.primary_300
         : colors["bg-100"],
       cursor: isDisabled ? "not-allowed" : "default",
       "&:hover": {
         backgroundColor: isSelected
           ? colors.primary
           : isFocused
-          ? colors.lightPrimary
+          ? colors.primary_300
           : colors["bg-200"],
-        color: isSelected || isFocused ? "#fff" : colors.black,
+        color: isSelected ? "#fff" : colors.title,
       },
     }),
     input: (provided) => ({
@@ -62,23 +62,24 @@ function InputSelect({
       ...provided,
       textAlign: "left",
       fontSize: "1rem",
-      color: colors.gray,
+      color: colors.label,
       fontWeight: 400,
     }),
     menuList: (provided) => ({
       ...provided,
       textAlign: "left",
       fontSize: "1rem",
-      color: colors.black,
+      color: colors.title,
       fontWeight: 400,
     }),
     singleValue: (provided) => ({
       ...provided,
       textAlign: "left",
       fontSize: "1rem",
-      color: colors.gray2,
+      color: colors.desc,
       fontWeight: 400,
     }),
+    menuPortal: (provided) => ({ ...provided, zIndex: 999 }),
   };
 
   return (
@@ -104,6 +105,7 @@ function InputSelect({
               IndicatorSeparator: () => null,
               ...components,
             }}
+            menuPortalTarget={document.body}
             styles={customSelectStyle}
             error={error ? true : false}
           />
@@ -118,6 +120,7 @@ function InputSelect({
             }}
             styles={customSelectStyle}
             error={error ? true : false}
+            menuPortalTarget={document.body}
           />
         ) : (
           <Select
@@ -128,6 +131,7 @@ function InputSelect({
               IndicatorSeparator: () => null,
               ...components,
             }}
+            menuPortalTarget={document.body}
             styles={customSelectStyle}
             error={error ? true : false}
           />

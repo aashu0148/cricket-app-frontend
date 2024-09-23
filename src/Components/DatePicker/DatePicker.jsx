@@ -127,25 +127,34 @@ function DatePicker({
 
   return (
     <div
-      className={`${className} ${styles.container}`}
+      className={`${className} ${styles.container} ${
+        showDropdown ? styles.selected : ""
+      }`}
       onClick={() => setShowDropdown((p) => !p)}
     >
       <div className={styles.calendarIcon}>
         <Calendar />
       </div>
-      <p className={styles.date}>
-        {getDateFormatted(
-          selectedDate.from,
-          shortDateLabels,
-          !isDiffGreaterThanYear
-        ) || "select"}{" "}
-        -{" "}
-        {getDateFormatted(
-          selectedDate.to,
-          shortDateLabels,
-          !isDiffGreaterThanYear
-        ) || "select"}
-      </p>
+
+      {rangePicker ? (
+        <p className={styles.date}>
+          {getDateFormatted(
+            selectedDate.from,
+            shortDateLabels,
+            !isDiffGreaterThanYear
+          ) || "select"}{" "}
+          -{" "}
+          {getDateFormatted(
+            selectedDate.to,
+            shortDateLabels,
+            !isDiffGreaterThanYear
+          ) || "select"}
+        </p>
+      ) : (
+        <p className={styles.date}>
+          {getDateFormatted(selectedDate, shortDateLabels) || "Select date"}
+        </p>
+      )}
 
       {showDropdown && (
         <Dropdown

@@ -22,11 +22,13 @@ const commonColors = {
   #e2458b 0%,
   #ff914d 100%
 )`,
-  primary: "#041796",
-  primary2: "#ff914d",
-  primary2_100: "#fff9f5",
-  primary2_200: "#fff2ea",
-  primary2_300: "#ffd3b8",
+  primary: "#11c9bb",
+  primary2: "#7bc911",
+  primary2_100: "#f6ffe9",
+  primary2_200: "#f0ffdc",
+  primary_100: "#effffe",
+  primary_200: "#dafffd",
+  primary_300: "#9afffa",
 };
 
 export const colors = {

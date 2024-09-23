@@ -3,8 +3,13 @@ import { useParams } from "react-router-dom";
 
 import PageLoader from "@/Components/PageLoader/PageLoader";
 import CreateLeagueForm from "./CreateLeagueForm/CreateLeagueForm";
+import LeagueCard from "@/Components/LeagueCard/LeagueCard";
 
-import { getJoinableLeaguesOfTournament } from "@/apis/leagues";
+import {
+  getJoinableLeaguesOfTournament,
+  getJoinedLeagues,
+} from "@/apis/leagues";
+import { getTournamentById } from "@/apis/tournament";
 
 import styles from "./LeaguesPage.module.scss";
 
@@ -17,18 +22,77 @@ function LeaguesPage() {
   const params = useParams();
   const [loadingPage, setLoadingPage] = useState(true);
   const [activeTab, setActiveTab] = useState();
+  const [tournamentDetails, setTournamentDetails] = useState({});
+  const [allLeagues, setAllLeagues] = useState([]);
+  const [joinedLeagues, setJoinedLeagues] = useState([]);
+
+  const fetchTournamentDetails = async () => {
+    const res = await getTournamentById(params.tournamentId);
+    if (!res) return;
+
+    setTournamentDetails(res.data);
+  };
 
   const fetchLeagues = async () => {
     const res = await getJoinableLeaguesOfTournament(params.tournamentId);
     setLoadingPage(false);
     if (!res) return;
 
-    console.log(res);
+    setAllLeagues(res.data);
+  };
+
+  const fetchJoinedLeagues = async () => {
+    const res = await getJoinedLeagues();
+    if (!res) return;
+
+    setJoinedLeagues(res.data);
   };
 
   useEffect(() => {
     fetchLeagues();
+    fetchJoinedLeagues();
+    fetchTournamentDetails();
   }, []);
+
+  const allLeaguesTab = (
+    <div className={`cards`}>
+      {allLeagues.map((item) => (
+        <LeagueCard
+          className={styles.leagueCard}
+          key={item._id}
+          leagueData={item}
+        />
+      ))}
+
+      {new Array(3).fill(1).map((_, i) => (
+        <div
+          key={i}
+          className={styles.leagueCard}
+          style={{ padding: 0, opacity: 0, pointerEvents: "none" }}
+        />
+      ))}
+    </div>
+  );
+
+  const joinedLeaguesTab = (
+    <div className={`cards`}>
+      {joinedLeagues.map((item) => (
+        <LeagueCard
+          className={styles.leagueCard}
+          key={item._id}
+          leagueData={item}
+        />
+      ))}
+
+      {new Array(3).fill(1).map((_, i) => (
+        <div
+          key={i}
+          className={styles.leagueCard}
+          style={{ padding: 0, opacity: 0, pointerEvents: "none" }}
+        />
+      ))}
+    </div>
+  );
 
   return loadingPage ? (
     <PageLoader fullPage />
@@ -61,7 +125,21 @@ function LeaguesPage() {
         </div>
       </div>
 
-      {activeTab === tabsEnum.create ? <CreateLeagueForm /> : ""}
+      {activeTab === tabsEnum.create ? (
+        <CreateLeagueForm
+          tournamentData={tournamentDetails}
+          onSuccess={(l) => {
+            setJoinedLeagues((p) => [...p, l]);
+            setActiveTab(tabsEnum.joined);
+          }}
+        />
+      ) : activeTab === tabsEnum.joined ? (
+        joinedLeaguesTab
+      ) : activeTab === tabsEnum.all ? (
+        allLeaguesTab
+      ) : (
+        ""
+      )}
     </div>
   );
 }
