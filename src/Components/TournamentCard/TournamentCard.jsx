@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import Img from "@/Components/Img/Img";
 import Button from "../Button/Button";
@@ -7,9 +7,25 @@ import { getDateFormatted } from "@/utils/util";
 
 import styles from "./TournamentCard.module.scss";
 
-function TournamentCard({ tournamentData = {} }) {
+function TournamentCard({ tournamentData = {}, isAdmin = false }) {
   const { allSquads, longName, season, startDate, endDate, allMatches } =
     tournamentData;
+
+  const PlayerCard = ({ player }) => {
+    return (
+      <div className={styles.playerCard}>
+        <div className={styles.imageContainer}>
+          <img
+            src={player.image}
+            alt={player.name}
+            className={styles.playerImage}
+          />
+        </div>
+        <h3 className={styles.playerName}>{player.name}</h3>
+        <p className={styles.playerCountry}>({player.country})</p>
+      </div>
+    );
+  };
 
   return (
     <div className={styles.card}>
@@ -83,6 +99,29 @@ function TournamentCard({ tournamentData = {} }) {
         </div>
       </div>
 
+      {isAdmin && (
+        <div className={styles.matchesDetails}>
+          <h3>
+            Players Count <span>{tournamentData.players.length}</span>
+          </h3>
+          <div
+            className={styles.player_scrollBar}
+            style={{
+              height: allSquads.length < 8 ? "fit-content" : "",
+              flexDirection: allSquads.length < 8 ? "row" : "",
+            }}
+          >
+            {tournamentData.players.length
+              ? tournamentData.players.map((item) => (
+                  <div>
+                    <PlayerCard player={item} />
+                  </div>
+                ))
+              : "No Players Found"}
+          </div>
+        </div>
+      )}
+
       <div className={styles.section}>
         <h3 className={`heading`}>Squads:</h3>
 
@@ -99,7 +138,6 @@ function TournamentCard({ tournamentData = {} }) {
                 <div className={styles.image}>
                   <Img isEspnImage src={squad.teamImage} alt={squad.name} />
                 </div>
-
                 <p className={styles.name}>{squad.title}</p>
               </div>
             ))}
