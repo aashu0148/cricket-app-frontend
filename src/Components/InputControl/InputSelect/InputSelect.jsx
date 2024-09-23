@@ -38,7 +38,7 @@ function InputSelect({
     }),
     option: (provided, { isDisabled, isSelected, isFocused }) => ({
       ...provided,
-      color: isSelected || isFocused ? "#fff" : colors.black,
+      color: isSelected || isFocused ? "#fff" : $black,
       backgroundColor: isSelected
         ? colors.primary
         : isFocused
@@ -51,7 +51,7 @@ function InputSelect({
           : isFocused
           ? colors.lightPrimary
           : colors["bg-200"],
-        color: isSelected || isFocused ? "#fff" : colors.black,
+        color: isSelected || isFocused ? "#fff" : $black,
       },
     }),
     input: (provided) => ({

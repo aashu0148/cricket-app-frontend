@@ -47,7 +47,7 @@ function TournamentCard({ tournamentData = {}, isAdmin = false }) {
               )
             }
           >
-            Explore Leagues
+            {isAdmin ? "Edit" : "Explore Leagues"}
           </Button>
         </div>
         <p className={styles.season}>

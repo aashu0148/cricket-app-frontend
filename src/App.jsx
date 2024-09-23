@@ -92,7 +92,7 @@ function App() {
       <Router>
         <Routes>
           <Route path={applicationRoutes.auth} element={<AuthPage />} />
-
+          <Route path="/landing" element={<LandingPage />} />
           {userDetails._id ? "" : <Route path="/" element={<LandingPage />} />}
 
           <Route
