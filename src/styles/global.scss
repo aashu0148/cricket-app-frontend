@@ -108,6 +108,8 @@ svg {
   --var-primary-100: #effffe;
   --var-primary-200: #dafffd;
   --var-primary-2: #7bc911;
+  --var-primary-2-100: #f6ffe9;
+  --var-primary-2-200: #f0ffdc;
   --gradient-1: linear-gradient(to right, #11c9bb, #7bc911);
 
   color-scheme: light;
@@ -123,4 +125,40 @@ svg {
   height: fit-content;
   width: 100%;
   height: 100%;
+}
+
+// external library styles
+
+// react day picker styles
+.rdp {
+  .rdp-day_selected {
+    --rdp-accent-color: var(--var-primary);
+    color: $color-title;
+  }
+  .rdp-button:hover:not([disabled]):not(.rdp-day_selected) {
+    background-color: $primary-200;
+  }
+  .rdp-day_selected {
+    color: $white;
+    background-color: $primary;
+  }
+  .rdp-day_range_end {
+    background-color: $primary;
+    color: $white;
+  }
+  .rdp-day_range_start {
+    background-color: $primary;
+    color: $white;
+  }
+  .rdp-caption_label {
+    font-weight: 600;
+  }
+  .rdp-head_cell {
+    font-weight: 600;
+  }
+  .rdp-cell button {
+    font-size: $text-md;
+
+    --rdp-cell-size: 36px;
+  }
 }

@@ -4,6 +4,7 @@ import { Outlet } from "react-router-dom";
 import PageLoader from "@/Components/PageLoader/PageLoader";
 import AppSidebar from "@/Layouts/AppSidebar/AppSidebar";
 import MobileNavigation from "@/Layouts/MobileNavigation/MobileNavigation";
+import { RoutesProvider } from "@/Layouts/RoutesContext/RoutesContext";
 
 import { checkIfUserAdmin } from "@/apis/user";
 import { getAppToken } from "@/utils/util";
@@ -40,19 +41,21 @@ function AppLayout({ adminLayout = false }) {
   return verifying ? (
     <PageLoader fullPage />
   ) : (
-    <div className={styles.container}>
-      <div className={styles.sidebarOuter}>
-        <AppSidebar useAdminRoutes={adminLayout} className={styles.sidebar} />
-      </div>
+    <RoutesProvider useAdminRoutes={adminLayout}>
+      <div className={styles.container}>
+        <div className={styles.sidebarOuter}>
+          <AppSidebar className={styles.sidebar} />
+        </div>
 
-      <div className={styles.app}>
-        <Outlet />
+        <div className={styles.app}>
+          <Outlet />
 
-        <div className={styles.mobileNavigation}>
-          <MobileNavigation />
+          <div className={styles.mobileNavigation}>
+            <MobileNavigation />
+          </div>
         </div>
       </div>
-    </div>
+    </RoutesProvider>
   );
 }
 

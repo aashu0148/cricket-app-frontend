@@ -8,6 +8,12 @@
 
     .cards {
       gap: $spacing-lg;
+
+      .leagueCard {
+        flex-grow: 1;
+        width: 400px;
+        align-self: stretch;
+      }
     }
   }
 }

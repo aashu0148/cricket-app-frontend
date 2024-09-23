@@ -1,0 +1,73 @@
+@import "@/styles/variables";
+
+.container {
+  width: fit-content;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  border: 1px solid $bg-200;
+  border-radius: 5px;
+  padding: $spacing-xs $spacing-sm;
+  transition: 300ms;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $bg-100;
+    border-color: $bg-300;
+  }
+
+  .calendarIcon {
+    display: flex;
+    align-items: center;
+
+    svg {
+      height: 18px;
+      width: 18px;
+    }
+  }
+
+  .date {
+    font-size: $text-md;
+    font-weight: 500;
+    color: $color-title;
+    white-space: nowrap;
+  }
+
+  .dropdown {
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+    overflow-x: auto;
+    max-width: 93vw;
+    border-color: $bg-200;
+    box-shadow: $shadow-lifted-100;
+    border-radius: 10px;
+
+    .options {
+      overflow-y: auto;
+      align-self: stretch;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-width: 140px;
+
+      .option {
+        padding: $spacing-xs $spacing-sm;
+        font-size: $text-sm;
+        cursor: pointer;
+        border-bottom: 1px solid $bg-200;
+        transition: 200ms;
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+        &:hover {
+          background-color: $bg-100;
+        }
+      }
+    }
+  }
+}

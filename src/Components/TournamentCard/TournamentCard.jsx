@@ -1,13 +1,17 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 import Img from "@/Components/Img/Img";
 import Button from "../Button/Button";
 
-import { getDateFormatted } from "@/utils/util";
+import { getDateFormatted, handleAppNavigation } from "@/utils/util";
+import { applicationRoutes } from "@/utils/constants";
 
 import styles from "./TournamentCard.module.scss";
 
 function TournamentCard({ tournamentData = {}, isAdmin = false }) {
+  const navigate = useNavigate();
+
   const { allSquads, longName, season, startDate, endDate, allMatches } =
     tournamentData;
 
@@ -34,7 +38,17 @@ function TournamentCard({ tournamentData = {}, isAdmin = false }) {
       <div className={`flex-col-xxs ${styles.header}`}>
         <div className="spacious-head">
           <h2 className={styles.title}>{longName}</h2>
-          <Button>Explore Leagues</Button>
+          <Button
+            onClick={(e) =>
+              handleAppNavigation(
+                e,
+                navigate,
+                applicationRoutes.leagues(tournamentData._id)
+              )
+            }
+          >
+            Explore Leagues
+          </Button>
         </div>
         <p className={styles.season}>
           Season: <span>{season}</span>
@@ -49,11 +63,9 @@ function TournamentCard({ tournamentData = {}, isAdmin = false }) {
         <h3 className={`heading`}>Matches:</h3>
 
         <div
-          className={styles.matchCards}
-          style={{
-            height: allMatches.length < 10 ? "fit-content" : "",
-            flexDirection: allMatches.length < 10 ? "row" : "",
-          }}
+          className={`${styles.matchCards} ${
+            allMatches.length < 10 ? styles.rowCards : ""
+          }`}
         >
           {allMatches
             .sort((a, b) =>
@@ -100,7 +112,7 @@ function TournamentCard({ tournamentData = {}, isAdmin = false }) {
       </div>
 
       {isAdmin && (
-        <div className={styles.matchesDetails}>
+        <div className={styles.section}>
           <h3>
             Players Count <span>{tournamentData.players.length}</span>
           </h3>
@@ -122,37 +134,39 @@ function TournamentCard({ tournamentData = {}, isAdmin = false }) {
         </div>
       )}
 
-      <div className={styles.section}>
-        <h3 className={`heading`}>Squads:</h3>
+      {allSquads.length ? (
+        <>
+          <div className={styles.section}>
+            <h3 className={`heading`}>Squads:</h3>
 
-        {allSquads.length ? (
-          <div
-            className={styles.squadCards}
-            style={{
-              height: allSquads.length < 8 ? "fit-content" : "",
-              flexDirection: allSquads.length < 8 ? "row" : "",
-            }}
-          >
-            {allSquads.map((squad) => (
-              <div key={squad.objectId} className={styles.card}>
-                <div className={styles.image}>
-                  <Img isEspnImage src={squad.teamImage} alt={squad.name} />
+            <div
+              className={styles.squadCards}
+              style={{
+                height: allSquads.length < 8 ? "fit-content" : "",
+                flexDirection: allSquads.length < 8 ? "row" : "",
+              }}
+            >
+              {allSquads.map((squad) => (
+                <div key={squad.objectId} className={styles.card}>
+                  <div className={styles.image}>
+                    <Img isEspnImage src={squad.teamImage} alt={squad.name} />
+                  </div>
+                  <p className={styles.name}>{squad.title}</p>
                 </div>
-                <p className={styles.name}>{squad.title}</p>
-              </div>
-            ))}
-            {new Array(4).fill(1).map((_, i) => (
-              <div
-                key={i}
-                className={styles.card}
-                style={{ opacity: 0, padding: 0, pointerEvents: "none" }}
-              />
-            ))}
+              ))}
+              {new Array(4).fill(1).map((_, i) => (
+                <div
+                  key={i}
+                  className={styles.card}
+                  style={{ opacity: 0, padding: 0, pointerEvents: "none" }}
+                />
+              ))}
+            </div>
           </div>
-        ) : (
-          <p>Not yet announced</p>
-        )}
-      </div>
+        </>
+      ) : (
+        ""
+      )}
     </div>
   );
 }

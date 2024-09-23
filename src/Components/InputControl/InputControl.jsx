@@ -6,7 +6,7 @@ import { arrowDownIcon, arrowUpIcon } from "@/utils/svgs";
 
 import styles from "./InputControl.module.scss";
 
-const InputControl = (
+const InputControl = ({
   small = false,
   subLabel,
   label,
@@ -28,7 +28,7 @@ const InputControl = (
   containerStyles = {},
   inputStyles = {},
   ...props
-) => {
+}) => {
   let onChangeFunc = useRef(onChange);
   let mouseDetails = useRef({
     down: false,

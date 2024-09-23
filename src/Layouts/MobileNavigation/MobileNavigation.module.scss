@@ -18,7 +18,7 @@
     &.selected {
       .icon {
         svg {
-          fill: $primary;
+          color: $primary;
         }
       }
 
@@ -32,7 +32,7 @@
       svg {
         height: 20px;
         width: 20px;
-        fill: $color-label;
+        color: $color-label;
       }
     }
 

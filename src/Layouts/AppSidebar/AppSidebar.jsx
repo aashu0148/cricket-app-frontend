@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Home, LogOut } from "react-feather";
+import { LogOut } from "react-feather";
 import { useNavigate } from "react-router-dom";
 
 import Logo from "@/Components/Navbar/Logo";
+import { useRoutesContext } from "../RoutesContext/RoutesContext";
 
 import {
   getDebounceFunc,
@@ -12,34 +13,14 @@ import {
 } from "@/utils/util";
 import { applicationRoutes } from "@/utils/constants";
 import userProfileIcon from "@/assets/profile-icon.png";
-import { dashboardIcon, tournament } from "@/utils/svgs";
 
 import styles from "./AppSidebar.module.scss";
 
 const debounce = getDebounceFunc();
-function AppSidebar({ useAdminRoutes = false, className = "", onRouteClick }) {
+function AppSidebar({ className = "", onRouteClick }) {
   const userDetails = useSelector((state) => state.user);
 
-  const adminSections = [
-    {
-      icon: tournament,
-      value: applicationRoutes.adminTournament,
-      label: "All Tournaments",
-      link: applicationRoutes.adminTournament,
-    },
-  ].filter((item) => item);
-
-  const userSections = [
-    {
-      icon: <Home />,
-      value: applicationRoutes.home,
-      label: "Home",
-      link: applicationRoutes.home,
-      class: "route-dashboard",
-    },
-  ].filter((item) => item);
-
-  const allSections = useAdminRoutes ? adminSections : userSections;
+  const { routes } = useRoutesContext();
 
   const navigate = useNavigate();
   const isMobileView = useSelector((state) => state.root.isMobileView);
@@ -80,7 +61,7 @@ function AppSidebar({ useAdminRoutes = false, className = "", onRouteClick }) {
       <Logo className={styles.logo} />
 
       <div className={styles.sections}>
-        {allSections.map((item) => (
+        {routes.map((item) => (
           <div
             className={`${styles.section} ${item.class || ""} ${
               window.location.pathname === item.link ? styles.selected : ""

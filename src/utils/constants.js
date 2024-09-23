@@ -4,8 +4,12 @@ export const applicationRoutes = {
   home: "/",
   landing: "/",
   auth: "/auth",
+  tournaments: "/tournaments",
   profile: "/profile",
-  adminTournament : "/admin/tournament",
+  adminTournament: "/admin/tournament",
+
+  // function routes
+  leagues: (tid = "") => `/tournaments/${tid || ":tournamentId"}/leagues`,
 };
 
 const commonColors = {

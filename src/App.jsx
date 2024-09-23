@@ -11,13 +11,15 @@ import LandingPage from "./Pages/LandingPage/LandingPage";
 import AuthPage from "./Pages/AuthPage/AuthPage";
 import PageLoader from "./Components/PageLoader/PageLoader";
 import HomePage from "./Pages/HomePage/HomePage";
+import AllTournaments from "./Pages/Admin/AllTournaments/AllTournaments";
+import TournamentsPage from "./Pages/TournamentsPage/TournamentsPage";
+import LeaguesPage from "./Pages/LeaguesPage/LeaguesPage";
 
 // Utils
 import { getCurrentUser } from "./apis/user";
 import actionTypes from "./store/actionTypes";
 import { applicationRoutes } from "./utils/constants";
 import { getAppToken, removeAppToken } from "./utils/util";
-import AllTournaments from "./Pages/Admin/AllTournaments/AllTournaments";
 
 function App() {
   const userDetails = useSelector((state) => state.user);
@@ -117,6 +119,18 @@ function App() {
           >
             {/* all routes of normal users will be defined here */}
             <Route path={applicationRoutes.home} element={<HomePage />} />
+            <Route
+              path={applicationRoutes.tournaments}
+              element={<TournamentsPage />}
+            />
+            <Route
+              path={applicationRoutes.leagues()}
+              element={<LeaguesPage />}
+            />
+            <Route
+              path={`/tournaments/:tournamentId/leagues/:leagueId`}
+              element={<TournamentsPage />}
+            />
           </Route>
 
           <Route path="/*" element={<PageNotFound />} />
