@@ -8,6 +8,7 @@ import LeagueCard from "@/Components/LeagueCard/LeagueCard";
 import {
   getJoinableLeaguesOfTournament,
   getJoinedLeagues,
+  getJoinedLeaguesOfTournament,
 } from "@/apis/leagues";
 import { getTournamentById } from "@/apis/tournament";
 
@@ -21,7 +22,7 @@ const tabsEnum = {
 function LeaguesPage() {
   const params = useParams();
   const [loadingPage, setLoadingPage] = useState(true);
-  const [activeTab, setActiveTab] = useState();
+  const [activeTab, setActiveTab] = useState(tabsEnum.all);
   const [tournamentDetails, setTournamentDetails] = useState({});
   const [allLeagues, setAllLeagues] = useState([]);
   const [joinedLeagues, setJoinedLeagues] = useState([]);
@@ -42,7 +43,7 @@ function LeaguesPage() {
   };
 
   const fetchJoinedLeagues = async () => {
-    const res = await getJoinedLeagues();
+    const res = await getJoinedLeaguesOfTournament(params.tournamentId);
     if (!res) return;
 
     setJoinedLeagues(res.data);
@@ -98,6 +99,8 @@ function LeaguesPage() {
     <PageLoader fullPage />
   ) : (
     <div className={`page-container ${styles.container}`}>
+      <p className="heading-big">{tournamentDetails.longName}</p>
+
       <div className={styles.tabs}>
         <div
           className={`${styles.tab} ${
@@ -121,7 +124,7 @@ function LeaguesPage() {
           }`}
           onClick={() => setActiveTab(tabsEnum.create)}
         >
-          Create New
+          Create League
         </div>
       </div>
 

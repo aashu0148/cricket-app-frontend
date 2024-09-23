@@ -125,6 +125,19 @@ export const getJoinedLeagues = async () => {
   });
 };
 
+//  Get Joined Leagues if tournament
+export const getJoinedLeaguesOfTournament = async (tournamentId) => {
+  const path = `/leagues/tournament/${tournamentId}/joined`;
+
+  return await makeApiCall({
+    functionName: "getJoinedLeaguesOfTournament",
+    defaultErrorMessage: "Failed to get Joined Leagues",
+    fetchWrapperOptions: {
+      path,
+    },
+  });
+};
+
 // 10. Get Joined Leagues
 export const getJoinedActiveLeagues = async () => {
   const path = "/leagues/joined/active";
@@ -140,7 +153,7 @@ export const getJoinedActiveLeagues = async () => {
 
 // 11. Get Joinable Leagues of Tournament
 export const getJoinableLeaguesOfTournament = async (tournamentId) => {
-  const path = `/leagues/tournament/${tournamentId}`;
+  const path = `/leagues/tournament/${tournamentId}/joinable`;
 
   return await makeApiCall({
     functionName: "getJoinableLeaguesOfTournament",
