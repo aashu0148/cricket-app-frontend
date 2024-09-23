@@ -23,7 +23,7 @@ const Button = ({
       type={inputProps.type || styles.button}
       onClick={(event) => (onClick ? onClick(event) : "")}
       disabled={disabled}
-      className={`${styles.button} ${redButton ? styles.red : ''} ${outlineButton ? styles.outline : ''} ${cancelButton ? styles.cance : ''} ${disabled ? styles.disabled : ''} ${gradientButton ? styles.gradientButton : ''} ${small ? styles.small : ''} ${className || ''}`}
+      className={`${styles.button} ${redButton ? styles.red : ''} ${outlineButton ? styles.outline : ''} ${cancelButton ? styles.cancel : ''} ${disabled ? styles.disabled : ''} ${gradientButton ? styles.gradientButton : ''} ${small ? styles.small : ''} ${className || ''}`}
       {...inputProps}
     >
       {children}

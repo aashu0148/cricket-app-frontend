@@ -3,7 +3,7 @@
 .button {
   outline: none;
   width: fit-content;
-  background: $primary;
+  background-color: $primary;
   color: $white;
   border: 2px solid $white;
   cursor: pointer;
@@ -33,13 +33,14 @@
 
   &.outline {
     background: none;
+    background-color: $bg;
     border: 2px solid $primary;
     color: $black;
     background-color: $bg;
   }
 
   &.cancel {
-    background: none;
+    background-color: $bg-100;
     border: 2px solid $bg-100;
     color: $black;
   }

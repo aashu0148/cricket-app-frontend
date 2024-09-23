@@ -50,18 +50,18 @@ export const updateTournament = async (id, payload) => {
   });
 };
 
-export const createTournament = async (payload) => {
-  const path = `/tournaments`;
+// export const createTournament = async (payload) => {
+//   const path = `/tournaments`;
 
-  return await makeApiCall({
-    functionName: "createTournament",
-    defaultErrorMessage: "Failed to create tournament",
-    fetchWrapperOptions: {
-      path,
-      payload,
-    },
-  });
-};
+//   return await makeApiCall({
+//     functionName: "createTournament",
+//     defaultErrorMessage: "Failed to create tournament",
+//     fetchWrapperOptions: {
+//       path,
+//       payload,
+//     },
+//   });
+// };
 
 export const deleteTournament = async (id) => {
   const path = `/tournaments/${id}`;
@@ -72,6 +72,19 @@ export const deleteTournament = async (id) => {
     fetchWrapperOptions: {
       path,
       requestType: "DELETE",
+    },
+  });
+};
+
+export const createTournament = async (payload) => {
+  const path = `/tournaments`;
+
+  return await makeApiCall({
+    functionName: "createTournament",
+    defaultErrorMessage: "Failed to create tournament",
+    fetchWrapperOptions: {
+      path,
+      payload,
     },
   });
 };

@@ -59,6 +59,13 @@
   gap: 20px;
 }
 
+.flexBox {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .modal-container {
   width: 1100px;
   max-width: 100%;

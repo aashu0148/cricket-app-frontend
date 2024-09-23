@@ -4,14 +4,17 @@ import { getAllTournaments } from "@/apis/tournament";
 import styles from "./AllTournaments.module.scss";
 
 import PageLoader from "@/Components/PageLoader/PageLoader";
-
 import TournamentCard from "@/Components/TournamentCard/TournamentCard";
+import Button from "@/Components/Button/Button";
+
+import CreateTournamentModal from "./CreateTournamentModal/CreateTournamentModal";
 
 export default function AllTournaments() {
   const [allTournaments, setAllTournaments] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showCreateTournament, setShowCreateTournament] = useState(false);
 
-  // ******************************* Functions ****************************
+  // ******************************************************************** Integrations Functions ****************************************************************
 
   async function fetchTournaments() {
     const res = await getAllTournaments();
@@ -33,12 +36,29 @@ export default function AllTournaments() {
     fetchTournaments();
   }, []);
 
+  // ********************************************************************* Return Statement ***********************************************************
   return loading ? (
     <PageLoader fullPage />
   ) : (
     <div className={`${styles.container} page-container`}>
       <section className={styles.section}>
-        <h1 className={"gradient-text"}>All Tournaments</h1>
+        <div className="flexBox">
+          <p className="heading">All Tournaments</p>
+          <Button onClick={() => setShowCreateTournament(true)}>
+            Create Tournament
+          </Button>
+        </div>
+
+        {/* ****************************************** Create Tournament Modal ********************************************** */}
+
+        {showCreateTournament ? (
+          <CreateTournamentModal
+            handleClose={() => setShowCreateTournament(false)}
+            setLoading={setLoading}
+          />
+        ) : (
+          ""
+        )}
 
         <div className={`cards ${styles.cards}`}>
           {allTournaments.map((tournament) => (

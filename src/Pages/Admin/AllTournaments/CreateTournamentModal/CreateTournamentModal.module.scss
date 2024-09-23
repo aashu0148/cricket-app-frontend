@@ -1,0 +1,14 @@
+@import "@/styles/variables";
+
+.modalContainer {
+    padding: 4%;
+  
+    .createTForm {
+      margin: $spacing-md 0%;
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-md;
+  
+    }
+  
+  }
