@@ -1,13 +1,17 @@
-import React, { useState } from "react";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
 import Img from "@/Components/Img/Img";
 import Button from "../Button/Button";
 
-import { getDateFormatted } from "@/utils/util";
+import { getDateFormatted, handleAppNavigation } from "@/utils/util";
+import { applicationRoutes } from "@/utils/constants";
 
 import styles from "./TournamentCard.module.scss";
 
 function TournamentCard({ tournamentData = {} }) {
+  const navigate = useNavigate();
+
   const { allSquads, longName, season, startDate, endDate, allMatches } =
     tournamentData;
 
@@ -18,7 +22,17 @@ function TournamentCard({ tournamentData = {} }) {
       <div className={`flex-col-xxs ${styles.header}`}>
         <div className="spacious-head">
           <h2 className={styles.title}>{longName}</h2>
-          <Button>Explore Leagues</Button>
+          <Button
+            onClick={(e) =>
+              handleAppNavigation(
+                e,
+                navigate,
+                applicationRoutes.leagues(tournamentData._id)
+              )
+            }
+          >
+            Explore Leagues
+          </Button>
         </div>
         <p className={styles.season}>
           Season: <span>{season}</span>

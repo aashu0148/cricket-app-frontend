@@ -1,0 +1,32 @@
+@import "@/styles/variables";
+
+.container {
+  .tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-md;
+    align-items: center;
+
+    .tab {
+      flex: 1;
+      width: 180px;
+      padding: $spacing-xs $spacing-sm;
+      border: 2px solid $bg-200;
+      cursor: pointer;
+      font-size: $text-md;
+      font-weight: 600;
+      text-align: center;
+      background-color: $bg;
+      border-radius: 5px;
+
+      &:hover {
+        background-color: $primary-2-100;
+      }
+
+      &.active {
+        background-color: $primary-2;
+        color: $white;
+      }
+    }
+  }
+}

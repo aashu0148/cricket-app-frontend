@@ -7,6 +7,9 @@ export const applicationRoutes = {
   tournaments: "/tournaments",
   profile: "/profile",
   adminTournament: "/admin/tournament",
+
+  // function routes
+  leagues: (tid = "") => `/tournaments/${tid || ":tournamentId"}/leagues`,
 };
 
 const commonColors = {

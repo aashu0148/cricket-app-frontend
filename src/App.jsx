@@ -124,7 +124,7 @@ function App() {
               element={<TournamentsPage />}
             />
             <Route
-              path={`/tournaments/:tournamentId/leagues`}
+              path={applicationRoutes.leagues()}
               element={<LeaguesPage />}
             />
             <Route
