@@ -29,6 +29,16 @@ export const handleNumericInputKeyDown = (event) => {
   }
 };
 
+export function autoAdjustTextareaHeight(event = {}) {
+  const textarea = event?.target;
+  if (!textarea) return;
+
+  textarea.style.height = "auto"; // Reset the height to auto to recalculate the scroll height
+
+  // Set the height to the scroll height of the content
+  textarea.style.height = textarea.scrollHeight + "px";
+}
+
 export const getRandomNumberBetween = (min, max) =>
   Math.floor(Math.random() * (max - min + 1) + min);
 

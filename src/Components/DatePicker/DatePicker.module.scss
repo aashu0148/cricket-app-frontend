@@ -8,9 +8,19 @@
   gap: $spacing-sm;
   border: 1px solid $bg-200;
   border-radius: 5px;
-  padding: $spacing-xs $spacing-sm;
+  padding: 10px $spacing-sm;
   transition: 300ms;
   cursor: pointer;
+
+  &.selected {
+    border-color: $primary;
+    background-color: $bg;
+
+    &:hover {
+      background-color: $bg;
+      border-color: $primary;
+    }
+  }
 
   &:hover {
     background-color: $bg-100;

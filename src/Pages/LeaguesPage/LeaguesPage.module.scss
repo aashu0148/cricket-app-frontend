@@ -20,13 +20,19 @@
       border-radius: 5px;
 
       &:hover {
-        background-color: $primary-2-100;
+        background-color: $primary-100;
       }
 
       &.active {
-        background-color: $primary-2;
+        background-color: $primary;
         color: $white;
       }
     }
+  }
+
+  .leagueCard {
+    flex-grow: 1;
+    width: 400px;
+    align-self: stretch;
   }
 }
