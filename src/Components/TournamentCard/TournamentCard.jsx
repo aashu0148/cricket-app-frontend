@@ -116,7 +116,7 @@ function TournamentCard({
         </div>
       </div>
 
-      {isAdmin && (
+      {/* {isAdmin && (
         <div className={styles.section}>
           <h3>
             Players Count <span>{tournamentData.players.length}</span>
@@ -128,16 +128,16 @@ function TournamentCard({
               flexDirection: tournamentData.players.length < 8 ? "row" : "",
             }}
           >
-            {tournamentData.players.length
+             {tournamentData.players.length
               ? tournamentData.players.map((item) => (
                   <div>
                     <PlayerCard player={item} />
                   </div>
                 ))
-              : "No Players Found"}
+              : "No Players Found"} 
           </div>
         </div>
-      )}
+      )} */}
 
       {allSquads.length ? (
         <>

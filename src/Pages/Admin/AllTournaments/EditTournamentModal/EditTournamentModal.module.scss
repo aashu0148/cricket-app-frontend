@@ -1,13 +1,8 @@
 @import "@/styles/variables";
 
 .modalContainer {
-  padding: 2%;
-  height: 80vh;
-  width: 80vw;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
   gap: $spacing-lg;
+
   .heading {
     font-size: $text-xl;
   }
@@ -19,7 +14,7 @@
 .createForm {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: $spacing-xs;
+  gap: $spacing-md;
 }
 
 .player_scrollBar {
@@ -31,7 +26,7 @@
   overflow-x: auto;
   border-radius: 12px;
   display: flex;
-  p{
+  p {
     margin-top: $spacing-xs;
   }
 }

@@ -75,7 +75,7 @@ function CreateLeagueForm({ tournamentData = {}, onSuccess }) {
 
   return (
     <div className={`flex-col ${styles.container}`}>
-      <p className="heading">Create League</p>
+      {/* <p className="heading">Create League</p> */}
 
       <div className={styles.form}>
         <div className="row align-start">

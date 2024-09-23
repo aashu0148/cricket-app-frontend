@@ -223,6 +223,13 @@ export const validatePassword = (pass) => {
   return /^(?=.*[0-9])(?=.*[!@#$%^&+*])[a-zA-Z0-9!@#$%^&+*]{6,18}$/.test(pass);
 };
 
+export const validateUrl = (str) => {
+  const res = str.match(
+    /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g
+  );
+  return res ? true : false;
+};
+
 export const getFileHashSha256 = async (blob) => {
   if (!blob) return;
 

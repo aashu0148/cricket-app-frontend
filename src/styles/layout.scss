@@ -66,6 +66,18 @@
   align-items: center;
 }
 
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+
+  label {
+    font-size: $text-md;
+    font-weight: 400;
+    color: $color-label;
+  }
+}
+
 .modal-container {
   width: 1100px;
   max-width: 100%;

@@ -1,10 +1,14 @@
-import React, { useEffect, useState } from "react";
-import styles from "./CreateTournamentModal.module.scss";
+import React, { useState } from "react";
+
 import Modal from "@/Components/Modal/Modal";
 import InputControl from "@/Components/InputControl/InputControl";
 import InputSelect from "@/Components/InputControl/InputSelect/InputSelect";
 import Button from "@/Components/Button/Button";
+
 import { createTournament } from "@/apis/tournament";
+import { validateUrl } from "@/utils/util";
+
+import styles from "./CreateTournamentModal.module.scss";
 
 export default function CreateTournamentModal({
   handleClose,
@@ -31,6 +35,9 @@ export default function CreateTournamentModal({
   const validateForm = () => {
     const errors = {};
     if (!states.espn) errors.espn = "Kindly Fill ESPN URL";
+    else if (!validateUrl(states.espn)) errors.espn = "Invalid URL";
+    else if (!states.espn.includes("espncricinfo.com"))
+      errors.espn = "Not an espn URL ";
     if (!states.scoringSystem.value)
       errors.scoringSystem = "Kindly select any Scoring System";
     setErrors(errors);
@@ -51,14 +58,10 @@ export default function CreateTournamentModal({
     };
     setLoading(true);
     const res = createTournament(payload);
-
     setLoading(false);
+    if (!res) return;
 
-    if (res) {
-      toast.success("A new Tournament Created");
-    } else {
-      toast.error("Something went wrong");
-    }
+    toast.success("A new Tournament Created");
     handleClose();
   };
 
@@ -72,23 +75,24 @@ export default function CreateTournamentModal({
             <h2 className={styles.heading}>Create Tournament</h2>
             <p>Create Matches, define rules, and oversee the competition</p>
           </div>
-          <Button onClick={() => handleClose()}>Close</Button>
         </div>
         <div className={styles.createTForm}>
           <InputControl
-            label="Enter the ESPN url"
+            label="ESPN url"
+            placeholder="Enter url"
             value={states.espn}
             error={errors.espn}
             onChange={(e) => handleChange(e.target.value, "espn")}
           />
           <InputSelect
             label="Select a Scoring System"
-            subLabel="Please choose wisely."
-            value={states.scoringSystem}
+            placeholder="Select"
+            value={
+              states.scoringSystem?.value ? states.scoringSystem : undefined
+            }
             error={errors.scoringSystem}
             onChange={(e) => handleChange(e, "scoringSystem")}
             options={allScoringSystems}
-            placeholder="Choose..."
           />
         </div>
         <div className="footer">

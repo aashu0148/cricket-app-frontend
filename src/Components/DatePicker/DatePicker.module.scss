@@ -1,12 +1,13 @@
 @import "@/styles/variables";
 
 .container {
-  width: fit-content;
+  width: 100%;
   position: relative;
   display: flex;
   align-items: center;
   gap: $spacing-sm;
   border: 1px solid $bg-200;
+  background-color: $bg-100;
   border-radius: 5px;
   padding: 10px $spacing-sm;
   transition: 300ms;
