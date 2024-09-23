@@ -6,13 +6,22 @@ import styles from "./AllTournaments.module.scss";
 import PageLoader from "@/Components/PageLoader/PageLoader";
 import TournamentCard from "@/Components/TournamentCard/TournamentCard";
 import Button from "@/Components/Button/Button";
-
+import { getAllScoringSystems } from "@/apis/scoringSystem";
 import CreateTournamentModal from "./CreateTournamentModal/CreateTournamentModal";
+import EditTournamentModal from "./EditTournamentModal/EditTournamentModal";
 
 export default function AllTournaments() {
   const [allTournaments, setAllTournaments] = useState([]);
+  const [allScoringSystems, setAllScoringSystems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showCreateTournament, setShowCreateTournament] = useState(false);
+  const [showEditTournament, setShowEditTournament] = useState(false);
+  const [tournamentToEdit, setTournamentToEdit] = useState(null);
+
+  const handleToggle = (id) => {
+    setTournamentToEdit(id);
+    setShowEditTournament((prev) => !prev);
+  };
 
   // ******************************************************************** Integrations Functions ****************************************************************
 
@@ -32,8 +41,21 @@ export default function AllTournaments() {
     setAllTournaments(result);
   }
 
+  async function fetchScoringSystems() {
+    const res = await getAllScoringSystems();
+    setLoading(false);
+    if (!res) return;
+
+    const result = res.data.map((item) => ({
+      label: item.name,
+      value: item._id,
+    }));
+    setAllScoringSystems(result);
+  }
+
   useEffect(() => {
     fetchTournaments();
+    fetchScoringSystems();
   }, []);
 
   // ********************************************************************* Return Statement ***********************************************************
@@ -49,12 +71,24 @@ export default function AllTournaments() {
           </Button>
         </div>
 
-        {/* ****************************************** Create Tournament Modal ********************************************** */}
+        {/* ****************************************** Create And Edit Tournament Modal ********************************************** */}
 
         {showCreateTournament ? (
           <CreateTournamentModal
             handleClose={() => setShowCreateTournament(false)}
             setLoading={setLoading}
+            allScoringSystems={allScoringSystems}
+          />
+        ) : (
+          ""
+        )}
+
+        {showEditTournament ? (
+          <EditTournamentModal
+            handleClose={() => handleToggle()}
+            setLoading={setLoading}
+            allScoringSystems={allScoringSystems}
+            tournamentId = {tournamentToEdit}
           />
         ) : (
           ""
@@ -65,6 +99,7 @@ export default function AllTournaments() {
             <TournamentCard
               key={tournament._id}
               tournamentData={tournament}
+              handleToggle={handleToggle}
               isAdmin
             />
           ))}

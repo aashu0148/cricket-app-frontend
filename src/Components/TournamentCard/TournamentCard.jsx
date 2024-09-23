@@ -9,9 +9,12 @@ import { applicationRoutes } from "@/utils/constants";
 
 import styles from "./TournamentCard.module.scss";
 
-function TournamentCard({ tournamentData = {}, isAdmin = false }) {
+function TournamentCard({
+  tournamentData = {},
+  isAdmin = false,
+  handleToggle,
+}) {
   const navigate = useNavigate();
-
   const { allSquads, longName, season, startDate, endDate, allMatches } =
     tournamentData;
 
@@ -39,13 +42,15 @@ function TournamentCard({ tournamentData = {}, isAdmin = false }) {
         <div className="spacious-head">
           <h2 className={styles.title}>{longName}</h2>
           <Button
-            onClick={(e) =>
-              handleAppNavigation(
-                e,
-                navigate,
-                applicationRoutes.leagues(tournamentData._id)
-              )
-            }
+            onClick={(e) => {
+              isAdmin
+                ? handleToggle(tournamentData?._id)
+                : handleAppNavigation(
+                    e,
+                    navigate,
+                    applicationRoutes.leagues(tournamentData._id)
+                  );
+            }}
           >
             {isAdmin ? "Edit" : "Explore Leagues"}
           </Button>
@@ -119,8 +124,8 @@ function TournamentCard({ tournamentData = {}, isAdmin = false }) {
           <div
             className={styles.player_scrollBar}
             style={{
-              height: allSquads.length < 8 ? "fit-content" : "",
-              flexDirection: allSquads.length < 8 ? "row" : "",
+              height: tournamentData.players.length < 8 ? "fit-content" : "",
+              flexDirection: tournamentData.players.length < 8 ? "row" : "",
             }}
           >
             {tournamentData.players.length

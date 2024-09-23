@@ -1,14 +1,18 @@
 @import "@/styles/variables";
 
 .modalContainer {
-    padding: 4%;
-  
-    .createTForm {
-      margin: $spacing-md 0%;
-      display: flex;
-      flex-direction: column;
-      gap: $spacing-md;
-  
-    }
-  
+  padding: 4%;
+
+  .createTForm {
+    margin: $spacing-md 0%;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
   }
+  .heading {
+    font-size: $text-xl;
+  }
+  p {
+    font-size: $text-sm;
+  }
+}

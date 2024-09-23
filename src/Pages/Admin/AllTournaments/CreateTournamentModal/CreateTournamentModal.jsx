@@ -3,12 +3,14 @@ import styles from "./CreateTournamentModal.module.scss";
 import Modal from "@/Components/Modal/Modal";
 import InputControl from "@/Components/InputControl/InputControl";
 import InputSelect from "@/Components/InputControl/InputSelect/InputSelect";
-import { getAllScoringSystems } from "@/apis/scoringSystem";
 import Button from "@/Components/Button/Button";
 import { createTournament } from "@/apis/tournament";
 
-export default function CreateTournamentModal({ handleClose, setLoading }) {
-  const [allScoringSystems, setAllScoringSystems] = useState([]);
+export default function CreateTournamentModal({
+  handleClose,
+  setLoading,
+  allScoringSystems,
+}) {
   const [states, setStates] = useState({
     espn: "",
     scoringSystem: { value: "", label: "" },
@@ -19,7 +21,6 @@ export default function CreateTournamentModal({ handleClose, setLoading }) {
     scoringSystem: "",
   });
 
-  
   //   ***************************** functions **********************************
 
   const handleChange = (val, label) => {
@@ -39,22 +40,6 @@ export default function CreateTournamentModal({ handleClose, setLoading }) {
 
   //   ********************************* Integrations ********************************
 
-  async function fetchScoringSystems() {
-    const res = await getAllScoringSystems();
-    setLoading(false);
-    if (!res) return;
-
-    const result = res.data.map((item) => ({
-      label: item.name,
-      value: item._id,
-    }));
-    setAllScoringSystems(result);
-  }
-
-  useEffect(() => {
-    fetchScoringSystems();
-  }, []);
-
   const handleSubmit = async () => {
     const valid = validateForm();
     if (!valid) {
@@ -64,21 +49,31 @@ export default function CreateTournamentModal({ handleClose, setLoading }) {
       espnUrl: states.espn,
       scoringSystemId: states.scoringSystem.value,
     };
-    const res =  createTournament(payload);
+    setLoading(true);
+    const res = createTournament(payload);
 
     setLoading(false);
 
-    console.log("res", res);
+    if (res) {
+      toast.success("A new Tournament Created");
+    } else {
+      toast.error("Something went wrong");
+    }
     handleClose();
   };
+
   //   **************************************** Return Statement ************************************
 
   return (
     <Modal onClose={handleClose}>
       <div className={styles.modalContainer}>
-        <h2>Create Tournament</h2>
-        <p>Set up matches, define rules, and oversee the competition.</p>
-
+        <div className="flexBox">
+          <div>
+            <h2 className={styles.heading}>Create Tournament</h2>
+            <p>Create Matches, define rules, and oversee the competition</p>
+          </div>
+          <Button onClick={() => handleClose()}>Close</Button>
+        </div>
         <div className={styles.createTForm}>
           <InputControl
             label="Enter the ESPN url"
