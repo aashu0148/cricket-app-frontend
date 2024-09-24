@@ -84,12 +84,25 @@ export const refreshTournament = async (id) => {
     defaultErrorMessage: "Failed to refresh tournament",
     fetchWrapperOptions: {
       path,
-      payload
+      payload,
     },
   });
 };
 
-export const addPlayerToTournament = async (id) => {
+// export const addPlayerToTournament = async (id) => {
+//   const path = `/tournaments/${id}/players`;
+
+//   return await makeApiCall({
+//     functionName: "addPlayerToTournament",
+//     defaultErrorMessage: "Failed to add Player to Tournament",
+//     fetchWrapperOptions: {
+//       path,
+//       payload
+//     },
+//   });
+// };
+
+export const deletePlayerFromTournament = async (id, payload) => {
   const path = `/tournaments/${id}/players`;
 
   return await makeApiCall({
@@ -97,20 +110,21 @@ export const addPlayerToTournament = async (id) => {
     defaultErrorMessage: "Failed to add Player to Tournament",
     fetchWrapperOptions: {
       path,
-      payload
-    },
-  });
-};
-
-export const deletePlayerFromTournament = async (id) => {
-  const path = `/tournaments/${id}/players`;
-
-  return await makeApiCall({
-    functionName: "addPlayerToTournament",
-    defaultErrorMessage: "Failed to add Player to Tournament",
-    fetchWrapperOptions: {
-      path,
+      payload,
       requestType: "DELETE",
+    },
+  });
+};
+
+export const addPlayerToTournament = async (id, payload) => {
+  const path = `/tournaments/${id}/players`;
+
+  return await makeApiCall({
+    functionName: "addPlayerToTournament",
+    defaultErrorMessage: "Failed to Add Player to Tournament",
+    fetchWrapperOptions: {
+      path,
+      payload,
     },
   });
 };
