@@ -79,7 +79,7 @@ function InputSelect({
       color: colors.desc,
       fontWeight: 400,
     }),
-    menuPortal: (provided) => ({ ...provided, zIndex: 999 }),
+    menuPortal: (provided) => ({ ...provided, zIndex: 999999 }),
   };
 
   return (
