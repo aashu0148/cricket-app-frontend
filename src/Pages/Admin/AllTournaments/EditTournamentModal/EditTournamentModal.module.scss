@@ -26,17 +26,31 @@
   overflow-x: auto;
   border-radius: 12px;
   display: flex;
-  p {
-    margin-top: $spacing-xs;
-  }
 }
 .playerCard {
   width: 150px;
-  height: 120px;
+  height: 150px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+  position: relative;
+  cursor: pointer;
+  padding: $spacing-sm 0%;
+  margin-top: $spacing-md;
+  border-radius: 12px;
+  box-shadow: $shadow-200;
+  gap: $spacing-xs;
+
+  .icon {
+    position: absolute;
+    right: 5%;
+    font-size: $text-xs;
+    height: $text-sm;
+    width: $text-sm;
+opacity: 0;
+    transition: 100ms opacity ease;
+  }
 
   .imageContainer {
     width: 80px;
@@ -64,8 +78,23 @@
 
   .playerCountry {
     font-size: $text-xs;
-    color: $black;
     text-align: center;
+  }
+
+  &:hover{
+    color: $white;
+    background-color: $primary-2;
+    transform: translateY(-2%);
+    .icon{
+      opacity: 20;
+      color: $red;
+    }
+    .playerCountry, .playerName{
+      color: $white;
+    }
+    .imageContainer{
+      border: 2px solid $white;
+    }
   }
 }
 .searchSection {
@@ -86,6 +115,11 @@
     border: 1px solid $primary-2;
     font-size: $text-sm;
     transition: background-color 0.3s, color 0.3s;
+    span{
+      color: $blue;
+      font-weight: 800;
+      cursor: pointer;
+    }
   }
   .hovered {
     color: white;

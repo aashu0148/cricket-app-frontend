@@ -2,27 +2,41 @@ import React, { useEffect, useState } from "react";
 import Modal from "@/Components/Modal/Modal";
 import styles from "./EditTournamentModal.module.scss";
 import InputControl from "@/Components/InputControl/InputControl";
+import { Trash2 } from "react-feather";
 import InputSelect from "@/Components/InputControl/InputSelect/InputSelect";
-import { getTournamentById } from "@/apis/tournament";
-import { getDateFormatted } from "@/utils/util";
-import { searchPlayerByName } from "@/apis/players";
 import Button from "@/Components/Button/Button";
 import Spinner from "@/Components/Spinner/Spinner";
 import DatePicker from "@/Components/DatePicker/DatePicker";
 
-export default function EditTournamentModal({
-  tournamentId,
-  handleClose,
-  allScoringSystems,
-}) {
+import {
+  addPlayerToTournament,
+  deletePlayerFromTournament,
+  getTournamentById,
+} from "@/apis/tournament";
+import { searchPlayerByName } from "@/apis/players";
+import { getAllScoringSystems } from "@/apis/scoringSystem";
+
+export default function EditTournamentModal({ tournamentId, handleClose }) {
   const [loading, setLoading] = useState(true);
+  const [allScoringSystems, setAllScoringSystems] = useState([]);
   const [tournament, setTournament] = useState({});
   const [searchPlayer, setSearchPlayer] = useState("");
   const [playerResult, setPlayerResult] = useState([]);
+  const [EditTournamentStates, setEditTournamentStates] = useState({
+    name: "",
+    longName: "",
+    startDate: null,
+    endDate: null,
+    scoringSystem: { name: "", value: null },
+  });
 
   const PlayerCard = ({ player }) => {
     return (
       <div className={styles.playerCard}>
+        <Trash2
+          className={styles.icon}
+          onClick={() => handlePlayerChange(player._id, "delete")}
+        />
         <div className={styles.imageContainer}>
           <img
             src={player.image}
@@ -30,33 +44,84 @@ export default function EditTournamentModal({
             className={styles.playerImage}
           />
         </div>
-        <p className={styles.playerName}>{player.name}</p>
-        <p className={styles.playerCountry}>({player.country})</p>
+        <div>
+          <p className={styles.playerName}>{player.name}</p>
+          <p className={styles.playerCountry}>({player.country})</p>
+        </div>
       </div>
     );
   };
-  // ****************************** Integrations *************************
 
+  //********************************* * Fetch scoring systems
+  async function fetchScoringSystems() {
+    const res = await getAllScoringSystems();
+    if (!res) return;
+
+    const result = res.data.map((item) => ({
+      label: item.name,
+      value: item._id,
+    }));
+    setAllScoringSystems(result);
+  }
+
+  //********************************* */ Get tournament details
   async function getTournamentDetails() {
     const res = await getTournamentById(tournamentId);
     setLoading(false);
     if (!res) return;
+
+    setEditTournamentStates((prev) => ({
+      ...prev,
+      name: res.data?.name,
+      longName: res.data?.longName,
+      startDate: res.data?.startDate,
+      endDate: res.data?.endDate,
+      scoringSystem: { ...prev.scoringSystem, value: res.data?.scoringSystem },
+    }));
     setTournament(res.data);
   }
+
+  // ********************************** Search player by name ********************
   async function handleSearch() {
+    if (!searchPlayer) return;
     const res = await searchPlayerByName(searchPlayer);
 
     if (!res) return;
 
-    const result = res?.data?.map((item) => ({
+    const result = res.data.map((item) => ({
       name: item?.name,
       id: item?._id,
     }));
     setPlayerResult(result);
-    console.log("response", res);
+  }
+
+  async function handlePlayerChange(id, action) {
+    if (!id) return;
+
+    setLoading(true);
+    const payload = { playerId: id };
+    let api;
+
+    if (action === "add") {
+      api = addPlayerToTournament(tournamentId, payload);
+    } else if (action === "delete") {
+      api = deletePlayerFromTournament(tournamentId, payload);
+    }
+
+    try {
+      const res = await api;
+      if (!res) return;
+
+      await getTournamentDetails();
+    } catch (error) {
+      console.error("Error handling player change:", error);
+    } finally {
+      setLoading(false);
+    }
   }
 
   useEffect(() => {
+    fetchScoringSystems();
     getTournamentDetails();
   }, []);
 
@@ -66,8 +131,7 @@ export default function EditTournamentModal({
     }
   }, [searchPlayer]);
 
-  //   ***************************************** Return statement ********************
-
+  // Return statement
   return (
     <Modal onClose={handleClose}>
       <div className={`modal-container ${styles.modalContainer}`}>
@@ -84,38 +148,65 @@ export default function EditTournamentModal({
               <InputControl
                 placeholder="Enter name"
                 label="Name"
-                value={tournament?.name}
+                value={EditTournamentStates?.name}
+                onChange={(e) =>
+                  setEditTournamentStates((prev) => ({
+                    ...prev,
+                    name: e.target.value,
+                  }))
+                }
               />
               <InputControl
                 placeholder={"Enter long name"}
                 label={"Long Name"}
-                value={tournament?.longName}
+                value={EditTournamentStates?.longName}
+                onChange={(e) =>
+                  setEditTournamentStates((prev) => ({
+                    ...prev,
+                    longName: e.target.value,
+                  }))
+                }
               />
               <div className="field">
                 <label>Start Date</label>
-                <DatePicker />
+                {/* <DatePicker
+                  onChange={(e) =>
+                    setEditTournamentStates((prev) => ({
+                      ...prev,
+                      startDate: e,
+                    }))
+                  }
+                  defaultDate={EditTournamentStates?.startDate}
+                /> */}
               </div>
 
               <div className="field">
                 <label>End Date</label>
-                <DatePicker />
+                {/* <DatePicker
+                  onChange={(e) =>
+                    setEditTournamentStates((prev) => ({
+                      ...prev,
+                      endDate: e,
+                    }))
+                  }
+                  defaultDate={EditTournamentStates?.endDate}
+                /> */}
               </div>
-              <InputControl
-                label={"Start Date"}
-                value={getDateFormatted(tournament?.startDate)}
-              />
-              <InputControl
-                label={"End Date"}
-                value={getDateFormatted(tournament?.endDate)}
-              />
               <InputSelect
                 small
                 label="Scoring System"
                 options={allScoringSystems}
                 placeholder="Select a Scoring System"
                 value={allScoringSystems.find(
-                  (item) => item.value === tournament?.scoringSystem
+                  (item) =>
+                    item.value === EditTournamentStates?.scoringSystem.value
                 )}
+                onChange={(e) =>
+                  setEditTournamentStates((prev) => ({
+                    ...prev,
+                    scoringSystem: e,
+                  }))
+                }
               />
             </div>
             <div className={styles.section}>
@@ -135,7 +226,8 @@ export default function EditTournamentModal({
                 )}
               </div>
             </div>
-            {/* ************************** search field ********************* */}
+
+            {/* Search field */}
             <div className={styles.searchSection}>
               <p>Search Player To Add</p>
               <div className="row">
@@ -147,20 +239,18 @@ export default function EditTournamentModal({
                   }}
                   onChange={(e) => setSearchPlayer(e.target.value)}
                 />
-                <Button onClick={() => handleSearch()}>Search</Button>
+                <Button onClick={handleSearch}>Search</Button>
               </div>
               <div className={styles.playerFound}>
                 {playerResult.length
                   ? playerResult.map((item, index) => (
-                      <p
-                        key={index}
-                        className={
-                          {
-                            /* Add your condition for the hovered class here, e.g., item.isSelected ? styles.hovered : '' */
-                          }
-                        }
-                      >
+                      <p key={index} className={`flexBox`}>
                         {item.name}
+                        <span
+                          onClick={() => handlePlayerChange(item.id, "add")}
+                        >
+                          + Add
+                        </span>
                       </p>
                     ))
                   : "No Result Found"}
@@ -168,6 +258,12 @@ export default function EditTournamentModal({
             </div>
           </>
         )}
+        <div className="footer">
+          <Button cancelButton onClick={handleClose}>
+            Cancel
+          </Button>
+          <Button onClick={() => console.log("Edit action")}>Edit</Button>
+        </div>
       </div>
     </Modal>
   );

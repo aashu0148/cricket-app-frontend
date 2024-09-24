@@ -1,20 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import Modal from "@/Components/Modal/Modal";
 import InputControl from "@/Components/InputControl/InputControl";
 import InputSelect from "@/Components/InputControl/InputSelect/InputSelect";
 import Button from "@/Components/Button/Button";
 
-import { createTournament } from "@/apis/tournament";
 import { validateUrl } from "@/utils/util";
 
 import styles from "./CreateTournamentModal.module.scss";
+import { getAllScoringSystems } from "@/apis/scoringSystem";
 
 export default function CreateTournamentModal({
   handleClose,
-  setLoading,
-  allScoringSystems,
+  handleCreateTournament,
 }) {
+  const [allScoringSystems, setAllScoringSystems] = useState([]);
   const [states, setStates] = useState({
     espn: "",
     scoringSystem: { value: "", label: "" },
@@ -56,15 +56,25 @@ export default function CreateTournamentModal({
       espnUrl: states.espn,
       scoringSystemId: states.scoringSystem.value,
     };
-    setLoading(true);
-    const res = createTournament(payload);
-    setLoading(false);
-    if (!res) return;
 
-    toast.success("A new Tournament Created");
+    await handleCreateTournament(payload);
     handleClose();
   };
 
+  async function fetchScoringSystems() {
+    const res = await getAllScoringSystems();
+    if (!res) return;
+
+    const result = res.data.map((item) => ({
+      label: item.name,
+      value: item._id,
+    }));
+    setAllScoringSystems(result);
+  }
+
+  useEffect(() => {
+    fetchScoringSystems();
+  }, []);
   //   **************************************** Return Statement ************************************
 
   return (
@@ -86,13 +96,16 @@ export default function CreateTournamentModal({
           />
           <InputSelect
             label="Select a Scoring System"
-            placeholder="Select"
-            value={
-              states.scoringSystem?.value ? states.scoringSystem : undefined
-            }
-            error={errors.scoringSystem}
-            onChange={(e) => handleChange(e, "scoringSystem")}
+            onChange={(e) => {
+              console.log("e", e);
+
+              handleChange(e, "scoringSystem");
+            }}
             options={allScoringSystems}
+            value={allScoringSystems.find(
+              (item) => item.value === states.scoringSystem
+            )}
+            error={errors.scoringSystem}
           />
         </div>
         <div className="footer">

@@ -50,19 +50,6 @@ export const updateTournament = async (id, payload) => {
   });
 };
 
-// export const createTournament = async (payload) => {
-//   const path = `/tournaments`;
-
-//   return await makeApiCall({
-//     functionName: "createTournament",
-//     defaultErrorMessage: "Failed to create tournament",
-//     fetchWrapperOptions: {
-//       path,
-//       payload,
-//     },
-//   });
-// };
-
 export const deleteTournament = async (id) => {
   const path = `/tournaments/${id}`;
 
@@ -82,6 +69,59 @@ export const createTournament = async (payload) => {
   return await makeApiCall({
     functionName: "createTournament",
     defaultErrorMessage: "Failed to create tournament",
+    fetchWrapperOptions: {
+      path,
+      payload,
+    },
+  });
+};
+
+export const refreshTournament = async (id) => {
+  const path = `/tournaments/refresh/${id}`;
+
+  return await makeApiCall({
+    functionName: "refreshTournament",
+    defaultErrorMessage: "Failed to refresh tournament",
+    fetchWrapperOptions: {
+      path,
+      payload,
+    },
+  });
+};
+
+// export const addPlayerToTournament = async (id) => {
+//   const path = `/tournaments/${id}/players`;
+
+//   return await makeApiCall({
+//     functionName: "addPlayerToTournament",
+//     defaultErrorMessage: "Failed to add Player to Tournament",
+//     fetchWrapperOptions: {
+//       path,
+//       payload
+//     },
+//   });
+// };
+
+export const deletePlayerFromTournament = async (id, payload) => {
+  const path = `/tournaments/${id}/players`;
+
+  return await makeApiCall({
+    functionName: "addPlayerToTournament",
+    defaultErrorMessage: "Failed to add Player to Tournament",
+    fetchWrapperOptions: {
+      path,
+      payload,
+      requestType: "DELETE",
+    },
+  });
+};
+
+export const addPlayerToTournament = async (id, payload) => {
+  const path = `/tournaments/${id}/players`;
+
+  return await makeApiCall({
+    functionName: "addPlayerToTournament",
+    defaultErrorMessage: "Failed to Add Player to Tournament",
     fetchWrapperOptions: {
       path,
       payload,

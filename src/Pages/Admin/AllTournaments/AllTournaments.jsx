@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { getAllTournaments } from "@/apis/tournament";
+import {
+  createTournament,
+  deleteTournament,
+  getAllTournaments,
+  refreshTournament,
+} from "@/apis/tournament";
 
 import styles from "./AllTournaments.module.scss";
 
 import PageLoader from "@/Components/PageLoader/PageLoader";
 import TournamentCard from "@/Components/TournamentCard/TournamentCard";
 import Button from "@/Components/Button/Button";
-import { getAllScoringSystems } from "@/apis/scoringSystem";
 import CreateTournamentModal from "./CreateTournamentModal/CreateTournamentModal";
 import EditTournamentModal from "./EditTournamentModal/EditTournamentModal";
 
@@ -40,22 +44,28 @@ export default function AllTournaments() {
     );
     setAllTournaments(result);
   }
-
-  async function fetchScoringSystems() {
-    const res = await getAllScoringSystems();
+  const handleDeleteTournament = async (id) => {
+    setLoading(true);
+    const res = await deleteTournament(id);
     setLoading(false);
     if (!res) return;
+    if (res) {
+      // const response = refreshTournament(id);
+      await fetchTournaments();
+    }
+  };
 
-    const result = res.data.map((item) => ({
-      label: item.name,
-      value: item._id,
-    }));
-    setAllScoringSystems(result);
-  }
+  const handleCreateTournament = async (payload) => {
+    setLoading(true);
+    const res = await createTournament(payload);
+    if (!res) return;
+    if (res) {
+      await fetchTournaments();
+    }
+  };
 
   useEffect(() => {
     fetchTournaments();
-    fetchScoringSystems();
   }, []);
 
   // ********************************************************************* Return Statement ***********************************************************
@@ -77,7 +87,7 @@ export default function AllTournaments() {
           <CreateTournamentModal
             handleClose={() => setShowCreateTournament(false)}
             setLoading={setLoading}
-            allScoringSystems={allScoringSystems}
+            handleCreateTournament={handleCreateTournament}
           />
         ) : (
           ""
@@ -87,8 +97,7 @@ export default function AllTournaments() {
           <EditTournamentModal
             handleClose={() => handleToggle()}
             setLoading={setLoading}
-            allScoringSystems={allScoringSystems}
-            tournamentId = {tournamentToEdit}
+            tournamentId={tournamentToEdit}
           />
         ) : (
           ""
@@ -100,6 +109,7 @@ export default function AllTournaments() {
               key={tournament._id}
               tournamentData={tournament}
               handleToggle={handleToggle}
+              handleDelete={handleDeleteTournament}
               isAdmin
             />
           ))}

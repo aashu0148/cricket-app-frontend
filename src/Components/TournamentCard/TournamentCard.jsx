@@ -8,31 +8,24 @@ import { getDateFormatted, handleAppNavigation } from "@/utils/util";
 import { applicationRoutes } from "@/utils/constants";
 
 import styles from "./TournamentCard.module.scss";
+import Toggle from "../Toggle/Toggle";
 
 function TournamentCard({
   tournamentData = {},
   isAdmin = false,
   handleToggle,
+  handleDelete,
 }) {
   const navigate = useNavigate();
-  const { allSquads, longName, season, startDate, endDate, allMatches } =
-    tournamentData;
-
-  const PlayerCard = ({ player }) => {
-    return (
-      <div className={styles.playerCard}>
-        <div className={styles.imageContainer}>
-          <img
-            src={player.image}
-            alt={player.name}
-            className={styles.playerImage}
-          />
-        </div>
-        <h3 className={styles.playerName}>{player.name}</h3>
-        <p className={styles.playerCountry}>({player.country})</p>
-      </div>
-    );
-  };
+  const {
+    allSquads,
+    active,
+    longName,
+    season,
+    startDate,
+    endDate,
+    allMatches,
+  } = tournamentData;
 
   return (
     <div className={styles.card}>
@@ -169,6 +162,17 @@ function TournamentCard({
             </div>
           </div>
         </>
+      ) : (
+        ""
+      )}
+      {isAdmin ? (
+        <div className={`flex gap-lg ${styles.section}`}>
+          <h3 className="heading">Current Status</h3>
+          <Toggle
+            active={active}
+            onChange={() => handleDelete(tournamentData._id)}
+          />
+        </div>
       ) : (
         ""
       )}
