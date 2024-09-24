@@ -14,6 +14,7 @@ import HomePage from "./Pages/HomePage/HomePage";
 import AllTournaments from "./Pages/Admin/AllTournaments/AllTournaments";
 import TournamentsPage from "./Pages/TournamentsPage/TournamentsPage";
 import LeaguesPage from "./Pages/LeaguesPage/LeaguesPage";
+import ProfilePage from "./Pages/ProfilePage/ProfilePage";
 
 // Utils
 import { getCurrentUser } from "./apis/user";
@@ -119,6 +120,7 @@ function App() {
           >
             {/* all routes of normal users will be defined here */}
             <Route path={applicationRoutes.home} element={<HomePage />} />
+            <Route path={applicationRoutes.profile} element={<ProfilePage />} />
             <Route
               path={applicationRoutes.tournaments}
               element={<TournamentsPage />}

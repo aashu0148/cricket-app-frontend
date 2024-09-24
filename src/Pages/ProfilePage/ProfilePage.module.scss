@@ -1,0 +1,215 @@
+@import "@/styles/variables";
+
+.container {
+  margin: 0 auto;
+  width: 100%;
+  max-width: min(100%, 1120px);
+
+  p {
+    word-break: break-word;
+  }
+
+  .separator {
+    height: 1px;
+    width: 100%;
+    background-color: $bg-200;
+  }
+
+  .personalDetails {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: $spacing-md;
+
+    .image {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: $spacing-xs;
+      position: relative;
+
+      .editImage {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        border-radius: 50%;
+        padding: 6px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        background-color: $bg;
+        transition: 300ms;
+        border: 1px solid $bg-100;
+
+        &:hover {
+          background-color: $bg-100;
+          border-color: $bg-200;
+        }
+
+        svg {
+          height: 18px;
+          width: 18px;
+        }
+      }
+
+      img {
+        height: 180px;
+        width: 180px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+
+      .progress {
+        width: 100%;
+        height: 6px;
+        border-radius: 40px;
+        background-color: $bg-200;
+        position: relative;
+
+        .text {
+          position: absolute;
+          top: calc(100% + 1px);
+          left: 50%;
+          transform: translateX(-50%);
+          font-size: $text-sm;
+          font-weight: 500;
+          text-align: center;
+        }
+
+        .bar {
+          border-radius: inherit;
+          width: 40%;
+          height: 100%;
+          background-color: $green;
+          transition: 300ms;
+        }
+      }
+
+      .error {
+        max-width: 250px;
+      }
+    }
+
+    .details {
+      gap: $spacing-xxs;
+    }
+
+    .name {
+      font-size: $text-2xl;
+      font-weight: 500;
+      color: $color-title;
+    }
+
+    .text {
+      font-size: $text-lg;
+      font-weight: 500;
+      color: $color-label;
+    }
+
+    .logout {
+      margin-top: $spacing-xs;
+      display: flex;
+      gap: $spacing-xs;
+      align-items: center;
+      width: fit-content;
+      cursor: pointer;
+      color: $red;
+      font-size: $text-md;
+      font-weight: 500;
+      user-select: none;
+
+      .icon {
+        display: flex;
+        align-items: center;
+
+        svg {
+          height: 16px;
+          width: 16px;
+          color: $red;
+        }
+      }
+    }
+  }
+
+  .section {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+
+    .heading {
+      color: $color-label;
+      font-size: $text-lg;
+      font-weight: 500;
+    }
+
+    .empty {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: $spacing-xs;
+      width: 100%;
+
+      .title {
+        font-size: $text-xl;
+        font-weight: 500;
+        color: $color-title;
+        text-align: center;
+      }
+
+      .desc {
+        font-size: $text-md;
+        color: $color-desc;
+        text-align: center;
+      }
+    }
+  }
+
+  @media (max-width: $breakpoint-md) {
+    .personalDetails {
+      gap: $spacing-xs;
+
+      .image {
+        img {
+          height: 140px;
+          width: 140px;
+        }
+      }
+
+      .name {
+        font-size: $text-xl;
+      }
+
+      .text {
+        font-size: $text-md;
+      }
+
+      .logout {
+        font-size: $text-sm;
+
+        .icon {
+          svg {
+            height: 14px;
+            width: 14px;
+          }
+        }
+      }
+    }
+
+    .section {
+      .heading {
+        font-size: $text-md;
+      }
+
+      .empty {
+        .title {
+          font-size: $text-lg;
+        }
+
+        .desc {
+          font-size: $text-sm;
+        }
+      }
+    }
+  }
+}

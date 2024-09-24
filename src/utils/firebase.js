@@ -7,12 +7,12 @@ import {
 } from "firebase/storage";
 
 const firebaseConfig = {
-  apiKey: "",
-  authDomain: "",
-  projectId: "",
-  storageBucket: "",
-  messagingSenderId: "",
-  appId: "",
+  apiKey: "AIzaSyBfDC2wEoNpfDxtp6gBB5EBU0eWddk8kng",
+  authDomain: "cric-maestro-firebase.firebaseapp.com",
+  projectId: "cric-maestro-firebase",
+  storageBucket: "cric-maestro-firebase.appspot.com",
+  messagingSenderId: "471959592868",
+  appId: "1:471959592868:web:097712bc01618c8387eb31",
 };
 
 const app = initializeApp(firebaseConfig);
