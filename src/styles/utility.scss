@@ -232,17 +232,19 @@
   width: fit-content;
   display: flex;
   align-items: center;
-  padding: $spacing-xxs;
+  padding: $spacing-xs;
   border-radius: 50%;
   background-color: $bg-100;
   cursor: pointer;
 
   &:hover {
-    background-color: $bg-200;
+    background-color: $red-100;
   }
 
   svg {
-    fill: $red;
+    height: 16px;
+    width: 16px;
+    color: $red;
   }
 }
 

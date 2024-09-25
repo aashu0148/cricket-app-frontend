@@ -1,0 +1,23 @@
+@import "@/styles/variables";
+
+.container {
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  gap: $spacing-xxs;
+
+  .item {
+    font-size: $text-sm;
+    color: $color-desc;
+    transition: 300ms;
+  }
+
+  .link {
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+      color: $primary;
+    }
+  }
+}

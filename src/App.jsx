@@ -15,12 +15,13 @@ import AllTournaments from "./Pages/Admin/AllTournaments/AllTournaments";
 import TournamentsPage from "./Pages/TournamentsPage/TournamentsPage";
 import LeaguesPage from "./Pages/LeaguesPage/LeaguesPage";
 import ProfilePage from "./Pages/ProfilePage/ProfilePage";
+import LeaguePage from "./Pages/LaaguePage/LeaguePage";
 
 // Utils
 import { getCurrentUser } from "./apis/user";
 import actionTypes from "./store/actionTypes";
 import { applicationRoutes } from "./utils/constants";
-import { getAppToken, removeAppToken } from "./utils/util";
+import { getAppToken } from "./utils/util";
 
 function App() {
   const userDetails = useSelector((state) => state.user);
@@ -129,10 +130,7 @@ function App() {
               path={applicationRoutes.leagues()}
               element={<LeaguesPage />}
             />
-            <Route
-              path={`/tournaments/:tournamentId/leagues/:leagueId`}
-              element={<TournamentsPage />}
-            />
+            <Route path={applicationRoutes.league()} element={<LeaguePage />} />
           </Route>
 
           <Route path="/*" element={<PageNotFound />} />

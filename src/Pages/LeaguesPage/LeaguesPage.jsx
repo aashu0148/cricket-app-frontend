@@ -7,7 +7,6 @@ import LeagueCard from "@/Components/LeagueCard/LeagueCard";
 
 import {
   getJoinableLeaguesOfTournament,
-  getJoinedLeagues,
   getJoinedLeaguesOfTournament,
 } from "@/apis/leagues";
 import { getTournamentById } from "@/apis/tournament";
@@ -62,6 +61,7 @@ function LeaguesPage() {
           className={styles.leagueCard}
           key={item._id}
           leagueData={item}
+          onJoined={fetchJoinedLeagues}
         />
       ))}
 
@@ -134,6 +134,7 @@ function LeaguesPage() {
           onSuccess={(l) => {
             setJoinedLeagues((p) => [...p, l]);
             setActiveTab(tabsEnum.joined);
+            fetchJoinedLeagues();
           }}
         />
       ) : activeTab === tabsEnum.joined ? (

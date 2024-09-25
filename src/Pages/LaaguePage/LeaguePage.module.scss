@@ -1,0 +1,40 @@
+@import "@/styles/variables";
+
+.container {
+  .main {
+    display: flex;
+
+    .mainLeft {
+      flex: 2;
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-lg;
+
+      .information {
+        display: flex;
+        gap: $spacing-xs;
+        align-items: center;
+
+        label {
+          font-size: $text-md;
+          color: $color-label;
+          font-weight: 400;
+        }
+
+        p {
+          font-size: $text-md;
+          color: $color-title;
+          font-weight: 500;
+        }
+      }
+    }
+
+    .mainRight {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-md;
+      align-self: stretch;
+    }
+  }
+}

@@ -15,8 +15,8 @@ export const scrapeAndStorePlayerData = async (payload) => {
 };
 
 // 2. Search Player by Name
-export const searchPlayerByName = async (name) => {
-  const path = `/players/search?name=${name}`;
+export const searchPlayerByName = async (name, tid = "") => {
+  const path = `/players/search?name=${name}&tournamentId=${tid}`;
 
   return await makeApiCall({
     functionName: "searchPlayerByName",

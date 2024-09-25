@@ -1,11 +1,13 @@
 import React, { useRef } from "react";
 
+import userProfileIcon from "@/assets/profile-icon.png";
 import placeholderImage from "@/assets/images/placeholder.jpg";
 import { espnOrigin } from "@/utils/constants";
 
 const imgOriginStr = "https://p.imgci.com";
 function Img({
   usePlaceholderImageOnError = false,
+  usePLaceholderUserImageOnError = false,
   isEspnImage = false,
   src,
   alt,
@@ -28,7 +30,8 @@ function Img({
       src = espnOrigin + src;
       e.target.src = src;
       usingEspnOrigin.current = true;
-    } else if (usePlaceholderImageOnError) e.target.src = placeholderImage;
+    } else if (usePLaceholderUserImageOnError) e.target.src = userProfileIcon;
+    else if (usePlaceholderImageOnError) e.target.src = placeholderImage;
     else if (onError) onError(e);
   }
 

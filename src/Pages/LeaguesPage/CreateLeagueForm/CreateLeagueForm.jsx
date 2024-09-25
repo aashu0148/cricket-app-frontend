@@ -135,11 +135,10 @@ function CreateLeagueForm({ tournamentData = {}, onSuccess }) {
           />
 
           <div className={styles.field}>
-            <label>Select Date & Time</label>
+            <label>Draft Round Date & Time</label>
 
             <div className={styles.dateTime}>
               <DatePicker
-                label="Draft Round Date"
                 minDate={new Date()}
                 onChange={(e) =>
                   setValues((p) => ({ ...p, draftRoundStartDate: e }))

@@ -19,6 +19,7 @@ const InputControl = ({
   inputClass,
   password = false,
   hintText = "",
+  placeholder = "",
   icon,
   numericInput = false,
   value = "",
@@ -154,6 +155,7 @@ const InputControl = ({
         }}
         value={value || undefined}
         disabled={disabled}
+        placeholder={placeholder}
         {...props}
       />
 
