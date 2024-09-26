@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { Edit2 } from "react-feather";
 
 import PageLoader from "@/Components/PageLoader/PageLoader";
 import BreadCrumbs from "@/Components/Breadcrumbs/BreadCrumbs";
 import Countdown from "@/Components/Countdown/Countdown";
 import Participants from "./Participants/Participants";
 import Wishlist from "./Wishlist/Wishlist";
+import EditLeagueModal from "./EditLeagueModal/EditLeagueModal";
 import LeaderBoard from "./LeaderBoard/LeaderBoard";
 
 import { getDateFormatted, handleAppNavigation } from "@/utils/util";
@@ -25,6 +27,7 @@ function LeaguePage() {
   const [loading, setLoading] = useState(true);
   const [leagueDetails, setLeagueDetails] = useState({});
   const [tournamentDetails, setTournamentDetails] = useState({});
+  const [showEditLeagueModal, setShowEditLeagueModal] = useState(false);
 
   const currentUserTeam = leagueDetails.teams?.length
     ? leagueDetails.teams.find((e) => e.owner?._id === userDetails._id)
@@ -57,6 +60,20 @@ function LeaguePage() {
     <PageLoader fullPage />
   ) : (
     <div className={`page-container ${styles.container}`}>
+      {showEditLeagueModal && (
+        <EditLeagueModal
+          leagueDetails={leagueDetails}
+          tournamentName={tournamentDetails.longName}
+          onClose={() => setShowEditLeagueModal(false)}
+          onSuccess={(data) => {
+            if (data) setLeagueDetails(data);
+
+            setShowEditLeagueModal(false);
+            fetchLeagueDetails();
+          }}
+        />
+      )}
+
       <BreadCrumbs
         links={[
           {
@@ -89,7 +106,17 @@ function LeaguePage() {
       <div className={styles.main}>
         <div className={styles.mainLeft}>
           <div className="flex-col-xs">
-            <p className="heading-big">{leagueDetails.name}</p>
+            <div className="flex">
+              <p className="heading-big">{leagueDetails.name}</p>
+              {leagueDetails.createdBy?._id === userDetails._id && (
+                <div
+                  className="icon"
+                  onClick={() => setShowEditLeagueModal(true)}
+                >
+                  <Edit2 />
+                </div>
+              )}
+            </div>
             <p className="desc">{leagueDetails.description}</p>
 
             <div className={styles.information}>

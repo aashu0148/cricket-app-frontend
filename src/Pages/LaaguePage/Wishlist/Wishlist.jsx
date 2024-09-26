@@ -63,7 +63,7 @@ function Wishlist({
 
       <div className={styles.players}>
         {currentPlayers.map((player) => (
-          <div className={styles.player}>
+          <div className={styles.player} key={player._id}>
             <div className={`flex ${styles.left}`}>
               <div className={styles.image}>
                 <Img src={player.image} usePLaceholderUserImageOnError />

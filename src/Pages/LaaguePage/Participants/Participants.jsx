@@ -12,7 +12,7 @@ function Participants({ participants = [] }) {
 
       <div className={`cards ${styles.cards}`}>
         {participants.map((p) => (
-          <div className={`card ${styles.card}`}>
+          <div key={p._id} className={`card ${styles.card}`}>
             <div className={styles.image}>
               <Img usePLaceholderUserImageOnError src={p.owner.profileImage} />
             </div>

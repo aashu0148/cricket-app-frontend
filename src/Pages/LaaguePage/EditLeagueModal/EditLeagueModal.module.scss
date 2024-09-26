@@ -1,0 +1,39 @@
+@import "@/styles/variables";
+
+.container {
+  padding: $spacing-md;
+  margin: 0 auto;
+  width: 900px;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
+
+    label {
+      font-size: $text-md;
+      font-weight: 400;
+      color: $color-label;
+    }
+  }
+
+  .dateTime {
+    display: flex;
+    align-items: flex-start;
+    gap: $spacing-xs;
+
+    & > div {
+      flex: 1;
+    }
+  }
+}

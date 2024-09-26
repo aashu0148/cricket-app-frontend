@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import ReactDOM from "react-dom";
 import { Toaster } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
@@ -85,12 +86,19 @@ function App() {
 
   return appLoaded ? (
     <div className="main-app">
-      <Toaster
-        position={isMobileView ? "top-right" : "bottom-right"}
-        toastOptions={{
-          duration: 2500,
-        }}
-      />
+      {ReactDOM.createPortal(
+        <Toaster
+          position={isMobileView ? "top-right" : "bottom-right"}
+          toastOptions={{
+            duration: 2500,
+            style: {
+              zIndex: 9999999,
+            },
+          }}
+        />,
+        document.body
+      )}
+
       <Router>
         <Routes>
           <Route path={applicationRoutes.auth} element={<AuthPage />} />
