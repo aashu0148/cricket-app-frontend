@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Modal from "@/Components/Modal/Modal";
 import styles from "./EditTournamentModal.module.scss";
 import InputControl from "@/Components/InputControl/InputControl";
-import { Trash2 } from "react-feather";
+import { Edit, Trash2 } from "react-feather";
 import InputSelect from "@/Components/InputControl/InputSelect/InputSelect";
 import Button from "@/Components/Button/Button";
 import Spinner from "@/Components/Spinner/Spinner";
@@ -12,6 +12,7 @@ import {
   addPlayerToTournament,
   deletePlayerFromTournament,
   getTournamentById,
+  updateTournament,
 } from "@/apis/tournament";
 import { searchPlayerByName } from "@/apis/players";
 import { getAllScoringSystems } from "@/apis/scoringSystem";
@@ -29,6 +30,16 @@ export default function EditTournamentModal({ tournamentId, handleClose }) {
     endDate: null,
     scoringSystem: { name: "", value: null },
   });
+
+  const [errors, setErrors] = useState({
+    name: "",
+    longName: "",
+    startDate: "",
+    endDate: "",
+    scoringSystem: "",
+  });
+
+  console.log("edit states", EditTournamentStates);
 
   const PlayerCard = ({ player }) => {
     return (
@@ -52,7 +63,41 @@ export default function EditTournamentModal({ tournamentId, handleClose }) {
     );
   };
 
-  //********************************* * Fetch scoring systems
+  // ********************************************** Validation and Submission Changes **********************
+
+  const handleChange = (label, val) => {
+    setEditTournamentStates((prev) => ({ ...prev, [label]: val }));
+    setErrors((prev) => ({ ...prev, [label]: "" }));
+  };
+
+  const validateStates = () => {
+    const errors = {};
+    if (!EditTournamentStates?.name) errors.name = "Name is a required field";
+    if (!EditTournamentStates?.longName)
+      errors.longName = "Long name is a required field";
+    if (!EditTournamentStates.startDate)
+      errors.startDate = "Start Date is a required field";
+    if (!EditTournamentStates.endDate)
+      errors.endDate = "End Date is a required field";
+    if (!EditTournamentStates.scoringSystem)
+      errors.scoringSystem = "Scoring System is a required field";
+
+    setErrors(errors);
+    if (Object.values(errors).length > 0) return false;
+    return true;
+  };
+
+  const handleSubmit = async () => {
+    const valid = validateStates();
+    if (!valid) return;
+
+    const res = await updateTournament(tournamentId, EditTournamentStates);
+    if (!res) return;
+
+    handleClose();
+  };
+  //********************************* * Fetch scoring systems *************************
+
   async function fetchScoringSystems() {
     const res = await getAllScoringSystems();
     if (!res) return;
@@ -64,7 +109,8 @@ export default function EditTournamentModal({ tournamentId, handleClose }) {
     setAllScoringSystems(result);
   }
 
-  //********************************* */ Get tournament details
+  //********************************* */ Get tournament details *****************
+
   async function getTournamentDetails() {
     const res = await getTournamentById(tournamentId);
     setLoading(false);
@@ -82,6 +128,7 @@ export default function EditTournamentModal({ tournamentId, handleClose }) {
   }
 
   // ********************************** Search player by name ********************
+
   async function handleSearch() {
     if (!searchPlayer) return;
     const res = await searchPlayerByName(searchPlayer);
@@ -149,48 +196,30 @@ export default function EditTournamentModal({ tournamentId, handleClose }) {
                 placeholder="Enter name"
                 label="Name"
                 value={EditTournamentStates?.name}
-                onChange={(e) =>
-                  setEditTournamentStates((prev) => ({
-                    ...prev,
-                    name: e.target.value,
-                  }))
-                }
+                onChange={(e) => handleChange("name", e.target.value)}
+                error={errors.name}
               />
               <InputControl
                 placeholder={"Enter long name"}
                 label={"Long Name"}
                 value={EditTournamentStates?.longName}
-                onChange={(e) =>
-                  setEditTournamentStates((prev) => ({
-                    ...prev,
-                    longName: e.target.value,
-                  }))
-                }
+                onChange={(e) => handleChange("longName", e.target.value)}
+                error={errors.longName}
               />
               <div className="field">
                 <label>Start Date</label>
-                {/* <DatePicker
-                  onChange={(e) =>
-                    setEditTournamentStates((prev) => ({
-                      ...prev,
-                      startDate: e,
-                    }))
-                  }
+                <DatePicker
+                  onChange={(e) => handleChange("startDate", e)}
                   defaultDate={EditTournamentStates?.startDate}
-                /> */}
+                />
               </div>
 
               <div className="field">
                 <label>End Date</label>
-                {/* <DatePicker
-                  onChange={(e) =>
-                    setEditTournamentStates((prev) => ({
-                      ...prev,
-                      endDate: e,
-                    }))
-                  }
+                <DatePicker
+                  onChange={(e) => handleChange("endDate", e)}
                   defaultDate={EditTournamentStates?.endDate}
-                /> */}
+                />
               </div>
               <InputSelect
                 small
@@ -201,12 +230,8 @@ export default function EditTournamentModal({ tournamentId, handleClose }) {
                   (item) =>
                     item.value === EditTournamentStates?.scoringSystem.value
                 )}
-                onChange={(e) =>
-                  setEditTournamentStates((prev) => ({
-                    ...prev,
-                    scoringSystem: e,
-                  }))
-                }
+                onChange={(e) => handleChange("scoringSystem", e)}
+                error={errors.scoringSystem}
               />
             </div>
             <div className={styles.section}>
@@ -262,7 +287,7 @@ export default function EditTournamentModal({ tournamentId, handleClose }) {
           <Button cancelButton onClick={handleClose}>
             Cancel
           </Button>
-          <Button onClick={() => console.log("Edit action")}>Edit</Button>
+          <Button onClick={() => handleSubmit()}>Edit</Button>
         </div>
       </div>
     </Modal>
