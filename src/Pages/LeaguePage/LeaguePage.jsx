@@ -34,6 +34,7 @@ function LeaguePage() {
   const [showEditLeagueModal, setShowEditLeagueModal] = useState(false);
   const [showJoinLeagueModal, setShowJoinLeagueModal] = useState(false);
   const [joiningLeague, setJoiningLeague] = useState(false);
+  const [playerPoints, setPlayerPoints] = useState([]);
 
   const currentUserTeam = leagueDetails.teams?.length
     ? leagueDetails.teams.find((e) => e.owner?._id === userDetails._id)
@@ -67,7 +68,20 @@ function LeaguePage() {
     const res = await getTournamentById(tournamentId);
     if (!res) return;
 
-    setTournamentDetails(res.data);
+    // lets not fill whole tournament into state, its pretty big and we wont be using it whole
+    const tournament = res.data;
+    setPlayerPoints(tournament.playerPoints);
+    setTournamentDetails({
+      _id: tournament._id,
+      name: tournament.name,
+      longName: tournament.longName,
+      active: tournament.active,
+      startDate: tournament.startDate,
+      endDate: tournament.endDate,
+      season: tournament.season,
+      scoringSystem: tournament.scoringSystem,
+      players: tournament.players,
+    });
   };
 
   useEffect(() => {
@@ -196,12 +210,17 @@ function LeaguePage() {
             )}
           </div>
 
-          <Participants participants={leagueDetails.teams} />
-
-          <LeaderBoard
-            teams={leagueDetails.teams}
-            playerPoints={tournamentDetails.playerPoints}
+          <Participants
+            participants={leagueDetails.teams}
+            playerPoints={playerPoints}
           />
+
+          {draftRoundStarted && (
+            <LeaderBoard
+              teams={leagueDetails.teams}
+              playerPoints={playerPoints}
+            />
+          )}
         </div>
 
         {currentUserTeam && (

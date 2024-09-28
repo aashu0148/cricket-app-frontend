@@ -12,20 +12,26 @@
   position: relative;
 
   .sidebarOuter {
-    position: sticky;
+    position: absolute;
     top: 0;
-    height: 100vh;
+    left: 0;
+    height: 100%;
     width: 70px;
     min-width: 70px;
     z-index: 500;
     background-color: $bg;
 
     .sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
       background-color: inherit;
+      // transition: height 0ms, width 100ms;
     }
   }
 
   .app {
+    padding-left: 70px;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -46,13 +52,12 @@
 
     .sidebarOuter {
       display: none;
-      position: absolute;
-      top: 0;
-      left: 0;
       transform: translateX(-100%);
     }
 
     .app {
+      padding-left: 0;
+
       .mobileNavigation {
         display: block;
       }

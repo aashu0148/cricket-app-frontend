@@ -1,10 +1,11 @@
 import React from "react";
 
+import Img from "@/Components/Img/Img";
+
 import { getTimeFormatted } from "@/utils/util";
 import { useDraftRound } from "../util/DraftRoundContext";
 
 import styles from "./Notifications.module.scss";
-import Img from "@/Components/Img/Img";
 
 function Notifications({ className = "" }) {
   const { room, notifications } = useDraftRound();

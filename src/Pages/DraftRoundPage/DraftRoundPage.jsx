@@ -52,6 +52,7 @@ function DraftRoundPage() {
   const [loading, setLoading] = useState(true);
   const [leagueDetails, setLeagueDetails] = useState({});
   const [tournamentDetails, setTournamentDetails] = useState({});
+  const [playerPoints, setPlayerPoints] = useState([]);
 
   const { tournamentId, leagueId } = params;
   const currentUserTeam = leagueDetails.teams?.length
@@ -73,7 +74,20 @@ function DraftRoundPage() {
     const res = await getTournamentById(tournamentId);
     if (!res) return;
 
-    setTournamentDetails(res.data);
+    // lets not fill whole tournament into state, its pretty big and we wont be using it whole
+    const tournament = res.data;
+    setPlayerPoints(tournament.playerPoints);
+    setTournamentDetails({
+      _id: tournament._id,
+      name: tournament.name,
+      longName: tournament.longName,
+      active: tournament.active,
+      startDate: tournament.startDate,
+      endDate: tournament.endDate,
+      season: tournament.season,
+      scoringSystem: tournament.scoringSystem,
+      players: tournament.players,
+    });
   };
 
   useEffect(() => {
@@ -149,8 +163,15 @@ function DraftRoundPage() {
           {/* <p className="desc">{leagueDetails.description}</p> */}
         </div>
 
-        <Participants participants={leagueDetails.teams} />
-        <PlayersPool />
+        <Participants
+          playerPoints={playerPoints}
+          participants={leagueDetails.teams}
+        />
+
+        <PlayersPool
+          players={tournamentDetails.players}
+          playerPoints={playerPoints}
+        />
       </div>
 
       <div className={styles.mainRight}>

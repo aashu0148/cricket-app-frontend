@@ -293,11 +293,22 @@ function FaQ() {
 }
 
 function ContactUs() {
-  const contactUsIcons = [
-    <Facebook />,
-    <Linkedin />,
-    <Twitter />,
-    <Instagram />,
+  const socialMedia = [
+    {
+      icon: <Linkedin />,
+      link: "",
+      label: "Linkedin",
+    },
+    {
+      icon: <Twitter />,
+      link: "",
+      label: "Twitter",
+    },
+    {
+      icon: <Instagram />,
+      link: "",
+      label: "Instagram",
+    },
   ];
 
   return (
@@ -313,10 +324,16 @@ function ContactUs() {
       </div>
       <div className={styles.contactUsSection_details}>
         <div className={styles.iconsContainer}>
-          {contactUsIcons.map((item, index) => (
-            <div key={index} className={styles.contactUsSection_iconWrapper}>
-              {item}
-            </div>
+          {socialMedia.map((item) => (
+            <a
+              key={item.link || item.label}
+              href={item.link}
+              target="_blank"
+              title={item.label}
+              className={styles.contactUsSection_iconWrapper}
+            >
+              {item.icon}
+            </a>
           ))}
         </div>
       </div>

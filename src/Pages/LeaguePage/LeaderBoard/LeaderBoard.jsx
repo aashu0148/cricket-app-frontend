@@ -30,8 +30,6 @@ function LeaderBoard({ teams = [], playerPoints = [] }) {
       .sort((a, b) => (a.teamPoints < b.teamPoints ? 1 : -1));
   }, [teams]);
 
-  // console.log(parsedTeams);
-
   return (
     <div className={`page-container ${styles.container}`}>
       <p className="heading">Leader Board</p>
@@ -62,7 +60,7 @@ function LeaderBoard({ teams = [], playerPoints = [] }) {
             </div>
 
             <div className={styles.right}>
-              <p className={styles.score}>{120 - i * (i + 3)} </p>
+              <p className={styles.score}>{team.teamPoints} </p>
               <p className={styles.rank}>{i + 1}</p>
             </div>
           </div>
