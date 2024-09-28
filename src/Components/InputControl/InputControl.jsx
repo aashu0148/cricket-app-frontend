@@ -153,7 +153,7 @@ const InputControl = ({
 
           if (onChange) onChange(event);
         }}
-        value={value || undefined}
+        value={typeof value === "string" ? value : undefined}
         disabled={disabled}
         placeholder={placeholder}
         {...props}
