@@ -5,6 +5,8 @@ import React, {
   useState,
   useEffect,
 } from "react";
+import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import useSocket from "@/utils/hooks/useSocket";
 import { socketEventsEnum } from "@/utils/enums";
@@ -12,10 +14,15 @@ import { socketEventsEnum } from "@/utils/enums";
 const DraftRoundContext = createContext();
 
 export const DraftRoundProvider = ({ children }) => {
+  const userDetails = useSelector((s) => s.user);
+  const { leagueId } = useParams();
   const heartbeatInterval = useRef(null);
+  const { socket, connectToSocket } = useSocket(true, {
+    name: socketEventsEnum.leaveRoom,
+    payload: { userId: userDetails._id, leagueId },
+  });
 
-  const { socket, connectToSocket } = useSocket(true);
-
+  const [notifications, setNotifications] = useState([]);
   const [room, setRoom] = useState({
     chats: [],
     users: [],
@@ -50,6 +57,8 @@ export const DraftRoundProvider = ({ children }) => {
         socket,
         room,
         chatUnreadCount,
+        notifications,
+        setNotifications,
         setChatUnreadCount,
         setRoom,
       }}
@@ -81,6 +90,8 @@ export const DraftRoundProvider = ({ children }) => {
  *   }>
  * },
  * chatUnreadCount:Number,
+ * notifications:Array<{title:string, desc:string,timestamp:Number}>,
+ * setNotifications:Function,
  * setRoom:Function,
  * setChatUnreadCount:Function,
  * }}

@@ -9,7 +9,8 @@ function useSocketEvents() {
   const userDetails = useSelector((s) => s.user);
   const { leagueId } = useParams();
 
-  const { socket, setRoom, setChatUnreadCount } = useDraftRound();
+  const { socket, setRoom, setNotifications, setChatUnreadCount } =
+    useDraftRound();
 
   function joinRoom() {
     if (!socket) return;
@@ -31,6 +32,18 @@ function useSocketEvents() {
     socket.on(socketEventsEnum.joinedRoom, (room) => {
       setRoom(room);
       console.log(`✅ Successfully joined the room`);
+    });
+
+    socket.on(socketEventsEnum.notification, (e) => {
+      if (!e.title) return console.log("Invalid notification format", e);
+
+      setNotifications((prev) => [...prev, { ...e, timestamp: Date.now() }]);
+    });
+
+    socket.on(socketEventsEnum.usersChange, (e) => {
+      if (!Array.isArray(e?.users)) return;
+
+      setRoom((p) => ({ ...p, users: e.users }));
     });
 
     socket.on(socketEventsEnum.chat, (data) => {

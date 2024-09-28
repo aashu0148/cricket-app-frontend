@@ -21,6 +21,7 @@
 
   .mainRight {
     gap: $spacing-xxs;
+    max-width: 550px;
     --tabs-height: 38px;
 
     .tabs {

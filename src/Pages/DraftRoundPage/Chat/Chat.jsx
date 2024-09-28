@@ -52,9 +52,11 @@ function Chat({ className = "" }) {
   const userDetails = useSelector((s) => s.user);
   const { socket, room, setChatUnreadCount } = useDraftRound();
 
+  const lastMsgDivRef = useRef();
   const messagesOuterRef = useRef();
   const chatInputRef = useRef();
 
+  const [isFirstRender, setIsFirstRender] = useState(true);
   const [inputMessage, setInputMessage] = useState("");
 
   const handleChatSubmission = () => {
@@ -73,12 +75,18 @@ function Chat({ className = "" }) {
   };
 
   useEffect(() => {
-    if (messagesOuterRef.current) {
-      messagesOuterRef.current.scrollTo({
-        top: messagesOuterRef.current.scrollHeight,
+    if (!room.chats.length) return;
+
+    if (lastMsgDivRef.current) {
+      lastMsgDivRef.current.scrollIntoView({
+        behavior: isFirstRender ? "instant" : "smooth",
       });
       setChatUnreadCount(0);
     }
+  }, [room.chats?.length]);
+
+  useEffect(() => {
+    setIsFirstRender(false);
   }, []);
 
   return (
@@ -99,6 +107,8 @@ function Chat({ className = "" }) {
           ) : (
             <p className={styles.empty}>No chats present for now!</p>
           )}
+
+          <p ref={lastMsgDivRef} />
         </div>
       </div>
 

@@ -5,7 +5,10 @@ import { io } from "socket.io-client";
 import { backendApiUrl } from "../configs";
 import { socketEventsEnum } from "../enums";
 
-function useSocket(manualConnect = false) {
+function useSocket(
+  manualConnect = false,
+  eventToFireOnBeforeDisconnect = { name: "", payload: {} }
+) {
   const socket = useRef(null);
 
   const [_, setCounter] = useState(0);
@@ -42,6 +45,12 @@ function useSocket(manualConnect = false) {
 
     return () => {
       if (socket.current?.disconnect && socket.current.connected) {
+        if (eventToFireOnBeforeDisconnect.name)
+          socket.current.emit(
+            eventToFireOnBeforeDisconnect.name,
+            eventToFireOnBeforeDisconnect.payload
+          );
+
         socket.current.disconnect();
         socket.current = null;
       }

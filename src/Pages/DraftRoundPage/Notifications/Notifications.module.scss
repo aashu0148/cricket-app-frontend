@@ -7,6 +7,36 @@
   flex-direction: column;
   padding: $spacing-xs;
 
+  p {
+    word-break: break-word;
+  }
+
+  .users {
+    padding: $spacing-sm;
+    padding-top: 0;
+    width: 100%;
+    overflow-x: auto;
+    height: 100%;
+    display: flex;
+    gap: $spacing-sm;
+    align-items: center;
+
+    .image {
+      display: flex;
+      align-items: center;
+      padding: 2px;
+      border-radius: 50%;
+      background-color: $green;
+
+      img {
+        height: 40px;
+        width: 40px;
+        border-radius: 50%;
+        border: 1px solid $bg-100;
+      }
+    }
+  }
+
   .empty {
     text-align: center;
     font-size: $text-md;
@@ -29,18 +59,6 @@
       border-bottom: none;
     }
 
-    .top {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-
-      .time {
-        font-size: $text-md;
-        color: $color-label;
-        font-weight: 500;
-      }
-    }
-
     .title {
       font-size: $text-md;
       font-weight: 600;
@@ -53,6 +71,13 @@
       line-height: 1.5;
       font-weight: 500;
       color: $color-desc;
+
+      .time {
+        font-size: $text-xs;
+        color: $color-label;
+        font-weight: 500;
+        float: right;
+      }
     }
   }
 

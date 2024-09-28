@@ -8,6 +8,12 @@
   gap: $spacing-sm;
   padding: $spacing-xs;
 
+  .empty {
+    margin: auto 0;
+    text-align: center;
+    font-weight: 500;
+  }
+
   .players {
     flex: 1;
     overflow-y: auto;
