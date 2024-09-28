@@ -358,3 +358,5 @@ export const getMatchScoreCardUrl = ({
 }) => {
   return `${espnOrigin}/series/${tournamentSlug}-${tournamentObjectId}/${matchSlug}-${matchObjectId}/full-scorecard`;
 };
+
+export const isEmojiPresentInString = (str) => /\p{Emoji}/u.test(str);

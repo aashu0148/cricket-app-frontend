@@ -25,13 +25,21 @@ const calculateTimeLeft = (date = "") => {
   return timeLeft;
 };
 
-const Countdown = ({ targetDate }) => {
-  const countdownInterval = useRef();
+const Countdown = ({ targetDate, onCountdownComplete }) => {
+  const countdownInterval = useRef(null);
 
-  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
+  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(targetDate));
 
   useEffect(() => {
-    if (timeLeft.timeOver) clearInterval(countdownInterval.current);
+    if (timeLeft.timeOver) {
+      if (countdownInterval.current) {
+        // interval was running before
+        if (onCountdownComplete) onCountdownComplete();
+      }
+
+      clearInterval(countdownInterval.current);
+      countdownInterval.current = null;
+    }
   }, [timeLeft.timeOver]);
 
   useEffect(() => {

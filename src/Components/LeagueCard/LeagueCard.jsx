@@ -5,8 +5,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import Button from "@/Components/Button/Button";
-import Modal from "@/Components/Modal/Modal";
-import InputControl from "@/Components/InputControl/InputControl";
+import JoinProtectedLeagueModal from "./JoinProtectedLeagueModal";
 
 import {
   getDateFormatted,
@@ -18,38 +17,6 @@ import { leagueTypeEnum } from "@/utils/enums";
 import { applicationRoutes } from "@/utils/constants";
 
 import styles from "./LeagueCard.module.scss";
-
-function JoinProtectedLeague({ onClose, onJoin }) {
-  const [pass, setPass] = useState("");
-
-  return (
-    <Modal onClose>
-      <div className="page-container form">
-        <p className="heading">Join League</p>
-        <InputControl
-          value={pass}
-          onChange={(e) => setPass(e.target.value)}
-          label="League Password"
-          placeholder="Enter password"
-        />
-
-        <div className="footer">
-          <Button cancelButton onClick={onClose}>
-            Close
-          </Button>
-          <Button
-            onClick={() => {
-              onJoin(pass);
-              onClose();
-            }}
-          >
-            Join
-          </Button>
-        </div>
-      </div>
-    </Modal>
-  );
-}
 
 function LeagueCard({ className = "", leagueData, onJoined }) {
   const navigate = useNavigate();
@@ -79,7 +46,7 @@ function LeagueCard({ className = "", leagueData, onJoined }) {
   return (
     <div className={`${className || ""} ${styles.container}`}>
       {showJoinLeagueModal && (
-        <JoinProtectedLeague
+        <JoinProtectedLeagueModal
           onClose={() => setShowJoinLeagueModal(false)}
           onJoin={handleJoinLeague}
         />

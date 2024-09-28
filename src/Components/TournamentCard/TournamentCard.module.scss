@@ -44,7 +44,7 @@
   .section {
     .matchCards,
     .squadCards {
-      width: fit-content;
+      width: 100%;
       height: 360px;
       overflow-x: auto;
       display: flex;
@@ -204,5 +204,3 @@
     text-align: center;
   }
 }
-
-// create tournament m jaegi scoring system id and espn url

@@ -16,7 +16,9 @@ import AllTournaments from "./Pages/Admin/AllTournaments/AllTournaments";
 import TournamentsPage from "./Pages/TournamentsPage/TournamentsPage";
 import LeaguesPage from "./Pages/LeaguesPage/LeaguesPage";
 import ProfilePage from "./Pages/ProfilePage/ProfilePage";
-import LeaguePage from "./Pages/LaaguePage/LeaguePage";
+import LeaguePage from "./Pages/LeaguePage/LeaguePage";
+import DraftRoundPage from "./Pages/DraftRoundPage/DraftRoundPage";
+import { DraftRoundProvider } from "./Pages/DraftRoundPage/util/DraftRoundContext";
 
 // Utils
 import { getCurrentUser } from "./apis/user";
@@ -139,6 +141,14 @@ function App() {
               element={<LeaguesPage />}
             />
             <Route path={applicationRoutes.league()} element={<LeaguePage />} />
+            <Route
+              path={applicationRoutes.draftRound()}
+              element={
+                <DraftRoundProvider>
+                  <DraftRoundPage />
+                </DraftRoundProvider>
+              }
+            />
           </Route>
 
           <Route path="/*" element={<PageNotFound />} />

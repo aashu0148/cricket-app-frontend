@@ -11,6 +11,7 @@ import { addPlayerToWishlist, removePlayerFromWishlist } from "@/apis/leagues";
 import styles from "./Wishlist.module.scss";
 
 function Wishlist({
+  className = "",
   leagueId,
   allPlayers = [],
   currentPlayers = [],
@@ -48,9 +49,7 @@ function Wishlist({
   };
 
   return (
-    <div className={styles.container}>
-      <p className={`heading`}>Wishlist</p>
-
+    <div className={`${className || ""} ${styles.container}`}>
       <InputSelect
         options={allPlayers
           .filter((p) => !currentPlayers.some((e) => e._id === p._id))

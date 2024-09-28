@@ -14,6 +14,10 @@ export const applicationRoutes = {
     `/tournaments/${tournamentId || ":tournamentId"}/leagues/${
       leagueId || ":leagueId"
     }`,
+  draftRound: (tournamentId = "", leagueId = "") =>
+    `/tournaments/${tournamentId || ":tournamentId"}/leagues/${
+      leagueId || ":leagueId"
+    }/draft-round`,
 };
 
 const commonColors = {

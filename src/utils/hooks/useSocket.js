@@ -1,47 +1,59 @@
 import { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
-import { io } from "socket.io-client";
 import { toast } from "react-hot-toast";
+import { io } from "socket.io-client";
 
 import { backendApiUrl } from "../configs";
+import { socketEventsEnum } from "../enums";
 
-function useSocket() {
+function useSocket(manualConnect = false) {
   const socket = useRef(null);
 
-  const userDetails = useSelector((s) => s.root.user);
+  const [_, setCounter] = useState(0);
 
   const handleSocketEvents = () => {
-    socket.current.on("connect", () => {
-      socket.current.emit("join", { userId: userDetails._id });
-      console.log("🔵 Socket connected");
+    socket.current.on(socketEventsEnum.connect, () => {
+      console.log("⚡ Socket connected");
     });
 
-    socket.current.on("disconnect", () => {
-      console.log("🔴 Socket disconnected");
+    socket.current.on(socketEventsEnum.disconnect, () => {
+      console.log("⚡🔴 Socket disconnected");
     });
 
-    socket.current.on("joined", () => {
-      console.log("✅ Successfully joined the room.");
-    });
-
-    socket.current.on("error", (msg) => {
-      console.log("⚠️ Socket Error", msg);
+    socket.current.on(socketEventsEnum.error, (msg) => {
+      console.log("⚡⚠️ Socket Error", msg);
       toast.error(msg);
     });
   };
 
-  useEffect(() => {
+  function initSocket() {
+    if (socket.current) return;
+
     socket.current = io(backendApiUrl);
     handleSocketEvents();
+    setCounter((p) => p + 1);
+  }
+
+  function connectSocket() {
+    if (!socket.current) initSocket();
+  }
+
+  useEffect(() => {
+    if (!manualConnect) initSocket();
 
     return () => {
-      if (socket?.current?.disconnect && socket.current.connected) {
+      if (socket.current?.disconnect && socket.current.connected) {
         socket.current.disconnect();
+        socket.current = null;
       }
     };
   }, []);
 
-  return [socket.current];
+  return {
+    socket: socket.current,
+    connectToSocket: manualConnect
+      ? connectSocket
+      : () => console.log("Manual connect not passed as true"),
+  };
 }
 
 export default useSocket;

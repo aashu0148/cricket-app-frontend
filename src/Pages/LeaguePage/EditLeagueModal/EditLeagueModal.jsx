@@ -38,7 +38,7 @@ function EditLeagueModal({
     draftRoundStartDate: leagueDetails.draftRound.startDate || "",
     draftRoundStartTime: leagueDetails.draftRound.startDate
       ? new Date(leagueDetails.draftRound.startDate)
-          .toLocaleTimeString()
+          .toLocaleTimeString("en-in", { hour12: false })
           .split(":")
           .slice(0, 2)
           .join(":")
@@ -52,6 +52,7 @@ function EditLeagueModal({
     const errors = {};
 
     if (!values.name) errors.name = "Enter league name";
+    else if (values.name.length > 50) errors.name = "Too long league name";
     if (!values.description) errors.description = "Enter league description";
     if (!values.type?.value) errors.type = "Select league type";
     if (!values.draftRoundStartDate || !values.draftRoundStartTime)
