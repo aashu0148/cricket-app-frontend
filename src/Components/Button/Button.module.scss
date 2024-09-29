@@ -51,7 +51,8 @@
     color: $black;
     border: 2px solid $bg-200;
     cursor: not-allowed;
-    &.active {
+
+    &:active {
       transform: none;
     }
   }

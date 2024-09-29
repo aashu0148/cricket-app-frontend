@@ -166,11 +166,13 @@ function DraftRoundPage() {
         <Participants
           playerPoints={playerPoints}
           participants={leagueDetails.teams}
+          activeTurnUserId={leagueDetails.draftRound?.currentTurn}
         />
 
         <PlayersPool
           players={tournamentDetails.players}
           playerPoints={playerPoints}
+          teams={leagueDetails.teams}
         />
       </div>
 

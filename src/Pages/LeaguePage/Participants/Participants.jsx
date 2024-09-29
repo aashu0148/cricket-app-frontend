@@ -36,36 +36,50 @@ function Participants({
 
       <div className={`cards ${styles.cards}`}>
         {participants.map((team) => (
-          <div key={team._id} className={`card ${styles.card}`}>
-            <div className={styles.image}>
-              <Img
-                usePLaceholderUserImageOnError
-                src={team.owner.profileImage}
-              />
-            </div>
-            <p className={styles.name}>{team.owner.name}</p>
-
-            {team.players?.length > 0 ? (
-              selectedTeam.owner._id === team.owner._id ? (
-                <Button
-                  small
-                  cancelButton
-                  onClick={() => setSelectedTeam({ owner: {}, players: [] })}
-                >
-                  Hide Team
-                </Button>
-              ) : (
-                <Button
-                  small
-                  outlineButton
-                  onClick={() => onTeamSelection(team)}
-                >
-                  View Team
-                </Button>
-              )
-            ) : (
-              ""
+          <div
+            key={team._id}
+            className={`${
+              activeTurnUserId === team.owner?._id ? styles.active : ""
+            } ${styles.cardOuter}`}
+          >
+            {activeTurnUserId === team.owner?._id && (
+              <p className={styles.turnTag}>Turn</p>
             )}
+            <div className={`card ${styles.card}`}>
+              <div className={styles.cardInner}>
+                <div className={styles.image}>
+                  <Img
+                    usePLaceholderUserImageOnError
+                    src={team.owner.profileImage}
+                  />
+                </div>
+                <p className={styles.name}>{team.owner.name}</p>
+
+                {team.players?.length > 0 ? (
+                  selectedTeam.owner._id === team.owner._id ? (
+                    <Button
+                      small
+                      cancelButton
+                      onClick={() =>
+                        setSelectedTeam({ owner: {}, players: [] })
+                      }
+                    >
+                      Hide Team
+                    </Button>
+                  ) : (
+                    <Button
+                      small
+                      outlineButton
+                      onClick={() => onTeamSelection(team)}
+                    >
+                      View Team
+                    </Button>
+                  )
+                ) : (
+                  ""
+                )}
+              </div>
+            </div>
           </div>
         ))}
       </div>

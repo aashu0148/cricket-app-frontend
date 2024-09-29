@@ -17,6 +17,8 @@ const socketEventsEnum = {
   usersChange: "users-change",
   draftRoundCompleted: "draft-round-completed",
   pickPlayer: "pick-player",
+  turnUpdate: "turn-update",
+  roundStatusUpdate: "round-status-update",
 };
 
 export { leagueTypeEnum, socketEventsEnum };
