@@ -44,7 +44,8 @@
     position: relative;
     box-shadow: $shadow-lifted-200;
 
-    .turnTag {
+    .turnTag,
+    .timer {
       position: absolute;
       top: 0;
       right: 6px;
@@ -56,6 +57,17 @@
       transform: translateY(-50%);
       background-color: $primary;
       color: $white;
+      line-height: 1;
+    }
+
+    .timer {
+      min-width: 55px;
+      text-align: center;
+      right: auto;
+      left: 6px;
+      background-color: $bg;
+      border: 2px solid $primary;
+      color: $primary;
     }
   }
 

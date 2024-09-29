@@ -1,16 +1,18 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { X } from "react-feather";
 
 import Img from "@/Components/Img/Img";
 import Button from "@/Components/Button/Button";
 
 import styles from "./Participants.module.scss";
+import Countdown from "@/Components/Countdown/Countdown";
 
 function Participants({
   participants = [],
   playerPoints = [],
   activeTurnUserId = "",
 }) {
+  const [targetDate, setTargetDate] = useState(new Date());
   const [selectedTeamOwnerId, setSelectedTeamOwnerId] = useState("");
 
   const selectedTeam = useMemo(() => {
@@ -32,6 +34,10 @@ function Participants({
     };
   }, [selectedTeamOwnerId, participants]);
 
+  useEffect(() => {
+    setTargetDate(new Date(Date.now() + 118 * 1000)); // around 12sec
+  }, [activeTurnUserId]);
+
   return (
     <div className={`flex-col-xs ${styles.container}`}>
       <p className="heading">Participants</p>
@@ -45,7 +51,17 @@ function Participants({
             } ${styles.cardOuter}`}
           >
             {activeTurnUserId === team.owner?._id && (
-              <p className={styles.turnTag}>Turn</p>
+              <>
+                <p className={styles.turnTag}>Turn</p>
+                <p className={styles.timer}>
+                  <Countdown
+                    skipDays
+                    skipHours
+                    returnTextOnly
+                    targetDate={targetDate}
+                  />
+                </p>
+              </>
             )}
             <div className={`card ${styles.card}`}>
               <div className={styles.cardInner}>

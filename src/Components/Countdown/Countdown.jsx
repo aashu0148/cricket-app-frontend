@@ -10,6 +10,7 @@ const calculateTimeLeft = (date = "") => {
     minutes: 0,
     seconds: 0,
     timeOver: false,
+    text: "",
   };
 
   if (difference > 0) {
@@ -22,13 +23,35 @@ const calculateTimeLeft = (date = "") => {
     };
   } else timeLeft.timeOver = true;
 
+  timeLeft.text = `${("0" + timeLeft.days).slice(-2)}:${(
+    "0" + timeLeft.hours
+  ).slice(-2)}:${("0" + timeLeft.minutes).slice(-2)}:${(
+    "0" + timeLeft.seconds
+  ).slice(-2)}`;
+
   return timeLeft;
 };
 
-const Countdown = ({ targetDate, onCountdownComplete }) => {
+const Countdown = ({
+  skipDays = false,
+  skipHours = false,
+  returnTextOnly = false,
+  targetDate,
+  onCountdownComplete,
+}) => {
   const countdownInterval = useRef(null);
 
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(targetDate));
+
+  const getText = () => {
+    let skipPlace = 0;
+    if (skipDays) skipPlace++;
+    if (skipHours) skipPlace++;
+
+    const arr = timeLeft.text.split(":");
+
+    return arr.slice(skipPlace).join(":");
+  };
 
   useEffect(() => {
     if (timeLeft.timeOver) {
@@ -50,7 +73,9 @@ const Countdown = ({ targetDate, onCountdownComplete }) => {
     return () => clearInterval(countdownInterval.current);
   }, [targetDate]);
 
-  return (
+  return returnTextOnly ? (
+    getText()
+  ) : (
     <div className={styles.countdown}>
       <div className={styles.timeBlock}>
         <div className={styles.timeValue}>
