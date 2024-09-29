@@ -111,7 +111,7 @@ function Participants({
             <Button
               cancelButton
               small
-              onClick={() => setSelectedTeam({ owner: {}, players: [] })}
+              onClick={() => setSelectedTeamOwnerId("")}
             >
               <X /> hide
             </Button>

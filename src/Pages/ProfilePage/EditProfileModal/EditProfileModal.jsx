@@ -7,6 +7,7 @@ import Button from "@/Components/Button/Button";
 import InputControl from "@/Components/InputControl/InputControl";
 
 import { updateUserDetails } from "@/apis/user";
+import { handleNumericInputKeyDown } from "@/utils/util";
 
 function EditProfileModal({ onClose, onSuccess }) {
   const userDetails = useSelector((s) => s.user);
@@ -37,12 +38,12 @@ function EditProfileModal({ onClose, onSuccess }) {
     };
 
     setSubmitting(true);
-    const res = await updateUserDetails(userDetails._id, body);
+    const res = await updateUserDetails(body);
     setSubmitting(false);
     if (!res) return;
 
     if (onSuccess) onSuccess(res.data);
-    toast.success("League updated successfully");
+    toast.success("User updated successfully");
   };
 
   return (
@@ -71,6 +72,7 @@ function EditProfileModal({ onClose, onSuccess }) {
               maxLength={10}
               placeholder={"Enter phone"}
               error={errors.phone}
+              onKeyDown={handleNumericInputKeyDown}
             />
           </div>
         </div>
