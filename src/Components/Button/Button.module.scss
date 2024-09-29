@@ -16,6 +16,11 @@
   font-size: 1rem;
   justify-content: center;
 
+  svg {
+    height: 16px;
+    width: 16px;
+  }
+
   &:active {
     transform: translateY(1px);
   }
