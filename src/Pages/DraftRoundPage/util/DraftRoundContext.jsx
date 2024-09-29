@@ -22,6 +22,12 @@ export const DraftRoundProvider = ({ children }) => {
     payload: { userId: userDetails._id, leagueId },
   });
 
+  const [roomStatuses, setRoomStatuses] = useState({
+    connected: true,
+    turn: "",
+    status: "",
+    started: false,
+  });
   const [notifications, setNotifications] = useState([]);
   const [room, setRoom] = useState({
     chats: [],
@@ -58,6 +64,8 @@ export const DraftRoundProvider = ({ children }) => {
         room,
         chatUnreadCount,
         notifications,
+        roomStatuses,
+        setRoomStatuses,
         setNotifications,
         setChatUnreadCount,
         setRoom,
@@ -72,6 +80,9 @@ export const DraftRoundProvider = ({ children }) => {
  *
  * @returns {{
  * socket:object,
+ * roomStatuses:{
+ * connected:boolean,started:boolean,status:string,turn:string
+ * },
  *  room:{
  *   name: string,
  *   leagueId: string,
@@ -94,6 +105,7 @@ export const DraftRoundProvider = ({ children }) => {
  * setNotifications:Function,
  * setRoom:Function,
  * setChatUnreadCount:Function,
+ * setRoomStatuses:Function,
  * }}
  */
 export const useDraftRound = () => {

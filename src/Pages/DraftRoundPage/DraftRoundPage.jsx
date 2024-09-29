@@ -15,10 +15,10 @@ import PlayersPool from "./PlayersPool/PlayersPool";
 import { getLeagueById } from "@/apis/leagues";
 import { getTournamentById } from "@/apis/tournament";
 import { handleAppNavigation } from "@/utils/util";
-import useSocket from "@/utils/hooks/useSocket";
 import { applicationRoutes } from "@/utils/constants";
 import { socketEventsEnum } from "@/utils/enums";
 import useSocketEvents from "./util/useSocketEvents";
+import { useDraftRound } from "./util/DraftRoundContext";
 
 import styles from "./DraftRoundPage.module.scss";
 
@@ -47,12 +47,14 @@ function DraftRoundPage() {
   const userDetails = useSelector((s) => s.user);
   const isMobileView = useSelector((s) => s.root.isMobileView);
   useSocketEvents();
+  const { socket, roomStatuses } = useDraftRound();
 
   const [activeTab, setActiveTab] = useState(tabsEnum.wishlist);
   const [loading, setLoading] = useState(true);
   const [leagueDetails, setLeagueDetails] = useState({});
   const [tournamentDetails, setTournamentDetails] = useState({});
   const [playerPoints, setPlayerPoints] = useState([]);
+  const [tournamentPlayers, setTournamentPlayers] = useState([]);
 
   const { tournamentId, leagueId } = params;
   const currentUserTeam = leagueDetails.teams?.length
@@ -61,6 +63,24 @@ function DraftRoundPage() {
   const isDraftRoundCompleted = leagueDetails.draftRound?.completed;
   const draftRoundStarted =
     new Date() > new Date(leagueDetails.draftRound?.startDate);
+
+  const handlePauseDraftRound = () => {
+    if (!socket) return;
+
+    socket.emit(socketEventsEnum.pauseRound, {
+      leagueId,
+      userId: userDetails._id,
+    });
+  };
+
+  const handleResumeDraftRound = () => {
+    if (!socket) return;
+
+    socket.emit(socketEventsEnum.resumeRound, {
+      leagueId,
+      userId: userDetails._id,
+    });
+  };
 
   const fetchLeagueDetails = async () => {
     const res = await getLeagueById(leagueId);
@@ -77,6 +97,7 @@ function DraftRoundPage() {
     // lets not fill whole tournament into state, its pretty big and we wont be using it whole
     const tournament = res.data;
     setPlayerPoints(tournament.playerPoints);
+    setTournamentPlayers(tournament.players || []);
     setTournamentDetails({
       _id: tournament._id,
       name: tournament.name,
@@ -86,9 +107,71 @@ function DraftRoundPage() {
       endDate: tournament.endDate,
       season: tournament.season,
       scoringSystem: tournament.scoringSystem,
-      players: tournament.players,
     });
   };
+
+  function removeSocketListeners() {
+    if (!socket) return;
+
+    socket.off(socketEventsEnum.paused);
+    socket.off(socketEventsEnum.resumed);
+    socket.off(socketEventsEnum.picked);
+  }
+
+  function handleSocketEvents() {
+    if (!socket) return;
+
+    socket.on(socketEventsEnum.paused, (data) => {
+      setLeagueDetails((p) => ({
+        ...p,
+        draftRound: { ...p.draftRound, paused: data.paused || true },
+      }));
+    });
+
+    socket.on(socketEventsEnum.resumed, (data) => {
+      setLeagueDetails((p) => ({
+        ...p,
+        draftRound: { ...p.draftRound, paused: data.paused || false },
+      }));
+    });
+
+    socket.on(socketEventsEnum.picked, (data = {}) => {
+      const { pickedById, pickedPlayerId } = data;
+      if (!pickedById)
+        return toast.error("Something is wrong updating players pool");
+
+      const player = tournamentPlayers.find((p) => p._id === pickedPlayerId);
+      if (!player)
+        return toast.error("Something is wrong updating players pool");
+
+      setLeagueDetails((p) => ({
+        ...p,
+        teams: p.teams.map((team) =>
+          team.owner._id === pickedById
+            ? { ...team, players: [...team.players, player] }
+            : team
+        ),
+      }));
+    });
+  }
+
+  useEffect(() => {
+    if (!roomStatuses.turn) return;
+
+    if (leagueDetails.draftRound)
+      setLeagueDetails((p) => ({
+        ...p,
+        draftRound: { ...p.draftRound, currentTurn: roomStatuses.turn },
+      }));
+  }, [roomStatuses.turn]);
+
+  useEffect(() => {
+    handleSocketEvents();
+
+    return () => {
+      removeSocketListeners();
+    };
+  }, [socket, tournamentPlayers]);
 
   useEffect(() => {
     if (!draftRoundStarted && leagueDetails.draftRound?.startDate) {
@@ -104,8 +187,6 @@ function DraftRoundPage() {
     fetchTournamentDetails();
     fetchLeagueDetails();
   }, []);
-
-  // console.log({ currentUserTeam, leagueDetails, tournamentDetails });
 
   return loading ? (
     <PageLoader fullPage />
@@ -158,19 +239,57 @@ function DraftRoundPage() {
           <div className="spacious-head">
             <p className="heading">Draft Round</p>
 
-            <Button>Pause round</Button>
+            {leagueDetails.createdBy?._id === userDetails._id ? (
+              leagueDetails.draftRound.paused ? (
+                <Button onClick={handleResumeDraftRound}>Resume round</Button>
+              ) : (
+                <Button onClick={handlePauseDraftRound} outlineButton>
+                  Pause round
+                </Button>
+              )
+            ) : (
+              ""
+            )}
           </div>
-          {/* <p className="desc">{leagueDetails.description}</p> */}
+          {!roomStatuses.connected && (
+            <div className={styles.information}>
+              <p className={styles.blink}>
+                Connection Disconnected, trying to re-connect{" "}
+              </p>
+            </div>
+          )}
+
+          <div className={styles.information}>
+            <label>Status:</label>
+            <p>{roomStatuses.status}</p>
+          </div>
+
+          <div className={styles.information}>
+            <label>Tournament:</label>
+            <p>{tournamentDetails.longName}</p>
+          </div>
+
+          <div className={styles.information}>
+            <label>League:</label>
+            <p>{leagueDetails.name}</p>
+          </div>
+
+          <div className={styles.information}>
+            <label>League Owner:</label>
+            <p>{leagueDetails.createdBy?.name}</p>
+          </div>
         </div>
 
         <Participants
           playerPoints={playerPoints}
           participants={leagueDetails.teams}
-          activeTurnUserId={leagueDetails.draftRound?.currentTurn}
+          activeTurnUserId={
+            roomStatuses.started ? leagueDetails.draftRound?.currentTurn : ""
+          }
         />
 
         <PlayersPool
-          players={tournamentDetails.players}
+          players={tournamentPlayers}
           playerPoints={playerPoints}
           teams={leagueDetails.teams}
         />
@@ -196,7 +315,7 @@ function DraftRoundPage() {
             className={styles.wishlist}
             currentPlayers={currentUserTeam.wishlist}
             leagueId={leagueDetails._id}
-            allPlayers={tournamentDetails.players}
+            allPlayers={tournamentPlayers}
             onPlayerAdded={(p) =>
               setLeagueDetails((league) => ({
                 ...league,

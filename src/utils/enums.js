@@ -19,6 +19,11 @@ const socketEventsEnum = {
   pickPlayer: "pick-player",
   turnUpdate: "turn-update",
   roundStatusUpdate: "round-status-update",
+  picked: "picked",
+  pauseRound: "pause-round",
+  paused: "paused",
+  resumeRound: "resume-round",
+  resumed: "resumed",
 };
 
 export { leagueTypeEnum, socketEventsEnum };

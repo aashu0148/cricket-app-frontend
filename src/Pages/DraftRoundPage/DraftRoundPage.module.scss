@@ -16,6 +16,39 @@
 
   .mainLeft {
     width: 66%;
+
+    .information {
+      display: flex;
+      gap: $spacing-xs;
+      align-items: center;
+
+      label {
+        font-size: $text-md;
+        color: $color-label;
+        font-weight: 400;
+      }
+
+      p {
+        font-size: $text-md;
+        color: $color-title;
+        font-weight: 500;
+      }
+
+      .blink {
+        animation: blink 2s linear infinite;
+        color: $red;
+      }
+
+      @keyframes blink {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.55;
+        }
+      }
+    }
   }
 
   .mainRight {

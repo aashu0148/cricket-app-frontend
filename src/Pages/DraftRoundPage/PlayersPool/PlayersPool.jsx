@@ -1,17 +1,28 @@
 import React, { useMemo, useState } from "react";
 import { X } from "react-feather";
+import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import InputControl from "@/Components/InputControl/InputControl";
 import Img from "@/Components/Img/Img";
-
-import styles from "./PlayersPool.module.scss";
 import Button from "@/Components/Button/Button";
 
+import { useDraftRound } from "../util/DraftRoundContext";
+import { socketEventsEnum } from "@/utils/enums";
+import { sleep } from "@/utils/util";
+
+import styles from "./PlayersPool.module.scss";
+
 function PlayersPool({ teams = [], players = [], playerPoints = [] }) {
+  const userDetails = useSelector((s) => s.user);
+  const { leagueId } = useParams();
+
+  const { socket } = useDraftRound();
   const [searchInput, setSearchInput] = useState("");
+  const [picking, setPicking] = useState(false);
 
   const parsedPlayers = useMemo(() => {
-    const allPlayers = players
+    const allPlayers = [...players]
       .map((item) => {
         const p = playerPoints.find((e) => e.player === item._id);
         if (p?.points) item.points = p.points;
@@ -34,7 +45,19 @@ function PlayersPool({ teams = [], players = [], playerPoints = [] }) {
       .sort((a, b) => ((a.points || 0) > (b.points || 0) ? -1 : 1));
 
     return [...available, ...picked];
-  }, [players, searchInput]);
+  }, [teams, players, searchInput]);
+
+  const handlePickClick = async (player) => {
+    setPicking(player._id);
+    socket.emit(socketEventsEnum.pickPlayer, {
+      userId: userDetails._id,
+      leagueId,
+      pickedPlayerId: player._id,
+    });
+
+    await sleep(2000);
+    setPicking("");
+  };
 
   return (
     <div className={styles.container}>
@@ -101,7 +124,14 @@ function PlayersPool({ teams = [], players = [], playerPoints = [] }) {
                   Picked
                 </Button>
               ) : (
-                <Button small>Pick</Button>
+                <Button
+                  disabled={player._id === picking}
+                  useSpinnerWhenDisabled
+                  small
+                  onClick={() => handlePickClick(player)}
+                >
+                  Pick
+                </Button>
               )}
             </div>
           ))}

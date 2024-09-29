@@ -9,8 +9,13 @@ function useSocketEvents() {
   const userDetails = useSelector((s) => s.user);
   const { leagueId } = useParams();
 
-  const { socket, setRoom, setNotifications, setChatUnreadCount } =
-    useDraftRound();
+  const {
+    socket,
+    setRoom,
+    setNotifications,
+    setRoomStatuses,
+    setChatUnreadCount,
+  } = useDraftRound();
 
   function joinRoom() {
     if (!socket) return;
@@ -21,6 +26,18 @@ function useSocketEvents() {
     });
   }
 
+  function removeSocketListeners() {
+    if (!socket) return;
+
+    socket.off(socketEventsEnum.connect);
+    socket.off(socketEventsEnum.disconnect);
+    socket.off(socketEventsEnum.joinedRoom);
+    socket.off(socketEventsEnum.chat);
+    socket.off(socketEventsEnum.usersChange);
+    socket.off(socketEventsEnum.draftRoundCompleted);
+    socket.off(socketEventsEnum.roundStatusUpdate);
+  }
+
   function handleSocketEvents() {
     if (!socket) return;
     if (socket.connected) joinRoom();
@@ -29,8 +46,13 @@ function useSocketEvents() {
       joinRoom();
     });
 
+    socket.on(socketEventsEnum.disconnect, () => {
+      setRoomStatuses((p) => ({ ...p, connected: false }));
+    });
+
     socket.on(socketEventsEnum.joinedRoom, (room) => {
       setRoom(room);
+      setRoomStatuses((p) => ({ ...p, connected: true }));
       console.log(`✅ Successfully joined the room`);
     });
 
@@ -53,10 +75,33 @@ function useSocketEvents() {
 
       // setChatUnreadCount((prev) => prev + 1);
     });
+
+    socket.on(socketEventsEnum.draftRoundCompleted, (data) => {
+      console.log(`📜 Event: ${socketEventsEnum.draftRoundCompleted}`, data);
+    });
+
+    socket.on(socketEventsEnum.turnUpdate, (data) => {
+      setRoomStatuses((prev) => ({
+        ...prev,
+        turn: data?.userId,
+      }));
+    });
+
+    socket.on(socketEventsEnum.roundStatusUpdate, (data) => {
+      setRoomStatuses((prev) => ({
+        ...prev,
+        ...data,
+        started: data.isStarted,
+      }));
+    });
   }
 
   useEffect(() => {
     handleSocketEvents();
+
+    return () => {
+      removeSocketListeners();
+    };
   }, [socket]);
 
   return null;
