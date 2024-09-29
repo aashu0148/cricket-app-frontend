@@ -37,4 +37,18 @@
       align-self: stretch;
     }
   }
+
+  @media (max-width: $breakpoint-md) {
+    .main {
+      flex-direction: column;
+      flex-direction: column;
+      height: fit-content;
+
+      .mainLeft,
+      .mainRight {
+        width: 100%;
+        overflow-y: visible;
+      }
+    }
+  }
 }

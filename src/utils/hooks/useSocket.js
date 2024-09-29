@@ -24,7 +24,7 @@ function useSocket(
     });
 
     socket.current.on(socketEventsEnum.error, (msg) => {
-      console.log("⚡⚠️ Socket Error", msg);
+      console.log("⚡⚠️ Socket Error:", msg);
       toast.error(msg);
     });
   };

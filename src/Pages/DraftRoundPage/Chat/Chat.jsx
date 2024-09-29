@@ -9,9 +9,9 @@ import Button from "@/Components/Button/Button";
 import { getTimeFormatted, isEmojiPresentInString } from "@/utils/util";
 import { useDraftRound } from "../util/DraftRoundContext";
 import { socketEventsEnum } from "@/utils/enums";
+import { colors } from "@/utils/constants";
 
 import styles from "./Chat.module.scss";
-import { colors } from "@/utils/constants";
 
 function Message({ chat = {}, isOnRightSide = false, isConcurrent = false }) {
   const message = chat.message || "";
@@ -100,8 +100,9 @@ function Chat({ className = "" }) {
       lastMsgDivRef.current.scrollIntoView({
         behavior: isFirstRender ? "instant" : "smooth",
       });
-      setChatUnreadCount(0);
     }
+
+    setChatUnreadCount(0);
   }, [room.chats?.length]);
 
   useEffect(() => {

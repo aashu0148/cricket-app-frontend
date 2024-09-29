@@ -27,6 +27,7 @@ export const DraftRoundProvider = ({ children }) => {
     turn: "",
     status: "",
     started: false,
+    completed: false,
   });
   const [notifications, setNotifications] = useState([]);
   const [room, setRoom] = useState({
@@ -40,13 +41,16 @@ export const DraftRoundProvider = ({ children }) => {
     if (heartbeatInterval.current) return;
 
     heartbeatInterval.current = setInterval(() => {
-      socket.emit(socketEventsEnum.heartbeat);
+      socket.emit(socketEventsEnum.heartbeat, {
+        userId: userDetails._id,
+        leagueId,
+      });
       console.log("💟");
     }, 60 * 1000);
   }
 
   useEffect(() => {
-    if (socket?.connected) handleHeartbeat();
+    if (socket) handleHeartbeat();
     else {
       clearInterval(heartbeatInterval.current);
       heartbeatInterval.current = null;
@@ -81,7 +85,7 @@ export const DraftRoundProvider = ({ children }) => {
  * @returns {{
  * socket:object,
  * roomStatuses:{
- * connected:boolean,started:boolean,status:string,turn:string
+ * connected:boolean,started:boolean,status:string,turn:string,completed:boolean
  * },
  *  room:{
  *   name: string,

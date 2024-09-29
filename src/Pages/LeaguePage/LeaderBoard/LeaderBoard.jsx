@@ -28,7 +28,7 @@ function LeaderBoard({ teams = [], playerPoints = [] }) {
         };
       })
       .sort((a, b) => (a.teamPoints < b.teamPoints ? 1 : -1));
-  }, [teams]);
+  }, [teams, playerPoints]);
 
   return (
     <div className={`page-container ${styles.container}`}>

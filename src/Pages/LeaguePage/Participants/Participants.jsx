@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { X } from "react-feather";
 
 import Img from "@/Components/Img/Img";
@@ -11,12 +11,14 @@ function Participants({
   playerPoints = [],
   activeTurnUserId = "",
 }) {
-  const [selectedTeam, setSelectedTeam] = useState({
-    owner: {},
-    players: [],
-  });
+  const [selectedTeamOwnerId, setSelectedTeamOwnerId] = useState("");
 
-  const onTeamSelection = (team) => {
+  const selectedTeam = useMemo(() => {
+    const team = participants.find(
+      (team) => team.owner._id === selectedTeamOwnerId
+    );
+    if (!team) return { owner: {}, players: [] };
+
     const mappedPlayers = team.players
       .map((p) => ({
         ...p,
@@ -24,11 +26,11 @@ function Participants({
       }))
       .sort((a, b) => (a.points > b.points ? -1 : 1));
 
-    setSelectedTeam({
+    return {
       owner: team.owner,
       players: mappedPlayers,
-    });
-  };
+    };
+  }, [selectedTeamOwnerId, participants]);
 
   return (
     <div className={`flex-col-xs ${styles.container}`}>
@@ -60,9 +62,7 @@ function Participants({
                     <Button
                       small
                       cancelButton
-                      onClick={() =>
-                        setSelectedTeam({ owner: {}, players: [] })
-                      }
+                      onClick={() => setSelectedTeamOwnerId("")}
                     >
                       Hide Team
                     </Button>
@@ -70,7 +70,7 @@ function Participants({
                     <Button
                       small
                       outlineButton
-                      onClick={() => onTeamSelection(team)}
+                      onClick={() => setSelectedTeamOwnerId(team.owner._id)}
                     >
                       View Team
                     </Button>

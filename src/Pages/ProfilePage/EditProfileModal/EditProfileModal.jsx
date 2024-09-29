@@ -68,7 +68,7 @@ function EditProfileModal({ onClose, onSuccess }) {
                 setValues((p) => ({ ...p, phone: e.target.value }))
               }
               label="Phone Number"
-              maxlength={10}
+              maxLength={10}
               placeholder={"Enter phone"}
               error={errors.phone}
             />

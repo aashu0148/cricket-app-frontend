@@ -11,6 +11,7 @@ import Button from "@/Components/Button/Button";
 import Notifications from "./Notifications/Notifications";
 import Chat from "./Chat/Chat";
 import PlayersPool from "./PlayersPool/PlayersPool";
+import DraftRoundCompleted from "./DraftRoundCompleted";
 
 import { getLeagueById } from "@/apis/leagues";
 import { getTournamentById } from "@/apis/tournament";
@@ -47,10 +48,11 @@ function DraftRoundPage() {
   const userDetails = useSelector((s) => s.user);
   const isMobileView = useSelector((s) => s.root.isMobileView);
   useSocketEvents();
-  const { socket, roomStatuses } = useDraftRound();
+  const { socket, roomStatuses, chatUnreadCount } = useDraftRound();
 
   const [activeTab, setActiveTab] = useState(tabsEnum.wishlist);
   const [loading, setLoading] = useState(true);
+  const [showDraftRoundCompleted, setShowDraftRoundCompleted] = useState(false);
   const [leagueDetails, setLeagueDetails] = useState({});
   const [tournamentDetails, setTournamentDetails] = useState({});
   const [playerPoints, setPlayerPoints] = useState([]);
@@ -156,6 +158,10 @@ function DraftRoundPage() {
   }
 
   useEffect(() => {
+    if (roomStatuses.completed) setShowDraftRoundCompleted(true);
+  }, [roomStatuses.completed]);
+
+  useEffect(() => {
     if (!roomStatuses.turn) return;
 
     if (leagueDetails.draftRound)
@@ -192,6 +198,8 @@ function DraftRoundPage() {
     <PageLoader fullPage />
   ) : (
     <div className={`${styles.container}`}>
+      {showDraftRoundCompleted && <DraftRoundCompleted />}
+
       <div className={styles.mainLeft}>
         <BreadCrumbs
           links={[
@@ -305,6 +313,13 @@ function DraftRoundPage() {
               onClick={() => setActiveTab(t.value)}
               key={t.value}
             >
+              {t.value === tabsEnum.chat &&
+              t.value !== activeTab &&
+              chatUnreadCount > 0 ? (
+                <p className={styles.count}>{chatUnreadCount}</p>
+              ) : (
+                ""
+              )}
               {t.label}
             </div>
           ))}

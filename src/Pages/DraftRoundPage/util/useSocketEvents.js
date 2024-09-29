@@ -32,8 +32,10 @@ function useSocketEvents() {
     socket.off(socketEventsEnum.connect);
     socket.off(socketEventsEnum.disconnect);
     socket.off(socketEventsEnum.joinedRoom);
-    socket.off(socketEventsEnum.chat);
+    socket.off(socketEventsEnum.notification);
     socket.off(socketEventsEnum.usersChange);
+    socket.off(socketEventsEnum.chat);
+    socket.off(socketEventsEnum.turnUpdate);
     socket.off(socketEventsEnum.draftRoundCompleted);
     socket.off(socketEventsEnum.roundStatusUpdate);
   }
@@ -72,11 +74,11 @@ function useSocketEvents() {
       if (!data?.user?._id) return; // invalid chat
 
       setRoom((prev) => ({ ...prev, chats: [...prev.chats, data] }));
-
-      // setChatUnreadCount((prev) => prev + 1);
+      setChatUnreadCount((prev) => prev + 1);
     });
 
     socket.on(socketEventsEnum.draftRoundCompleted, (data) => {
+      setRoomStatuses((p) => ({ ...p, completed: true }));
       console.log(`📜 Event: ${socketEventsEnum.draftRoundCompleted}`, data);
     });
 
