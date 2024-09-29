@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Send } from "react-feather";
 import { useSelector } from "react-redux";
+import Linkify from "react-linkify";
 
 import Img from "@/Components/Img/Img";
 import Button from "@/Components/Button/Button";
@@ -10,6 +11,7 @@ import { useDraftRound } from "../util/DraftRoundContext";
 import { socketEventsEnum } from "@/utils/enums";
 
 import styles from "./Chat.module.scss";
+import { colors } from "@/utils/constants";
 
 function Message({ chat = {}, isOnRightSide = false, isConcurrent = false }) {
   const message = chat.message || "";
@@ -40,7 +42,24 @@ function Message({ chat = {}, isOnRightSide = false, isConcurrent = false }) {
       <div className={`${styles.inner}`}>
         {!isConcurrent && <p className={styles.name}>{chat.user?.name}</p>}
         <p className={`${styles.text} ${biggerMessage ? styles.bigText : ""}`}>
-          {message}
+          <Linkify
+            componentDecorator={(decoratedHref, decoratedText, k) => (
+              <a
+                target="_blank"
+                href={decoratedHref}
+                rel="noreferrer"
+                key={k}
+                style={{
+                  color: isOnRightSide ? "#fff" : colors.primary2,
+                  textDecoration: "underline",
+                }}
+              >
+                {decoratedText}
+              </a>
+            )}
+          >
+            {message}
+          </Linkify>
         </p>
         <p className={styles.timestamp}>{getTimeFormatted(chat.timestamp)}</p>
       </div>

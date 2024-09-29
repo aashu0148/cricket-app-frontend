@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { Edit2 } from "react-feather";
+import Linkify from "react-linkify";
 
 import PageLoader from "@/Components/PageLoader/PageLoader";
 import BreadCrumbs from "@/Components/Breadcrumbs/BreadCrumbs";
@@ -15,7 +16,7 @@ import Button from "@/Components/Button/Button";
 import JoinProtectedLeagueModal from "@/Components/LeagueCard/JoinProtectedLeagueModal";
 
 import { handleAppNavigation } from "@/utils/util";
-import { applicationRoutes } from "@/utils/constants";
+import { applicationRoutes, colors } from "@/utils/constants";
 import { leagueTypeEnum } from "@/utils/enums";
 import { getLeagueById, joinLeague } from "@/apis/leagues";
 import { getTournamentById } from "@/apis/tournament";
@@ -98,9 +99,7 @@ function LeaguePage() {
           leagueDetails={leagueDetails}
           tournamentName={tournamentDetails.longName}
           onClose={() => setShowEditLeagueModal(false)}
-          onSuccess={(data) => {
-            if (data) setLeagueDetails(data);
-
+          onSuccess={() => {
             setShowEditLeagueModal(false);
             fetchLeagueDetails();
           }}
@@ -156,7 +155,26 @@ function LeaguePage() {
                 </div>
               )}
             </div>
-            <p className="desc">{leagueDetails.description}</p>
+            <p className="desc" style={{ whiteSpace: "pre" }}>
+              <Linkify
+                componentDecorator={(decoratedHref, decoratedText, k) => (
+                  <a
+                    target="_blank"
+                    href={decoratedHref}
+                    rel="noreferrer"
+                    key={k}
+                    style={{
+                      color: colors.primary2,
+                      textDecoration: "underline",
+                    }}
+                  >
+                    {decoratedText}
+                  </a>
+                )}
+              >
+                {leagueDetails.description}
+              </Linkify>
+            </p>
 
             <div className={styles.information}>
               <label>Tournament:</label>

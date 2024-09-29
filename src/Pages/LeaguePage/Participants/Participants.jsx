@@ -1,10 +1,10 @@
 import React, { useState } from "react";
+import { X } from "react-feather";
 
 import Img from "@/Components/Img/Img";
 import Button from "@/Components/Button/Button";
 
 import styles from "./Participants.module.scss";
-import { X } from "react-feather";
 
 function Participants({
   participants = [],
@@ -89,7 +89,7 @@ function Participants({
           <div className="spacious-head">
             <p className={styles.title}>
               {selectedTeam.owner?.name}
-              {"'s"} team
+              {"'s"} team <span>{`(${selectedTeam.players?.length})`}</span>
             </p>
 
             <Button
