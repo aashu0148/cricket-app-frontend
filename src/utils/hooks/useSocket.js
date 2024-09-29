@@ -4,6 +4,7 @@ import { io } from "socket.io-client";
 
 import { backendApiUrl } from "../configs";
 import { socketEventsEnum } from "../enums";
+import { sleep } from "../util";
 
 function useSocket(
   manualConnect = false,
@@ -43,13 +44,15 @@ function useSocket(
   useEffect(() => {
     if (!manualConnect) initSocket();
 
-    return () => {
+    return async () => {
       if (socket.current?.disconnect && socket.current.connected) {
-        if (eventToFireOnBeforeDisconnect.name)
+        if (eventToFireOnBeforeDisconnect.name) {
           socket.current.emit(
             eventToFireOnBeforeDisconnect.name,
             eventToFireOnBeforeDisconnect.payload
           );
+          await sleep(1000); // wait before disconnecting otherwise socket will be disconnected before this event gets fired
+        }
 
         socket.current.disconnect();
         socket.current = null;
