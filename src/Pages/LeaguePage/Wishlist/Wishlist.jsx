@@ -11,6 +11,7 @@ import { addPlayerToWishlist, removePlayerFromWishlist } from "@/apis/leagues";
 import styles from "./Wishlist.module.scss";
 
 function Wishlist({
+  className = "",
   leagueId,
   allPlayers = [],
   currentPlayers = [],
@@ -48,9 +49,7 @@ function Wishlist({
   };
 
   return (
-    <div className={styles.container}>
-      <p className={`heading`}>Wishlist</p>
-
+    <div className={`${className || ""} ${styles.container}`}>
       <InputSelect
         options={allPlayers
           .filter((p) => !currentPlayers.some((e) => e._id === p._id))
@@ -62,28 +61,36 @@ function Wishlist({
       />
 
       <div className={styles.players}>
-        {currentPlayers.map((player) => (
-          <div className={styles.player}>
-            <div className={`flex ${styles.left}`}>
-              <div className={styles.image}>
-                <Img src={player.image} usePLaceholderUserImageOnError />
-              </div>
+        {currentPlayers.length ? (
+          currentPlayers.map((player) => (
+            <div className={styles.player} key={player._id}>
+              <div className={`flex ${styles.left}`}>
+                <div className={styles.image}>
+                  <Img src={player.image} usePLaceholderUserImageOnError />
+                </div>
 
-              <p className={styles.name}>
-                {player.slug ? player.slug.split("-").join(" ") : player.name}
-              </p>
-            </div>
-            <div className={styles.actions}>
-              <div
-                title={"Remove from wishlist"}
-                className="delete-icon"
-                onClick={() => handleRemovePlayerFromWishlist(player._id)}
-              >
-                {removing.includes(player._id) ? <Spinner small /> : <Trash2 />}
+                <p className={styles.name}>
+                  {player.slug ? player.slug.split("-").join(" ") : player.name}
+                </p>
+              </div>
+              <div className={styles.actions}>
+                <div
+                  title={"Remove from wishlist"}
+                  className="delete-icon"
+                  onClick={() => handleRemovePlayerFromWishlist(player._id)}
+                >
+                  {removing.includes(player._id) ? (
+                    <Spinner small />
+                  ) : (
+                    <Trash2 />
+                  )}
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))
+        ) : (
+          <p className={styles.empty}>No players added to wishlist</p>
+        )}
       </div>
     </div>
   );

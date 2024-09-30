@@ -1,0 +1,234 @@
+@import "@/styles/variables";
+
+.chatBox {
+  height: 600px;
+  display: flex;
+  flex-direction: column;
+
+  .empty {
+    text-align: center;
+    font-size: $text-md;
+    font-weight: 400;
+    margin: auto 0;
+  }
+
+  .messagesOuter {
+    flex: 1;
+    position: relative;
+    overflow-y: auto;
+  }
+
+  .messages {
+    min-height: 100%;
+    height: max-content;
+    padding-bottom: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding-right: 5px;
+
+    .message {
+      width: fit-content;
+      max-width: 90%;
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+      min-width: 180px;
+
+      .image {
+        img,
+        .imagePlaceholder {
+          height: 26px;
+          width: 26px;
+          border-radius: 50%;
+        }
+      }
+
+      .inner {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        background-color: $primary-100;
+        border-radius: 10px;
+        border-top-left-radius: 0;
+        overflow: hidden;
+        position: relative;
+
+        .name {
+          width: 100%;
+          background-color: rgba(0, 0, 0, 0.03);
+          text-align: start;
+          font-size: 14px;
+          line-height: 16px;
+          font-weight: 600;
+          padding: 5px 10px;
+          text-transform: capitalize;
+        }
+
+        .text {
+          padding: 10px;
+          padding-top: 0;
+          padding-bottom: 22px;
+          font-size: $text-md;
+          line-height: 1.5;
+          word-break: break-word;
+
+          &.bigText {
+            font-size: $text-4xl;
+          }
+        }
+
+        .timestamp {
+          font-size: $text-xs;
+          font-weight: 500;
+          text-align: end;
+          position: absolute;
+          bottom: 2px;
+          right: 10px;
+          color: $color-label;
+        }
+      }
+    }
+
+    .rightMessage {
+      flex-direction: row-reverse;
+      margin-left: auto;
+
+      .inner {
+        border-top-left-radius: 10px;
+        border-top-right-radius: 0;
+        background-color: $primary;
+
+        .name {
+          text-align: end;
+        }
+
+        .name,
+        .text,
+        .timestamp {
+          color: $white;
+        }
+      }
+    }
+
+    .concurrent {
+      .inner {
+        .text {
+          padding-top: 10px;
+        }
+      }
+    }
+  }
+
+  .footer {
+    width: 100%;
+    border-top: 1px solid $bg-200;
+    padding-top: $spacing-xxs;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+
+    input {
+      flex: 1;
+      padding: 8px 16px;
+      outline: none;
+      border: 1px solid transparent;
+      font-size: 16px;
+      line-height: 25px;
+      color: $color-title;
+      border-radius: 5px;
+      background-color: $bg-100;
+      transition: 200ms;
+
+      &::placeholder {
+        color: $color-label;
+      }
+
+      &:hover {
+        border-color: $bg-200;
+      }
+
+      &:focus {
+        border-color: $primary;
+      }
+    }
+
+    button {
+      align-self: stretch;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+
+      svg {
+        height: 16px;
+        width: 16px;
+      }
+    }
+  }
+
+  @media (max-width: $breakpoint-md) {
+    height: calc(100% - var(--header-height) - 2px);
+
+    .empty {
+      font-size: 16px;
+    }
+
+    .messages {
+      .message {
+        gap: 5px;
+        max-width: 90%;
+
+        .image {
+          img,
+          .imagePlaceholder {
+            height: 22px;
+            width: 22px;
+          }
+        }
+
+        .inner {
+          border-radius: 5px;
+
+          .name {
+            font-size: 12px;
+            line-height: 14px;
+          }
+
+          .text {
+            padding: 8px;
+            padding-top: 0;
+            font-size: 14px;
+            padding-bottom: 16px;
+          }
+
+          .timestamp {
+            font-size: 12px;
+          }
+        }
+      }
+
+      .rightMessage {
+        .inner {
+          border-top-left-radius: 5px;
+        }
+      }
+
+      .concurrent {
+        .inner {
+          .text {
+            padding-top: 8px;
+          }
+        }
+      }
+    }
+
+    .footer {
+      gap: 8px;
+
+      input {
+        font-size: 14px;
+      }
+    }
+  }
+}

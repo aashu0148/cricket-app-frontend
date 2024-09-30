@@ -1,0 +1,154 @@
+@import "@/styles/variables";
+
+.roundCompleted {
+  padding: $spacing-md;
+  width: 600px;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+  align-items: center;
+
+  p,
+  h2 {
+    text-align: center;
+  }
+
+  .desc {
+    font-size: $text-lg;
+    color: $color-desc;
+  }
+}
+
+.container {
+  height: 100vh;
+  display: flex;
+
+  .mainLeft,
+  .mainRight {
+    align-self: stretch;
+    padding: $spacing-md $spacing-sm;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+  }
+
+  .mainLeft {
+    width: 66%;
+
+    .information {
+      display: flex;
+      gap: $spacing-xs;
+      align-items: center;
+
+      label {
+        font-size: $text-md;
+        color: $color-label;
+        font-weight: 400;
+      }
+
+      p {
+        font-size: $text-md;
+        color: $color-title;
+        font-weight: 500;
+      }
+
+      .blink {
+        animation: blink 2s linear infinite;
+        color: $red;
+      }
+
+      @keyframes blink {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.55;
+        }
+      }
+    }
+  }
+
+  .mainRight {
+    width: 34%;
+    gap: $spacing-xxs;
+    max-width: 550px;
+    --tabs-height: 38px;
+
+    .tabs {
+      height: var(--tabs-height);
+      background-color: $bg;
+      position: sticky;
+      top: 0;
+      display: flex;
+      align-items: center;
+      width: 100%;
+      gap: $spacing-xs;
+      z-index: 40;
+
+      .tab {
+        flex: 1;
+        padding: $spacing-xs $spacing-sm;
+        font-size: $text-md;
+        text-align: center;
+        font-weight: 500;
+        cursor: pointer;
+        position: relative;
+
+        .count {
+          position: absolute;
+          top: 0;
+          transform: translateY(-50%);
+          right: 5px;
+          height: 25px;
+          width: 25px;
+          line-height: 1;
+          border-radius: 50%;
+          font-weight: 600;
+          color: $white;
+          background-color: $primary;
+          font-size: $text-sm;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        &:hover {
+          background-color: $bg-100;
+        }
+      }
+
+      .tab.active {
+        background-color: $primary;
+        color: $white;
+      }
+    }
+
+    .wishlist,
+    .chat,
+    .notifications {
+      height: calc(100% - var(--tabs-height) - $spacing-xxs);
+      max-width: none;
+    }
+  }
+
+  @media (max-width: $breakpoint-md) {
+    flex-direction: column;
+    height: fit-content;
+
+    .mainLeft,
+    .mainRight {
+      width: 100%;
+      overflow-y: visible;
+    }
+
+    .mainRight {
+      .chat,
+      .notifications {
+        height: 600px;
+      }
+    }
+  }
+}

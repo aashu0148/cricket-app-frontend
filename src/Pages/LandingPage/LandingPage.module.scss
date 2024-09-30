@@ -449,8 +449,12 @@
         }
 
         &.half {
-          animation: rotate 10s linear infinite;
-
+          svg {
+            height: 40px;
+            width: 40px;
+          }
+        }
+        &.ring {
           svg {
             height: 40px;
             width: 40px;

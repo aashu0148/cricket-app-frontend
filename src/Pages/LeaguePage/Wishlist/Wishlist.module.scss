@@ -2,11 +2,17 @@
 
 .container {
   height: 100%;
-  max-width: 400px;
+  max-width: 600px;
   display: flex;
   flex-direction: column;
   gap: $spacing-sm;
   padding: $spacing-xs;
+
+  .empty {
+    margin: auto 0;
+    text-align: center;
+    font-weight: 500;
+  }
 
   .players {
     flex: 1;

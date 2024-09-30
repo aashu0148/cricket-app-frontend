@@ -61,7 +61,10 @@ function LeaguesPage() {
           className={styles.leagueCard}
           key={item._id}
           leagueData={item}
-          onJoined={fetchJoinedLeagues}
+          onJoined={() => {
+            fetchLeagues();
+            fetchJoinedLeagues();
+          }}
         />
       ))}
 

@@ -2,9 +2,12 @@ import React, { useState } from "react";
 import { Edit2, LogOut } from "react-feather";
 import { useDispatch, useSelector } from "react-redux";
 
+import EditProfileModal from "./EditProfileModal/EditProfileModal";
+import Button from "@/Components/Button/Button";
+
 import userProfileIcon from "@/assets/profile-icon.png";
 import { updateUserDetails } from "@/apis/user";
-import { handleLogout } from "@/utils/util";
+import { handleLogout, refreshUserDetailsFromBackend } from "@/utils/util";
 import { uploadFile } from "@/utils/firebase";
 import actionTypes from "@/store/actionTypes";
 import useImagePicker from "@/utils/hooks/useImagePicker";
@@ -16,6 +19,8 @@ function ProfilePage() {
   const userDetails = useSelector((s) => s.user);
 
   const { openImagePicker } = useImagePicker();
+
+  const [showEditProfile, setShowEditProfile] = useState(false);
   const [imageUploadDetails, setImageUploadDetails] = useState({
     error: "",
     uploading: false,
@@ -89,11 +94,25 @@ function ProfilePage() {
 
   return (
     <div className={`page-container ${styles.container}`}>
+      {showEditProfile && (
+        <EditProfileModal
+          onClose={() => setShowEditProfile(false)}
+          onSuccess={() => {
+            setShowEditProfile(false);
+            refreshUserDetailsFromBackend();
+          }}
+        />
+      )}
+
       <div className={styles.personalDetails}>
         <div className={`text-box ${styles.details}`}>
           <p className={styles.name}>{userDetails.name}</p>
           <p className={`${styles.text}`}>{userDetails.email}</p>
           <p className={`${styles.text}`}>{userDetails.phone}</p>
+
+          <Button onClick={() => setShowEditProfile(true)} small outlineButton>
+            <Edit2 /> Edit profile
+          </Button>
 
           <div className={styles.logout} onClick={handleLogout}>
             Logout{" "}

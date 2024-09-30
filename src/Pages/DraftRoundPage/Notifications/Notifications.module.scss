@@ -1,0 +1,101 @@
+@import "@/styles/variables";
+
+.container {
+  height: 600px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  padding: $spacing-xs;
+
+  p {
+    word-break: break-word;
+  }
+
+  .users {
+    padding: $spacing-sm;
+    padding-top: 0;
+    width: 100%;
+    overflow-x: auto;
+    height: 100%;
+    display: flex;
+    gap: $spacing-sm;
+    align-items: center;
+
+    .image {
+      display: flex;
+      align-items: center;
+      padding: 2px;
+      border-radius: 50%;
+      background-color: $green;
+
+      img {
+        height: 40px;
+        width: 40px;
+        border-radius: 50%;
+        border: 1px solid $bg-100;
+      }
+    }
+  }
+
+  .empty {
+    text-align: center;
+    font-size: $text-md;
+    font-weight: 500;
+    margin: auto 0;
+  }
+
+  .activity {
+    padding: 8px 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    border-bottom: 1px solid $bg-200;
+
+    &:nth-child(even) {
+      background-color: $primary-200;
+    }
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    .title {
+      font-size: $text-md;
+      font-weight: 600;
+      color: $color-title;
+      line-height: 1.4;
+    }
+
+    .desc {
+      font-size: $text-sm;
+      line-height: 1.5;
+      font-weight: 500;
+      color: $color-desc;
+
+      .time {
+        font-size: $text-xs;
+        color: $color-label;
+        font-weight: 500;
+        float: right;
+      }
+    }
+  }
+
+  @media (max-width: $breakpoint-md) {
+    .activity {
+      .top {
+        .time {
+          font-size: $text-sm;
+        }
+      }
+
+      .title {
+        font-size: $text-sm;
+      }
+
+      .desc {
+        font-size: $text-xs;
+      }
+    }
+  }
+}
