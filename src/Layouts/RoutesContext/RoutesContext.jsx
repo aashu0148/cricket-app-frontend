@@ -14,6 +14,12 @@ export const RoutesProvider = ({ useAdminRoutes = false, children }) => {
       label: "All Tournaments",
       link: applicationRoutes.adminTournament,
     },
+    {
+      icon: tournament,
+      value: applicationRoutes.scoringSystem,
+      label: "Scoring System",
+      link: applicationRoutes.scoringSystem,
+    },
   ].filter((item) => item);
 
   const userSections = [

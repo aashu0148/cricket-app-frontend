@@ -7,6 +7,7 @@ export const applicationRoutes = {
   tournaments: "/tournaments",
   profile: "/profile",
   adminTournament: "/admin/tournament",
+  scoringSystem: "/admin/scoringSystem",
 
   // function routes
   leagues: (tid = "") => `/tournaments/${tid || ":tournamentId"}/leagues`,

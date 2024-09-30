@@ -75,6 +75,7 @@ export default function CreateTournamentModal({
   useEffect(() => {
     fetchScoringSystems();
   }, []);
+  
   //   **************************************** Return Statement ************************************
 
   return (

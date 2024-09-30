@@ -1,0 +1,32 @@
+@import "@/styles/variables.scss";
+
+.modalContainer {
+  padding: 4%;
+  width: 90vw;
+
+  .section {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+  }
+  .heading{
+    font-size: $text-xl;
+  }
+  .mainHeading {
+    font-size: $text-xl;
+    font-weight: 700;
+  }
+  .subHeading {
+    font-size: $text-lg;
+  }
+  .subSection{
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-sm;
+      .subSection_row{
+        width: 100%;
+        display: flex;
+        gap: $spacing-sm;
+      }
+  }
+}

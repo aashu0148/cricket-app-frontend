@@ -16,7 +16,6 @@ import EditTournamentModal from "./EditTournamentModal/EditTournamentModal";
 
 export default function AllTournaments() {
   const [allTournaments, setAllTournaments] = useState([]);
-  const [allScoringSystems, setAllScoringSystems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showCreateTournament, setShowCreateTournament] = useState(false);
   const [showEditTournament, setShowEditTournament] = useState(false);

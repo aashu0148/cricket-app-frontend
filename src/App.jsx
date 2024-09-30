@@ -22,6 +22,7 @@ import { getCurrentUser } from "./apis/user";
 import actionTypes from "./store/actionTypes";
 import { applicationRoutes } from "./utils/constants";
 import { getAppToken } from "./utils/util";
+import ScoringSystem from "./Pages/Admin/ScoringSystem/ScoringSystem";
 
 function App() {
   const userDetails = useSelector((state) => state.user);
@@ -108,6 +109,10 @@ function App() {
             <Route
               path={applicationRoutes.adminTournament}
               element={<AllTournaments />}
+            />
+            <Route
+              path={applicationRoutes.scoringSystem}
+              element={<ScoringSystem />}
             />
             {/* all routes of admin will be defined here */}
           </Route>
