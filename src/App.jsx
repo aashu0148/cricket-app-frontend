@@ -26,6 +26,7 @@ import actionTypes from "./store/actionTypes";
 import { applicationRoutes } from "./utils/constants";
 import { getAppToken } from "./utils/util";
 import ScoringSystem from "./Pages/Admin/ScoringSystem/ScoringSystem";
+import EditScoringSystem from "./Pages/Admin/ScoringSystem/EditScoringSystem/EditScoringSytem";
 
 function App() {
   const userDetails = useSelector((state) => state.user);
@@ -123,6 +124,10 @@ function App() {
             <Route
               path={applicationRoutes.scoringSystem}
               element={<ScoringSystem />}
+            />
+            <Route
+              path={applicationRoutes.editScoringSystem()}
+              element={<EditScoringSystem />}
             />
             {/* all routes of admin will be defined here */}
           </Route>

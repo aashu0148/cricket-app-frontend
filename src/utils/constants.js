@@ -8,6 +8,7 @@ export const applicationRoutes = {
   profile: "/profile",
   adminTournament: "/admin/tournament",
   scoringSystem: "/admin/scoringSystem",
+  editScoringSystem: (scoringId = "") => `/admin/editScoringSystem/${scoringId || ":scoringId"}`,
 
   // function routes
   leagues: (tid = "") => `/tournaments/${tid || ":tournamentId"}/leagues`,

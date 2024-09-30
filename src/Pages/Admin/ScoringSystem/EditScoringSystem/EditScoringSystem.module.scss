@@ -1,32 +1,102 @@
+// @import "@/styles/variables.scss";
+
+// .container {
+//   padding: 2%;
+
+//   .section {
+//     display: flex;
+//     flex-direction: column;
+//     gap: $spacing-sm;
+//   }
+//   .heading {
+//     font-size: $text-xl;
+//   }
+//   .mainHeading {
+//     font-size: $text-xl;
+//     font-weight: 700;
+//   }
+//   .subHeading {
+//     font-size: $text-lg;
+//   }
+//   .subSection {
+//     display: flex;
+//     flex-direction: column;
+//     gap: $spacing-sm;
+//     .subSection_row {
+//       width: 100%;
+//       display: flex;
+//       justify-content: center;
+//       align-items: center;
+//       gap: $spacing-sm;
+
+//     }
+//   }
+// }
+
 @import "@/styles/variables.scss";
 
-.modalContainer {
-  padding: 4%;
-  width: 90vw;
+.container {
+  min-height: 100vh;
+  min-width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  .heading {
+    font-size: $text-xl;
+    font-weight: 600;
+    color: $primary;
+  }
 
   .section {
-    display: flex;
-    flex-direction: column;
-    gap: $spacing-sm;
-  }
-  .heading{
-    font-size: $text-xl;
-  }
-  .mainHeading {
-    font-size: $text-xl;
-    font-weight: 700;
-  }
-  .subHeading {
-    font-size: $text-lg;
-  }
-  .subSection{
+    margin-bottom: 2rem;
+    position: relative;
+    padding: 1.5rem;
+    background-color: $bg;
+    border-radius: 8px;
+    box-shadow: $shadow-200;
+
+    &:hover {
+      box-shadow: $shadow-100;
+    }
+
+    .mainHeading {
+      font-size: $text-xl;
+      font-weight: 700;
+      color: $primary;
+      margin-bottom: $spacing-md;
+    }
+
+    .subHeading {
+      font-size: $text-md;
+      font-weight: 500;
+      margin-bottom: $spacing-sm;
+      border-bottom: 1px solid $primary;
+      padding-bottom: $spacing-sm;
+    }
+
+    .subSection {
+      .subSection_row {
         display: flex;
-        flex-direction: column;
-        gap: $spacing-sm;
-      .subSection_row{
-        width: 100%;
-        display: flex;
-        gap: $spacing-sm;
+        align-items: center;
+        gap: $spacing-md;
+        margin-bottom: $spacing-sm;
+
+        .deleteIcon {
+          cursor: pointer;
+          transition: transform 0.2s ease-in-out;
+
+          &:hover {
+            transform: scale(1.1);
+          }
+        }
       }
+
+      .link {
+        font-size: $text-sm;
+        margin: $spacing-sm 0;
+        cursor: pointer;
+      }
+    }
   }
 }

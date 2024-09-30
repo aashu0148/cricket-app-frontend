@@ -3,11 +3,12 @@ import styles from "./ScoringSystem.module.scss";
 import Button from "@/Components/Button/Button";
 import { getAllScoringSystems } from "@/apis/scoringSystem";
 import { getDateFormatted } from "@/utils/util";
-import ScoringSystemModal from "./EditScoringSystem/EditScoringSytem";
+import { useNavigate } from "react-router-dom";
+import { applicationRoutes } from "@/utils/constants";
 
 export default function ScoringSystem() {
+  const navigate = useNavigate();
   const [allScoringSystems, setAllScoringSystems] = useState([]);
-  const [showScoringSystemModal, setShowScoringSystemModal] = useState(false);
 
   // **************************** Integrations ********************
 
@@ -52,22 +53,12 @@ export default function ScoringSystem() {
             </div>
             <div className={`footer ${styles.buttonContainer}`}>
               <Button>Copy</Button>
-              <Button onClick={() => setShowScoringSystemModal(true)}>
+              <Button
+                onClick={() => navigate(applicationRoutes.editScoringSystem(item.id))}
+              >
                 Edit
               </Button>
             </div>
-            {/* ************************** scoring system modal ************************ */}
-    
-            {showScoringSystemModal ? (
-              <ScoringSystemModal
-                handleClose={() => setShowScoringSystemModal(false)}
-                id={item.id}
-              />
-            ) : (
-              ""
-            )}
-
-            
           </div>
         ))}
       </section>
