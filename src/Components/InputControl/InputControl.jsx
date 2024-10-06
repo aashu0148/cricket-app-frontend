@@ -22,7 +22,7 @@ const InputControl = ({
   placeholder = "",
   icon,
   numericInput = false,
-  value = "",
+  value,
   disabled = false,
   onChange,
   preventChangeByDragging = false,
@@ -153,7 +153,7 @@ const InputControl = ({
 
           if (onChange) onChange(event);
         }}
-        value={typeof value === "string" ? value : undefined}
+        value={value ?? undefined}
         disabled={disabled}
         placeholder={placeholder}
         {...props}
