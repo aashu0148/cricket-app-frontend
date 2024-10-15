@@ -41,7 +41,7 @@ export default function ScoringSystem() {
 
       <section className={styles.card_Container}>
         {allScoringSystems.map((item) => (
-          <div className={styles.card}>
+          <div className={styles.card} key={item._id}>
             <h2 className={styles.card_heading}>{item.name}</h2>
             <div className={`${styles.card_content} flex-col-xs`}>
               <p className="row">
@@ -52,9 +52,11 @@ export default function ScoringSystem() {
               </p>
             </div>
             <div className={`footer ${styles.buttonContainer}`}>
-              <Button>Copy</Button>
+              <Button outlineButton>Copy</Button>
               <Button
-                onClick={() => navigate(applicationRoutes.editScoringSystem(item.id))}
+                onClick={() =>
+                  navigate(applicationRoutes.editScoringSystem(item.id))
+                }
               >
                 Edit
               </Button>

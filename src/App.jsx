@@ -19,14 +19,14 @@ import ProfilePage from "./Pages/ProfilePage/ProfilePage";
 import LeaguePage from "./Pages/LeaguePage/LeaguePage";
 import DraftRoundPage from "./Pages/DraftRoundPage/DraftRoundPage";
 import { DraftRoundProvider } from "./Pages/DraftRoundPage/util/DraftRoundContext";
+import ScoringSystem from "./Pages/Admin/ScoringSystem/ScoringSystem";
+import EditScoringSystem from "./Pages/Admin/ScoringSystem/EditScoringSystem/EditScoringSystem";
 
 // Utils
 import { getCurrentUser } from "./apis/user";
 import actionTypes from "./store/actionTypes";
 import { applicationRoutes } from "./utils/constants";
 import { getAppToken } from "./utils/util";
-import ScoringSystem from "./Pages/Admin/ScoringSystem/ScoringSystem";
-import EditScoringSystem from "./Pages/Admin/ScoringSystem/EditScoringSystem/EditScoringSytem";
 
 function App() {
   const userDetails = useSelector((state) => state.user);
