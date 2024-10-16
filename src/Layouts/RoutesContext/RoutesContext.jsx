@@ -1,24 +1,33 @@
 import React, { createContext, useContext } from "react";
+import { useSelector } from "react-redux";
 
 import { Home } from "react-feather";
 import { applicationRoutes } from "@/utils/constants";
-import { tournament } from "@/utils/svgs";
+import { adminIcon, batsmanIcon, championCup, scoringIcon } from "@/utils/svgs";
 
 const RoutesContext = createContext();
 
 export const RoutesProvider = ({ useAdminRoutes = false, children }) => {
+  const userDetails = useSelector((s) => s.user);
+
   const adminSections = [
     {
-      icon: tournament,
+      icon: championCup,
       value: applicationRoutes.adminTournament,
       label: "All Tournaments",
       link: applicationRoutes.adminTournament,
     },
     {
-      icon: tournament,
+      icon: scoringIcon,
       value: applicationRoutes.scoringSystem,
       label: "Scoring System",
       link: applicationRoutes.scoringSystem,
+    },
+    {
+      icon: batsmanIcon,
+      value: applicationRoutes.players,
+      label: "Players",
+      link: applicationRoutes.players,
     },
   ].filter((item) => item);
 
@@ -31,10 +40,16 @@ export const RoutesProvider = ({ useAdminRoutes = false, children }) => {
       class: "route-dashboard",
     },
     {
-      icon: tournament,
+      icon: championCup,
       value: applicationRoutes.tournaments,
       label: "Tournaments",
       link: applicationRoutes.tournaments,
+    },
+    userDetails.role === "ADMIN" && {
+      icon: adminIcon,
+      value: applicationRoutes.adminTournament,
+      label: "Admin Panel",
+      link: applicationRoutes.adminTournament,
     },
   ].filter((item) => item);
 

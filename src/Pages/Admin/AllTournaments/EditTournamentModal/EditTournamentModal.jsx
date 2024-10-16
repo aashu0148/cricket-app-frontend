@@ -184,7 +184,6 @@ export default function EditTournamentModal({ tournamentId, handleClose }) {
       <div className={`modal-container ${styles.modalContainer}`}>
         <div className="flex-col-xxs">
           <h2 className={styles.heading}>Edit Tournament</h2>
-          <p>Edit Matches, define rules, and oversee the competition</p>
         </div>
 
         {loading ? (

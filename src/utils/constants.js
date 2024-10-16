@@ -6,11 +6,13 @@ export const applicationRoutes = {
   auth: "/auth",
   tournaments: "/tournaments",
   profile: "/profile",
-  adminTournament: "/admin/tournament",
-  scoringSystem: "/admin/scoringSystem",
-  editScoringSystem: (scoringId = "") => `/admin/editScoringSystem/${scoringId || ":scoringId"}`,
+  adminTournament: "/admin/tournaments",
+  scoringSystem: "/admin/scoring-systems",
+  players: "/admin/players",
 
   // function routes
+  editScoringSystem: (scoringId = "") =>
+    `/admin/scoring-systems/edit/${scoringId || ":scoringId"}`,
   leagues: (tid = "") => `/tournaments/${tid || ":tournamentId"}/leagues`,
   league: (tournamentId = "", leagueId = "") =>
     `/tournaments/${tournamentId || ":tournamentId"}/leagues/${

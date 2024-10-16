@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Eye, EyeOff } from "react-feather";
+import { Eye, EyeOff, Info } from "react-feather";
 
 import { handleNumericInputKeyDown } from "@/utils/util";
 import { arrowDownIcon, arrowUpIcon } from "@/utils/svgs";
+import { getTooltipAttributes } from "@/utils/tooltip";
 
 import styles from "./InputControl.module.scss";
 
@@ -28,6 +29,7 @@ const InputControl = ({
   preventChangeByDragging = false,
   containerStyles = {},
   inputStyles = {},
+  labelInfo = "",
   ...props
 }) => {
   let onChangeFunc = useRef(onChange);
@@ -200,6 +202,15 @@ const InputControl = ({
         <label className={styles.label}>
           {label}
           <span> {subLabel}</span>
+
+          {labelInfo && (
+            <span
+              className={`icon ${styles.info}`}
+              {...getTooltipAttributes({ text: labelInfo })}
+            >
+              <Info />
+            </span>
+          )}
         </label>
       )}
 

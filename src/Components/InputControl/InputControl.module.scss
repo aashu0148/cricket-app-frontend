@@ -62,9 +62,23 @@
     font-size: $text-md;
     font-weight: 400;
     color: $color-label;
+    display: flex;
+    gap: $spacing-xxs;
+    align-items: center;
 
     span {
       font-size: 0.875rem;
+    }
+
+    .info {
+      display: flex;
+      align-items: center;
+      padding: 2px;
+
+      svg {
+        height: 15px;
+        width: 15px;
+      }
     }
   }
 

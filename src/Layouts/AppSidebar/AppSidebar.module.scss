@@ -99,6 +99,8 @@
 
       .icon {
         z-index: 10;
+        align-items: center;
+        display: flex;
 
         svg {
           height: 26px;

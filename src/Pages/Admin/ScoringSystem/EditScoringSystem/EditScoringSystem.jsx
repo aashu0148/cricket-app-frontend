@@ -12,6 +12,60 @@ import { getUniqueId } from "@/utils/util";
 
 import styles from "./EditScoringSystem.module.scss";
 
+const infoTexts = {
+  boundaryPoints: {
+    four: "Points awarded for hitting a boundary (4 runs) based on the match's average scoring rate.",
+    six: "Points awarded for hitting a maximum (6 runs) based on the match's average scoring rate.",
+    minAMSR:
+      "The minimum average match scoring rate (A.M.S.R) threshold for determining boundary points.",
+    maxAMSR:
+      "The maximum average match scoring rate (A.M.S.R) threshold for determining boundary points.",
+  },
+  milestones: {
+    runsUpto:
+      "The range of runs scored by a batter for which milestone points are awarded.",
+    points:
+      "The points awarded when a batter's runs fall within the corresponding 'Runs Upto' range.",
+  },
+  strikeRateBonusMultiplierRanges: {
+    battingPositions:
+      "The range of batting positions for which strike rate bonus multipliers are applied.",
+    minimumBalls:
+      "The minimum number of balls faced by a batter required to qualify for strike rate bonus points.",
+    maximumBalls:
+      "The maximum number of balls a batter can face to still qualify for a particular strike rate bonus multiplier.",
+    multiplier:
+      "The factor applied to calculate the strike rate bonus based on the number of balls faced and runs scored.",
+  },
+  wicketPoints: {
+    minBattingPosition:
+      "The minimum batting position of the batter whose wicket is taken, determining the base points for the wicket.",
+    maxBattingPosition:
+      "The maximum batting position of the batter whose wicket is taken, determining the base points for the wicket.",
+    points:
+      "The points awarded for taking the wicket of a batter within the defined batting positions.",
+    runsCapForIncrementing:
+      "The number of runs a batter must score for their wicket to be worth additional points.",
+    incrementedPoints:
+      "The additional points awarded if a batter surpasses the runs cap when they are dismissed.",
+  },
+  dotBallPoints: {
+    minAMSR:
+      "The minimum average match scoring rate (A.M.S.R) threshold for determining points awarded for dot balls (balls on which no runs are scored).",
+    maxAMSR:
+      "The maximum average match scoring rate (A.M.S.R) threshold for determining points awarded for dot balls.",
+    points:
+      "The points awarded for each dot ball delivered by a bowler, based on the average match scoring rate.",
+  },
+  wicketMilestones: {
+    minWickets:
+      "The minimum number of wickets taken by a bowler to qualify for a milestone bonus.",
+    maxWickets:
+      "The maximum number of wickets taken by a bowler to qualify for a higher milestone bonus.",
+    points: "The points awarded when a bowler reaches the wicket milestone.",
+  },
+};
+
 export default function EditScoringSystem() {
   const { scoringId } = useParams();
   const navigate = useNavigate();
@@ -77,11 +131,9 @@ export default function EditScoringSystem() {
     const newObject = Object.keys(fieldsObj)
       .filter((item) => item !== "_id")
       .reduce((acc, item) => {
-        acc[item] = "";
+        acc[item] = undefined;
         return acc;
       }, {});
-
-    newObject._id = getUniqueId();
 
     const updatedField = [...section[field], newObject];
 
@@ -99,58 +151,66 @@ export default function EditScoringSystem() {
         {battingData.boundaryPoints?.map((boundary, index) => (
           <div key={index} className={styles.subSection_row}>
             <InputControl
+              placeholder="Type here"
               numericInput
               label="Four"
               value={boundary.four}
               onChange={(e) =>
                 handleBattingChange({
-                  val: e.target.value,
+                  val: e.target.valueAsNumber,
                   field: "boundaryPoints",
                   subField: "four",
                   index,
                 })
               }
+              labelInfo={infoTexts.boundaryPoints.four}
             />
             <InputControl
+              placeholder="Type here"
               numericInput
               label="Six"
               value={boundary.six}
               onChange={(e) =>
                 handleBattingChange({
-                  val: e.target.value,
+                  val: e.target.valueAsNumber,
                   field: "boundaryPoints",
                   subField: "six",
                   index,
                 })
               }
+              labelInfo={infoTexts.boundaryPoints.six}
             />
             <InputControl
+              placeholder="Type here"
               numericInput
-              label="Min Rate"
+              label="Min A.M.S.R"
               value={boundary.minRate}
               onChange={(e) =>
                 handleBattingChange({
-                  val: e.target.value,
+                  val: e.target.valueAsNumber,
                   field: "boundaryPoints",
                   subField: "minRate",
                   index,
                 })
               }
+              labelInfo={infoTexts.boundaryPoints.minAMSR}
             />
             <InputControl
+              placeholder="Type here"
               numericInput
-              label="Max Rate"
+              label="Max A.M.S.R"
               value={boundary.maxRate}
               onChange={(e) =>
                 handleBattingChange({
-                  val: e.target.value,
+                  val: e.target.valueAsNumber,
                   field: "boundaryPoints",
                   subField: "maxRate",
                   index,
                 })
               }
+              labelInfo={infoTexts.boundaryPoints.maxAMSR}
             />
-            <div className={styles.deleteIcon}>
+            <div className={`icon ${styles.deleteIcon}`}>
               <Trash2 color="red" />
             </div>
           </div>
@@ -164,10 +224,10 @@ export default function EditScoringSystem() {
               setFunction: setBattingData,
             })
           }
+          outlineButton
         >
-          {" "}
           + ADD
-        </Button>{" "}
+        </Button>
       </div>
 
       {/******************************************** Milestones **********************************/}
@@ -177,12 +237,13 @@ export default function EditScoringSystem() {
         {battingData.runMilestoneBonus?.milestones?.map((milestone, index) => (
           <div key={milestone._id} className={styles.subSection_row}>
             <InputControl
+              placeholder="Type here"
               numericInput
               label="Runs Upto"
               value={milestone.runsUpto}
               onChange={(e) =>
                 handleBattingChange({
-                  val: e.target.value,
+                  val: e.target.valueAsNumber,
                   field: "milestones",
                   subField: "runsUpto",
                   index,
@@ -190,14 +251,16 @@ export default function EditScoringSystem() {
                   secondField: "runMilestoneBonus",
                 })
               }
+              labelInfo={infoTexts.milestones.runsUpto}
             />
             <InputControl
+              placeholder="Type here"
               numericInput
               label="Points"
               value={milestone.points}
               onChange={(e) =>
                 handleBattingChange({
-                  val: e.target.value,
+                  val: e.target.valueAsNumber,
                   field: "milestones",
                   subField: "points",
                   index,
@@ -205,8 +268,9 @@ export default function EditScoringSystem() {
                   secondField: "runMilestoneBonus",
                 })
               }
+              labelInfo={infoTexts.milestones.points}
             />
-            <div className={styles.deleteIcon}>
+            <div className={`icon ${styles.deleteIcon}`}>
               <Trash2 color="red" />
             </div>
           </div>
@@ -220,10 +284,10 @@ export default function EditScoringSystem() {
               setFunction: setBattingData,
             })
           }
+          outlineButton
         >
-          {" "}
           + ADD
-        </Button>{" "}
+        </Button>
       </div>
 
       {/*************************************************** Strike Rate Bonus ***********************/}
@@ -235,12 +299,13 @@ export default function EditScoringSystem() {
         {battingData.strikeRateBonus?.multiplierRanges?.map((range, index) => (
           <div key={range._id + index} className={styles.subSection_row}>
             <InputControl
+              placeholder="Type here"
               numericInput
               label="Batting Positions"
               value={range.battingPositions.join(", ")}
               onChange={(e) =>
                 handleBattingChange({
-                  val: e.target.value,
+                  val: e.target.valueAsNumber,
                   field: "multiplierRanges",
                   subField: "battingPositions",
                   index,
@@ -248,14 +313,18 @@ export default function EditScoringSystem() {
                   secondField: "strikeRateBonus",
                 })
               }
+              labelInfo={
+                infoTexts.strikeRateBonusMultiplierRanges.battingPositions
+              }
             />
             <InputControl
+              placeholder="Type here"
               numericInput
               label="Minimum Balls"
               value={range.minBalls}
               onChange={(e) =>
                 handleBattingChange({
-                  val: e.target.value,
+                  val: e.target.valueAsNumber,
                   field: "multiplierRanges",
                   subField: "minBalls",
                   index,
@@ -264,14 +333,16 @@ export default function EditScoringSystem() {
                   secondField: "strikeRateBonus",
                 })
               }
+              labelInfo={infoTexts.strikeRateBonusMultiplierRanges.minimumBalls}
             />
             <InputControl
+              placeholder="Type here"
               numericInput
               label="Maximum Balls"
               value={range.maxBalls}
               onChange={(e) =>
                 handleBattingChange({
-                  val: e.target.value,
+                  val: e.target.valueAsNumber,
                   field: "multiplierRanges",
                   subField: "maxBalls",
                   index,
@@ -279,14 +350,16 @@ export default function EditScoringSystem() {
                   secondField: "strikeRateBonus",
                 })
               }
+              labelInfo={infoTexts.strikeRateBonusMultiplierRanges.maximumBalls}
             />
             <InputControl
+              placeholder="Type here"
               numericInput
               label="Multiplier"
               value={range.multiplier}
               onChange={(e) =>
                 handleBattingChange({
-                  val: e.target.value,
+                  val: e.target.valueAsNumber,
                   field: "multiplierRanges",
                   subField: "multiplier",
                   index,
@@ -294,13 +367,16 @@ export default function EditScoringSystem() {
                   secondField: "strikeRateBonus",
                 })
               }
+              labelInfo={infoTexts.strikeRateBonusMultiplierRanges.multiplier}
             />
-            <div className={styles.deleteIcon}>
+            <div className={`icon ${styles.deleteIcon}`}>
               <Trash2 color="red" />
             </div>
           </div>
         ))}
-        <Button className={styles.link}> + ADD</Button>{" "}
+        <Button className={styles.link} outlineButton>
+          + ADD
+        </Button>{" "}
       </div>
     </div>
   );
@@ -317,71 +393,81 @@ export default function EditScoringSystem() {
         {bowlingData.wicketPoints?.map((wicket, index) => (
           <div key={wicket._id + index} className={styles.subSection_row}>
             <InputControl
+              placeholder="Type here"
               numericInput
               label="Min Batting Position"
               value={wicket.minBattingPosition}
               onChange={(e) =>
                 handleBowlingChange({
-                  val: e.target.value,
+                  val: e.target.valueAsNumber,
                   field: "wicketPoints",
                   subField: "minBattingPosition",
                   index,
                 })
               }
+              labelInfo={infoTexts.wicketPoints.minBattingPosition}
             />
             <InputControl
+              placeholder="Type here"
               numericInput
               label="Max Batting Position"
               value={wicket.maxBattingPosition}
               onChange={(e) =>
                 handleBowlingChange({
-                  val: e.target.value,
+                  val: e.target.valueAsNumber,
                   field: "wicketPoints",
                   subField: "maxBattingPosition",
                   index,
                 })
               }
+              labelInfo={infoTexts.wicketPoints.maxBattingPosition}
             />
             <InputControl
+              placeholder="Type here"
               numericInput
               label="Points"
               value={wicket.points}
               onChange={(e) =>
                 handleBowlingChange({
-                  val: e.target.value,
+                  val: e.target.valueAsNumber,
                   field: "wicketPoints",
                   subField: "points",
                   index,
                 })
               }
+              labelInfo={infoTexts.wicketPoints.points}
             />
             <InputControl
+              placeholder="Type here"
               numericInput
               label="Runs Cap For Incrementing"
               value={wicket.runsCapForIncrementingPoints}
               onChange={(e) =>
                 handleBowlingChange({
-                  val: e.target.value,
+                  val: e.target.valueAsNumber,
                   field: "wicketPoints",
                   subField: "runsCapForIncrementingPoints",
                   index,
                 })
               }
+              labelInfo={infoTexts.wicketPoints.runsCapForIncrementing}
             />
             <InputControl
+              placeholder="Type here"
               numericInput
               label="Incremented Points"
               value={wicket.incrementedPoints}
               onChange={(e) =>
                 handleBowlingChange({
-                  val: e.target.value,
+                  val: e.target.valueAsNumber,
                   field: "wicketPoints",
                   subField: "incrementedPoints",
                   index,
                 })
               }
+              labelInfo={infoTexts.wicketPoints.incrementedPoints}
             />
-            <div className={styles.deleteIcon}>
+            <div className={`icon ${styles.deleteIcon}`}>
               <Trash2 color="red" />
             </div>
           </div>
@@ -395,8 +481,8 @@ export default function EditScoringSystem() {
               setFunction: setBowlingData,
             })
           }
+          outlineButton
         >
-          {" "}
           + ADD
         </Button>{" "}
       </div>
@@ -408,45 +494,51 @@ export default function EditScoringSystem() {
         {bowlingData.dotBallPoints?.map((dotBall, index) => (
           <div key={dotBall._id + index} className={styles.subSection_row}>
             <InputControl
+              placeholder="Type here"
               numericInput
-              label="Min Rate"
+              label="Min A.M.S.R"
               value={dotBall.minRate}
               onChange={(e) =>
                 handleBowlingChange({
-                  val: e.target.value,
+                  val: e.target.valueAsNumber,
                   field: "dotBallPoints",
                   subField: "minRate",
                   index,
                 })
               }
+              labelInfo={infoTexts.dotBallPoints.minAMSR}
             />
             <InputControl
+              placeholder="Type here"
               numericInput
-              label="Max Rate"
+              label="Max A.M.S.R"
               value={dotBall.maxRate}
               onChange={(e) =>
                 handleBowlingChange({
-                  val: e.target.value,
+                  val: e.target.valueAsNumber,
                   field: "dotBallPoints",
                   subField: "maxRate",
                   index,
                 })
               }
+              labelInfo={infoTexts.dotBallPoints.maxAMSR}
             />
             <InputControl
+              placeholder="Type here"
               numericInput
               label="Points"
               value={dotBall.points}
               onChange={(e) =>
                 handleBowlingChange({
-                  val: e.target.value,
+                  val: e.target.valueAsNumber,
                   field: "dotBallPoints",
                   subField: "points",
                   index,
                 })
               }
+              labelInfo={infoTexts.dotBallPoints.points}
             />
-            <div className={styles.deleteIcon}>
+            <div className={`icon ${styles.deleteIcon}`}>
               <Trash2 color="red" />
             </div>
           </div>
@@ -460,8 +552,8 @@ export default function EditScoringSystem() {
               setFunction: setBowlingData,
             })
           }
+          outlineButton
         >
-          {" "}
           + ADD
         </Button>
       </div>
@@ -474,45 +566,51 @@ export default function EditScoringSystem() {
         {bowlingData.wicketMilestoneBonus?.map((milestone, index) => (
           <div key={milestone._id} className={styles.subSection_row}>
             <InputControl
+              placeholder="Type here"
               numericInput
               label="Min Wickets"
               value={milestone.minWickets}
               onChange={(e) =>
                 handleBowlingChange({
-                  val: e.target.value,
+                  val: e.target.valueAsNumber,
                   field: "wicketMilestoneBonus",
                   subField: "minWickets",
                   index,
                 })
               }
+              labelInfo={infoTexts.wicketMilestones.minWickets}
             />
             <InputControl
+              placeholder="Type here"
               numericInput
               label="Max Wickets"
               value={milestone.maxWickets}
               onChange={(e) =>
                 handleBowlingChange({
-                  val: e.target.value,
+                  val: e.target.valueAsNumber,
                   field: "wicketMilestoneBonus",
                   subField: "maxWickets",
                   index,
                 })
               }
+              labelInfo={infoTexts.wicketMilestones.maxWickets}
             />
             <InputControl
+              placeholder="Type here"
               numericInput
               label="Points"
               value={milestone.points}
               onChange={(e) =>
                 handleBowlingChange({
-                  val: e.target.value,
+                  val: e.target.valueAsNumber,
                   field: "wicketMilestoneBonus",
                   subField: "points",
                   index,
                 })
               }
+              labelInfo={infoTexts.wicketMilestones.points}
             />
-            <div className={styles.deleteIcon}>
+            <div className={`icon ${styles.deleteIcon}`}>
               <Trash2 color="red" />
             </div>
           </div>
@@ -526,8 +624,8 @@ export default function EditScoringSystem() {
               setFunction: setBowlingData,
             })
           }
+          outlineButton
         >
-          {" "}
           + ADD
         </Button>
       </div>
@@ -543,35 +641,38 @@ export default function EditScoringSystem() {
       <div className={styles.subSection}>
         <div className={styles.subSection_row}>
           <InputControl
+            placeholder="Type here"
             numericInput
             label="Catch Points"
             value={fieldingData.catchPoints}
             onChange={(e) =>
               setFieldingData((prev) => ({
                 ...prev,
-                catchPoints: e.target.value,
+                catchPoints: e.target.valueAsNumber,
               }))
             }
           />
           <InputControl
+            placeholder="Type here"
             numericInput
             label="Stumping Points"
             value={fieldingData.stumpingPoints}
             onChange={(e) =>
               setFieldingData((prev) => ({
                 ...prev,
-                stumpingPoints: e.target.value,
+                stumpingPoints: e.target.valueAsNumber,
               }))
             }
           />
           <InputControl
+            placeholder="Type here"
             numericInput
             label="Direct Hit Run Out Points"
             value={fieldingData.directHitRunOutPoints}
             onChange={(e) =>
               setFieldingData((prev) => ({
                 ...prev,
-                directHitRunOutPoints: e.target.value,
+                directHitRunOutPoints: e.target.valueAsNumber,
               }))
             }
           />
@@ -587,7 +688,7 @@ export default function EditScoringSystem() {
   }, [scoringId]);
 
   return !scoringData ? (
-    <PageLoader />
+    <PageLoader fullPage />
   ) : (
     <div className={`page-container ${styles.container}`}>
       <div className="flex-col-xxs">
@@ -597,19 +698,28 @@ export default function EditScoringSystem() {
         </p>
       </div>
 
+      <div className="flex-col-xs">
+        <label className="label">Abbreviations</label>
+        <div className="key-value">
+          <label>A.M.S.R : </label>
+          <p className="value">Average Match Scoring Rate</p>
+        </div>
+      </div>
+
       {battingSection}
       {bowlingSection}
       {fieldingSection}
 
       {/* Footer */}
-      <div className="footer">
+      <div className="footer spacious-head">
         <Button
           cancelButton
           onClick={() => navigate(applicationRoutes.scoringSystem)}
         >
-          Exit
+          Exit editing
         </Button>
-        <Button>Edit</Button>
+
+        <Button>Save Edit</Button>
       </div>
     </div>
   );

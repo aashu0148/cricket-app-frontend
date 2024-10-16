@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import { Toaster } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Tooltip } from "react-tooltip";
 
 // Components
 import PageNotFound from "./Components/PageNotFound/PageNotFound";
@@ -91,15 +92,27 @@ function App() {
   return appLoaded ? (
     <div className="main-app">
       {ReactDOM.createPortal(
-        <Toaster
-          position={isMobileView ? "top-right" : "bottom-right"}
-          toastOptions={{
-            duration: 2500,
-            style: {
+        <>
+          <Toaster
+            position={isMobileView ? "top-right" : "bottom-right"}
+            toastOptions={{
+              duration: 2500,
+              style: {
+                zIndex: 9999999,
+              },
+            }}
+          />
+
+          <Tooltip
+            id="global-tooltip"
+            style={{
               zIndex: 9999999,
-            },
-          }}
-        />,
+              borderRadius: "8px",
+              background: "#000",
+            }}
+            delayShow={950}
+          />
+        </>,
         document.body
       )}
 
