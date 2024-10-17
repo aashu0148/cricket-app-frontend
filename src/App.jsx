@@ -142,6 +142,10 @@ function App() {
               path={applicationRoutes.editScoringSystem()}
               element={<EditScoringSystem />}
             />
+            <Route
+              path={applicationRoutes.createScoringSystem}
+              element={<EditScoringSystem createMode />}
+            />
             {/* all routes of admin will be defined here */}
           </Route>
 

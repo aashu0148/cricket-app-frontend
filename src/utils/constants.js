@@ -9,6 +9,7 @@ export const applicationRoutes = {
   adminTournament: "/admin/tournaments",
   scoringSystem: "/admin/scoring-systems",
   players: "/admin/players",
+  createScoringSystem: "/admin/scoring-systems/create",
 
   // function routes
   editScoringSystem: (scoringId = "") =>

@@ -8,7 +8,7 @@ import {
   createScoringSystem,
   getAllScoringSystems,
 } from "@/apis/scoringSystem";
-import { getDateFormatted } from "@/utils/util";
+import { getDateFormatted, handleAppNavigation } from "@/utils/util";
 import { applicationRoutes } from "@/utils/constants";
 
 import styles from "./ScoringSystem.module.scss";
@@ -18,8 +18,6 @@ export default function ScoringSystem() {
   const [allScoringSystems, setAllScoringSystems] = useState([]);
   const [processingSystem, setProcessingSystem] = useState("");
   const [loadingPage, setLoadingPage] = useState(true);
-
-  // **************************** Integrations ********************
 
   async function fetchScoringSystems() {
     const res = await getAllScoringSystems();
@@ -61,7 +59,17 @@ export default function ScoringSystem() {
       <section className={styles.section}>
         <div className="flexBox">
           <p className="heading">All Scoring Systems</p>
-          <Button>Create Scoring System</Button>
+          <Button
+            onClick={(e) =>
+              handleAppNavigation(
+                e,
+                navigate,
+                applicationRoutes.createScoringSystem
+              )
+            }
+          >
+            Create Scoring System
+          </Button>
         </div>
       </section>
 

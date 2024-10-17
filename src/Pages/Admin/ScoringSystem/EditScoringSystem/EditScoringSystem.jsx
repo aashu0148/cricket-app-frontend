@@ -1,91 +1,114 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { Trash, Trash2, X } from "react-feather";
+import React, { useEffect, useState } from "react";
+import { Info, Trash2 } from "react-feather";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 import Button from "@/Components/Button/Button";
 import InputControl from "@/Components/InputControl/InputControl";
 import PageLoader from "@/Components/PageLoader/PageLoader";
 import SimpleArrayEdit from "./SimpleArrayEdit";
 
-import { getScoringSystemById } from "@/apis/scoringSystem";
+import {
+  createScoringSystem,
+  getScoringSystemById,
+  updateScoringSystem,
+} from "@/apis/scoringSystem";
 import { applicationRoutes } from "@/utils/constants";
-import { getUniqueId } from "@/utils/util";
+import { getTooltipAttributes } from "@/utils/tooltip";
 
 import styles from "./EditScoringSystem.module.scss";
 
 const infoTexts = {
+  runPoints:
+    "Points assigned based on the number of runs scored by the batter.",
   boundaryPoints: {
-    four: "Points awarded for hitting a boundary (4 runs) based on the match's average scoring rate.",
-    six: "Points awarded for hitting a maximum (6 runs) based on the match's average scoring rate.",
+    four: "Bonus points for every boundary hit (four runs) by the batter.",
+    six: "Bonus points for every six hit by the batter.",
     minAMSR:
-      "The minimum average match scoring rate (A.M.S.R) threshold for determining boundary points.",
+      "The minimum average match scoring rate (A.M.S.R.) used to determine the bonus for boundaries.",
     maxAMSR:
-      "The maximum average match scoring rate (A.M.S.R) threshold for determining boundary points.",
+      "The maximum average match scoring rate (A.M.S.R.) used to determine the bonus for boundaries.",
   },
-  milestones: {
+  runMilestoneBonus: {
     runsUpto:
-      "The range of runs scored by a batter for which milestone points are awarded.",
-    points:
-      "The points awarded when a batter's runs fall within the corresponding 'Runs Upto' range.",
+      "Defines the upper limit of runs for the first milestone where a bonus is applied.",
+    points: "Bonus points awarded for reaching the first run milestone.",
+    negativeRunsExemptPositions:
+      "Batters in these positions will not have negative points for scoring below 10 runs.",
   },
-  strikeRateBonusMultiplierRanges: {
+  strikeRateBonus: {
+    minBallsRequired:
+      "The minimum number of balls a batter must face to be eligible for a strike rate bonus.",
     battingPositions:
-      "The range of batting positions for which strike rate bonus multipliers are applied.",
+      "The batting positions that are considered when calculating the strike rate bonus.",
     minimumBalls:
-      "The minimum number of balls faced by a batter required to qualify for strike rate bonus points.",
+      "The minimum number of balls faced by the batter used to calculate the strike rate bonus.",
     maximumBalls:
-      "The maximum number of balls a batter can face to still qualify for a particular strike rate bonus multiplier.",
+      "The maximum number of balls faced by the batter used to calculate the strike rate bonus.",
     multiplier:
-      "The factor applied to calculate the strike rate bonus based on the number of balls faced and runs scored.",
+      "The multiplier applied to the strike rate bonus calculation based on balls faced.",
   },
   wicketPoints: {
     minBattingPosition:
-      "The minimum batting position of the batter whose wicket is taken, determining the base points for the wicket.",
+      "The minimum batting position of the dismissed batter for the wicket points calculation.",
     maxBattingPosition:
-      "The maximum batting position of the batter whose wicket is taken, determining the base points for the wicket.",
+      "The maximum batting position of the dismissed batter for the wicket points calculation.",
     points:
-      "The points awarded for taking the wicket of a batter within the defined batting positions.",
+      "Points awarded for taking a wicket based on the batter's position.",
     runsCapForIncrementing:
-      "The number of runs a batter must score for their wicket to be worth additional points.",
+      "The run limit above which additional points are awarded for taking a wicket.",
     incrementedPoints:
-      "The additional points awarded if a batter surpasses the runs cap when they are dismissed.",
+      "Extra points awarded for dismissing a batter who has scored more than a specific number of runs.",
   },
   dotBallPoints: {
     minAMSR:
-      "The minimum average match scoring rate (A.M.S.R) threshold for determining points awarded for dot balls (balls on which no runs are scored).",
+      "The minimum average match scoring rate (A.M.S.R.) used to calculate dot ball points.",
     maxAMSR:
-      "The maximum average match scoring rate (A.M.S.R) threshold for determining points awarded for dot balls.",
+      "The maximum average match scoring rate (A.M.S.R.) used to calculate dot ball points.",
     points:
-      "The points awarded for each dot ball delivered by a bowler, based on the average match scoring rate.",
+      "Points awarded for delivering a dot ball, depending on the average match scoring rate.",
   },
-  wicketMilestones: {
+  economyRateBonus: {
+    minBallsRequired:
+      "The minimum number of balls a bowler must bowl to qualify for the economy rate bonus.",
+    minimumBalls:
+      "The minimum number of balls bowled by the bowler used in the economy rate bonus calculation.",
+    maximumBalls:
+      "The maximum number of balls bowled by the bowler used in the economy rate bonus calculation.",
+    multiplier:
+      "The multiplier applied to the economy rate bonus calculation based on balls bowled.",
+  },
+  wicketMilestonesBonus: {
     minWickets:
-      "The minimum number of wickets taken by a bowler to qualify for a milestone bonus.",
+      "The minimum number of wickets required to earn a milestone bonus.",
     maxWickets:
-      "The maximum number of wickets taken by a bowler to qualify for a higher milestone bonus.",
-    points: "The points awarded when a bowler reaches the wicket milestone.",
+      "The maximum number of wickets considered for calculating the milestone bonus.",
+    points: "Points awarded as a bonus for reaching the wicket milestone.",
   },
 };
 
-export default function EditScoringSystem() {
+export default function EditScoringSystem({ createMode = false }) {
   const { scoringId } = useParams();
   const navigate = useNavigate();
-  const [scoringData, setScoringData] = useState(null);
-  const [battingData, setBattingData] = useState(scoringData?.batting || {});
-  const [bowlingData, setBowlingData] = useState(scoringData?.bowling || {});
-  const [fieldingData, setFieldingData] = useState(scoringData?.fielding || {});
+  const [systemName, setSystemName] = useState("");
+  const [loadingPage, setLoadingPage] = useState(true);
+  const [battingData, setBattingData] = useState({});
+  const [bowlingData, setBowlingData] = useState({});
+  const [fieldingData, setFieldingData] = useState({});
   const [errors, setErrors] = useState({
     batting: {},
     bowling: {},
     fielding: {},
   });
-
-  // ***************************** get scoring system by id ***************************
+  const [submitting, setSubmitting] = useState(false);
 
   function validateForm() {
+    const errs = {};
     const battingErrors = {};
     const bowlingErrors = {};
     const fieldingErrors = {};
+
+    if (!systemName) errs.name = "Enter system name";
 
     // Batting validation
     if (isNaN(battingData.runPoints) || battingData.runPoints < 0) {
@@ -281,30 +304,52 @@ export default function EditScoringSystem() {
         "Direct hit run-out points must be a positive number.";
     }
 
+    const isNormalError = Object.keys(errs).length > 0;
     const isBattingError = Object.keys(battingErrors).length > 0;
     const isBowlingError = Object.keys(bowlingErrors).length > 0;
     const isFieldingError = Object.keys(fieldingErrors).length > 0;
 
     setErrors({
+      ...errs,
       batting: battingErrors,
       bowling: bowlingErrors,
       fielding: fieldingErrors,
     });
 
-    if (isBattingError || isBowlingError || isFieldingError) return false;
+    if (isNormalError || isBattingError || isBowlingError || isFieldingError)
+      return false;
     return true;
   }
 
   const handleSubmission = async () => {
     if (!validateForm()) return;
 
-    console.log("Validation successful");
+    setSubmitting(true);
+    const res = createMode
+      ? await createScoringSystem({
+          name: systemName,
+          batting: battingData,
+          bowling: bowlingData,
+          fielding: fieldingData,
+        })
+      : await updateScoringSystem(scoringId, {
+          batting: battingData,
+          bowling: bowlingData,
+          fielding: fieldingData,
+        });
+    setSubmitting(false);
+    if (!res) return;
+
+    toast.success(`${createMode ? "Created" : "Edited"} successfully`);
+    navigate(applicationRoutes.scoringSystem);
   };
 
   const fetchScoringSystem = async () => {
     const res = await getScoringSystemById(scoringId);
+    setLoadingPage(false);
     if (!res) return;
-    setScoringData(res.data);
+
+    setSystemName(res.data?.name);
     setBattingData(res.data.batting);
     setBowlingData(res.data.bowling);
     setFieldingData(res.data.fielding);
@@ -349,21 +394,6 @@ export default function EditScoringSystem() {
     setBowlingData((prev) => ({ ...prev, [field]: updatedField }));
   }
 
-  function handleAddition({ field, section, setFunction }) {
-    const fieldsObj = section[field][0];
-
-    const newObject = Object.keys(fieldsObj)
-      .filter((item) => item !== "_id")
-      .reduce((acc, item) => {
-        acc[item] = undefined;
-        return acc;
-      }, {});
-
-    const updatedField = [...section[field], newObject];
-
-    setFunction((prev) => ({ ...prev, [field]: updatedField }));
-  }
-
   const battingSection = (
     <div className={styles.section}>
       <h2 className={styles.mainHeading}>Batting</h2>
@@ -379,8 +409,8 @@ export default function EditScoringSystem() {
               runPoints: e.target.valueAsNumber,
             }))
           }
-          // labelInfo={infoTexts}
           error={errors.batting.runPoints}
+          labelInfo={infoTexts.runPoints}
         />
 
         <h3 className={styles.subHeading}>Boundary Points</h3>
@@ -468,11 +498,10 @@ export default function EditScoringSystem() {
         <Button
           className={styles.link}
           onClick={() =>
-            handleAddition({
-              field: "boundaryPoints",
-              section: battingData,
-              setFunction: setBattingData,
-            })
+            setBattingData((p) => ({
+              ...p,
+              boundaryPoints: [...p.boundaryPoints, {}],
+            }))
           }
           outlineButton
         >
@@ -499,7 +528,7 @@ export default function EditScoringSystem() {
                   secondField: "runMilestoneBonus",
                 })
               }
-              labelInfo={infoTexts.milestones.runsUpto}
+              labelInfo={infoTexts.runMilestoneBonus?.runsUpto}
               error={errors.batting[`runMilestoneBonus_${index}_runsUpto`]}
             />
             <InputControl
@@ -517,7 +546,7 @@ export default function EditScoringSystem() {
                   secondField: "runMilestoneBonus",
                 })
               }
-              labelInfo={infoTexts.milestones.points}
+              labelInfo={infoTexts.runMilestoneBonus?.points}
               error={errors.batting[`runMilestoneBonus_${index}_points`]}
             />
             <div
@@ -554,7 +583,17 @@ export default function EditScoringSystem() {
           + ADD
         </Button>
 
-        <h3 className={styles.subHeading}>Negative Runs Exempt positions</h3>
+        <h3 className={styles.subHeading}>
+          Negative Runs Exempt positions
+          <span
+            className={`icon ${styles.info}`}
+            {...getTooltipAttributes({
+              text: infoTexts.runMilestoneBonus?.negativeRunsExemptPositions,
+            })}
+          >
+            <Info />
+          </span>
+        </h3>
         <SimpleArrayEdit
           array={battingData.runMilestoneBonus?.negativeRunsExemptPositions}
           onChange={(arr) =>
@@ -585,13 +624,23 @@ export default function EditScoringSystem() {
               },
             }))
           }
-          // labelInfo={infoTexts}
+          labelInfo={infoTexts.strikeRateBonus?.minBallsRequired}
         />
         <h3 className={styles.subHeading}>Multiplier Ranges</h3>
         {battingData.strikeRateBonus?.multiplierRanges?.map((range, index) => (
           <div key={range._id + index} className="flex-col-xxs">
             <div className="flex-col-xs">
-              <label className="label">Batting positions</label>
+              <label className="label flex align-center">
+                Batting positions{" "}
+                <span
+                  className={`icon ${styles.info}`}
+                  {...getTooltipAttributes({
+                    text: infoTexts.strikeRateBonus?.battingPositions,
+                  })}
+                >
+                  <Info />
+                </span>
+              </label>
 
               <SimpleArrayEdit
                 array={
@@ -635,9 +684,7 @@ export default function EditScoringSystem() {
                     secondField: "strikeRateBonus",
                   })
                 }
-                labelInfo={
-                  infoTexts.strikeRateBonusMultiplierRanges.minimumBalls
-                }
+                labelInfo={infoTexts.strikeRateBonus?.maximumBalls}
                 error={errors.batting[`strikeRateBonus_${index}_minBalls`]}
               />
               <InputControl
@@ -655,9 +702,7 @@ export default function EditScoringSystem() {
                     secondField: "strikeRateBonus",
                   })
                 }
-                labelInfo={
-                  infoTexts.strikeRateBonusMultiplierRanges.maximumBalls
-                }
+                labelInfo={infoTexts.strikeRateBonus?.maximumBalls}
                 error={errors.batting[`strikeRateBonus_${index}_maxBalls`]}
               />
               <InputControl
@@ -675,7 +720,7 @@ export default function EditScoringSystem() {
                     secondField: "strikeRateBonus",
                   })
                 }
-                labelInfo={infoTexts.strikeRateBonusMultiplierRanges.multiplier}
+                labelInfo={infoTexts.strikeRateBonus?.multiplier}
                 error={errors.batting[`strikeRateBonus_${index}_multiplier`]}
               />
               <div
@@ -931,7 +976,7 @@ export default function EditScoringSystem() {
               },
             }))
           }
-          // labelInfo={infoTexts}
+          labelInfo={infoTexts.economyRateBonus?.minBallsRequired}
         />
         <h3 className={styles.subHeading}>Multiplier Ranges</h3>
         {bowlingData.economyRateBonus?.multiplierRanges?.map((range, index) => (
@@ -955,9 +1000,7 @@ export default function EditScoringSystem() {
                   },
                 }))
               }
-              // labelInfo={
-              //   infoTexts.economyRateBonusMultiplierRanges.minimumBalls
-              // }
+              labelInfo={infoTexts.economyRateBonus?.minimumBalls}
               error={errors.bowling[`economyRateBonus_${index}_minBallsBowled`]}
             />
             <InputControl
@@ -979,9 +1022,7 @@ export default function EditScoringSystem() {
                   },
                 }))
               }
-              // labelInfo={
-              //   infoTexts.economyRateBonusMultiplierRanges.maximumBalls
-              // }
+              labelInfo={infoTexts.economyRateBonus?.maximumBalls}
               error={errors.bowling[`economyRateBonus_${index}_maxBallsBowled`]}
             />
             <InputControl
@@ -1006,7 +1047,7 @@ export default function EditScoringSystem() {
                   },
                 }))
               }
-              // labelInfo={infoTexts.economyRateBonusMultiplierRanges.multiplier}
+              labelInfo={infoTexts.economyRateBonus?.multiplier}
               error={errors.bowling[`economyRateBonus_${index}_multiplier`]}
             />
             <div
@@ -1063,7 +1104,7 @@ export default function EditScoringSystem() {
                   index,
                 })
               }
-              labelInfo={infoTexts.wicketMilestones.minWickets}
+              labelInfo={infoTexts.wicketMilestonesBonus?.minWickets}
               error={errors.bowling[`wicketMilestoneBonus_${index}_minWickets`]}
             />
             <InputControl
@@ -1079,7 +1120,7 @@ export default function EditScoringSystem() {
                   index,
                 })
               }
-              labelInfo={infoTexts.wicketMilestones.maxWickets}
+              labelInfo={infoTexts.wicketMilestonesBonus?.maxWickets}
               error={errors.bowling[`wicketMilestoneBonus_${index}_maxWickets`]}
             />
             <InputControl
@@ -1095,7 +1136,7 @@ export default function EditScoringSystem() {
                   index,
                 })
               }
-              labelInfo={infoTexts.wicketMilestones.points}
+              labelInfo={infoTexts.wicketMilestonesBonus?.points}
               error={errors.bowling[`wicketMilestoneBonus_${index}_points`]}
             />
             <div
@@ -1180,17 +1221,47 @@ export default function EditScoringSystem() {
   );
 
   useEffect(() => {
+    if (createMode) {
+      setLoadingPage(false);
+      setBattingData({
+        boundaryPoints: [],
+        runMilestoneBonus: {
+          milestones: [],
+        },
+        strikeRateBonus: {
+          multiplierRanges: [],
+        },
+      });
+      setBowlingData({
+        dotBallPoints: [],
+        wicketPoints: [],
+        wicketMilestoneBonus: [],
+        economyRateBonus: {
+          multiplierRanges: [],
+        },
+      });
+      return;
+    }
+
     fetchScoringSystem();
   }, []);
 
-  return !scoringData ? (
+  return loadingPage ? (
     <PageLoader fullPage />
   ) : (
     <div className={`page-container ${styles.container}`}>
       <div className="flex-col-xxs">
-        <h2 className={`heading-big`}>Edit Scoring System</h2>
+        {createMode ? (
+          <h2 className={`heading-big`}>
+            {createMode ? "Create" : "Edit"} Scoring System
+          </h2>
+        ) : (
+          <h2 className={`heading-big`}>Edit: {systemName}</h2>
+        )}
+
         <p className="shoulder">
-          Edit Scoring System, define rules, and oversee the competition.
+          {createMode ? "Create" : "Edit"} Scoring System, define rules, and
+          oversee the competition.
         </p>
       </div>
 
@@ -1202,20 +1273,35 @@ export default function EditScoringSystem() {
         </div>
       </div>
 
+      {createMode && (
+        <InputControl
+          placeholder="Enter system name"
+          value={systemName}
+          onChange={(e) => setSystemName(e.target.value)}
+          label="Scoring System Name"
+          error={errors.name}
+        />
+      )}
+
       {battingSection}
       {bowlingSection}
       {fieldingSection}
 
-      {/* Footer */}
       <div className="footer spacious-head">
         <Button
           cancelButton
           onClick={() => navigate(applicationRoutes.scoringSystem)}
         >
-          Exit editing
+          Exit {createMode ? "" : "editing"}
         </Button>
 
-        <Button onClick={handleSubmission}>Save Edit</Button>
+        <Button
+          onClick={handleSubmission}
+          disabled={submitting}
+          useSpinnerWhenDisabled
+        >
+          {createMode ? "Create" : "Edit"}
+        </Button>
       </div>
     </div>
   );
