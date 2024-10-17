@@ -22,7 +22,7 @@ export const handleNumericInputKeyDown = (event) => {
   )
     return;
 
-  if (!/[0-9]/.test(key)) {
+  if (!/[0-9.]/.test(key)) {
     event.returnValue = false;
 
     if (event.preventDefault) event.preventDefault();

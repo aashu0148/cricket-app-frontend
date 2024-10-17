@@ -1,5 +1,33 @@
 @import "@/styles/variables.scss";
 
+.simpleArray {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  flex-wrap: wrap;
+
+  & > div {
+    width: 100px;
+  }
+
+  .delete {
+    transform: translate(50%, -90%);
+    padding: $spacing-xxs;
+
+    &:hover {
+      svg {
+        color: $red;
+      }
+    }
+
+    svg {
+      height: 13px;
+      width: 13px;
+      color: $color-desc;
+    }
+  }
+}
+
 .container {
   min-height: 100vh;
   min-width: 100%;
@@ -12,23 +40,28 @@
     position: relative;
     background-color: $bg;
     border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
 
     .mainHeading {
       font-size: $text-xl;
       font-weight: 700;
       color: $primary;
-      margin-bottom: $spacing-sm;
     }
 
     .subHeading {
       font-size: $text-md;
       font-weight: 500;
-      padding-bottom: $spacing-xs;
+      padding-top: $spacing-xs;
     }
 
     .subSection {
+      padding-bottom: $spacing-sm;
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-xs;
       border-bottom: 1px solid $primary;
-      margin-bottom: $spacing-sm;
 
       &:last-child {
         border-bottom: none;
@@ -36,7 +69,7 @@
 
       .subSection_row {
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         gap: $spacing-md;
         margin-bottom: $spacing-sm;
 
@@ -52,7 +85,6 @@
 
       .link {
         font-size: $text-sm;
-        margin: $spacing-sm 0;
         cursor: pointer;
       }
     }
