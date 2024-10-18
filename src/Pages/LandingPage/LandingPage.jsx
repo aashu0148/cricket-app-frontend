@@ -11,6 +11,7 @@ import {
   Twitter,
 } from "react-feather";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import Navbar from "@/Components/Navbar/Navbar";
 import Shapes from "./Shapes";
@@ -23,7 +24,7 @@ import {
   testimonials,
   FAQs,
   generalCopy,
-} from "./landingCopy";
+} from "./landingCopy.jsx";
 import image from "@/assets/images/batsman.png";
 import aboutImage from "@/assets/images/about-us.png";
 import LineAnimate from "@/Components/LineAnimate/LineAnimate";
@@ -32,7 +33,6 @@ import { handleAppNavigation } from "@/utils/util";
 import { applicationRoutes } from "@/utils/constants";
 
 import styles from "./LandingPage.module.scss";
-import { useSelector } from "react-redux";
 
 function Hero() {
   const navigate = useNavigate();
@@ -63,15 +63,10 @@ function Hero() {
       />
       <div className={styles.heroSection__left}>
         <h1>
-          Create Your <span className="gradient-text">Dream Team</span> and
-          Dominate Fantasy Cricket!
+          The ultimate cricket fantasy experience for{" "}
+          <span className="gradient-text">serious cricket fans</span>
         </h1>
-        <p>
-          Join the ultimate fantasy cricket experience with real-time scoring,
-          custom draft leagues, and in-depth player stats. Build your team,
-          compete with friends, and climb the leaderboard. Your strategy, your
-          game—make every match count!
-        </p>
+        <p>A draft-based fantasy cricket app with superior scoring system</p>
         <div className={styles.heroSection__buttonContainer}>
           <Button
             className={styles.heroSection__button}
@@ -282,7 +277,9 @@ function FaQ() {
                 </span>
               </div>
               {openIndex === index && (
-                <p className={styles.faqSection_answer}>{item.answer}</p>
+                <p className={styles.faqSection_answer}>
+                  {item.jsx || item.answer}
+                </p>
               )}
             </React.Fragment>
           ))}
@@ -348,7 +345,7 @@ function LandingPage() {
 
       <Hero />
 
-      <div className={styles.cardSection}>
+      {/* <div className={styles.cardSection}>
         {details.map((item, index) => (
           <Card
             key={index}
@@ -358,7 +355,7 @@ function LandingPage() {
             subText={item.subText}
           />
         ))}
-      </div>
+      </div> */}
 
       <About />
 

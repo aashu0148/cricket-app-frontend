@@ -118,6 +118,7 @@
         font-weight: 500;
         color: $color-label;
         opacity: 0;
+        white-space: nowrap;
       }
     }
   }
@@ -210,8 +211,6 @@
   }
 
   .sections {
-    gap: 0;
-
     .section {
       justify-content: flex-start;
       gap: $spacing-sm;
@@ -231,13 +230,6 @@
 
         .text {
           color: $white;
-        }
-      }
-
-      .icon {
-        svg {
-          height: 22px;
-          width: 22px;
         }
       }
 
