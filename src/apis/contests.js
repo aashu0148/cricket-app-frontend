@@ -125,7 +125,7 @@ export const getJoinedContests = async () => {
   });
 };
 
-//  Get Joined Contests if tournament
+//  Get Joined Contests of tournament
 export const getJoinedContestsOfTournament = async (tournamentId) => {
   const path = `/leagues/tournament/${tournamentId}/joined`;
 
@@ -160,6 +160,20 @@ export const getJoinableContestsOfTournament = async (tournamentId) => {
     defaultErrorMessage: "Failed to get Contests",
     fetchWrapperOptions: {
       path,
+    },
+  });
+};
+
+export const updateContestTeamName = async (contestId, payload) => {
+  const path = `/leagues/${contestId}/team`;
+
+  return await makeApiCall({
+    functionName: "updateContestTeamName",
+    defaultErrorMessage: "Failed to update Contest",
+    fetchWrapperOptions: {
+      path,
+      payload,
+      requestType: "PATCH",
     },
   });
 };

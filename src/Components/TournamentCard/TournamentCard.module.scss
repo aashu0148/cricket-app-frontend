@@ -23,6 +23,10 @@
     font-size: $text-sm;
   }
 
+  .tag.gray {
+    background: $color-label;
+  }
+
   .header {
     .title {
       font-size: $text-2xl;

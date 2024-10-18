@@ -56,7 +56,7 @@ function LeaderBoard({ teams = [], playerPoints = [] }) {
                   usePLaceholderUserImageOnError
                 />
               </div>
-              <p className={styles.name}>{team.owner?.name}</p>
+              <p className={styles.name}>{team.name || team.owner?.name}</p>
             </div>
 
             <div className={styles.right}>

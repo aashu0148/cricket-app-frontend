@@ -3,12 +3,12 @@ import { useNavigate } from "react-router-dom";
 
 import Img from "@/Components/Img/Img";
 import Button from "../Button/Button";
+import Toggle from "../Toggle/Toggle";
 
 import { getDateFormatted, handleAppNavigation } from "@/utils/util";
 import { applicationRoutes } from "@/utils/constants";
 
 import styles from "./TournamentCard.module.scss";
-import Toggle from "../Toggle/Toggle";
 
 function TournamentCard({
   tournamentData = {},
@@ -27,9 +27,18 @@ function TournamentCard({
     allMatches,
   } = tournamentData;
 
+  const isCompleted = new Date(tournamentData.endDate) < new Date();
+  const isUpcoming = new Date(tournamentData.startDate) > new Date();
+
   return (
     <div className={styles.card}>
-      {tournamentData.ongoing && <p className={styles.tag}>Ongoing</p>}
+      {isUpcoming ? (
+        <p className={styles.tag}>Upcoming</p>
+      ) : isCompleted ? (
+        <p className={`${styles.gray} ${styles.tag}`}>Upcoming</p>
+      ) : (
+        ""
+      )}
 
       <div className={`flex-col-xxs ${styles.header}`}>
         <div className="spacious-head">
@@ -48,9 +57,9 @@ function TournamentCard({
             {isAdmin ? "Edit" : "Explore Contests"}
           </Button>
         </div>
-        <p className={styles.season}>
+        {/* <p className={styles.season}>
           Season: <span>{season}</span>
-        </p>
+        </p> */}
         <p className={styles.dates}>
           {getDateFormatted(startDate, true)} -{" "}
           {getDateFormatted(endDate, true)}
@@ -109,62 +118,6 @@ function TournamentCard({
         </div>
       </div>
 
-      {/* {isAdmin && (
-        <div className={styles.section}>
-          <h3>
-            Players Count <span>{tournamentData.players.length}</span>
-          </h3>
-          <div
-            className={styles.player_scrollBar}
-            style={{
-              height: tournamentData.players.length < 8 ? "fit-content" : "",
-              flexDirection: tournamentData.players.length < 8 ? "row" : "",
-            }}
-          >
-             {tournamentData.players.length
-              ? tournamentData.players.map((item) => (
-                  <div>
-                    <PlayerCard player={item} />
-                  </div>
-                ))
-              : "No Players Found"} 
-          </div>
-        </div>
-      )} */}
-
-      {allSquads.length ? (
-        <>
-          <div className={styles.section}>
-            <h3 className={`heading`}>Squads:</h3>
-
-            <div
-              className={styles.squadCards}
-              style={{
-                height: allSquads.length < 8 ? "fit-content" : "",
-                flexDirection: allSquads.length < 8 ? "row" : "",
-              }}
-            >
-              {allSquads.map((squad) => (
-                <div key={squad.objectId} className={styles.card}>
-                  <div className={styles.image}>
-                    <Img isEspnImage src={squad.teamImage} alt={squad.name} />
-                  </div>
-                  <p className={styles.name}>{squad.title}</p>
-                </div>
-              ))}
-              {new Array(4).fill(1).map((_, i) => (
-                <div
-                  key={i}
-                  className={styles.card}
-                  style={{ opacity: 0, padding: 0, pointerEvents: "none" }}
-                />
-              ))}
-            </div>
-          </div>
-        </>
-      ) : (
-        ""
-      )}
       {isAdmin ? (
         <div className={`flex gap-lg ${styles.section}`}>
           <h3 className="heading">Current Status</h3>

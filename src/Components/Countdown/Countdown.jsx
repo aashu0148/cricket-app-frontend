@@ -33,6 +33,7 @@ const calculateTimeLeft = (date = "") => {
 };
 
 const Countdown = ({
+  small = false,
   skipDays = false,
   skipHours = false,
   returnTextOnly = false,
@@ -76,7 +77,7 @@ const Countdown = ({
   return returnTextOnly ? (
     getText()
   ) : (
-    <div className={styles.countdown}>
+    <div className={`${small ? styles.small : ""} ${styles.countdown}`}>
       <div className={styles.timeBlock}>
         <div className={styles.timeValue}>
           {timeLeft.days < 10 ? "0" + timeLeft.days : timeLeft.days}

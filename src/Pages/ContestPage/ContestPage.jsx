@@ -14,11 +14,16 @@ import EditContestModal from "./EditContestModal/EditContestModal";
 import LeaderBoard from "./LeaderBoard/LeaderBoard";
 import Button from "@/Components/Button/Button";
 import JoinProtectedContestModal from "@/Components/ContestCard/JoinProtectedContestModal";
+import InputControl from "@/Components/InputControl/InputControl";
 
 import { handleAppNavigation } from "@/utils/util";
 import { applicationRoutes, colors } from "@/utils/constants";
 import { contestTypeEnum } from "@/utils/enums";
-import { getContestById, joinContest } from "@/apis/contests";
+import {
+  getContestById,
+  joinContest,
+  updateContestTeamName,
+} from "@/apis/contests";
 import { getTournamentById } from "@/apis/tournament";
 
 import styles from "./ContestPage.module.scss";
@@ -36,6 +41,7 @@ function ContestPage() {
   const [showJoinContestModal, setShowJoinContestModal] = useState(false);
   const [joiningContest, setJoiningContest] = useState(false);
   const [playerPoints, setPlayerPoints] = useState([]);
+  const [teamNameInput, setTeamNameInput] = useState("");
 
   const currentUserTeam = contestDetails.teams?.length
     ? contestDetails.teams.find((e) => e.owner?._id === userDetails._id)
@@ -43,6 +49,27 @@ function ContestPage() {
   const isDraftRoundCompleted = contestDetails.draftRound?.completed;
   const draftRoundStarted =
     new Date() > new Date(contestDetails.draftRound?.startDate);
+
+  const handleTeamNameInputBlur = async () => {
+    const currName =
+      contestDetails.teams.find((t) => t.owner._id === userDetails._id)?.name ||
+      "";
+
+    if (!teamNameInput.trim() || currName === teamNameInput) return;
+
+    const res = await updateContestTeamName(contestId, {
+      name: teamNameInput,
+    });
+    if (!res) return;
+
+    setContestDetails((p) => ({
+      ...p,
+      teams: p.teams.map((t) =>
+        t.owner?._id === userDetails._id ? { ...t, name: teamNameInput } : t
+      ),
+    }));
+    toast.success("Team name updated successfully");
+  };
 
   const handleJoinContest = async (pass = "") => {
     setJoiningContest(true);
@@ -57,12 +84,20 @@ function ContestPage() {
     setContestDetails(res.data);
     fetchContestDetails();
   };
+
   const fetchContestDetails = async () => {
     const res = await getContestById(contestId);
     setLoading(false);
     if (!res) return;
 
     setContestDetails(res.data);
+
+    if (res.data?.teams) {
+      const userTeam = res.data.teams.find(
+        (e) => e.owner?._id === userDetails._id
+      );
+      setTeamNameInput(userTeam?.name || "");
+    }
   };
 
   const fetchTournamentDetails = async () => {
@@ -226,6 +261,18 @@ function ContestPage() {
             ) : (
               ""
             )}
+          </div>
+
+          <div className="flex">
+            <InputControl
+              small
+              label="Your team name"
+              placeholder="Enter your team name"
+              maxLength={50}
+              value={teamNameInput}
+              onChange={(e) => setTeamNameInput(e.target.value)}
+              onBlur={handleTeamNameInputBlur}
+            />
           </div>
 
           <Participants

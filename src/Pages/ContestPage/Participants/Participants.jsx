@@ -31,6 +31,7 @@ function Participants({
     return {
       owner: team.owner,
       players: mappedPlayers,
+      name: team.name,
     };
   }, [selectedTeamOwnerId, participants]);
 
@@ -71,7 +72,9 @@ function Participants({
                     src={team.owner.profileImage}
                   />
                 </div>
-                <p className={styles.name}>{team.owner.name}</p>
+                <p className={styles.name} title={team.owner.name}>
+                  {team.owner.name}
+                </p>
 
                 {team.players?.length > 0 ? (
                   selectedTeam.owner._id === team.owner._id ? (
@@ -104,8 +107,8 @@ function Participants({
         <div className={styles.team}>
           <div className="spacious-head">
             <p className={styles.title}>
-              {selectedTeam.owner?.name}
-              {"'s"} team <span>{`(${selectedTeam.players?.length})`}</span>
+              {selectedTeam.name || `${selectedTeam.owner?.name}'s team `}{" "}
+              <span>{` (${selectedTeam.players?.length})`}</span>
             </p>
 
             <Button

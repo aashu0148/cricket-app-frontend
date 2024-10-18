@@ -31,3 +31,20 @@
     }
   }
 }
+
+.countdown.small {
+  gap: $spacing-xs;
+
+  .timeBlock {
+    padding: $spacing-xxs;
+
+    .timeValue {
+      min-width: 40px;
+      font-size: $text-xl;
+    }
+
+    .timeLabel {
+      font-size: $text-xs;
+    }
+  }
+}

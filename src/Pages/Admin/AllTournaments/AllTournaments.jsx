@@ -37,6 +37,7 @@ export default function AllTournaments() {
     const result = res?.data.map((t) => ({
       ...t,
       ongoing: new Date(t.startDate) < new Date(),
+      upcoming: new Date(t.startDate) > new Date(),
     }));
     result.sort((a, b) =>
       new Date(a.startDate) < new Date(b.startDate) ? -1 : 1

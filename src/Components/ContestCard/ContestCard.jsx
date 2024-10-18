@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 import Button from "@/Components/Button/Button";
 import JoinProtectedContestModal from "./JoinProtectedContestModal";
+import Countdown from "../Countdown/Countdown";
 
 import {
   getDateFormatted,
@@ -29,6 +30,8 @@ function ContestCard({ className = "", contestData, onJoined }) {
   const isJoined =
     contestData.createdBy?._id === userDetails._id ||
     contestData.teams.some((t) => t.owner?._id === userDetails._id);
+  const isDraftRoundStarted =
+    new Date(contestData.draftRound?.startDate) < new Date();
 
   const handleJoinContest = async (pass = "") => {
     setJoining(true);
@@ -80,16 +83,37 @@ function ContestCard({ className = "", contestData, onJoined }) {
           <label>Teams: </label>
           <p>{contestData.teams.length}</p>
         </div>
+
+        {isDraftRoundStarted ? (
+          <div className={styles.information}>
+            <label>Draft time: </label>
+
+            <p>
+              {getTimeFormatted(contestData.draftRound.startDate)},{" "}
+              {getDateFormatted(contestData.draftRound.startDate, true)}
+            </p>
+          </div>
+        ) : (
+          <div
+            className={styles.information}
+            style={{ alignItems: "flex-start" }}
+          >
+            <label>Draft Round in: </label>
+
+            <Countdown small targetDate={contestData.draftRound.startDate} />
+          </div>
+        )}
       </div>
 
       <div className={styles.bottom}>
-        <div className={styles.date}>
+        <div />
+        {/* <div className={styles.date}>
           <Clock />
           <p>
             {getTimeFormatted(contestData.draftRound.startDate)},{" "}
             {getDateFormatted(contestData.draftRound.startDate, true)}
           </p>
-        </div>
+        </div> */}
 
         {isJoined ? (
           <Button
