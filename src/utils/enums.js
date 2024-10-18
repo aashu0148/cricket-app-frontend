@@ -1,4 +1,4 @@
-const leagueTypeEnum = {
+const contestTypeEnum = {
   PUBLIC: "PUBLIC",
   PRIVATE: "PRIVATE",
 };
@@ -26,4 +26,4 @@ const socketEventsEnum = {
   resumed: "resumed",
 };
 
-export { leagueTypeEnum, socketEventsEnum };
+export { contestTypeEnum, socketEventsEnum };

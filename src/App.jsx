@@ -15,9 +15,9 @@ import PageLoader from "./Components/PageLoader/PageLoader";
 import HomePage from "./Pages/HomePage/HomePage";
 import AllTournaments from "./Pages/Admin/AllTournaments/AllTournaments";
 import TournamentsPage from "./Pages/TournamentsPage/TournamentsPage";
-import LeaguesPage from "./Pages/LeaguesPage/LeaguesPage";
+import ContestsPage from "./Pages/ContestsPage/ContestsPage";
 import ProfilePage from "./Pages/ProfilePage/ProfilePage";
-import LeaguePage from "./Pages/LeaguePage/LeaguePage";
+import ContestPage from "./Pages/ContestPage/ContestPage";
 import DraftRoundPage from "./Pages/DraftRoundPage/DraftRoundPage";
 import { DraftRoundProvider } from "./Pages/DraftRoundPage/util/DraftRoundContext";
 import ScoringSystem from "./Pages/Admin/ScoringSystem/ScoringSystem";
@@ -164,10 +164,10 @@ function App() {
               element={<TournamentsPage />}
             />
             <Route
-              path={applicationRoutes.leagues()}
-              element={<LeaguesPage />}
+              path={applicationRoutes.contests()}
+              element={<ContestsPage />}
             />
-            <Route path={applicationRoutes.league()} element={<LeaguePage />} />
+            <Route path={applicationRoutes.contest()} element={<ContestPage />} />
             <Route
               path={applicationRoutes.draftRound()}
               element={

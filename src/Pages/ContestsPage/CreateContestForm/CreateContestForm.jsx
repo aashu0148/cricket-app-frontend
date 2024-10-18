@@ -7,16 +7,16 @@ import InputSelect from "@/Components/InputControl/InputSelect/InputSelect";
 import TextArea from "@/Components/Textarea/Textarea";
 import Button from "@/Components/Button/Button";
 
-import { leagueTypeEnum } from "@/utils/enums";
-import { createLeague } from "@/apis/leagues";
+import { contestTypeEnum } from "@/utils/enums";
+import { createContest } from "@/apis/contests";
 
-import styles from "./CreateLeagueForm.module.scss";
+import styles from "./CreateContestForm.module.scss";
 
-function CreateLeagueForm({ tournamentData = {}, onSuccess }) {
+function CreateContestForm({ tournamentData = {}, onSuccess }) {
   const [values, setValues] = useState({
     name: "",
     description: "",
-    type: { label: "Public", value: leagueTypeEnum.PUBLIC },
+    type: { label: "Public", value: contestTypeEnum.PUBLIC },
     draftRoundStartDate: "",
     draftRoundStartTime: "",
     tournament: "",
@@ -28,10 +28,10 @@ function CreateLeagueForm({ tournamentData = {}, onSuccess }) {
   const validateForm = () => {
     const errors = {};
 
-    if (!values.name) errors.name = "Enter league name";
-    else if (values.name.length > 50) errors.name = "Too long league name";
-    if (!values.description) errors.description = "Enter league description";
-    if (!values.type?.value) errors.type = "Select league type";
+    if (!values.name) errors.name = "Enter contest name";
+    else if (values.name.length > 50) errors.name = "Too long contest name";
+    if (!values.description) errors.description = "Enter contest description";
+    if (!values.type?.value) errors.type = "Select contest type";
     if (!values.draftRoundStartDate || !values.draftRoundStartTime)
       errors.date = "Select date";
     else {
@@ -66,24 +66,24 @@ function CreateLeagueForm({ tournamentData = {}, onSuccess }) {
     };
 
     setSubmitting(true);
-    const res = await createLeague(body);
+    const res = await createContest(body);
     setSubmitting(false);
     if (!res) return;
 
     if (onSuccess) onSuccess(res.data);
-    toast.success("League created successfully");
+    toast.success("Contest created successfully");
   };
 
   return (
     <div className={`flex-col ${styles.container}`}>
-      {/* <p className="heading">Create League</p> */}
+      {/* <p className="heading">Create Contest</p> */}
 
       <div className={styles.form}>
         <div className="row align-start">
           <InputControl
             value={values.name}
             onChange={(e) => setValues((p) => ({ ...p, name: e.target.value }))}
-            label="League Name"
+            label="Contest Name"
             placeholder={"Enter name"}
             error={errors.name}
           />
@@ -96,15 +96,15 @@ function CreateLeagueForm({ tournamentData = {}, onSuccess }) {
         </div>
         <div className="row">
           <InputSelect
-            label="League Type"
+            label="Contest Type"
             options={[
               {
                 label: "Public",
-                value: leagueTypeEnum.PUBLIC,
+                value: contestTypeEnum.PUBLIC,
               },
               {
                 label: "Private",
-                value: leagueTypeEnum.PRIVATE,
+                value: contestTypeEnum.PRIVATE,
               },
             ]}
             value={values.type || undefined}
@@ -112,9 +112,9 @@ function CreateLeagueForm({ tournamentData = {}, onSuccess }) {
             error={errors.type}
           />
 
-          {values.type?.value === leagueTypeEnum.PRIVATE && (
+          {values.type?.value === contestTypeEnum.PRIVATE && (
             <InputControl
-              label={"League Password"}
+              label={"Contest Password"}
               placeholder="Enter password"
               value={values.password}
               onChange={(e) =>
@@ -130,7 +130,7 @@ function CreateLeagueForm({ tournamentData = {}, onSuccess }) {
             onChange={(e) =>
               setValues((p) => ({ ...p, description: e.target.value }))
             }
-            label="League Description"
+            label="Contest Description"
             placeholder={"Enter description"}
             error={errors.description}
           />
@@ -167,11 +167,11 @@ function CreateLeagueForm({ tournamentData = {}, onSuccess }) {
           useSpinnerWhenDisabled
           onClick={handleSubmission}
         >
-          Create League
+          Create Contest
         </Button>
       </div>
     </div>
   );
 }
 
-export default CreateLeagueForm;
+export default CreateContestForm;

@@ -2,16 +2,16 @@ import React, { useEffect, useState } from "react";
 
 import PageLoader from "@/Components/PageLoader/PageLoader";
 import TournamentCard from "@/Components/TournamentCard/TournamentCard";
-import LeagueCard from "@/Components/LeagueCard/LeagueCard";
+import ContestCard from "@/Components/ContestCard/ContestCard";
 
 import { getOngoingUpcomingTournaments } from "@/apis/tournament";
-import { getJoinedActiveLeagues } from "@/apis/leagues";
+import { getJoinedActiveContests } from "@/apis/contests";
 
 import styles from "./HomePage.module.scss";
 
 function HomePage() {
   const [allTournaments, setAllTournaments] = useState([]);
-  const [joinedLeagues, setJoinedLeagues] = useState([]);
+  const [joinedContests, setJoinedContests] = useState([]);
   const [loading, setLoading] = useState(true);
 
   async function fetchTournaments() {
@@ -30,15 +30,15 @@ function HomePage() {
     setAllTournaments(result.slice(0, 3));
   }
 
-  async function fetchJoinedLeagues() {
-    const res = await getJoinedActiveLeagues();
+  async function fetchJoinedContests() {
+    const res = await getJoinedActiveContests();
     if (!res) return;
 
-    setJoinedLeagues(res.data);
+    setJoinedContests(res.data);
   }
 
   useEffect(() => {
-    fetchJoinedLeagues();
+    fetchJoinedContests();
     fetchTournaments();
   }, []);
 
@@ -47,21 +47,21 @@ function HomePage() {
   ) : (
     <div className={`page-container ${styles.container}`}>
       <section className={styles.section}>
-        <p className="heading">Joined Leagues</p>
+        <p className="heading">Joined Contests</p>
 
         <div className={`cards ${styles.cards}`}>
-          {joinedLeagues.map((league) => (
-            <LeagueCard
-              key={league._id}
-              className={styles.leagueCard}
-              leagueData={league}
+          {joinedContests.map((contest) => (
+            <ContestCard
+              key={contest._id}
+              className={styles.contestCard}
+              contestData={contest}
             />
           ))}
 
           {new Array(3).fill(1).map((_, i) => (
             <div
               key={i}
-              className={styles.leagueCard}
+              className={styles.contestCard}
               style={{ padding: 0, opacity: 0, pointerEvents: "none" }}
             />
           ))}

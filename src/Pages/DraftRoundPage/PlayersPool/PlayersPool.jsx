@@ -15,7 +15,7 @@ import styles from "./PlayersPool.module.scss";
 
 function PlayersPool({ teams = [], players = [], playerPoints = [] }) {
   const userDetails = useSelector((s) => s.user);
-  const { leagueId } = useParams();
+  const { contestId } = useParams();
 
   const { socket } = useDraftRound();
   const [searchInput, setSearchInput] = useState("");
@@ -51,7 +51,7 @@ function PlayersPool({ teams = [], players = [], playerPoints = [] }) {
     setPicking(player._id);
     socket.emit(socketEventsEnum.pickPlayer, {
       userId: userDetails._id,
-      leagueId,
+      leagueId: contestId,
       pickedPlayerId: player._id,
     });
 

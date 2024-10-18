@@ -10,59 +10,59 @@ import BreadCrumbs from "@/Components/Breadcrumbs/BreadCrumbs";
 import Countdown from "@/Components/Countdown/Countdown";
 import Participants from "./Participants/Participants";
 import Wishlist from "./Wishlist/Wishlist";
-import EditLeagueModal from "./EditLeagueModal/EditLeagueModal";
+import EditContestModal from "./EditContestModal/EditContestModal";
 import LeaderBoard from "./LeaderBoard/LeaderBoard";
 import Button from "@/Components/Button/Button";
-import JoinProtectedLeagueModal from "@/Components/LeagueCard/JoinProtectedLeagueModal";
+import JoinProtectedContestModal from "@/Components/ContestCard/JoinProtectedContestModal";
 
 import { handleAppNavigation } from "@/utils/util";
 import { applicationRoutes, colors } from "@/utils/constants";
-import { leagueTypeEnum } from "@/utils/enums";
-import { getLeagueById, joinLeague } from "@/apis/leagues";
+import { contestTypeEnum } from "@/utils/enums";
+import { getContestById, joinContest } from "@/apis/contests";
 import { getTournamentById } from "@/apis/tournament";
 
-import styles from "./LeaguePage.module.scss";
+import styles from "./ContestPage.module.scss";
 
-function LeaguePage() {
+function ContestPage() {
   const navigate = useNavigate();
   const params = useParams();
   const userDetails = useSelector((s) => s.user);
-  const { tournamentId, leagueId } = params;
+  const { tournamentId, contestId } = params;
 
   const [loading, setLoading] = useState(true);
-  const [leagueDetails, setLeagueDetails] = useState({});
+  const [contestDetails, setContestDetails] = useState({});
   const [tournamentDetails, setTournamentDetails] = useState({});
-  const [showEditLeagueModal, setShowEditLeagueModal] = useState(false);
-  const [showJoinLeagueModal, setShowJoinLeagueModal] = useState(false);
-  const [joiningLeague, setJoiningLeague] = useState(false);
+  const [showEditContestModal, setShowEditContestModal] = useState(false);
+  const [showJoinContestModal, setShowJoinContestModal] = useState(false);
+  const [joiningContest, setJoiningContest] = useState(false);
   const [playerPoints, setPlayerPoints] = useState([]);
 
-  const currentUserTeam = leagueDetails.teams?.length
-    ? leagueDetails.teams.find((e) => e.owner?._id === userDetails._id)
+  const currentUserTeam = contestDetails.teams?.length
+    ? contestDetails.teams.find((e) => e.owner?._id === userDetails._id)
     : null;
-  const isDraftRoundCompleted = leagueDetails.draftRound?.completed;
+  const isDraftRoundCompleted = contestDetails.draftRound?.completed;
   const draftRoundStarted =
-    new Date() > new Date(leagueDetails.draftRound?.startDate);
+    new Date() > new Date(contestDetails.draftRound?.startDate);
 
-  const handleJoinLeague = async (pass = "") => {
-    setJoiningLeague(true);
-    const res = await joinLeague(leagueId, {
-      leagueId,
+  const handleJoinContest = async (pass = "") => {
+    setJoiningContest(true);
+    const res = await joinContest(contestId, {
+      contestId,
       password: pass,
     });
-    setJoiningLeague(false);
+    setJoiningContest(false);
     if (!res) return;
 
-    toast.success("League joined successfully");
-    setLeagueDetails(res.data);
-    fetchLeagueDetails();
+    toast.success("Contest joined successfully");
+    setContestDetails(res.data);
+    fetchContestDetails();
   };
-  const fetchLeagueDetails = async () => {
-    const res = await getLeagueById(leagueId);
+  const fetchContestDetails = async () => {
+    const res = await getContestById(contestId);
     setLoading(false);
     if (!res) return;
 
-    setLeagueDetails(res.data);
+    setContestDetails(res.data);
   };
 
   const fetchTournamentDetails = async () => {
@@ -87,28 +87,28 @@ function LeaguePage() {
 
   useEffect(() => {
     fetchTournamentDetails();
-    fetchLeagueDetails();
+    fetchContestDetails();
   }, []);
 
   return loading ? (
     <PageLoader fullPage />
   ) : (
     <div className={`page-container ${styles.container}`}>
-      {showEditLeagueModal && (
-        <EditLeagueModal
-          leagueDetails={leagueDetails}
+      {showEditContestModal && (
+        <EditContestModal
+          contestDetails={contestDetails}
           tournamentName={tournamentDetails.longName}
-          onClose={() => setShowEditLeagueModal(false)}
+          onClose={() => setShowEditContestModal(false)}
           onSuccess={() => {
-            setShowEditLeagueModal(false);
-            fetchLeagueDetails();
+            setShowEditContestModal(false);
+            fetchContestDetails();
           }}
         />
       )}
-      {showJoinLeagueModal && (
-        <JoinProtectedLeagueModal
-          onClose={() => setShowJoinLeagueModal(false)}
-          onJoin={handleJoinLeague}
+      {showJoinContestModal && (
+        <JoinProtectedContestModal
+          onClose={() => setShowJoinContestModal(false)}
+          onJoin={handleJoinContest}
         />
       )}
 
@@ -119,23 +119,23 @@ function LeaguePage() {
             value: "tournaments",
           },
           {
-            label: "Leagues",
-            value: "leagues",
+            label: "Contests",
+            value: "contests",
           },
           {
             static: true,
-            label: leagueDetails.name,
+            label: contestDetails.name,
             value: "name",
           },
         ]}
         onClick={(e, val) =>
           val === "tournaments"
             ? handleAppNavigation(e, navigate, applicationRoutes.tournaments)
-            : val === "leagues"
+            : val === "contests"
             ? handleAppNavigation(
                 e,
                 navigate,
-                applicationRoutes.leagues(leagueDetails.tournament._id)
+                applicationRoutes.contests(contestDetails.tournament._id)
               )
             : ""
         }
@@ -145,11 +145,11 @@ function LeaguePage() {
         <div className={styles.mainLeft}>
           <div className="flex-col-xs">
             <div className="flex">
-              <p className="heading-big">{leagueDetails.name}</p>
-              {leagueDetails.createdBy?._id === userDetails._id && (
+              <p className="heading-big">{contestDetails.name}</p>
+              {contestDetails.createdBy?._id === userDetails._id && (
                 <div
                   className="icon"
-                  onClick={() => setShowEditLeagueModal(true)}
+                  onClick={() => setShowEditContestModal(true)}
                 >
                   <Edit2 />
                 </div>
@@ -172,7 +172,7 @@ function LeaguePage() {
                   </a>
                 )}
               >
-                {leagueDetails.description}
+                {contestDetails.description}
               </Linkify>
             </p>
 
@@ -182,8 +182,8 @@ function LeaguePage() {
             </div>
 
             <div className={styles.information}>
-              <label>League Owner:</label>
-              <p>{leagueDetails.createdBy?.name}</p>
+              <label>Contest Owner:</label>
+              <p>{contestDetails.createdBy?.name}</p>
             </div>
 
             {!isDraftRoundCompleted && currentUserTeam ? (
@@ -196,7 +196,7 @@ function LeaguePage() {
                       handleAppNavigation(
                         e,
                         navigate,
-                        applicationRoutes.draftRound(tournamentId, leagueId)
+                        applicationRoutes.draftRound(tournamentId, contestId)
                       )
                     }
                   >
@@ -205,23 +205,23 @@ function LeaguePage() {
                 ) : (
                   <Countdown
                     onCountdownComplete={() => {
-                      fetchLeagueDetails();
+                      fetchContestDetails();
                     }}
-                    targetDate={leagueDetails.draftRound?.startDate}
+                    targetDate={contestDetails.draftRound?.startDate}
                   />
                 )}
               </div>
             ) : !draftRoundStarted && !currentUserTeam ? (
               <Button
-                disabled={joiningLeague}
+                disabled={joiningContest}
                 useSpinnerWhenDisabled
                 onClick={() =>
-                  leagueDetails.type === leagueTypeEnum.PRIVATE
-                    ? setShowJoinLeagueModal(true)
-                    : handleJoinLeague()
+                  contestDetails.type === contestTypeEnum.PRIVATE
+                    ? setShowJoinContestModal(true)
+                    : handleJoinContest()
                 }
               >
-                Join this League
+                Join this Contest
               </Button>
             ) : (
               ""
@@ -229,13 +229,13 @@ function LeaguePage() {
           </div>
 
           <Participants
-            participants={leagueDetails.teams}
+            participants={contestDetails.teams}
             playerPoints={playerPoints}
           />
 
           {draftRoundStarted && (
             <LeaderBoard
-              teams={leagueDetails.teams}
+              teams={contestDetails.teams}
               playerPoints={playerPoints}
             />
           )}
@@ -247,12 +247,12 @@ function LeaguePage() {
 
             <Wishlist
               currentPlayers={currentUserTeam.wishlist}
-              leagueId={leagueDetails._id}
+              contestId={contestDetails._id}
               allPlayers={tournamentDetails.players}
               onPlayerAdded={(p) =>
-                setLeagueDetails((league) => ({
-                  ...league,
-                  teams: league.teams.map((t) =>
+                setContestDetails((contest) => ({
+                  ...contest,
+                  teams: contest.teams.map((t) =>
                     t._id === currentUserTeam._id
                       ? { ...t, wishlist: [...t.wishlist, p] }
                       : t
@@ -260,9 +260,9 @@ function LeaguePage() {
                 }))
               }
               onPlayerRemoved={(pid) =>
-                setLeagueDetails((league) => ({
-                  ...league,
-                  teams: league.teams.map((t) =>
+                setContestDetails((contest) => ({
+                  ...contest,
+                  teams: contest.teams.map((t) =>
                     t._id === currentUserTeam._id
                       ? {
                           ...t,
@@ -280,4 +280,4 @@ function LeaguePage() {
   );
 }
 
-export default LeaguePage;
+export default ContestPage;

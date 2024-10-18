@@ -6,13 +6,13 @@ import Spinner from "@/Components/Spinner/Spinner";
 import InputSelect from "@/Components/InputControl/InputSelect/InputSelect";
 import Img from "@/Components/Img/Img";
 
-import { addPlayerToWishlist, removePlayerFromWishlist } from "@/apis/leagues";
+import { addPlayerToWishlist, removePlayerFromWishlist } from "@/apis/contests";
 
 import styles from "./Wishlist.module.scss";
 
 function Wishlist({
   className = "",
-  leagueId,
+  contestId,
   allPlayers = [],
   currentPlayers = [],
   onPlayerAdded,
@@ -25,7 +25,7 @@ function Wishlist({
     if (!player) return;
 
     const res = await addPlayerToWishlist({
-      leagueId,
+      leagueId: contestId,
       playerId,
     });
     if (!res) return;
@@ -39,7 +39,7 @@ function Wishlist({
 
     setRemoving((p) => [...p, pid]);
     const res = await removePlayerFromWishlist({
-      leagueId,
+      leagueId: contestId,
       playerId: pid,
     });
     setRemoving((p) => p.filter((item) => item !== pid));

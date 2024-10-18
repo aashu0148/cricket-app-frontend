@@ -87,7 +87,7 @@ function AuthPage() {
 
         <p className={styles.desc}>
           Sign in with Google to start drafting your dream cricket team and
-          compete in exciting fantasy leagues. Quick, easy, and secure access to
+          compete in exciting fantasy contests. Quick, easy, and secure access to
           the ultimate cricket fantasy experience awaits!
         </p>
 

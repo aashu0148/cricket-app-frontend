@@ -41,11 +41,11 @@ function TournamentCard({
                 : handleAppNavigation(
                     e,
                     navigate,
-                    applicationRoutes.leagues(tournamentData._id)
+                    applicationRoutes.contests(tournamentData._id)
                   );
             }}
           >
-            {isAdmin ? "Edit" : "Explore Leagues"}
+            {isAdmin ? "Edit" : "Explore Contests"}
           </Button>
         </div>
         <p className={styles.season}>

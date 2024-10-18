@@ -17,11 +17,11 @@ const generalCopy = {
       "Join the ultimate fantasy cricket experience, tailored for true fans of the game.",
     heading: "Tailored for true fans of the game",
     description:
-      "Our app revolutionizes fantasy cricket with a unique draft system. The snake draft system ensures each player is exclusive to a team. Compete with up to 8 teams in your league, with a squad of 15 players, with your best XI delivering the points. Our app scoring system has been designed to revamp the age-old fantasy scoring system to provide a new, improved fantasy scoring system.",
+      "Our app revolutionizes fantasy cricket with a unique draft system. The snake draft system ensures each player is exclusive to a team. Compete with up to 8 teams in your contest, with a squad of 15 players, with your best XI delivering the points. Our app scoring system has been designed to revamp the age-old fantasy scoring system to provide a new, improved fantasy scoring system.",
   },
   features: {
     shoulder:
-      "Unleash the power of a competitive fantasy cricket league. Built for serious players.",
+      "Unleash the power of a competitive fantasy cricket contest. Built for serious players.",
   },
   testimonials: {
     shoulder:
@@ -39,7 +39,7 @@ const generalCopy = {
 const details = [
   {
     mainText: "1,020",
-    subText: "Active Leagues",
+    subText: "Active Contests",
     icon: faHome,
   },
   {
@@ -93,7 +93,7 @@ const features = [
   {
     mainText: "Exciting Contests",
     subText:
-      "Join leagues with friends or compete with global users in unlimited fantasy cricket contests.",
+      "Join contests with friends or compete with global users in unlimited fantasy cricket contests.",
     icon: faCamera,
   },
 ];
@@ -137,13 +137,13 @@ If you think a particular player is a match-winner but doesn't get enough credit
     question: "Why is a draft system better than the regular fantasy one?",
     answer: `Over the course of playing many fantasy tournaments, we realised that there is a tremendous amount of homogeneity in every user's team and that takes the joy away from playing. 
 
-    No body wants to be part of a league where seven of the eight users have captained Virat Kohli while having six-seven same players. 
+    No body wants to be part of a contest where seven of the eight users have captained Virat Kohli while having six-seven same players. 
 
 Much like the real world, once you draft a player into your team here, that player is 'yours'. You are likely to be way more invested in that player's performance and we have found that it makes for a great experience while watching the tournament. There's absolutely no confilct of interest here.`,
   },
   {
     question: "What is a snake draft?",
-    answer: `A snake draft is a format commonly used in fantasy sports leagues. In this type of draft, the pick order reverses after each round.
+    answer: `A snake draft is a format commonly used in fantasy sports contests. In this type of draft, the pick order reverses after each round.
 
 Here’s how it works:
 

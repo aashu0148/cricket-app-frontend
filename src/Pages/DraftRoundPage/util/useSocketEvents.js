@@ -7,7 +7,7 @@ import { socketEventsEnum } from "@/utils/enums";
 
 function useSocketEvents() {
   const userDetails = useSelector((s) => s.user);
-  const { leagueId } = useParams();
+  const { contestId } = useParams();
 
   const {
     socket,
@@ -22,7 +22,7 @@ function useSocketEvents() {
 
     socket.emit(socketEventsEnum.joinRoom, {
       userId: userDetails._id,
-      leagueId,
+      leagueId: contestId,
     });
   }
 

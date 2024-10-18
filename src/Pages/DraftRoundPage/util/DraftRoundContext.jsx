@@ -15,11 +15,11 @@ const DraftRoundContext = createContext();
 
 export const DraftRoundProvider = ({ children }) => {
   const userDetails = useSelector((s) => s.user);
-  const { leagueId } = useParams();
+  const { contestId } = useParams();
   const heartbeatInterval = useRef(null);
   const { socket, connectToSocket } = useSocket(true, {
     name: socketEventsEnum.leaveRoom,
-    payload: { userId: userDetails._id, leagueId },
+    payload: { userId: userDetails._id, leagueId: contestId },
   });
 
   const [roomStatuses, setRoomStatuses] = useState({
@@ -43,7 +43,7 @@ export const DraftRoundProvider = ({ children }) => {
     heartbeatInterval.current = setInterval(() => {
       socket.emit(socketEventsEnum.heartbeat, {
         userId: userDetails._id,
-        leagueId,
+        leagueId: contestId,
       });
       console.log("💟");
     }, 60 * 1000);
@@ -89,7 +89,7 @@ export const DraftRoundProvider = ({ children }) => {
  * },
  *  room:{
  *   name: string,
- *   leagueId: string,
+ *   contestId: string,
  *   users: Array<{
  *     _id: string,
  *     name: string

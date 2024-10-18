@@ -11,6 +11,7 @@
   .title {
     font-size: $text-xl;
     color: $color-title;
+    font-weight: 500;
   }
 
   .privateTag {
@@ -32,7 +33,7 @@
       color: $white;
       font-size: $text-sm;
       font-weight: 600;
-      text-transform: lowercase;
+      text-transform: capitalize;
     }
   }
 
@@ -43,7 +44,7 @@
     span {
       color: $primary-2;
       font: inherit;
-      font-weight: 700;
+      font-weight: 500;
     }
   }
 

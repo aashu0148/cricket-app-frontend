@@ -2,29 +2,29 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import PageLoader from "@/Components/PageLoader/PageLoader";
-import CreateLeagueForm from "./CreateLeagueForm/CreateLeagueForm";
-import LeagueCard from "@/Components/LeagueCard/LeagueCard";
+import CreateContestForm from "./CreateContestForm/CreateContestForm";
+import ContestCard from "@/Components/ContestCard/ContestCard";
 
 import {
-  getJoinableLeaguesOfTournament,
-  getJoinedLeaguesOfTournament,
-} from "@/apis/leagues";
+  getJoinableContestsOfTournament,
+  getJoinedContestsOfTournament,
+} from "@/apis/contests";
 import { getTournamentById } from "@/apis/tournament";
 
-import styles from "./LeaguesPage.module.scss";
+import styles from "./ContestsPage.module.scss";
 
 const tabsEnum = {
   all: "all",
   joined: "joined",
   create: "create",
 };
-function LeaguesPage() {
+function ContestsPage() {
   const params = useParams();
   const [loadingPage, setLoadingPage] = useState(true);
   const [activeTab, setActiveTab] = useState(tabsEnum.all);
   const [tournamentDetails, setTournamentDetails] = useState({});
-  const [allLeagues, setAllLeagues] = useState([]);
-  const [joinedLeagues, setJoinedLeagues] = useState([]);
+  const [allContests, setAllContests] = useState([]);
+  const [joinedContests, setJoinedContests] = useState([]);
 
   const fetchTournamentDetails = async () => {
     const res = await getTournamentById(params.tournamentId);
@@ -33,37 +33,37 @@ function LeaguesPage() {
     setTournamentDetails(res.data);
   };
 
-  const fetchLeagues = async () => {
-    const res = await getJoinableLeaguesOfTournament(params.tournamentId);
+  const fetchContests = async () => {
+    const res = await getJoinableContestsOfTournament(params.tournamentId);
     setLoadingPage(false);
     if (!res) return;
 
-    setAllLeagues(res.data);
+    setAllContests(res.data);
   };
 
-  const fetchJoinedLeagues = async () => {
-    const res = await getJoinedLeaguesOfTournament(params.tournamentId);
+  const fetchJoinedContests = async () => {
+    const res = await getJoinedContestsOfTournament(params.tournamentId);
     if (!res) return;
 
-    setJoinedLeagues(res.data);
+    setJoinedContests(res.data);
   };
 
   useEffect(() => {
-    fetchLeagues();
-    fetchJoinedLeagues();
+    fetchContests();
+    fetchJoinedContests();
     fetchTournamentDetails();
   }, []);
 
-  const allLeaguesTab = (
+  const allContestsTab = (
     <div className={`cards`}>
-      {allLeagues.map((item) => (
-        <LeagueCard
-          className={styles.leagueCard}
+      {allContests.map((item) => (
+        <ContestCard
+          className={styles.contestCard}
           key={item._id}
-          leagueData={item}
+          contestData={item}
           onJoined={() => {
-            fetchLeagues();
-            fetchJoinedLeagues();
+            fetchContests();
+            fetchJoinedContests();
           }}
         />
       ))}
@@ -71,27 +71,27 @@ function LeaguesPage() {
       {new Array(3).fill(1).map((_, i) => (
         <div
           key={i}
-          className={styles.leagueCard}
+          className={styles.contestCard}
           style={{ padding: 0, opacity: 0, pointerEvents: "none" }}
         />
       ))}
     </div>
   );
 
-  const joinedLeaguesTab = (
+  const joinedContestsTab = (
     <div className={`cards`}>
-      {joinedLeagues.map((item) => (
-        <LeagueCard
-          className={styles.leagueCard}
+      {joinedContests.map((item) => (
+        <ContestCard
+          className={styles.contestCard}
           key={item._id}
-          leagueData={item}
+          contestData={item}
         />
       ))}
 
       {new Array(3).fill(1).map((_, i) => (
         <div
           key={i}
-          className={styles.leagueCard}
+          className={styles.contestCard}
           style={{ padding: 0, opacity: 0, pointerEvents: "none" }}
         />
       ))}
@@ -111,7 +111,7 @@ function LeaguesPage() {
           }`}
           onClick={() => setActiveTab(tabsEnum.all)}
         >
-          All Leagues
+          All Contests
         </div>
         <div
           className={`${styles.tab} ${
@@ -119,7 +119,7 @@ function LeaguesPage() {
           }`}
           onClick={() => setActiveTab(tabsEnum.joined)}
         >
-          Joined Leagues
+          Joined Contests
         </div>
         <div
           className={`${styles.tab} ${
@@ -127,23 +127,23 @@ function LeaguesPage() {
           }`}
           onClick={() => setActiveTab(tabsEnum.create)}
         >
-          Create League
+          Create Contest
         </div>
       </div>
 
       {activeTab === tabsEnum.create ? (
-        <CreateLeagueForm
+        <CreateContestForm
           tournamentData={tournamentDetails}
           onSuccess={(l) => {
-            setJoinedLeagues((p) => [...p, l]);
+            setJoinedContests((p) => [...p, l]);
             setActiveTab(tabsEnum.joined);
-            fetchJoinedLeagues();
+            fetchJoinedContests();
           }}
         />
       ) : activeTab === tabsEnum.joined ? (
-        joinedLeaguesTab
+        joinedContestsTab
       ) : activeTab === tabsEnum.all ? (
-        allLeaguesTab
+        allContestsTab
       ) : (
         ""
       )}
@@ -151,4 +151,4 @@ function LeaguesPage() {
   );
 }
 
-export default LeaguesPage;
+export default ContestsPage;

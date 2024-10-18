@@ -150,7 +150,7 @@ function ProfilePage() {
       {/* <span className={styles.separator} />
 
       <section className={styles.section}>
-        <p className={`${styles.heading}`}>Your Leagues</p>
+        <p className={`${styles.heading}`}>Your Contests</p>
 
       </section> */}
     </div>

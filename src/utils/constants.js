@@ -14,14 +14,14 @@ export const applicationRoutes = {
   // function routes
   editScoringSystem: (scoringId = "") =>
     `/admin/scoring-systems/edit/${scoringId || ":scoringId"}`,
-  leagues: (tid = "") => `/tournaments/${tid || ":tournamentId"}/leagues`,
-  league: (tournamentId = "", leagueId = "") =>
-    `/tournaments/${tournamentId || ":tournamentId"}/leagues/${
-      leagueId || ":leagueId"
+  contests: (tid = "") => `/tournaments/${tid || ":tournamentId"}/contests`,
+  contest: (tournamentId = "", contestId = "") =>
+    `/tournaments/${tournamentId || ":tournamentId"}/contests/${
+      contestId || ":contestId"
     }`,
-  draftRound: (tournamentId = "", leagueId = "") =>
-    `/tournaments/${tournamentId || ":tournamentId"}/leagues/${
-      leagueId || ":leagueId"
+  draftRound: (tournamentId = "", contestId = "") =>
+    `/tournaments/${tournamentId || ":tournamentId"}/contests/${
+      contestId || ":contestId"
     }/draft-round`,
 };
 

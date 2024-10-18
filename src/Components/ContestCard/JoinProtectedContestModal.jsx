@@ -4,17 +4,17 @@ import Button from "@/Components/Button/Button";
 import Modal from "@/Components/Modal/Modal";
 import InputControl from "@/Components/InputControl/InputControl";
 
-function JoinProtectedLeagueModal({ onClose, onJoin }) {
+function JoinProtectedContestModal({ onClose, onJoin }) {
   const [pass, setPass] = useState("");
 
   return (
     <Modal onClose>
       <div className="page-container form">
-        <p className="heading">Join League</p>
+        <p className="heading">Join Contest</p>
         <InputControl
           value={pass}
           onChange={(e) => setPass(e.target.value)}
-          label="League Password"
+          label="Contest Password"
           placeholder="Enter password"
         />
 
@@ -36,4 +36,4 @@ function JoinProtectedLeagueModal({ onClose, onJoin }) {
   );
 }
 
-export default JoinProtectedLeagueModal;
+export default JoinProtectedContestModal;

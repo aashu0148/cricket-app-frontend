@@ -8,42 +8,42 @@ import TextArea from "@/Components/Textarea/Textarea";
 import Button from "@/Components/Button/Button";
 import Modal from "@/Components/Modal/Modal";
 
-import { leagueTypeEnum } from "@/utils/enums";
-import { updateLeague } from "@/apis/leagues";
+import { contestTypeEnum } from "@/utils/enums";
+import { updateContest } from "@/apis/contests";
 
-import styles from "./EditLeagueModal.module.scss";
+import styles from "./EditContestModal.module.scss";
 
-const leagueTypeOptions = [
+const contestTypeOptions = [
   {
     label: "Public",
-    value: leagueTypeEnum.PUBLIC,
+    value: contestTypeEnum.PUBLIC,
   },
   {
     label: "Private",
-    value: leagueTypeEnum.PRIVATE,
+    value: contestTypeEnum.PRIVATE,
   },
 ];
-function EditLeagueModal({
-  leagueDetails = {},
+function EditContestModal({
+  contestDetails = {},
   onClose,
   tournamentName = "",
   onSuccess,
 }) {
   const [values, setValues] = useState({
-    name: leagueDetails.name || "",
-    description: leagueDetails.description || "",
-    type: leagueDetails.type
-      ? leagueTypeOptions.find((e) => e.value === leagueDetails.type)
-      : leagueTypeOptions[0],
-    draftRoundStartDate: leagueDetails.draftRound.startDate || "",
-    draftRoundStartTime: leagueDetails.draftRound.startDate
-      ? new Date(leagueDetails.draftRound.startDate)
+    name: contestDetails.name || "",
+    description: contestDetails.description || "",
+    type: contestDetails.type
+      ? contestTypeOptions.find((e) => e.value === contestDetails.type)
+      : contestTypeOptions[0],
+    draftRoundStartDate: contestDetails.draftRound.startDate || "",
+    draftRoundStartTime: contestDetails.draftRound.startDate
+      ? new Date(contestDetails.draftRound.startDate)
           .toLocaleTimeString("en-in", { hour12: false })
           .split(":")
           .slice(0, 2)
           .join(":")
       : "",
-    password: leagueDetails.password || "",
+    password: contestDetails.password || "",
   });
   const [errors, setErrors] = useState({});
   const [submitting, setSubmitting] = useState(false);
@@ -51,10 +51,10 @@ function EditLeagueModal({
   const validateForm = () => {
     const errors = {};
 
-    if (!values.name) errors.name = "Enter league name";
-    else if (values.name.length > 50) errors.name = "Too long league name";
-    if (!values.description) errors.description = "Enter league description";
-    if (!values.type?.value) errors.type = "Select league type";
+    if (!values.name) errors.name = "Enter contest name";
+    else if (values.name.length > 50) errors.name = "Too long contest name";
+    if (!values.description) errors.description = "Enter contest description";
+    if (!values.type?.value) errors.type = "Select contest type";
     if (!values.draftRoundStartDate || !values.draftRoundStartTime)
       errors.date = "Select date";
     else {
@@ -88,18 +88,18 @@ function EditLeagueModal({
     };
 
     setSubmitting(true);
-    const res = await updateLeague(leagueDetails._id, body);
+    const res = await updateContest(contestDetails._id, body);
     setSubmitting(false);
     if (!res) return;
 
     if (onSuccess) onSuccess(res.data);
-    toast.success("League updated successfully");
+    toast.success("Contest updated successfully");
   };
 
   return (
     <Modal onClose={onClose}>
       <div className={`flex-col ${styles.container}`}>
-        <p className="heading">Edit League</p>
+        <p className="heading">Edit Contest</p>
 
         <div className={styles.form}>
           <div className="row align-start">
@@ -108,7 +108,7 @@ function EditLeagueModal({
               onChange={(e) =>
                 setValues((p) => ({ ...p, name: e.target.value }))
               }
-              label="League Name"
+              label="Contest Name"
               placeholder={"Enter name"}
               error={errors.name}
             />
@@ -117,16 +117,16 @@ function EditLeagueModal({
           </div>
           <div className="row">
             <InputSelect
-              label="League Type"
-              options={leagueTypeOptions}
+              label="Contest Type"
+              options={contestTypeOptions}
               value={values.type || undefined}
               onChange={(e) => setValues((p) => ({ ...p, type: e }))}
               error={errors.type}
             />
 
-            {values.type?.value === leagueTypeEnum.PRIVATE && (
+            {values.type?.value === contestTypeEnum.PRIVATE && (
               <InputControl
-                label={"League Password"}
+                label={"Contest Password"}
                 placeholder="Enter password"
                 value={values.password}
                 onChange={(e) =>
@@ -142,7 +142,7 @@ function EditLeagueModal({
               onChange={(e) =>
                 setValues((p) => ({ ...p, description: e.target.value }))
               }
-              label="League Description"
+              label="Contest Description"
               placeholder={"Enter description"}
               error={errors.description}
             />
@@ -191,4 +191,4 @@ function EditLeagueModal({
   );
 }
 
-export default EditLeagueModal;
+export default EditContestModal;

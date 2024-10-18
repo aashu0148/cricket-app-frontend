@@ -5,15 +5,15 @@ import { toast } from "react-hot-toast";
 
 import PageLoader from "@/Components/PageLoader/PageLoader";
 import BreadCrumbs from "@/Components/Breadcrumbs/BreadCrumbs";
-import Participants from "@/Pages/LeaguePage/Participants/Participants";
-import Wishlist from "@/Pages/LeaguePage/Wishlist/Wishlist";
+import Participants from "@/Pages/ContestPage/Participants/Participants";
+import Wishlist from "@/Pages/ContestPage/Wishlist/Wishlist";
 import Button from "@/Components/Button/Button";
 import Notifications from "./Notifications/Notifications";
 import Chat from "./Chat/Chat";
 import PlayersPool from "./PlayersPool/PlayersPool";
 import DraftRoundCompleted from "./DraftRoundCompleted";
 
-import { getLeagueById } from "@/apis/leagues";
+import { getContestById } from "@/apis/contests";
 import { getTournamentById } from "@/apis/tournament";
 import { handleAppNavigation } from "@/utils/util";
 import { applicationRoutes } from "@/utils/constants";
@@ -53,24 +53,24 @@ function DraftRoundPage() {
   const [activeTab, setActiveTab] = useState(tabsEnum.wishlist);
   const [loading, setLoading] = useState(true);
   const [showDraftRoundCompleted, setShowDraftRoundCompleted] = useState(false);
-  const [leagueDetails, setLeagueDetails] = useState({});
+  const [contestDetails, setContestDetails] = useState({});
   const [tournamentDetails, setTournamentDetails] = useState({});
   const [playerPoints, setPlayerPoints] = useState([]);
   const [tournamentPlayers, setTournamentPlayers] = useState([]);
 
-  const { tournamentId, leagueId } = params;
-  const currentUserTeam = leagueDetails.teams?.length
-    ? leagueDetails.teams.find((e) => e.owner?._id === userDetails._id)
+  const { tournamentId, contestId } = params;
+  const currentUserTeam = contestDetails.teams?.length
+    ? contestDetails.teams.find((e) => e.owner?._id === userDetails._id)
     : null;
-  const isDraftRoundCompleted = leagueDetails.draftRound?.completed;
+  const isDraftRoundCompleted = contestDetails.draftRound?.completed;
   const draftRoundStarted =
-    new Date() > new Date(leagueDetails.draftRound?.startDate);
+    new Date() > new Date(contestDetails.draftRound?.startDate);
 
   const handlePauseDraftRound = () => {
     if (!socket) return;
 
     socket.emit(socketEventsEnum.pauseRound, {
-      leagueId,
+      leagueId: contestId,
       userId: userDetails._id,
     });
   };
@@ -79,17 +79,17 @@ function DraftRoundPage() {
     if (!socket) return;
 
     socket.emit(socketEventsEnum.resumeRound, {
-      leagueId,
+      leagueId: contestId,
       userId: userDetails._id,
     });
   };
 
-  const fetchLeagueDetails = async () => {
-    const res = await getLeagueById(leagueId);
+  const fetchContestDetails = async () => {
+    const res = await getContestById(contestId);
     setLoading(false);
     if (!res) return;
 
-    setLeagueDetails(res.data);
+    setContestDetails(res.data);
   };
 
   const fetchTournamentDetails = async () => {
@@ -124,14 +124,14 @@ function DraftRoundPage() {
     if (!socket) return;
 
     socket.on(socketEventsEnum.paused, (data) => {
-      setLeagueDetails((p) => ({
+      setContestDetails((p) => ({
         ...p,
         draftRound: { ...p.draftRound, paused: data.paused || true },
       }));
     });
 
     socket.on(socketEventsEnum.resumed, (data) => {
-      setLeagueDetails((p) => ({
+      setContestDetails((p) => ({
         ...p,
         draftRound: { ...p.draftRound, paused: data.paused || false },
       }));
@@ -146,7 +146,7 @@ function DraftRoundPage() {
       if (!player)
         return toast.error("Something is wrong updating players pool");
 
-      setLeagueDetails((p) => ({
+      setContestDetails((p) => ({
         ...p,
         teams: p.teams.map((team) =>
           team.owner._id === pickedById
@@ -164,8 +164,8 @@ function DraftRoundPage() {
   useEffect(() => {
     if (!roomStatuses.turn) return;
 
-    if (leagueDetails.draftRound)
-      setLeagueDetails((p) => ({
+    if (contestDetails.draftRound)
+      setContestDetails((p) => ({
         ...p,
         draftRound: { ...p.draftRound, currentTurn: roomStatuses.turn },
       }));
@@ -180,18 +180,18 @@ function DraftRoundPage() {
   }, [socket, tournamentPlayers]);
 
   useEffect(() => {
-    if (!draftRoundStarted && leagueDetails.draftRound?.startDate) {
+    if (!draftRoundStarted && contestDetails.draftRound?.startDate) {
       toast.error("Draft round not started");
-      navigate(applicationRoutes.league(tournamentId, leagueId));
+      navigate(applicationRoutes.contest(tournamentId, contestId));
     } else if (isDraftRoundCompleted) {
       toast.error("Draft round Ended");
-      navigate(applicationRoutes.league(tournamentId, leagueId));
+      navigate(applicationRoutes.contest(tournamentId, contestId));
     }
-  }, [draftRoundStarted, leagueDetails]);
+  }, [draftRoundStarted, contestDetails]);
 
   useEffect(() => {
     fetchTournamentDetails();
-    fetchLeagueDetails();
+    fetchContestDetails();
   }, []);
 
   return loading ? (
@@ -211,12 +211,12 @@ function DraftRoundPage() {
               value: "tournaments",
             },
             {
-              label: "Leagues",
-              value: "leagues",
+              label: "Contests",
+              value: "contests",
             },
             {
-              label: isMobileView ? "League" : leagueDetails.name,
-              value: "league",
+              label: isMobileView ? "Contest" : contestDetails.name,
+              value: "contest",
             },
             {
               static: true,
@@ -227,17 +227,17 @@ function DraftRoundPage() {
           onClick={(e, val) =>
             val === "tournaments"
               ? handleAppNavigation(e, navigate, applicationRoutes.tournaments)
-              : val === "leagues"
+              : val === "contests"
               ? handleAppNavigation(
                   e,
                   navigate,
-                  applicationRoutes.leagues(tournamentId)
+                  applicationRoutes.contests(tournamentId)
                 )
-              : val === "league"
+              : val === "contest"
               ? handleAppNavigation(
                   e,
                   navigate,
-                  applicationRoutes.league(tournamentId, leagueId)
+                  applicationRoutes.contest(tournamentId, contestId)
                 )
               : ""
           }
@@ -247,8 +247,8 @@ function DraftRoundPage() {
           <div className="spacious-head">
             <p className="heading">Draft Round</p>
 
-            {leagueDetails.createdBy?._id === userDetails._id ? (
-              leagueDetails.draftRound.paused ? (
+            {contestDetails.createdBy?._id === userDetails._id ? (
+              contestDetails.draftRound.paused ? (
                 <Button onClick={handleResumeDraftRound}>Resume round</Button>
               ) : (
                 <Button onClick={handlePauseDraftRound} outlineButton>
@@ -278,28 +278,28 @@ function DraftRoundPage() {
           </div>
 
           <div className={styles.information}>
-            <label>League:</label>
-            <p>{leagueDetails.name}</p>
+            <label>Contest:</label>
+            <p>{contestDetails.name}</p>
           </div>
 
           <div className={styles.information}>
-            <label>League Owner:</label>
-            <p>{leagueDetails.createdBy?.name}</p>
+            <label>Contest Owner:</label>
+            <p>{contestDetails.createdBy?.name}</p>
           </div>
         </div>
 
         <Participants
           playerPoints={playerPoints}
-          participants={leagueDetails.teams}
+          participants={contestDetails.teams}
           activeTurnUserId={
-            roomStatuses.started ? leagueDetails.draftRound?.currentTurn : ""
+            roomStatuses.started ? contestDetails.draftRound?.currentTurn : ""
           }
         />
 
         <PlayersPool
           players={tournamentPlayers}
           playerPoints={playerPoints}
-          teams={leagueDetails.teams}
+          teams={contestDetails.teams}
         />
       </div>
 
@@ -329,12 +329,12 @@ function DraftRoundPage() {
           <Wishlist
             className={styles.wishlist}
             currentPlayers={currentUserTeam.wishlist}
-            leagueId={leagueDetails._id}
+            contestId={contestDetails._id}
             allPlayers={tournamentPlayers}
             onPlayerAdded={(p) =>
-              setLeagueDetails((league) => ({
-                ...league,
-                teams: league.teams.map((t) =>
+              setContestDetails((contest) => ({
+                ...contest,
+                teams: contest.teams.map((t) =>
                   t._id === currentUserTeam._id
                     ? { ...t, wishlist: [...t.wishlist, p] }
                     : t
@@ -342,9 +342,9 @@ function DraftRoundPage() {
               }))
             }
             onPlayerRemoved={(pid) =>
-              setLeagueDetails((league) => ({
-                ...league,
-                teams: league.teams.map((t) =>
+              setContestDetails((contest) => ({
+                ...contest,
+                teams: contest.teams.map((t) =>
                   t._id === currentUserTeam._id
                     ? {
                         ...t,

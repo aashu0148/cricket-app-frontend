@@ -5,80 +5,80 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import Button from "@/Components/Button/Button";
-import JoinProtectedLeagueModal from "./JoinProtectedLeagueModal";
+import JoinProtectedContestModal from "./JoinProtectedContestModal";
 
 import {
   getDateFormatted,
   getTimeFormatted,
   handleAppNavigation,
 } from "@/utils/util";
-import { joinLeague } from "@/apis/leagues";
-import { leagueTypeEnum } from "@/utils/enums";
+import { joinContest } from "@/apis/contests";
+import { contestTypeEnum } from "@/utils/enums";
 import { applicationRoutes } from "@/utils/constants";
 
-import styles from "./LeagueCard.module.scss";
+import styles from "./ContestCard.module.scss";
 
-function LeagueCard({ className = "", leagueData, onJoined }) {
+function ContestCard({ className = "", contestData, onJoined }) {
   const navigate = useNavigate();
 
   const userDetails = useSelector((s) => s.user);
-  const [showJoinLeagueModal, setShowJoinLeagueModal] = useState(false);
+  const [showJoinContestModal, setShowJoinContestModal] = useState(false);
   const [joining, setJoining] = useState(false);
 
-  const isOwner = leagueData.createdBy?._id === userDetails._id;
+  const isOwner = contestData.createdBy?._id === userDetails._id;
   const isJoined =
-    leagueData.createdBy?._id === userDetails._id ||
-    leagueData.teams.some((t) => t.owner?._id === userDetails._id);
+    contestData.createdBy?._id === userDetails._id ||
+    contestData.teams.some((t) => t.owner?._id === userDetails._id);
 
-  const handleJoinLeague = async (pass = "") => {
+  const handleJoinContest = async (pass = "") => {
     setJoining(true);
-    const res = await joinLeague(leagueData._id, {
-      leagueId: leagueData._id,
+    const res = await joinContest(contestData._id, {
+      contestId: contestData._id,
       password: pass,
     });
     setJoining(false);
     if (!res) return;
 
-    toast.success("League joined successfully");
+    toast.success("Contest joined successfully");
     if (onJoined) onJoined(res.data);
   };
 
   return (
     <div className={`${className || ""} ${styles.container}`}>
-      {showJoinLeagueModal && (
-        <JoinProtectedLeagueModal
-          onClose={() => setShowJoinLeagueModal(false)}
-          onJoin={handleJoinLeague}
+      {showJoinContestModal && (
+        <JoinProtectedContestModal
+          onClose={() => setShowJoinContestModal(false)}
+          onJoin={handleJoinContest}
         />
       )}
 
       <div className="flex-col-xs">
         <div className="flex">
-          <h2 className={styles.title}>{leagueData.name}</h2>
+          <h2 className={styles.title}>{contestData.name}</h2>
 
-          {leagueData.type === leagueTypeEnum.PRIVATE && (
+          {contestData.type === contestTypeEnum.PRIVATE && (
             <div className={styles.privateTag}>
               <Lock />
-              <p>{leagueData.type}</p>
+              <p>{contestData.type.toLowerCase()}</p>
             </div>
           )}
         </div>
         <p className={styles.tournament}>
-          Tournament: <span>{leagueData.tournament.name}</span>
+          Tournament: <span>{contestData.tournament.name}</span>
         </p>
 
-        <p className={styles.desc}>{leagueData.description}</p>
+        <p className={styles.desc}>{contestData.description}</p>
       </div>
 
       <div className="flex-col-xs">
         <div className={styles.information}>
           <label>Owner: </label>
-          <p>{leagueData.createdBy?.name}</p>
+          <p>{contestData.createdBy?.name}</p>
         </div>
 
         <div className={styles.information}>
           <label>Teams: </label>
-          <p>{leagueData.teams.length}</p>
+          <p>{contestData.teams.length}</p>
         </div>
       </div>
 
@@ -86,8 +86,8 @@ function LeagueCard({ className = "", leagueData, onJoined }) {
         <div className={styles.date}>
           <Clock />
           <p>
-            {getTimeFormatted(leagueData.draftRound.startDate)},{" "}
-            {getDateFormatted(leagueData.draftRound.startDate, true)}
+            {getTimeFormatted(contestData.draftRound.startDate)},{" "}
+            {getDateFormatted(contestData.draftRound.startDate, true)}
           </p>
         </div>
 
@@ -98,26 +98,26 @@ function LeagueCard({ className = "", leagueData, onJoined }) {
               handleAppNavigation(
                 e,
                 navigate,
-                applicationRoutes.league(
-                  leagueData.tournament?._id,
-                  leagueData._id
+                applicationRoutes.contest(
+                  contestData.tournament?._id,
+                  contestData._id
                 )
               )
             }
           >
-            View League
+            View Contest
           </Button>
         ) : (
           <Button
             disabled={joining}
             useSpinnerWhenDisabled
             onClick={() =>
-              leagueData.type === leagueTypeEnum.PRIVATE
-                ? setShowJoinLeagueModal(true)
-                : handleJoinLeague()
+              contestData.type === contestTypeEnum.PRIVATE
+                ? setShowJoinContestModal(true)
+                : handleJoinContest()
             }
           >
-            Join League
+            Join Contest
           </Button>
         )}
       </div>
@@ -125,4 +125,4 @@ function LeagueCard({ className = "", leagueData, onJoined }) {
   );
 }
 
-export default LeagueCard;
+export default ContestCard;

@@ -87,7 +87,7 @@ function Chat({ className = "" }) {
 
     console.log(`🟡Emitted: ${socketEventsEnum.chat}`);
     socket.emit(socketEventsEnum.chat, {
-      leagueId: room.leagueId,
+      leagueId: room.contestId,
       userId: userDetails._id,
       message: msg,
     });

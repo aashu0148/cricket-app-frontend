@@ -9,7 +9,7 @@ import { applicationRoutes } from "@/utils/constants";
 import styles from "./DraftRoundPage.module.scss";
 
 function DraftRoundCompleted() {
-  const { tournamentId, leagueId } = useParams();
+  const { tournamentId, contestId } = useParams();
 
   const navigate = useNavigate();
 
@@ -19,17 +19,17 @@ function DraftRoundCompleted() {
         <h2 className="heading-big">Draft round is completed</h2>
 
         <p className={styles.desc}>
-          Draft round is completed, please head over to league page to see your
+          Draft round is completed, please head over to contest page to see your
           team and leader board
         </p>
 
         <Button
           withArrow
           onClick={() =>
-            navigate(applicationRoutes.league(tournamentId, leagueId))
+            navigate(applicationRoutes.contest(tournamentId, contestId))
           }
         >
-          League page
+          Contest page
         </Button>
       </div>
     </Modal>
