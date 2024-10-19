@@ -26,4 +26,10 @@ const socketEventsEnum = {
   resumed: "resumed",
 };
 
-export { contestTypeEnum, socketEventsEnum };
+const playerRoleEnum = {
+  BATTER: "BATTER",
+  BOWLER: "BOWLER",
+  ALLROUNDER: "ALLROUNDER",
+};
+
+export { contestTypeEnum, socketEventsEnum, playerRoleEnum };

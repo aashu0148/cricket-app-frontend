@@ -170,17 +170,20 @@
   .playersOuter {
     width: 100%;
     display: flex;
-    overflow-x: auto;
+    overflow: auto;
     padding: $spacing-xs 0;
 
     .players {
-      width: max-content;
+      // width: max-content;
+      width: 100%;
+      flex-wrap: wrap;
       display: flex;
       align-items: center;
-      gap: $spacing-sm;
+      gap: $spacing-xs;
     }
 
     .player {
+      flex-grow: 1;
       width: 120px;
       border-radius: 10px;
       padding: $spacing-sm;

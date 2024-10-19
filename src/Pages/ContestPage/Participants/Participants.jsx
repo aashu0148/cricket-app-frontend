@@ -140,6 +140,14 @@ function Participants({
                   </div>
                 </div>
               ))}
+
+              {new Array(6).fill(1).map((_, i) => (
+                <div
+                  style={{ padding: 0, pointerEvents: "none", opacity: 0 }}
+                  className={styles.player}
+                  key={i}
+                />
+              ))}
             </div>
           </div>
         </div>

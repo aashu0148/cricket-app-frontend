@@ -14,6 +14,12 @@
     font-weight: 500;
   }
 
+  .filter {
+    justify-content: space-evenly;
+    display: flex;
+    align-items: center;
+  }
+
   .players {
     flex: 1;
     overflow-y: auto;
@@ -32,6 +38,17 @@
 
       .left {
         flex: 1;
+
+        .dragHandle {
+          display: flex;
+          align-items: center;
+          cursor: grab;
+
+          svg {
+            height: 18px;
+            width: 18px;
+          }
+        }
       }
 
       .image {
@@ -53,6 +70,12 @@
         color: $color-title;
         text-transform: capitalize;
         line-height: 1;
+      }
+
+      .role {
+        color: $color-label;
+        font-size: $text-sm;
+        font-weight: 500;
       }
 
       .actions {

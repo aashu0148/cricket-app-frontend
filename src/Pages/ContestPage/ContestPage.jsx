@@ -263,63 +263,66 @@ function ContestPage() {
             )}
           </div>
 
-          <div className="flex">
-            <InputControl
-              small
-              label="Your team name"
-              placeholder="Enter your team name"
-              maxLength={50}
-              value={teamNameInput}
-              onChange={(e) => setTeamNameInput(e.target.value)}
-              onBlur={handleTeamNameInputBlur}
-            />
-          </div>
+          {currentUserTeam && (
+            <div className="flex">
+              <InputControl
+                small
+                label="Your team name"
+                placeholder="Enter your team name"
+                maxLength={50}
+                value={teamNameInput}
+                onChange={(e) => setTeamNameInput(e.target.value)}
+                onBlur={handleTeamNameInputBlur}
+              />
+            </div>
+          )}
 
           <Participants
             participants={contestDetails.teams}
             playerPoints={playerPoints}
           />
-
-          {draftRoundStarted && (
-            <LeaderBoard
-              teams={contestDetails.teams}
-              playerPoints={playerPoints}
-            />
-          )}
         </div>
 
         {currentUserTeam && (
           <div className={styles.mainRight}>
-            <p className={`heading`}>Wishlist</p>
-
-            <Wishlist
-              currentPlayers={currentUserTeam.wishlist}
-              contestId={contestDetails._id}
-              allPlayers={tournamentDetails.players}
-              onPlayerAdded={(p) =>
-                setContestDetails((contest) => ({
-                  ...contest,
-                  teams: contest.teams.map((t) =>
-                    t._id === currentUserTeam._id
-                      ? { ...t, wishlist: [...t.wishlist, p] }
-                      : t
-                  ),
-                }))
-              }
-              onPlayerRemoved={(pid) =>
-                setContestDetails((contest) => ({
-                  ...contest,
-                  teams: contest.teams.map((t) =>
-                    t._id === currentUserTeam._id
-                      ? {
-                          ...t,
-                          wishlist: t.wishlist.filter((e) => e._id !== pid),
-                        }
-                      : t
-                  ),
-                }))
-              }
-            />
+            {isDraftRoundCompleted ? (
+              <LeaderBoard
+                teams={contestDetails.teams}
+                playerPoints={playerPoints}
+              />
+            ) : (
+              <>
+                <p className={`heading`}>Wishlist</p>
+                <Wishlist
+                  currentPlayers={currentUserTeam.wishlist}
+                  contestId={contestDetails._id}
+                  allPlayers={tournamentDetails.players}
+                  onPlayerAdded={(p) =>
+                    setContestDetails((contest) => ({
+                      ...contest,
+                      teams: contest.teams.map((t) =>
+                        t._id === currentUserTeam._id
+                          ? { ...t, wishlist: [...t.wishlist, p] }
+                          : t
+                      ),
+                    }))
+                  }
+                  onPlayerRemoved={(pid) =>
+                    setContestDetails((contest) => ({
+                      ...contest,
+                      teams: contest.teams.map((t) =>
+                        t._id === currentUserTeam._id
+                          ? {
+                              ...t,
+                              wishlist: t.wishlist.filter((e) => e._id !== pid),
+                            }
+                          : t
+                      ),
+                    }))
+                  }
+                />{" "}
+              </>
+            )}
           </div>
         )}
       </div>

@@ -29,7 +29,7 @@
 
     .title {
       font-size: $text-2xl;
-      font-weight: bold;
+      font-weight: 600;
       text-align: center;
       color: $color-title;
     }
@@ -38,11 +38,12 @@
       font-size: $text-lg;
       text-align: center;
       color: $color-desc;
+      font-weight: 400;
     }
 
     button {
       font-size: 18px;
-      font-weight: 600;
+      font-weight: 400;
       width: 100%;
       position: relative;
       max-width: 400px;

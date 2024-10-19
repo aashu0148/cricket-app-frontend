@@ -97,6 +97,19 @@ export const addPlayerToWishlist = async (payload) => {
   });
 };
 
+export const updateWishlistOrder = async (payload) => {
+  const path = "/leagues/wishlist/order";
+
+  return await makeApiCall({
+    functionName: "updateWishlistOrder",
+    defaultErrorMessage: "Failed to update wishlist order",
+    fetchWrapperOptions: {
+      path,
+      payload,
+    },
+  });
+};
+
 // 8. Remove Player from Wishlist
 export const removePlayerFromWishlist = async (payload) => {
   const path = "/leagues/wishlist";

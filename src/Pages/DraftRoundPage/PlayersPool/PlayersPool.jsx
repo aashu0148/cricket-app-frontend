@@ -6,9 +6,10 @@ import { useSelector } from "react-redux";
 import InputControl from "@/Components/InputControl/InputControl";
 import Img from "@/Components/Img/Img";
 import Button from "@/Components/Button/Button";
+import Checkbox from "@/Components/Checkbox/Checkbox";
 
 import { useDraftRound } from "../util/DraftRoundContext";
-import { socketEventsEnum } from "@/utils/enums";
+import { playerRoleEnum, socketEventsEnum } from "@/utils/enums";
 import { sleep } from "@/utils/util";
 
 import styles from "./PlayersPool.module.scss";
@@ -20,6 +21,7 @@ function PlayersPool({ teams = [], players = [], playerPoints = [] }) {
   const { socket } = useDraftRound();
   const [searchInput, setSearchInput] = useState("");
   const [picking, setPicking] = useState(false);
+  const [selectedRoleType, setSelectedRoleType] = useState([]);
 
   const parsedPlayers = useMemo(() => {
     const allPlayers = [...players]
@@ -35,7 +37,10 @@ function PlayersPool({ teams = [], players = [], playerPoints = [] }) {
 
         return item;
       })
-      .filter((e) => new RegExp(`${searchInput}`, "gi").test(e.fullName));
+      .filter((e) => new RegExp(`${searchInput}`, "gi").test(e.fullName))
+      .filter((p) =>
+        selectedRoleType.length ? selectedRoleType.includes(p.role) : true
+      );
 
     const available = allPlayers
       .filter((e) => !e.pickedBy)
@@ -45,7 +50,7 @@ function PlayersPool({ teams = [], players = [], playerPoints = [] }) {
       .sort((a, b) => ((a.points || 0) > (b.points || 0) ? -1 : 1));
 
     return [...available, ...picked];
-  }, [teams, players, searchInput]);
+  }, [teams, players, searchInput, selectedRoleType]);
 
   const handlePickClick = async (player) => {
     setPicking(player._id);
@@ -83,6 +88,42 @@ function PlayersPool({ teams = [], players = [], playerPoints = [] }) {
         />
       </div>
 
+      <div className="flex gap-md">
+        <Checkbox
+          label="Batter"
+          checked={selectedRoleType.includes(playerRoleEnum.BATTER)}
+          onChange={(e) =>
+            setSelectedRoleType((prev) =>
+              e
+                ? [...prev, playerRoleEnum.BATTER]
+                : prev.filter((r) => r !== playerRoleEnum.BATTER)
+            )
+          }
+        />
+        <Checkbox
+          label="Bowler"
+          checked={selectedRoleType.includes(playerRoleEnum.BOWLER)}
+          onChange={(e) =>
+            setSelectedRoleType((prev) =>
+              e
+                ? [...prev, playerRoleEnum.BOWLER]
+                : prev.filter((r) => r !== playerRoleEnum.BOWLER)
+            )
+          }
+        />
+        <Checkbox
+          label="All Rounder"
+          checked={selectedRoleType.includes(playerRoleEnum.ALLROUNDER)}
+          onChange={(e) =>
+            setSelectedRoleType((prev) =>
+              e
+                ? [...prev, playerRoleEnum.ALLROUNDER]
+                : prev.filter((r) => r !== playerRoleEnum.ALLROUNDER)
+            )
+          }
+        />
+      </div>
+
       <div className={styles.playersOuter}>
         <div className={styles.players}>
           {parsedPlayers.map((player) => (
@@ -115,6 +156,9 @@ function PlayersPool({ teams = [], players = [], playerPoints = [] }) {
                 </p>
 
                 <p className={styles.score}>
+                  {player.role.toLowerCase() || "_"}
+                </p>
+                <p className={styles.score}>
                   score: <span>{player.points || "_"}</span>
                 </p>
               </div>
@@ -134,6 +178,14 @@ function PlayersPool({ teams = [], players = [], playerPoints = [] }) {
                 </Button>
               )}
             </div>
+          ))}
+
+          {new Array(5).fill(1).map((_, i) => (
+            <div
+              className={styles.player}
+              key={i}
+              style={{ padding: "0", opacity: "0", pointerEvents: "none" }}
+            />
           ))}
         </div>
       </div>

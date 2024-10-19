@@ -36,7 +36,7 @@ function ContestCard({ className = "", contestData, onJoined }) {
   const handleJoinContest = async (pass = "") => {
     setJoining(true);
     const res = await joinContest(contestData._id, {
-      contestId: contestData._id,
+      leagueId: contestData._id,
       password: pass,
     });
     setJoining(false);

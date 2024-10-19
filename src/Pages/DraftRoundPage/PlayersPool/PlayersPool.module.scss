@@ -20,14 +20,14 @@
   .playersOuter {
     width: 100%;
     display: flex;
-    overflow-x: auto;
+    overflow: auto;
     padding: $spacing-xs 0;
 
     .players {
       max-height: 500px;
-      width: max-content;
+      // width: max-content;
+      width: 100%;
       display: flex;
-      flex-direction: column;
       flex-wrap: wrap;
       gap: $spacing-md;
       padding: $spacing-md $spacing-xs;
@@ -39,6 +39,7 @@
 
     .player {
       width: 140px;
+      flex-grow: 1;
       border-radius: 10px;
       padding: $spacing-sm;
       border: 1px solid $bg-200;
@@ -90,6 +91,7 @@
       .score {
         text-align: center;
         font-size: $text-sm;
+        text-transform: capitalize;
 
         span {
           font: inherit;
