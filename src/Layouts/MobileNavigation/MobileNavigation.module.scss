@@ -3,7 +3,7 @@
 .container {
   border-top: 1px solid $bg-200;
   background-color: $bg;
-  padding: $spacing-xxs $spacing-sm;
+  padding: $spacing-xs $spacing-sm;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -29,9 +29,12 @@
     }
 
     .icon {
+      display: flex;
+      align-items: center;
+
       svg {
-        height: 20px;
-        width: 20px;
+        height: 28px;
+        width: 28px;
         color: $color-label;
       }
     }

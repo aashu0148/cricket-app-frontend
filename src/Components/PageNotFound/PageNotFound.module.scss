@@ -12,6 +12,7 @@
   h1 {
     font-size: $text-4xl;
     text-align: center;
+    font-weight: 500;
 
     @media (max-width: 640px) {
       font-size: $text-2xl;

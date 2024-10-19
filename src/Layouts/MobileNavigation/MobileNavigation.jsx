@@ -34,7 +34,7 @@ function MobileNavigation({
           }}
         >
           <div className={styles.icon}>{item.icon}</div>
-          <p className={styles.text}>{item.label}</p>
+          {/* <p className={styles.text}>{item.label}</p> */}
         </div>
       ))}
 
@@ -51,7 +51,7 @@ function MobileNavigation({
             onError={(e) => (e.target.src = userProfileIcon)}
           />
         </div>
-        <p className={styles.name}>{userDetails.name}</p>
+        {/* <p className={styles.name}>{userDetails.name}</p> */}
       </div>
     </div>
   );

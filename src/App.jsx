@@ -22,6 +22,7 @@ import DraftRoundPage from "./Pages/DraftRoundPage/DraftRoundPage";
 import { DraftRoundProvider } from "./Pages/DraftRoundPage/util/DraftRoundContext";
 import ScoringSystem from "./Pages/Admin/ScoringSystem/ScoringSystem";
 import EditScoringSystem from "./Pages/Admin/ScoringSystem/EditScoringSystem/EditScoringSystem";
+import PlayersPage from "./Pages/Admin/PlayersPage/PlayersPage";
 
 // Utils
 import { getCurrentUser } from "./apis/user";
@@ -146,7 +147,7 @@ function App() {
               path={applicationRoutes.createScoringSystem}
               element={<EditScoringSystem createMode />}
             />
-            {/* all routes of admin will be defined here */}
+            <Route path={applicationRoutes.players} element={<PlayersPage />} />
           </Route>
 
           <Route
@@ -167,7 +168,10 @@ function App() {
               path={applicationRoutes.contests()}
               element={<ContestsPage />}
             />
-            <Route path={applicationRoutes.contest()} element={<ContestPage />} />
+            <Route
+              path={applicationRoutes.contest()}
+              element={<ContestPage />}
+            />
             <Route
               path={applicationRoutes.draftRound()}
               element={

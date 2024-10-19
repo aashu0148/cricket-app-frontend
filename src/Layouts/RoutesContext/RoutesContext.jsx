@@ -23,12 +23,12 @@ export const RoutesProvider = ({ useAdminRoutes = false, children }) => {
       label: "Scoring System",
       link: applicationRoutes.scoringSystem,
     },
-    // {
-    //   icon: batsmanIcon,
-    //   value: applicationRoutes.players,
-    //   label: "Players",
-    //   link: applicationRoutes.players,
-    // },
+    {
+      icon: batsmanIcon,
+      value: applicationRoutes.players,
+      label: "Players",
+      link: applicationRoutes.players,
+    },
   ].filter((item) => item);
 
   const userSections = [

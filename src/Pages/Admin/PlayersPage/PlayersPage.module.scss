@@ -1,0 +1,102 @@
+@import "@/styles/variables";
+
+.playersContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-sm;
+}
+
+.playerCard {
+  width: 100%;
+  flex-grow: 1;
+  background-color: $bg-100;
+  border-radius: $spacing-xs;
+  padding: $spacing-md;
+  display: flex;
+  flex-direction: column;
+
+  .playerHeader {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+
+    .playerImage {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .playerInfo {
+      display: flex;
+      flex-direction: column;
+
+      .playerName {
+        font-size: $text-md;
+        color: $color-heading;
+        font-weight: 500;
+        margin: 0;
+
+        span {
+          font: inherit;
+          font-size: 0.8em;
+        }
+      }
+
+      .playerCountry,
+      .playingRole {
+        font-size: $text-sm;
+        color: $color-label;
+        margin: 0;
+      }
+    }
+  }
+
+  .playerStats {
+    margin-top: $spacing-md;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
+    max-width: 100%;
+    overflow-x: auto;
+
+    // &:last-child {
+    //   margin-top: auto;
+    // }
+
+    .title {
+      font-size: $text-sm;
+      color: $color-title;
+    }
+
+    .statsTable {
+      width: 100%;
+      border-collapse: collapse;
+      border-radius: 8px;
+      overflow: hidden;
+
+      th,
+      td {
+        padding: $spacing-xs;
+        text-align: center;
+        font-size: $text-xs;
+      }
+
+      th {
+        background-color: $bg-300;
+        color: $color-title;
+        font-weight: bold;
+        text-transform: capitalize;
+      }
+
+      td {
+        background-color: $bg-200;
+        color: $color-desc;
+      }
+
+      tr:nth-child(even) {
+        background-color: $bg-100;
+      }
+    }
+  }
+}
