@@ -15,9 +15,10 @@
   }
 
   .filter {
-    justify-content: space-evenly;
+    // justify-content: space-evenly;
     display: flex;
     align-items: center;
+    gap: $spacing-sm;
   }
 
   .players {
