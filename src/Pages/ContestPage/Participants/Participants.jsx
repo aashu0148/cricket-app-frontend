@@ -11,6 +11,7 @@ function Participants({
   participants = [],
   playerPoints = [],
   activeTurnUserId = "",
+  turnDir = "",
 }) {
   const [targetDate, setTargetDate] = useState(new Date());
   const [selectedTeamOwnerId, setSelectedTeamOwnerId] = useState("");
@@ -37,7 +38,7 @@ function Participants({
 
   useEffect(() => {
     setTargetDate(new Date(Date.now() + 118 * 1000)); // around 12sec
-  }, [activeTurnUserId]);
+  }, [activeTurnUserId, turnDir]);
 
   return (
     <div className={`flex-col-xs ${styles.container}`}>

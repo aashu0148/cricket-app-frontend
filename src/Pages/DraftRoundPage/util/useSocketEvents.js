@@ -86,6 +86,7 @@ function useSocketEvents() {
       setRoomStatuses((prev) => ({
         ...prev,
         turn: data?.userId,
+        turnDir: data?.turnDir,
       }));
     });
 

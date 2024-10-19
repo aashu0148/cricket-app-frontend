@@ -25,6 +25,7 @@ export const DraftRoundProvider = ({ children }) => {
   const [roomStatuses, setRoomStatuses] = useState({
     connected: true,
     turn: "",
+    turnDir: "",
     status: "",
     started: false,
     completed: false,
@@ -85,7 +86,7 @@ export const DraftRoundProvider = ({ children }) => {
  * @returns {{
  * socket:object,
  * roomStatuses:{
- * connected:boolean,started:boolean,status:string,turn:string,completed:boolean
+ * connected:boolean,started:boolean,status:string,turn:string,turnDir:string,completed:boolean
  * },
  *  room:{
  *   name: string,

@@ -169,7 +169,7 @@ function DraftRoundPage() {
         ...p,
         draftRound: { ...p.draftRound, currentTurn: roomStatuses.turn },
       }));
-  }, [roomStatuses.turn]);
+  }, [roomStatuses.turn, roomStatuses.turnDir]);
 
   useEffect(() => {
     handleSocketEvents();
@@ -294,6 +294,7 @@ function DraftRoundPage() {
           activeTurnUserId={
             roomStatuses.started ? contestDetails.draftRound?.currentTurn : ""
           }
+          turnDir={roomStatuses.turnDir}
         />
 
         <PlayersPool
