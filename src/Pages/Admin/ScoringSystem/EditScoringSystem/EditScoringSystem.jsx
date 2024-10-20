@@ -333,6 +333,7 @@ export default function EditScoringSystem({ createMode = false }) {
           fielding: fieldingData,
         })
       : await updateScoringSystem(scoringId, {
+          name: systemName,
           batting: battingData,
           bowling: bowlingData,
           fielding: fieldingData,
@@ -1273,15 +1274,13 @@ export default function EditScoringSystem({ createMode = false }) {
         </div>
       </div>
 
-      {createMode && (
-        <InputControl
-          placeholder="Enter system name"
-          value={systemName}
-          onChange={(e) => setSystemName(e.target.value)}
-          label="Scoring System Name"
-          error={errors.name}
-        />
-      )}
+      <InputControl
+        placeholder="Enter system name"
+        value={systemName}
+        onChange={(e) => setSystemName(e.target.value)}
+        label="Scoring System Name"
+        error={errors.name}
+      />
 
       {battingSection}
       {bowlingSection}
@@ -1300,7 +1299,7 @@ export default function EditScoringSystem({ createMode = false }) {
           disabled={submitting}
           useSpinnerWhenDisabled
         >
-          {createMode ? "Create" : "Edit"}
+          {createMode ? "Create" : "Submit"}
         </Button>
       </div>
     </div>
