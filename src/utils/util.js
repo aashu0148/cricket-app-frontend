@@ -364,3 +364,42 @@ export function sleep(time = 1000) {
 }
 
 export const isEmojiPresentInString = (str) => /\p{Emoji}/u.test(str);
+
+/**
+ *
+ * @param {Array} teams
+ * @param {Array<{player:string,points:number}>} playerPoints
+ * @returns {Array}
+ */
+export const parseTeamsForScorePoints = (teams = [], playerPoints = []) => {
+  if (!teams.length || !playerPoints.length) {
+    console.error("INVALID INPUT FOR parseTeams", { teams, playerPoints });
+    return teams;
+  }
+
+  const numberOfTopPlayersToInclude = 11;
+
+  return teams
+    .map((team) => {
+      const players = team.players.map((item) => {
+        const p = playerPoints.find((e) => e.player === item._id);
+        if (p?.points) item.points = p.points;
+        else item.points = NaN;
+
+        return item;
+      });
+
+      const pointsArr = players.map((e) => e.points || 0).sort();
+
+      const teamPoints = pointsArr
+        .slice(0, numberOfTopPlayersToInclude)
+        .reduce((acc, curr) => acc + curr, 0);
+
+      return {
+        ...team,
+        players,
+        teamPoints,
+      };
+    })
+    .sort((a, b) => (a.teamPoints < b.teamPoints ? 1 : -1));
+};

@@ -151,7 +151,7 @@ export const getJoinedContestsOfTournament = async (tournamentId) => {
   });
 };
 
-// 10. Get Joined Contests
+// 10. Get Joined Running Contests
 export const getJoinedActiveContests = async () => {
   const path = "/leagues/joined/active";
 

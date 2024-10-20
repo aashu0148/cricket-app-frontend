@@ -169,8 +169,8 @@ function PlayersPool({ teams = [], players = [], playerPoints = [] }) {
                 </Button>
               ) : (
                 <Button
-                  disabled={player._id === picking}
-                  useSpinnerWhenDisabled
+                  disabled={picking}
+                  useSpinnerWhenDisabled={player._id === picking}
                   small
                   onClick={() => handlePickClick(player)}
                 >

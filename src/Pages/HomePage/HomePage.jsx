@@ -47,27 +47,29 @@ function HomePage() {
     <PageLoader fullPage />
   ) : (
     <div className={`page-container ${styles.container}`}>
-      <section className={styles.section}>
-        <p className="heading">Joined Contests</p>
+      {joinedContests.length > 0 && (
+        <section className={styles.section}>
+          <p className="heading">Joined Contests</p>
 
-        <div className={`cards ${styles.cards}`}>
-          {joinedContests.map((contest) => (
-            <ContestCard
-              key={contest._id}
-              className={styles.contestCard}
-              contestData={contest}
-            />
-          ))}
+          <div className={`cards ${styles.cards}`}>
+            {joinedContests.map((contest) => (
+              <ContestCard
+                key={contest._id}
+                className={styles.contestCard}
+                contestData={contest}
+              />
+            ))}
 
-          {new Array(3).fill(1).map((_, i) => (
-            <div
-              key={i}
-              className={styles.contestCard}
-              style={{ padding: 0, opacity: 0, pointerEvents: "none" }}
-            />
-          ))}
-        </div>
-      </section>
+            {new Array(3).fill(1).map((_, i) => (
+              <div
+                key={i}
+                className={styles.contestCard}
+                style={{ padding: 0, opacity: 0, pointerEvents: "none" }}
+              />
+            ))}
+          </div>
+        </section>
+      )}
 
       <section className={styles.section}>
         <p className="heading">Available Tournaments</p>

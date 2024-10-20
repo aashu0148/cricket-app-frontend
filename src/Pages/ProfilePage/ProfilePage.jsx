@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Edit2, LogOut } from "react-feather";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -7,7 +7,13 @@ import Button from "@/Components/Button/Button";
 
 import userProfileIcon from "@/assets/profile-icon.png";
 import { updateUserDetails } from "@/apis/user";
-import { handleLogout, refreshUserDetailsFromBackend } from "@/utils/util";
+import { getJoinedContests } from "@/apis/contests";
+import { getTournamentsWithPlayers } from "@/apis/tournament";
+import {
+  handleLogout,
+  parseTeamsForScorePoints,
+  refreshUserDetailsFromBackend,
+} from "@/utils/util";
 import { uploadFile } from "@/utils/firebase";
 import actionTypes from "@/store/actionTypes";
 import useImagePicker from "@/utils/hooks/useImagePicker";
@@ -26,6 +32,47 @@ function ProfilePage() {
     uploading: false,
     progress: 0,
   });
+  const [joinedContests, setJoinedContests] = useState([]);
+
+  console.log(joinedContests);
+
+  const fetchJoinedContests = async () => {
+    const res = await getJoinedContests();
+    if (!res) return;
+
+    const tournamentIds = res.data.map((e) => e.tournament?._id);
+    const res2 = await getTournamentsWithPlayers(tournamentIds);
+    if (!res2) return;
+
+    const finalContests = res.data
+      .map((c) => {
+        const tournamentData = res2.data.find(
+          (t) => t._id === c.tournament._id
+        );
+        if (!tournamentData.completed) return null;
+
+        const fullPlayers = tournamentData.players;
+        const teams = c.teams.map((e) => ({
+          ...e,
+          players: e.players
+            .map((p) => fullPlayers.find((item) => item._id === p))
+            .filter((e) => e),
+        }));
+
+        const parsedTeams = parseTeamsForScorePoints(
+          teams,
+          tournamentData?.playerPoints
+        );
+
+        return {
+          ...c,
+          teams: parsedTeams,
+        };
+      })
+      .filter((e) => e);
+
+    setJoinedContests(finalContests);
+  };
 
   const handleImageUploaded = async (url) => {
     const res = await updateUserDetails({ profileImage: url });
@@ -91,6 +138,10 @@ function ProfilePage() {
         setImageUploadDetails({ uploading: false, error: err, progress: 0 })
     );
   };
+
+  useEffect(() => {
+    fetchJoinedContests();
+  }, []);
 
   return (
     <div className={`page-container ${styles.container}`}>

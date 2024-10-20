@@ -34,7 +34,7 @@ function TournamentsPage() {
     <PageLoader fullPage />
   ) : (
     <div className={`page-container`}>
-      <p className="heading">Trending Tournaments</p>
+      <p className="heading">All Tournaments</p>
 
       <div className={`cards gap-2xl`}>
         {allTournaments.map((tournament) => (

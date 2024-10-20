@@ -10,6 +10,10 @@
       flex-direction: column;
       gap: $spacing-lg;
 
+      * {
+        word-break: break-word;
+      }
+
       .information {
         display: flex;
         gap: $spacing-xs;

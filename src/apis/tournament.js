@@ -100,6 +100,18 @@ export const insertMatchResultsIfNeededToTournament = async (id) => {
   });
 };
 
+export const getTournamentsWithPlayers = async (ids = []) => {
+  const path = `/tournaments/players?tournamentIds=${ids.join(",")}`;
+
+  return await makeApiCall({
+    functionName: "getTournamentsWithPlayers",
+    defaultErrorMessage: "Failed to tournaments",
+    fetchWrapperOptions: {
+      path,
+    },
+  });
+};
+
 export const deletePlayerFromTournament = async (id, payload) => {
   const path = `/tournaments/${id}/players`;
 

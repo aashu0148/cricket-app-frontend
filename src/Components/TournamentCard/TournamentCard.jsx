@@ -120,11 +120,7 @@ function TournamentCard({
       <div className={styles.section}>
         <h3 className={`heading`}>Matches:</h3>
 
-        <div
-          className={`${styles.matchCards} ${
-            allMatches.length < 10 ? styles.rowCards : ""
-          }`}
-        >
+        <div className={`${styles.matchCards}`}>
           {allMatches
             .sort((a, b) =>
               new Date(a.startDate) < new Date(b.startDate) ? 1 : -1

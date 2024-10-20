@@ -195,7 +195,7 @@ function ContestPage() {
                 </div>
               )}
             </div>
-            <p className="desc" style={{ whiteSpace: "pre" }}>
+            <p className="desc" style={{ whiteSpace: "pre-wrap" }}>
               <Linkify
                 componentDecorator={(decoratedHref, decoratedText, k) => (
                   <a
