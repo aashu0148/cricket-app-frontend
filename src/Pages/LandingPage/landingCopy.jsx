@@ -10,6 +10,7 @@ import {
   faKey,
   faStar,
 } from "@fortawesome/free-solid-svg-icons";
+import { applicationRoutes } from "@/utils/constants";
 
 const generalCopy = {
   about: {
@@ -165,7 +166,7 @@ This aims to nullify any unforeseen injuries/drop of form for a player in your t
       <>
         <a
           className="link"
-          href="https://cric-maestro.netlify.app/"
+          href={applicationRoutes.viewScoringSystem("66ed6313dc9c0352f77b6f63")}
           target="_blank"
         >
           This link

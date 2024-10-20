@@ -1,6 +1,7 @@
 @import "@/styles/variables";
 
 .logo {
+  width: fit-content;
   display: flex;
   gap: $spacing-xs;
   align-items: flex-end;

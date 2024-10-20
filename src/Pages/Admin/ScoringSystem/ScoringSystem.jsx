@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Eye } from "react-feather";
 
 import Button from "@/Components/Button/Button";
 import PageLoader from "@/Components/PageLoader/PageLoader";
@@ -82,22 +83,37 @@ export default function ScoringSystem() {
                 Created on : <span>{getDateFormatted(item.createdAt)}</span>
               </p>
             </div>
-            <div className={`footer ${styles.buttonContainer}`}>
+            <div className="flex" style={{ justifyContent: "space-between" }}>
               <Button
-                onClick={() => handleCopySystem(item)}
-                disabled={item._id === processingSystem}
-                useSpinnerWhenDisabled
                 outlineButton
-              >
-                Copy
-              </Button>
-              <Button
-                onClick={() =>
-                  navigate(applicationRoutes.editScoringSystem(item._id))
+                onClick={(e) =>
+                  handleAppNavigation(
+                    e,
+                    navigate,
+                    applicationRoutes.viewScoringSystem(item._id)
+                  )
                 }
               >
-                Edit
+                <Eye />
               </Button>
+
+              <div className={`footer ${styles.buttonContainer}`}>
+                <Button
+                  onClick={() => handleCopySystem(item)}
+                  disabled={item._id === processingSystem}
+                  useSpinnerWhenDisabled
+                  outlineButton
+                >
+                  Copy
+                </Button>
+                <Button
+                  onClick={() =>
+                    navigate(applicationRoutes.editScoringSystem(item._id))
+                  }
+                >
+                  Edit
+                </Button>
+              </div>
             </div>
           </div>
         ))}

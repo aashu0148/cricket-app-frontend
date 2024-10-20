@@ -1,0 +1,23 @@
+@import "@/styles/variables.scss";
+
+.playersPool {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: $spacing-xs;
+  max-height: 400px;
+  overflow-y: auto;
+  background-color: $primary-200;
+  padding: $spacing-sm;
+  padding-top: 0;
+  border-radius: 10px;
+
+  .tools {
+    padding-top: $spacing-sm;
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 50;
+    background-color: inherit;
+  }
+}

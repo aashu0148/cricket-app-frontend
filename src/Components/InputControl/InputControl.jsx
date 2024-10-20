@@ -79,6 +79,7 @@ const InputControl = ({
       onChangeFunc.current({
         target: {
           value: newValue,
+          valueAsNumber: parseFloat(newValue),
         },
       });
     }
@@ -99,6 +100,7 @@ const InputControl = ({
       onChange({
         target: {
           value: newVal,
+          valueAsNumber: parseFloat(newVal),
         },
       });
   };

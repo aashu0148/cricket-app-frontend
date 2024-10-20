@@ -23,6 +23,7 @@ import { DraftRoundProvider } from "./Pages/DraftRoundPage/util/DraftRoundContex
 import ScoringSystem from "./Pages/Admin/ScoringSystem/ScoringSystem";
 import EditScoringSystem from "./Pages/Admin/ScoringSystem/EditScoringSystem/EditScoringSystem";
 import PlayersPage from "./Pages/Admin/PlayersPage/PlayersPage";
+import ScoringSystemView from "./Pages/ScoringSystemView/ScoringSystemView";
 
 // Utils
 import { getCurrentUser } from "./apis/user";
@@ -119,9 +120,14 @@ function App() {
 
       <Router>
         <Routes>
+          {userDetails._id ? "" : <Route path="/" element={<LandingPage />} />}
+
           <Route path={applicationRoutes.auth} element={<AuthPage />} />
           <Route path="/landing" element={<LandingPage />} />
-          {userDetails._id ? "" : <Route path="/" element={<LandingPage />} />}
+          <Route
+            path={applicationRoutes.viewScoringSystem()}
+            element={<ScoringSystemView />}
+          />
 
           <Route
             path="/admin"

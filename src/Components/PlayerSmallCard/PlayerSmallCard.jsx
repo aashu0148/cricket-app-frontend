@@ -1,6 +1,9 @@
 import React from "react";
+import { X } from "react-feather";
 
 import Img from "@/Components/Img/Img";
+import Spinner from "../Spinner/Spinner";
+import Button from "../Button/Button";
 
 import { playerRoleEnum } from "@/utils/enums";
 import { ballIcon, batBallIcon, batIcon } from "@/utils/svgs";
@@ -9,11 +12,17 @@ import { getTooltipAttributes } from "@/utils/tooltip";
 import styles from "./PlayerSmallCard.module.scss";
 
 function PlayerSmallCard({
+  showDeleteIcon = false,
+  isDeleting = false,
+  onDeleteClick,
+  hideScore = false,
+  showCountry = false,
   playerData = {},
   isPlayerBreakdownAllowed = false,
   isBreakdownVisible = false,
   onHideBreakdown,
   onShowBreakdown,
+  bottomJSX,
 }) {
   return (
     <div className={styles.player} key={playerData._id}>
@@ -29,6 +38,14 @@ function PlayerSmallCard({
           ? ballIcon
           : ""}
       </div>
+      {showDeleteIcon && (
+        <div
+          className={styles.delete}
+          onClick={() => (isDeleting ? "" : onDeleteClick())}
+        >
+          {isDeleting ? <Spinner small /> : <X />}
+        </div>
+      )}
 
       <Img
         src={playerData.image}
@@ -40,10 +57,17 @@ function PlayerSmallCard({
         <p className={styles.name} title={playerData.fullName}>
           {playerData.slug?.split("-")?.join(" ")}
         </p>
+        {showCountry && (
+          <p className={styles.score}>
+            <span>({playerData.country})</span>
+          </p>
+        )}
 
-        <p className={styles.score}>
-          score: <span>{playerData.points || "_"}</span>
-        </p>
+        {!hideScore && (
+          <p className={styles.score}>
+            score: <span>{playerData.points || "_"}</span>
+          </p>
+        )}
 
         {isPlayerBreakdownAllowed && (
           <p
@@ -59,6 +83,8 @@ function PlayerSmallCard({
             Breakdown
           </p>
         )}
+
+        {bottomJSX}
       </div>
     </div>
   );

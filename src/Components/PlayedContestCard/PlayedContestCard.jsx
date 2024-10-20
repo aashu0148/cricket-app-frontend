@@ -9,7 +9,7 @@ import { applicationRoutes } from "@/utils/constants";
 
 import styles from "./PlayedContestCard.module.scss";
 
-export function FillerPlayerContestCard() {
+export function FillerPlayedContestCard() {
   return (
     <div
       className={styles.container}

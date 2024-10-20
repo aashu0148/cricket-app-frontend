@@ -6,7 +6,7 @@ import EditProfileModal from "./EditProfileModal/EditProfileModal";
 import Button from "@/Components/Button/Button";
 import PageLoader from "@/Components/PageLoader/PageLoader";
 import PlayedContestCard, {
-  FillerPlayerContestCard,
+  FillerPlayedContestCard,
 } from "@/Components/PlayedContestCard/PlayedContestCard";
 
 import userProfileIcon from "@/assets/profile-icon.png";
@@ -216,7 +216,7 @@ function ProfilePage() {
             ))}
 
             {new Array(4).fill(1).map((_, i) => (
-              <FillerPlayerContestCard key={i} />
+              <FillerPlayedContestCard key={i} />
             ))}
           </div>
         ) : (

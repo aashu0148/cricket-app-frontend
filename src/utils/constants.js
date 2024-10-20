@@ -23,6 +23,7 @@ export const applicationRoutes = {
     `/tournaments/${tournamentId || ":tournamentId"}/contests/${
       contestId || ":contestId"
     }/draft-round`,
+  viewScoringSystem: (systemId = "") => `/scoring-systems/${systemId || ":id"}`,
 };
 
 const commonColors = {

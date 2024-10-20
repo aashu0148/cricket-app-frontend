@@ -27,7 +27,7 @@ export const createScoringSystem = async (payload) => {
   });
 };
 
-// 3. Get Scoring System by ID (Admin only)
+// 3. Get Scoring System by ID
 export const getScoringSystemById = async (id) => {
   const path = `/scoring-systems/${id}`;
 
@@ -36,6 +36,7 @@ export const getScoringSystemById = async (id) => {
     defaultErrorMessage: "Failed to fetch scoring system",
     fetchWrapperOptions: {
       path,
+      isPublic: true,
     },
   });
 };

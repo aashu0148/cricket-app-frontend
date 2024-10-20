@@ -1,0 +1,94 @@
+@import "@/styles/variables";
+
+.scoringSystemContainer {
+  background-color: $bg;
+  padding: $spacing-lg;
+  border-radius: $spacing-md;
+  color: $color-desc;
+
+  strong {
+    font-weight: 500;
+  }
+
+  h1.title {
+    margin-top: $spacing-xs;
+    color: $color-heading;
+    font-size: $text-3xl;
+    font-weight: 500;
+    margin-bottom: $spacing-md;
+    text-align: center;
+  }
+
+  .section {
+    margin-bottom: $spacing-lg;
+
+    h2 {
+      color: $color-title;
+      font-size: $text-xl;
+      font-weight: 500;
+      margin-bottom: $spacing-sm;
+    }
+
+    .card {
+      background-color: $bg-100;
+      border-radius: $spacing-sm;
+      padding: $spacing-md;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      margin-bottom: $spacing-sm;
+      margin-top: $spacing-xs;
+
+      h3 {
+        color: $color-title;
+        font-size: $text-lg;
+        font-weight: 500;
+        margin-bottom: $spacing-sm;
+      }
+
+      p {
+        font-size: $text-md;
+        color: $color-desc;
+        margin-bottom: $spacing-sm;
+      }
+
+      ul {
+        list-style-type: none;
+        padding-left: 0;
+        margin-bottom: $spacing-sm;
+
+        li {
+          font-size: $text-md;
+          color: $color-desc;
+          margin-bottom: $spacing-xs;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .scoringSystemContainer {
+    padding: $spacing-md;
+
+    h1.title {
+      font-size: $text-xl;
+    }
+
+    .section {
+      h2 {
+        font-size: $text-lg;
+      }
+
+      .card {
+        padding: $spacing-sm;
+
+        h3 {
+          font-size: $text-lg;
+        }
+
+        ul li {
+          font-size: $text-sm;
+        }
+      }
+    }
+  }
+}

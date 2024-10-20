@@ -95,6 +95,7 @@ export default function AllTournaments() {
 
         {showEditTournament ? (
           <EditTournamentModal
+            onSuccess={fetchTournaments}
             handleClose={() => setShowEditTournament(false)}
             setLoading={setLoading}
             tournamentId={tournamentToEdit}

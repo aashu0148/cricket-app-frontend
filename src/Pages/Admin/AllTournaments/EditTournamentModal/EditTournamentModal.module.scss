@@ -1,6 +1,8 @@
 @import "@/styles/variables";
 
 .modalContainer {
+  width: 1400px;
+  max-width: 100%;
   gap: $spacing-lg;
 
   .heading {
@@ -18,118 +20,30 @@
   gap: $spacing-md;
 }
 
-.player_scrollBar {
-  min-height: fit-content;
-  width: 100%;
-  overflow: auto;
-  display: flex;
-  gap: $spacing-md;
-  overflow-x: auto;
-  border-radius: 12px;
-  display: flex;
-}
-.playerCard {
-  width: 150px;
-  height: 150px;
+.section {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  position: relative;
-  cursor: pointer;
-  padding: $spacing-sm 0%;
-  margin-top: $spacing-md;
-  border-radius: 12px;
-  box-shadow: $shadow-200;
   gap: $spacing-xs;
-
-  .icon {
-    position: absolute;
-    right: 5%;
-    font-size: $text-xs;
-    height: $text-sm;
-    width: $text-sm;
-    opacity: 0;
-    transition: 100ms opacity ease;
-  }
-
-  .imageContainer {
-    width: 80px;
-    height: 80px;
-    overflow-x: hidden;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 2px solid $bg-200;
-  }
-
-  .playerImage {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .playerName {
-    text-align: center;
-    font-size: $text-sm;
-    white-space: normal;
-    overflow-wrap: break-word;
-  }
-
-  .playerCountry {
-    font-size: $text-xs;
-    text-align: center;
-  }
-
-  &:hover {
-    color: $white;
-    background-color: $primary-2;
-    transform: translateY(-2%);
-    .icon {
-      opacity: 20;
-      color: $red;
-    }
-    .playerCountry,
-    .playerName {
-      color: $white;
-    }
-    .imageContainer {
-      border: 2px solid $white;
-    }
-  }
 }
+
 .searchSection {
   display: flex;
   flex-direction: column;
-  gap: $spacing-sm;
-}
-.playerFound {
-  width: 100%;
-  min-height: fit-content;
-  display: flex;
-  flex-direction: column;
   gap: $spacing-xs;
-
-  p {
-    padding: 1%;
-    border-radius: 12px;
-    border: 1px solid $primary-2;
-    font-size: $text-sm;
-    transition: background-color 0.3s, color 0.3s;
-    span {
-      color: $blue;
-      font-weight: 800;
-      cursor: pointer;
-    }
-  }
-  .hovered {
-    color: white;
-    background-color: $primary-2;
-  }
 }
 
-.playerFound:hover p:hover {
-  color: white;
-  background-color: $primary-2;
+.players {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-xs;
+  max-height: 400px;
+  overflow-y: auto;
+  padding: $spacing-xxs;
+
+  .smallButton {
+    margin: auto;
+    margin-top: $spacing-xxs;
+    font-size: $text-xs;
+    padding: $spacing-xxs $spacing-xs;
+  }
 }

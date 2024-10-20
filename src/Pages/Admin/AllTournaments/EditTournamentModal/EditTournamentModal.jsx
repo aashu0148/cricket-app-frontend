@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
+
 import Modal from "@/Components/Modal/Modal";
-import styles from "./EditTournamentModal.module.scss";
 import InputControl from "@/Components/InputControl/InputControl";
-import { Trash2 } from "react-feather";
 import InputSelect from "@/Components/InputControl/InputSelect/InputSelect";
 import Button from "@/Components/Button/Button";
 import Spinner from "@/Components/Spinner/Spinner";
 import DatePicker from "@/Components/DatePicker/DatePicker";
-import Img from "@/Components/Img/Img";
+import PlayersPool from "./PlayersPool/PlayersPool";
+import PlayerSmallCard, {
+  FillerPlayerSmallCard,
+} from "@/Components/PlayerSmallCard/PlayerSmallCard";
 
 import {
   addPlayerToTournament,
@@ -15,23 +18,29 @@ import {
   getTournamentById,
   updateTournament,
 } from "@/apis/tournament";
-import { searchPlayerByName } from "@/apis/players";
 import { getAllScoringSystems } from "@/apis/scoringSystem";
+import { searchPlayerByName } from "@/apis/players";
 
-export default function EditTournamentModal({ tournamentId, handleClose }) {
+import styles from "./EditTournamentModal.module.scss";
+
+export default function EditTournamentModal({
+  tournamentId,
+  handleClose,
+  onSuccess,
+}) {
   const [loading, setLoading] = useState(true);
   const [allScoringSystems, setAllScoringSystems] = useState([]);
-  const [tournament, setTournament] = useState({});
   const [searchPlayer, setSearchPlayer] = useState("");
+  const [searchingPlayer, setSearchingPlayer] = useState(false);
   const [playerResult, setPlayerResult] = useState([]);
-  const [EditTournamentStates, setEditTournamentStates] = useState({
+  const [tournamentDetails, setTournamentDetails] = useState({
     name: "",
     longName: "",
     startDate: null,
     endDate: null,
-    scoringSystem: { name: "", value: null },
+    scoringSystem: "",
+    players: [],
   });
-
   const [errors, setErrors] = useState({
     name: "",
     longName: "",
@@ -39,47 +48,23 @@ export default function EditTournamentModal({ tournamentId, handleClose }) {
     endDate: "",
     scoringSystem: "",
   });
-
-  const PlayerCard = ({ player }) => {
-    return (
-      <div className={styles.playerCard}>
-        <Trash2
-          className={styles.icon}
-          onClick={() => handlePlayerChange(player._id, "delete")}
-        />
-        <div className={styles.imageContainer}>
-          <Img
-            usePLaceholderUserImageOnError
-            src={player.image}
-            alt={player.name}
-            className={styles.playerImage}
-          />
-        </div>
-        <div>
-          <p className={styles.playerName}>{player.name}</p>
-          <p className={styles.playerCountry}>({player.country})</p>
-        </div>
-      </div>
-    );
-  };
-
-  // ********************************************** Validation and Submission Changes **********************
+  const [submitting, setSubmitting] = useState(false);
 
   const handleChange = (label, val) => {
-    setEditTournamentStates((prev) => ({ ...prev, [label]: val }));
+    setTournamentDetails((prev) => ({ ...prev, [label]: val }));
     setErrors((prev) => ({ ...prev, [label]: "" }));
   };
 
   const validateStates = () => {
     const errors = {};
-    if (!EditTournamentStates?.name) errors.name = "Name is a required field";
-    if (!EditTournamentStates?.longName)
+    if (!tournamentDetails?.name) errors.name = "Name is a required field";
+    if (!tournamentDetails?.longName)
       errors.longName = "Long name is a required field";
-    if (!EditTournamentStates.startDate)
+    if (!tournamentDetails.startDate)
       errors.startDate = "Start Date is a required field";
-    if (!EditTournamentStates.endDate)
+    if (!tournamentDetails.endDate)
       errors.endDate = "End Date is a required field";
-    if (!EditTournamentStates.scoringSystem)
+    if (!tournamentDetails.scoringSystem)
       errors.scoringSystem = "Scoring System is a required field";
 
     setErrors(errors);
@@ -91,12 +76,24 @@ export default function EditTournamentModal({ tournamentId, handleClose }) {
     const valid = validateStates();
     if (!valid) return;
 
-    const res = await updateTournament(tournamentId, EditTournamentStates);
+    const body = {
+      ...tournamentDetails,
+      scoringSystemId: tournamentDetails.scoringSystem,
+      playerIds: tournamentDetails.players.map((e) => e._id),
+    };
+    delete body.players;
+    delete body.allMatches;
+    delete body.allSquads;
+
+    setSubmitting(true);
+    const res = await updateTournament(tournamentId, body);
+    setSubmitting(false);
     if (!res) return;
 
+    toast.success("Tournament updated successfully");
     handleClose();
+    if (onSuccess) onSuccess();
   };
-  //********************************* * Fetch scoring systems *************************
 
   async function fetchScoringSystems() {
     const res = await getAllScoringSystems();
@@ -109,62 +106,29 @@ export default function EditTournamentModal({ tournamentId, handleClose }) {
     setAllScoringSystems(result);
   }
 
-  //********************************* */ Get tournament details *****************
-
   async function getTournamentDetails() {
     const res = await getTournamentById(tournamentId);
     setLoading(false);
     if (!res) return;
 
-    setEditTournamentStates((prev) => ({
-      ...prev,
-      name: res.data?.name,
-      longName: res.data?.longName,
-      startDate: res.data?.startDate,
-      endDate: res.data?.endDate,
-      scoringSystem: { ...prev.scoringSystem, value: res.data?.scoringSystem },
-    }));
-    setTournament(res.data);
+    setTournamentDetails(res.data);
   }
-
-  // ********************************** Search player by name ********************
 
   async function handleSearch() {
     if (!searchPlayer) return;
-    const res = await searchPlayerByName(searchPlayer);
 
+    setPlayerResult([]);
+    setSearchingPlayer(true);
+    const res = await searchPlayerByName(searchPlayer);
+    setSearchingPlayer(false);
     if (!res) return;
 
-    const result = res.data.map((item) => ({
-      name: item?.name,
-      id: item?._id,
-    }));
-    setPlayerResult(result);
-  }
-
-  async function handlePlayerChange(id, action) {
-    if (!id) return;
-
-    setLoading(true);
-    const payload = { playerId: id };
-    let api;
-
-    if (action === "add") {
-      api = addPlayerToTournament(tournamentId, payload);
-    } else if (action === "delete") {
-      api = deletePlayerFromTournament(tournamentId, payload);
-    }
-
-    try {
-      const res = await api;
-      if (!res) return;
-
-      await getTournamentDetails();
-    } catch (error) {
-      console.error("Error handling player change:", error);
-    } finally {
-      setLoading(false);
-    }
+    setPlayerResult(
+      res.data.map((p) => {
+        delete p.stats;
+        return p;
+      })
+    );
   }
 
   useEffect(() => {
@@ -172,15 +136,8 @@ export default function EditTournamentModal({ tournamentId, handleClose }) {
     getTournamentDetails();
   }, []);
 
-  useEffect(() => {
-    if (!searchPlayer) {
-      setPlayerResult([]);
-    }
-  }, [searchPlayer]);
-
-  // Return statement
   return (
-    <Modal onClose={handleClose}>
+    <Modal>
       <div className={`modal-container ${styles.modalContainer}`}>
         <div className="flex-col-xxs">
           <h2 className={styles.heading}>Edit Tournament</h2>
@@ -194,14 +151,14 @@ export default function EditTournamentModal({ tournamentId, handleClose }) {
               <InputControl
                 placeholder="Enter name"
                 label="Name"
-                value={EditTournamentStates?.name}
+                value={tournamentDetails?.name}
                 onChange={(e) => handleChange("name", e.target.value)}
                 error={errors.name}
               />
               <InputControl
                 placeholder={"Enter long name"}
                 label={"Long Name"}
-                value={EditTournamentStates?.longName}
+                value={tournamentDetails?.longName}
                 onChange={(e) => handleChange("longName", e.target.value)}
                 error={errors.longName}
               />
@@ -209,7 +166,7 @@ export default function EditTournamentModal({ tournamentId, handleClose }) {
                 <label>Start Date</label>
                 <DatePicker
                   onChange={(e) => handleChange("startDate", e)}
-                  defaultDate={EditTournamentStates?.startDate}
+                  defaultDate={tournamentDetails?.startDate}
                 />
               </div>
 
@@ -217,7 +174,7 @@ export default function EditTournamentModal({ tournamentId, handleClose }) {
                 <label>End Date</label>
                 <DatePicker
                   onChange={(e) => handleChange("endDate", e)}
-                  defaultDate={EditTournamentStates?.endDate}
+                  defaultDate={tournamentDetails?.endDate}
                 />
               </div>
               <InputSelect
@@ -226,29 +183,26 @@ export default function EditTournamentModal({ tournamentId, handleClose }) {
                 options={allScoringSystems}
                 placeholder="Select a Scoring System"
                 value={allScoringSystems.find(
-                  (item) =>
-                    item.value === EditTournamentStates?.scoringSystem.value
+                  (item) => item.value === tournamentDetails?.scoringSystem
                 )}
-                onChange={(e) => handleChange("scoringSystem", e)}
+                onChange={(e) => handleChange("scoringSystem", e.value)}
                 error={errors.scoringSystem}
               />
             </div>
             <div className={styles.section}>
-              <h3>
-                Players Count <span>{tournament?.players?.length}</span>
+              <h3 className="title">
+                Players Count <span>{tournamentDetails?.players?.length}</span>
               </h3>
-              <div className={styles.player_scrollBar}>
-                {" "}
-                {tournament?.players?.length ? (
-                  tournament?.players?.map((item) => (
-                    <div>
-                      <PlayerCard player={item} />
-                    </div>
-                  ))
-                ) : (
-                  <p>No Players Found</p>
-                )}
-              </div>
+
+              <PlayersPool
+                players={tournamentDetails.players}
+                onPlayersUpdate={(newPlayers) =>
+                  setTournamentDetails((p) => ({
+                    ...p,
+                    players: newPlayers,
+                  }))
+                }
+              />
             </div>
 
             {/* Search field */}
@@ -257,27 +211,58 @@ export default function EditTournamentModal({ tournamentId, handleClose }) {
               <div className="row">
                 <InputControl
                   small
+                  placeholder="Enter name"
                   value={searchPlayer}
                   onKeyDown={(e) => {
                     if (e.key === "Enter") handleSearch();
                   }}
                   onChange={(e) => setSearchPlayer(e.target.value)}
+                  icon={searchingPlayer ? <Spinner small /> : ""}
                 />
-                <Button onClick={handleSearch}>Search</Button>
+                <Button
+                  outlineButton
+                  disabled={searchingPlayer}
+                  onClick={handleSearch}
+                >
+                  Search
+                </Button>
               </div>
-              <div className={styles.playerFound}>
-                {playerResult.length
-                  ? playerResult.map((item, index) => (
-                      <p key={index} className={`flexBox`}>
-                        {item.name}
-                        <span
-                          onClick={() => handlePlayerChange(item.id, "add")}
+              <div className={styles.players}>
+                {playerResult.map((item) => (
+                  <PlayerSmallCard
+                    key={item._id}
+                    playerData={item}
+                    showCountry
+                    hideScore
+                    showAddButton
+                    bottomJSX={
+                      tournamentDetails.players.some(
+                        (e) => e._id === item._id
+                      ) ? (
+                        <Button disabled className={styles.smallButton} small>
+                          Already exist
+                        </Button>
+                      ) : (
+                        <Button
+                          onClick={() =>
+                            setTournamentDetails((p) => ({
+                              ...p,
+                              players: [...p.players, item],
+                            }))
+                          }
+                          className={styles.smallButton}
+                          small
                         >
-                          + Add
-                        </span>
-                      </p>
-                    ))
-                  : "No Result Found"}
+                          Add
+                        </Button>
+                      )
+                    }
+                  />
+                ))}
+
+                {new Array(5).fill(1).map((_, i) => (
+                  <FillerPlayerSmallCard key={i} />
+                ))}
               </div>
             </div>
           </>
@@ -286,7 +271,13 @@ export default function EditTournamentModal({ tournamentId, handleClose }) {
           <Button cancelButton onClick={handleClose}>
             Cancel
           </Button>
-          <Button onClick={() => handleSubmit()}>Edit</Button>
+          <Button
+            onClick={() => handleSubmit()}
+            disabled={submitting}
+            useSpinnerWhenDisabled
+          >
+            Submit
+          </Button>
         </div>
       </div>
     </Modal>
