@@ -3,18 +3,24 @@ import { X } from "react-feather";
 
 import Img from "@/Components/Img/Img";
 import Button from "@/Components/Button/Button";
+import Countdown from "@/Components/Countdown/Countdown";
+import PlayerSmallCard, {
+  FillerPlayerSmallCard,
+} from "@/Components/PlayerSmallCard/PlayerSmallCard";
 
 import styles from "./Participants.module.scss";
-import Countdown from "@/Components/Countdown/Countdown";
 
 function Participants({
   participants = [],
   playerPoints = [],
   activeTurnUserId = "",
   turnDir = "",
+  completedMatches = [],
 }) {
   const [targetDate, setTargetDate] = useState(new Date());
   const [selectedTeamOwnerId, setSelectedTeamOwnerId] = useState("");
+  const [selectedPLayerIdForBreakdown, setSelectedPlayerIdForBreakdown] =
+    useState("");
 
   const selectedTeam = useMemo(() => {
     const team = participants.find(
@@ -36,8 +42,48 @@ function Participants({
     };
   }, [selectedTeamOwnerId, participants]);
 
+  const selectedPlayerBreakdown = useMemo(() => {
+    const matches = completedMatches.filter((m) =>
+      m.playerPoints.some((p) => p.player === selectedPLayerIdForBreakdown)
+    );
+
+    const playerMatches = matches.map((m) => {
+      const { _id, endDate, slug, startDate, statusText, teams } = m;
+      const points = m.playerPoints.find(
+        (p) => p.player === selectedPLayerIdForBreakdown
+      ).points;
+
+      let name = slug.split("-").join(" ").toLowerCase();
+      name = name.replace("vs", "");
+      name = name.replace(teams[0]?.name?.toLowerCase(), "");
+      name = name.replace(teams[1]?.name?.toLowerCase(), "");
+
+      return {
+        _id,
+        slug,
+        title: name.trim(),
+        startDate,
+        endDate,
+        statusText,
+        teams,
+        points,
+      };
+    });
+
+    const player = selectedTeam.players.find(
+      (e) => e._id === selectedPLayerIdForBreakdown
+    );
+
+    return {
+      player,
+      matches: playerMatches.sort((a, b) =>
+        new Date(a.endDate) < new Date(b.endDate) ? -1 : 1
+      ),
+    };
+  }, [selectedPLayerIdForBreakdown, participants, completedMatches]);
+
   useEffect(() => {
-    setTargetDate(new Date(Date.now() + 118 * 1000)); // around 12sec
+    setTargetDate(new Date(Date.now() + 119 * 1000)); // around 120 sec
   }, [activeTurnUserId, turnDir]);
 
   return (
@@ -105,53 +151,113 @@ function Participants({
       </div>
 
       {selectedTeam.owner?._id && (
-        <div className={styles.team}>
-          <div className="spacious-head">
-            <p className={styles.title}>
-              {selectedTeam.name || `${selectedTeam.owner?.name}'s team `}{" "}
-              <span>{` (${selectedTeam.players?.length})`}</span>
-            </p>
+        <>
+          <div className={styles.section}>
+            <div className="spacious-head">
+              <p className={styles.title}>
+                {selectedTeam.name || `${selectedTeam.owner?.name}'s team `}{" "}
+                <span>{` (${selectedTeam.players?.length})`}</span>
+              </p>
 
-            <Button
-              cancelButton
-              small
-              onClick={() => setSelectedTeamOwnerId("")}
-            >
-              <X /> hide
-            </Button>
-          </div>
-          <div className={styles.playersOuter}>
-            <div className={styles.players}>
-              {selectedTeam.players.map((player) => (
-                <div className={styles.player} key={player._id}>
-                  <Img
-                    src={player.image}
-                    usePLaceholderUserImageOnError
-                    alt={player.slug}
+              <Button
+                cancelButton
+                small
+                onClick={() => setSelectedTeamOwnerId("")}
+              >
+                <X /> hide
+              </Button>
+            </div>
+            <div className={styles.playersOuter}>
+              <div className={styles.players}>
+                {selectedTeam.players.map((player) => (
+                  <PlayerSmallCard
+                    key={player._id}
+                    playerData={player}
+                    isPlayerBreakdownAllowed={completedMatches.length > 0}
+                    isBreakdownVisible={
+                      selectedPLayerIdForBreakdown === player._id
+                    }
+                    onShowBreakdown={() =>
+                      setSelectedPlayerIdForBreakdown(player._id)
+                    }
+                    onHideBreakdown={() => setSelectedPlayerIdForBreakdown("")}
                   />
+                ))}
 
-                  <div>
-                    <p className={styles.name} title={player.fullName}>
-                      {player.slug.split("-").join(" ")}
-                    </p>
-
-                    <p className={styles.score}>
-                      score: <span>{player.points || "_"}</span>
-                    </p>
-                  </div>
-                </div>
-              ))}
-
-              {new Array(6).fill(1).map((_, i) => (
-                <div
-                  style={{ padding: 0, pointerEvents: "none", opacity: 0 }}
-                  className={styles.player}
-                  key={i}
-                />
-              ))}
+                {new Array(6).fill(1).map((_, i) => (
+                  <FillerPlayerSmallCard key={i} />
+                ))}
+              </div>
             </div>
           </div>
-        </div>
+
+          {selectedPLayerIdForBreakdown && (
+            <div className={styles.section}>
+              <div className="spacious-head">
+                <p className={styles.title}>
+                  Points Breakdown:{" "}
+                  <span>
+                    {selectedPlayerBreakdown.player?.slug?.split("-").join(" ")}
+                  </span>
+                </p>
+
+                <Button
+                  cancelButton
+                  small
+                  onClick={() => setSelectedPlayerIdForBreakdown("")}
+                >
+                  <X /> hide
+                </Button>
+              </div>
+              <div className={styles.matches}>
+                {selectedPlayerBreakdown.matches.map((match) => (
+                  <div key={match._id} className={styles.match}>
+                    <p className={styles.title}>{match.title}</p>
+                    <div className={styles.teams}>
+                      <div className={styles.team}>
+                        <Img
+                          isEspnImage
+                          usePlaceholderImageOnError
+                          src={match.teams[0].image}
+                          alt={match.teams[0].name}
+                        />
+                        <span className={styles.name}>
+                          {match.teams[0].name}
+                        </span>
+                      </div>
+                      <span className={styles.vs}>vs</span>
+                      <div className={styles.team}>
+                        <Img
+                          isEspnImage
+                          usePlaceholderImageOnError
+                          src={match.teams[1].image}
+                          alt={match.teams[1].name}
+                        />
+                        <span className={styles.name}>
+                          {match.teams[1].name}
+                        </span>
+                      </div>
+                    </div>
+
+                    <p className={styles.text}>Scored: {match.points}</p>
+                  </div>
+                ))}
+
+                {new Array(4).fill(1).map((_, i) => (
+                  <div
+                    key={i}
+                    className={styles.match}
+                    style={{
+                      padding: "0",
+                      opacity: "0",
+                      pointerEvents: "none",
+                    }}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+        </>
       )}
     </div>
   );

@@ -140,6 +140,7 @@ function CreateContestForm({ tournamentData = {}, onSuccess }) {
 
             <div className={styles.dateTime}>
               <DatePicker
+                maxDate={tournamentData.endDate}
                 minDate={new Date()}
                 onChange={(e) =>
                   setValues((p) => ({ ...p, draftRoundStartDate: e }))

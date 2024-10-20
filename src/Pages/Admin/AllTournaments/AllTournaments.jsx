@@ -21,7 +21,7 @@ export default function AllTournaments() {
   const [showEditTournament, setShowEditTournament] = useState(false);
   const [tournamentToEdit, setTournamentToEdit] = useState(null);
 
-  const handleToggle = (id) => {
+  const handleEditTournament = (id) => {
     setTournamentToEdit(id);
     setShowEditTournament((prev) => !prev);
   };
@@ -108,8 +108,8 @@ export default function AllTournaments() {
             <TournamentCard
               key={tournament._id}
               tournamentData={tournament}
-              handleToggle={handleToggle}
-              handleDelete={handleDeleteTournament}
+              onEdit={handleEditTournament}
+              onDeleted={fetchTournaments}
               isAdmin
             />
           ))}

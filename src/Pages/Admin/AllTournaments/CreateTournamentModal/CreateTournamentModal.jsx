@@ -75,7 +75,7 @@ export default function CreateTournamentModal({
   useEffect(() => {
     fetchScoringSystems();
   }, []);
-  
+
   //   **************************************** Return Statement ************************************
 
   return (
@@ -97,11 +97,7 @@ export default function CreateTournamentModal({
           />
           <InputSelect
             label="Select a Scoring System"
-            onChange={(e) => {
-              console.log("e", e);
-
-              handleChange(e, "scoringSystem");
-            }}
+            onChange={(e) => handleChange(e, "scoringSystem")}
             options={allScoringSystems}
             value={allScoringSystems.find(
               (item) => item.value === states.scoringSystem

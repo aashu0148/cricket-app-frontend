@@ -1,0 +1,78 @@
+@import "@/styles/variables";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+
+  .matches {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
+
+    .match.selected {
+      background-color: $primary-200;
+      border-color: $primary-200;
+
+      .top {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        background-color: $primary;
+
+        * {
+          color: $white;
+        }
+
+        &:hover {
+          background-color: $primary;
+        }
+      }
+    }
+
+    .match {
+      border: 1px solid $bg-200;
+      background-color: $white;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-sm;
+
+      .top {
+        padding: $spacing-xs $spacing-sm;
+        border-radius: inherit;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+
+        &:hover {
+          background-color: $bg-100;
+        }
+
+        .left {
+          .title {
+            text-transform: capitalize;
+          }
+        }
+
+        .icon {
+          display: flex;
+          align-items: center;
+
+          svg {
+            height: 18px;
+            width: 18px;
+          }
+        }
+      }
+
+      .players {
+        padding: $spacing-xs $spacing-sm;
+        display: flex;
+        gap: $spacing-xs;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+    }
+  }
+}

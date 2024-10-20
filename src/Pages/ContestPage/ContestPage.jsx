@@ -15,6 +15,7 @@ import LeaderBoard from "./LeaderBoard/LeaderBoard";
 import Button from "@/Components/Button/Button";
 import JoinProtectedContestModal from "@/Components/ContestCard/JoinProtectedContestModal";
 import InputControl from "@/Components/InputControl/InputControl";
+import Matches from "./Matches/Matches";
 
 import { handleAppNavigation } from "@/utils/util";
 import { applicationRoutes, colors } from "@/utils/constants";
@@ -37,6 +38,9 @@ function ContestPage() {
   const [loading, setLoading] = useState(true);
   const [contestDetails, setContestDetails] = useState({});
   const [tournamentDetails, setTournamentDetails] = useState({});
+  const [completedTournamentMatches, setCompletedTournamentMatches] = useState(
+    []
+  );
   const [showEditContestModal, setShowEditContestModal] = useState(false);
   const [showJoinContestModal, setShowJoinContestModal] = useState(false);
   const [joiningContest, setJoiningContest] = useState(false);
@@ -118,6 +122,7 @@ function ContestPage() {
       scoringSystem: tournament.scoringSystem,
       players: tournament.players,
     });
+    setCompletedTournamentMatches(tournament.completedMatches || []);
   };
 
   useEffect(() => {
@@ -280,7 +285,15 @@ function ContestPage() {
           <Participants
             participants={contestDetails.teams}
             playerPoints={playerPoints}
+            completedMatches={completedTournamentMatches}
           />
+
+          {isDraftRoundCompleted && (
+            <Matches
+              players={tournamentDetails.players}
+              completedMatches={completedTournamentMatches}
+            />
+          )}
         </div>
 
         {currentUserTeam && (
