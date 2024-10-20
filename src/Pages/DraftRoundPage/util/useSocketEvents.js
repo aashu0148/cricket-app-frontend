@@ -53,7 +53,7 @@ function useSocketEvents() {
     });
 
     socket.on(socketEventsEnum.joinedRoom, (room) => {
-      setRoom(room);
+      setRoom({ ...room, contestId: room.leagueId });
       setRoomStatuses((p) => ({ ...p, connected: true }));
       console.log(`✅ Successfully joined the room`);
     });

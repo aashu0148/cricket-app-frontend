@@ -85,7 +85,6 @@ function Chat({ className = "" }) {
     setInputMessage("");
     chatInputRef.current.focus();
 
-    console.log(`🟡Emitted: ${socketEventsEnum.chat}`);
     socket.emit(socketEventsEnum.chat, {
       leagueId: room.contestId,
       userId: userDetails._id,
