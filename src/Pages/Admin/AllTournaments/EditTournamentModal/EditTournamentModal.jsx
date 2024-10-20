@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import Modal from "@/Components/Modal/Modal";
 import styles from "./EditTournamentModal.module.scss";
 import InputControl from "@/Components/InputControl/InputControl";
-import { Edit, Trash2 } from "react-feather";
+import { Trash2 } from "react-feather";
 import InputSelect from "@/Components/InputControl/InputSelect/InputSelect";
 import Button from "@/Components/Button/Button";
 import Spinner from "@/Components/Spinner/Spinner";
 import DatePicker from "@/Components/DatePicker/DatePicker";
+import Img from "@/Components/Img/Img";
 
 import {
   addPlayerToTournament,
@@ -39,8 +40,6 @@ export default function EditTournamentModal({ tournamentId, handleClose }) {
     scoringSystem: "",
   });
 
-  console.log("edit states", EditTournamentStates);
-
   const PlayerCard = ({ player }) => {
     return (
       <div className={styles.playerCard}>
@@ -49,7 +48,8 @@ export default function EditTournamentModal({ tournamentId, handleClose }) {
           onClick={() => handlePlayerChange(player._id, "delete")}
         />
         <div className={styles.imageContainer}>
-          <img
+          <Img
+            usePLaceholderUserImageOnError
             src={player.image}
             alt={player.name}
             className={styles.playerImage}

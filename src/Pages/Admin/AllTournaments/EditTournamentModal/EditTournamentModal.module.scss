@@ -4,6 +4,7 @@
   gap: $spacing-lg;
 
   .heading {
+    font-weight: 500;
     font-size: $text-xl;
   }
   p {
@@ -48,7 +49,7 @@
     font-size: $text-xs;
     height: $text-sm;
     width: $text-sm;
-opacity: 0;
+    opacity: 0;
     transition: 100ms opacity ease;
   }
 
@@ -81,18 +82,19 @@ opacity: 0;
     text-align: center;
   }
 
-  &:hover{
+  &:hover {
     color: $white;
     background-color: $primary-2;
     transform: translateY(-2%);
-    .icon{
+    .icon {
       opacity: 20;
       color: $red;
     }
-    .playerCountry, .playerName{
+    .playerCountry,
+    .playerName {
       color: $white;
     }
-    .imageContainer{
+    .imageContainer {
       border: 2px solid $white;
     }
   }
@@ -115,7 +117,7 @@ opacity: 0;
     border: 1px solid $primary-2;
     font-size: $text-sm;
     transition: background-color 0.3s, color 0.3s;
-    span{
+    span {
       color: $blue;
       font-weight: 800;
       cursor: pointer;

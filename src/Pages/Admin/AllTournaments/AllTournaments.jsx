@@ -23,7 +23,7 @@ export default function AllTournaments() {
 
   const handleEditTournament = (id) => {
     setTournamentToEdit(id);
-    setShowEditTournament((prev) => !prev);
+    setShowEditTournament(true);
   };
 
   // ******************************************************************** Integrations Functions ****************************************************************
@@ -95,7 +95,7 @@ export default function AllTournaments() {
 
         {showEditTournament ? (
           <EditTournamentModal
-            handleClose={() => handleToggle()}
+            handleClose={() => setShowEditTournament(false)}
             setLoading={setLoading}
             tournamentId={tournamentToEdit}
           />
