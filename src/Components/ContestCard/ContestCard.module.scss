@@ -8,6 +8,10 @@
   border-radius: 10px;
   background-color: $bg-200;
 
+  * {
+    word-break: break-word;
+  }
+
   .title {
     font-size: $text-xl;
     color: $color-title;
@@ -51,6 +55,13 @@
   .desc {
     font-size: $text-sm;
     font-weight: 400;
+    white-space: pre-wrap;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 6;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .information {

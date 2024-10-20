@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 import EditProfileModal from "./EditProfileModal/EditProfileModal";
 import Button from "@/Components/Button/Button";
+import PageLoader from "@/Components/PageLoader/PageLoader";
+import PlayedContestCard from "@/Components/PlayedContestCard/PlayedContestCard";
 
 import userProfileIcon from "@/assets/profile-icon.png";
 import { updateUserDetails } from "@/apis/user";
@@ -33,15 +35,15 @@ function ProfilePage() {
     progress: 0,
   });
   const [joinedContests, setJoinedContests] = useState([]);
-
-  console.log(joinedContests);
+  const [loadingContests, setLoadingContests] = useState(true);
 
   const fetchJoinedContests = async () => {
     const res = await getJoinedContests();
-    if (!res) return;
+    if (!res) return setLoadingContests(false);
 
     const tournamentIds = res.data.map((e) => e.tournament?._id);
     const res2 = await getTournamentsWithPlayers(tournamentIds);
+    setLoadingContests(false);
     if (!res2) return;
 
     const finalContests = res.data
@@ -198,12 +200,23 @@ function ProfilePage() {
         </div>
       </div>
 
-      {/* <span className={styles.separator} />
+      <span className={styles.separator} />
 
       <section className={styles.section}>
         <p className={`${styles.heading}`}>Your Contests</p>
 
-      </section> */}
+        {loadingContests ? (
+          <PageLoader />
+        ) : joinedContests.length ? (
+          <div className={styles.contests}>
+            {joinedContests.map((contest) => (
+              <PlayedContestCard key={contest._id} contestData={contest} />
+            ))}
+          </div>
+        ) : (
+          <p>No contest present for now</p>
+        )}
+      </section>
     </div>
   );
 }

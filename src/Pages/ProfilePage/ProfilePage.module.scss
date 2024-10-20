@@ -163,6 +163,12 @@
         text-align: center;
       }
     }
+
+    .contests {
+      display: flex;
+      gap: $spacing-sm;
+      align-items: center;
+    }
   }
 
   @media (max-width: $breakpoint-md) {

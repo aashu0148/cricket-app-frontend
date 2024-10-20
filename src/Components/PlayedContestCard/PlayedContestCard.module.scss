@@ -1,0 +1,44 @@
+@import "@/styles/variables";
+
+.container {
+  border-radius: 10px;
+  background-color: $white;
+  padding: $spacing-md;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+  box-shadow: $shadow-100;
+  width: 400px;
+  max-width: 100%;
+  flex-grow: 1;
+
+  .title {
+    font-size: $text-lg;
+    font-weight: 600;
+  }
+
+  .tournament {
+    font-size: $text-md;
+
+    span {
+      font: inherit;
+      font-size: 0.8em;
+    }
+  }
+
+  .info {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xxs;
+
+    label {
+      font-size: $text-sm;
+      color: $color-label;
+    }
+
+    p {
+      font-size: $text-md;
+      font-weight: 500;
+    }
+  }
+}
