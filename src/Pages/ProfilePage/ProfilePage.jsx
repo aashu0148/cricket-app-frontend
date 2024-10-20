@@ -5,7 +5,9 @@ import { useDispatch, useSelector } from "react-redux";
 import EditProfileModal from "./EditProfileModal/EditProfileModal";
 import Button from "@/Components/Button/Button";
 import PageLoader from "@/Components/PageLoader/PageLoader";
-import PlayedContestCard from "@/Components/PlayedContestCard/PlayedContestCard";
+import PlayedContestCard, {
+  FillerPlayerContestCard,
+} from "@/Components/PlayedContestCard/PlayedContestCard";
 
 import userProfileIcon from "@/assets/profile-icon.png";
 import { updateUserDetails } from "@/apis/user";
@@ -211,6 +213,10 @@ function ProfilePage() {
           <div className={styles.contests}>
             {joinedContests.map((contest) => (
               <PlayedContestCard key={contest._id} contestData={contest} />
+            ))}
+
+            {new Array(4).fill(1).map((_, i) => (
+              <FillerPlayerContestCard key={i} />
             ))}
           </div>
         ) : (

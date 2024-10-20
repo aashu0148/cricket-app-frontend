@@ -9,6 +9,15 @@ import { applicationRoutes } from "@/utils/constants";
 
 import styles from "./PlayedContestCard.module.scss";
 
+export function FillerPlayerContestCard() {
+  return (
+    <div
+      className={styles.container}
+      style={{ padding: "0", opacity: "0", pointerEvents: "none" }}
+    />
+  );
+}
+
 function PlayedContestCard({ contestData = {} }) {
   const userDetails = useSelector((s) => s.user);
   const navigate = useNavigate();

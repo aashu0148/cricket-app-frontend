@@ -166,6 +166,7 @@
 
     .contests {
       display: flex;
+      flex-wrap: wrap;
       gap: $spacing-sm;
       align-items: center;
     }
