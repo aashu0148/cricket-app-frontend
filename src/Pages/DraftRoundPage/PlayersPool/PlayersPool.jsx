@@ -26,20 +26,26 @@ function PlayersPool({ teams = [], players = [], playerPoints = [] }) {
   const parsedPlayers = useMemo(() => {
     const allPlayers = [...players]
       .map((item) => {
-        const p = playerPoints.find((e) => e.player === item._id);
+        const p = playerPoints.find((e) => e.player === item.player._id);
         if (p?.points) item.points = p.points;
         else item.points = NaN;
 
         const pickedBy = teams.find((e) =>
-          e.players.some((p) => p._id === item._id)
+          e.players.some((p) => p._id === item.player._id)
         );
         item.pickedBy = pickedBy?.owner;
 
         return item;
       })
-      .filter((e) => new RegExp(`${searchInput}`, "gi").test(e.fullName))
+      .filter(
+        (e) =>
+          new RegExp(`${searchInput}`, "gi").test(e.player.fullName) ||
+          new RegExp(`${searchInput}`, "gi").test(e.squad?.teamName)
+      )
       .filter((p) =>
-        selectedRoleType.length ? selectedRoleType.includes(p.role) : true
+        selectedRoleType.length
+          ? selectedRoleType.includes(p.player.role)
+          : true
       );
 
     const available = allPlayers
@@ -126,53 +132,53 @@ function PlayersPool({ teams = [], players = [], playerPoints = [] }) {
 
       <div className={styles.playersOuter}>
         <div className={styles.players}>
-          {parsedPlayers.map((player) => (
+          {parsedPlayers.map((item) => (
             <div
-              className={`${player.pickedBy?._id ? styles.picked : ""} ${
+              className={`${item.pickedBy?._id ? styles.picked : ""} ${
                 styles.player
               }`}
-              key={player._id}
+              key={item._id}
             >
-              {player.pickedBy?._id && (
+              {item.pickedBy?._id && (
                 <div className={styles.pickedImage}>
                   <Img
-                    title={player.pickedBy?.name}
-                    src={player.pickedBy.profileImage}
+                    title={item.pickedBy?.name}
+                    src={item.pickedBy.profileImage}
                     usePLaceholderUserImageOnError
-                    alt={player.pickedBy?.name}
+                    alt={item.pickedBy?.name}
                   />
                 </div>
               )}
 
               <Img
-                src={player.image}
+                src={item.player.image}
                 usePLaceholderUserImageOnError
-                alt={player.slug}
+                alt={item.player.slug}
               />
 
               <div>
-                <p className={styles.name} title={player.fullName}>
-                  {player.slug.split("-").join(" ")}
+                <p className={styles.name} title={item.player.fullName}>
+                  {item.player.slug.split("-").join(" ")}
                 </p>
 
                 <p className={styles.score}>
-                  {player.role.toLowerCase() || "_"}
+                  {item.player.role.toLowerCase() || "_"}
                 </p>
                 <p className={styles.score}>
-                  score: <span>{player.points || "_"}</span>
+                  score: <span>{item.points || "_"}</span>
                 </p>
               </div>
 
-              {player.pickedBy?._id ? (
+              {item.pickedBy?._id ? (
                 <Button small disabled>
                   Picked
                 </Button>
               ) : (
                 <Button
                   disabled={picking}
-                  useSpinnerWhenDisabled={player._id === picking}
+                  useSpinnerWhenDisabled={item.player._id === picking}
                   small
-                  onClick={() => handlePickClick(player)}
+                  onClick={() => handlePickClick(item.player)}
                 >
                   Pick
                 </Button>

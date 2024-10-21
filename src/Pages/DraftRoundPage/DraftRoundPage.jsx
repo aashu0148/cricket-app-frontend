@@ -15,7 +15,7 @@ import DraftRoundCompleted from "./DraftRoundCompleted";
 
 import { getContestById } from "@/apis/contests";
 import { getTournamentById } from "@/apis/tournament";
-import { handleAppNavigation } from "@/utils/util";
+import { handleAppNavigation, parsePlayersForSquadDetails } from "@/utils/util";
 import { applicationRoutes } from "@/utils/constants";
 import { socketEventsEnum } from "@/utils/enums";
 import useSocketEvents from "./util/useSocketEvents";
@@ -98,8 +98,12 @@ function DraftRoundPage() {
 
     // lets not fill whole tournament into state, its pretty big and we wont be using it whole
     const tournament = res.data;
+    const players = parsePlayersForSquadDetails(
+      tournament.players,
+      tournament.allSquads
+    );
     setPlayerPoints(tournament.playerPoints);
-    setTournamentPlayers(tournament.players || []);
+    setTournamentPlayers(players);
     setTournamentDetails({
       _id: tournament._id,
       name: tournament.name,
@@ -142,7 +146,9 @@ function DraftRoundPage() {
       if (!pickedById)
         return toast.error("Something is wrong updating players pool");
 
-      const player = tournamentPlayers.find((p) => p._id === pickedPlayerId);
+      const player = tournamentPlayers.find(
+        (p) => p.player._id === pickedPlayerId
+      )?.player;
       if (!player)
         return toast.error("Something is wrong updating players pool");
 
@@ -261,9 +267,7 @@ function DraftRoundPage() {
           </div>
           {!roomStatuses.connected && (
             <div className={styles.information}>
-              <p className={styles.blink}>
-                Connection Disconnected, trying to re-connect{" "}
-              </p>
+              <p className={styles.blink}>Connection Disconnected</p>
             </div>
           )}
 

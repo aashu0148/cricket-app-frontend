@@ -12,14 +12,10 @@ import PlayerSmallCard, {
   FillerPlayerSmallCard,
 } from "@/Components/PlayerSmallCard/PlayerSmallCard";
 
-import {
-  addPlayerToTournament,
-  deletePlayerFromTournament,
-  getTournamentById,
-  updateTournament,
-} from "@/apis/tournament";
+import { getTournamentById, updateTournament } from "@/apis/tournament";
 import { getAllScoringSystems } from "@/apis/scoringSystem";
 import { searchPlayerByName } from "@/apis/players";
+import { parsePlayersForSquadDetails } from "@/utils/util";
 
 import styles from "./EditTournamentModal.module.scss";
 
@@ -111,7 +107,13 @@ export default function EditTournamentModal({
     setLoading(false);
     if (!res) return;
 
-    setTournamentDetails(res.data);
+    setTournamentDetails({
+      ...res.data,
+      players: parsePlayersForSquadDetails(
+        res.data.players,
+        res.data.allSquads
+      ),
+    });
   }
 
   async function handleSearch() {
@@ -147,7 +149,7 @@ export default function EditTournamentModal({
           <Spinner />
         ) : (
           <>
-            <div className={styles.createForm}>
+            <div className={styles.createForm} style={{ zIndex: "70" }}>
               <InputControl
                 placeholder="Enter name"
                 label="Name"

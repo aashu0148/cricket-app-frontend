@@ -13,7 +13,7 @@ function PlayersPool({ players = [], onPlayersUpdate }) {
 
   const availablePlayersPool = useMemo(() => {
     return players.filter((e) =>
-      new RegExp(`${inputStr}`, "gi").test(e.fullName)
+      new RegExp(`${inputStr}`, "gi").test(e.player.fullName)
     );
   }, [inputStr, players]);
 
@@ -22,7 +22,7 @@ function PlayersPool({ players = [], onPlayersUpdate }) {
       <div className={styles.tools}>
         <InputControl
           small
-          placeholder="Enter name"
+          placeholder="Search by player name"
           label="Find player"
           value={inputStr}
           onChange={(e) => setInputStr(e.target.value)}
@@ -35,15 +35,16 @@ function PlayersPool({ players = [], onPlayersUpdate }) {
         />
       </div>
 
-      {availablePlayersPool.map((player) => (
+      {availablePlayersPool.map((item) => (
         <PlayerSmallCard
-          key={player._id}
+          key={item._id}
+          squadData={item.squad}
           hideScore
           showCountry
-          playerData={player}
+          playerData={item.player}
           showDeleteIcon
           onDeleteClick={() =>
-            onPlayersUpdate(players.filter((e) => e._id !== player._id))
+            onPlayersUpdate(players.filter((e) => e._id !== item._id))
           }
         />
       ))}

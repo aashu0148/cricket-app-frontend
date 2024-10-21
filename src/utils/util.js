@@ -403,3 +403,19 @@ export const parseTeamsForScorePoints = (teams = [], playerPoints = []) => {
     })
     .sort((a, b) => (a.teamPoints < b.teamPoints ? 1 : -1));
 };
+
+export function parsePlayersForSquadDetails(players = [], allSquads = []) {
+  return players.map((player) => {
+    const { teamName, teamImage, teamSlug } =
+      allSquads.find((item) => item.squadId === player.squadId) || {};
+
+    return {
+      ...player,
+      squad: {
+        teamImage,
+        teamName,
+        teamSlug,
+      },
+    };
+  });
+}

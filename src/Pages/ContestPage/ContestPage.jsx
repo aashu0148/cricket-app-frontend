@@ -17,7 +17,7 @@ import JoinProtectedContestModal from "@/Components/ContestCard/JoinProtectedCon
 import InputControl from "@/Components/InputControl/InputControl";
 import Matches from "./Matches/Matches";
 
-import { handleAppNavigation } from "@/utils/util";
+import { handleAppNavigation, parsePlayersForSquadDetails } from "@/utils/util";
 import { applicationRoutes, colors } from "@/utils/constants";
 import { contestTypeEnum } from "@/utils/enums";
 import {
@@ -120,7 +120,10 @@ function ContestPage() {
       endDate: tournament.endDate,
       season: tournament.season,
       scoringSystem: tournament.scoringSystem,
-      players: tournament.players,
+      players: parsePlayersForSquadDetails(
+        tournament.players,
+        tournament.allSquads
+      ),
     });
     setCompletedTournamentMatches(tournament.completedMatches || []);
   };

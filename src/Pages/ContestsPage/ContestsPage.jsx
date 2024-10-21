@@ -10,6 +10,7 @@ import {
   getJoinedContestsOfTournament,
 } from "@/apis/contests";
 import { getTournamentById } from "@/apis/tournament";
+import { parsePlayersForSquadDetails } from "@/utils/util";
 
 import styles from "./ContestsPage.module.scss";
 
@@ -30,7 +31,13 @@ function ContestsPage() {
     const res = await getTournamentById(params.tournamentId);
     if (!res) return;
 
-    setTournamentDetails(res.data);
+    setTournamentDetails({
+      ...res.data,
+      players: parsePlayersForSquadDetails(
+        res.data.players,
+        res.data.allSquads
+      ),
+    });
   };
 
   const fetchContests = async () => {

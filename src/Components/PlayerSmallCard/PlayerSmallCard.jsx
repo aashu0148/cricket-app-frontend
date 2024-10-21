@@ -12,6 +12,7 @@ import { getTooltipAttributes } from "@/utils/tooltip";
 import styles from "./PlayerSmallCard.module.scss";
 
 function PlayerSmallCard({
+  squadData = {},
   showDeleteIcon = false,
   isDeleting = false,
   onDeleteClick,
@@ -59,7 +60,13 @@ function PlayerSmallCard({
         </p>
         {showCountry && (
           <p className={styles.score}>
-            <span>({playerData.country})</span>
+            <span>{playerData.country}</span>
+          </p>
+        )}
+
+        {squadData?.teamName && (
+          <p className={styles.score}>
+            <span>({squadData.teamName})</span>
           </p>
         )}
 

@@ -120,8 +120,8 @@ function DatePicker({
   }, [selectedDate]);
 
   const diff =
-    selectedDate.to && selectedDate.from
-      ? Math.abs(selectedDate.to.getTime() - selectedDate.from.getTime())
+    selectedDate?.to && selectedDate?.from
+      ? Math.abs(selectedDate?.to?.getTime() - selectedDate?.from?.getTime())
       : 0;
   const isDiffGreaterThanYear = diff > 11 * 30 * 24 * 60 * 60 * 1000;
 

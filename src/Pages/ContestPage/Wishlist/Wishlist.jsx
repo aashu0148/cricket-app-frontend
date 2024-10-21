@@ -76,13 +76,17 @@ function Wishlist({
   const [removing, setRemoving] = useState([]);
   const [selectedRoleType, setSelectedRoleType] = useState([]);
   const [playersOrder, setPlayersOrder] = useState(
-    currentPlayers.map((p) => p._id)
+    currentPlayers.map((p) => p.player._id)
   );
 
   const parsedPlayers = useMemo(() => {
-    return allPlayers.filter((p) =>
-      selectedRoleType.length ? selectedRoleType.includes(p.role) : true
-    );
+    return allPlayers
+      .filter((p) =>
+        selectedRoleType.length
+          ? selectedRoleType.includes(p.player.role)
+          : true
+      )
+      .map((p) => p.player);
   }, [allPlayers, selectedRoleType]);
 
   const handleAddNewPlayer = async (playerId) => {
@@ -140,7 +144,7 @@ function Wishlist({
   };
 
   useEffect(() => {
-    setPlayersOrder(currentPlayers.map((p) => p._id));
+    setPlayersOrder(currentPlayers.map((p) => p.player._id));
   }, [currentPlayers]);
 
   return (
@@ -186,7 +190,7 @@ function Wishlist({
 
         <InputSelect
           options={parsedPlayers
-            .filter((p) => !currentPlayers.some((e) => e._id === p._id))
+            .filter((p) => !currentPlayers.some((e) => e.player._id === p._id))
             .map((p) => ({
               label: `${p.slug.split("-").join(" ")} [${p.playingRole || "_"}]`,
               value: p._id,
@@ -209,7 +213,9 @@ function Wishlist({
               strategy={verticalListSortingStrategy}
             >
               {playersOrder.map((playerId) => {
-                const player = currentPlayers.find((p) => p._id === playerId);
+                const player = currentPlayers.find(
+                  (p) => p.player._id === playerId
+                );
                 if (!player) return null; // happens when we remove a player and its updated in currentPlayers but not in playersOrder for one particular render cycle
 
                 return (

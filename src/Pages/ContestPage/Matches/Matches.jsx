@@ -16,9 +16,9 @@ function Matches({ completedMatches = [], players = [] }) {
     return completedMatches.map((e) => {
       const newPlayerPoints = e.playerPoints.map((p) => {
         const matchingPlayer =
-          players.find((item) => item._id === p.player) || {};
+          players.find((item) => item.player._id === p.player) || {};
 
-        return { ...matchingPlayer, ...p };
+        return { ...matchingPlayer.player, ...p };
       });
 
       const batters = newPlayerPoints
