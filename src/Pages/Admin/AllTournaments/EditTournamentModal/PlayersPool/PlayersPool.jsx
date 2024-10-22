@@ -48,7 +48,7 @@ function PlayersPool({ players = [], onPlayersUpdate }) {
           }
         />
       ))}
-      {new Array(6).fill(1).map((_, i) => (
+      {new Array(9).fill(1).map((_, i) => (
         <FillerPlayerSmallCard key={i} />
       ))}
     </div>

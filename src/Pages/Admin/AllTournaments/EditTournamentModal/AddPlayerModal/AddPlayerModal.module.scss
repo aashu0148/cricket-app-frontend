@@ -1,0 +1,8 @@
+@import "@/styles/variables";
+
+.container {
+  padding: $spacing-md;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+}

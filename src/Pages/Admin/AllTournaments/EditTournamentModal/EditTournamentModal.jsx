@@ -11,6 +11,7 @@ import PlayersPool from "./PlayersPool/PlayersPool";
 import PlayerSmallCard, {
   FillerPlayerSmallCard,
 } from "@/Components/PlayerSmallCard/PlayerSmallCard";
+import AddPlayerModal from "./AddPlayerModal/AddPlayerModal";
 
 import { getTournamentById, updateTournament } from "@/apis/tournament";
 import { getAllScoringSystems } from "@/apis/scoringSystem";
@@ -36,6 +37,7 @@ export default function EditTournamentModal({
     endDate: null,
     scoringSystem: "",
     players: [],
+    allSquads: [],
   });
   const [errors, setErrors] = useState({
     name: "",
@@ -45,6 +47,10 @@ export default function EditTournamentModal({
     scoringSystem: "",
   });
   const [submitting, setSubmitting] = useState(false);
+  const [addPlayerModal, setAddPlayerModal] = useState({
+    showModal: false,
+    player: {},
+  });
 
   const handleChange = (label, val) => {
     setTournamentDetails((prev) => ({ ...prev, [label]: val }));
@@ -75,9 +81,11 @@ export default function EditTournamentModal({
     const body = {
       ...tournamentDetails,
       scoringSystemId: tournamentDetails.scoringSystem,
-      playerIds: tournamentDetails.players.map((e) => e._id),
+      players: tournamentDetails.players.map((e) => ({
+        player: e.player._id,
+        squadId: e.squadId,
+      })),
     };
-    delete body.players;
     delete body.allMatches;
     delete body.allSquads;
 
@@ -141,6 +149,21 @@ export default function EditTournamentModal({
   return (
     <Modal>
       <div className={`modal-container ${styles.modalContainer}`}>
+        {addPlayerModal.showModal && (
+          <AddPlayerModal
+            player={addPlayerModal.player}
+            onClose={() => setAddPlayerModal({ showModal: false, player: {} })}
+            squads={tournamentDetails.allSquads}
+            onSelect={(data) => {
+              setTournamentDetails((p) => ({
+                ...p,
+                players: [...p.players, data],
+              }));
+              setAddPlayerModal({ showModal: false });
+            }}
+          />
+        )}
+
         <div className="flex-col-xxs">
           <h2 className={styles.heading}>Edit Tournament</h2>
         </div>
@@ -239,7 +262,7 @@ export default function EditTournamentModal({
                     showAddButton
                     bottomJSX={
                       tournamentDetails.players.some(
-                        (e) => e._id === item._id
+                        (e) => e.player._id === item._id
                       ) ? (
                         <Button disabled className={styles.smallButton} small>
                           Already exist
@@ -247,10 +270,10 @@ export default function EditTournamentModal({
                       ) : (
                         <Button
                           onClick={() =>
-                            setTournamentDetails((p) => ({
-                              ...p,
-                              players: [...p.players, item],
-                            }))
+                            setAddPlayerModal({
+                              showModal: true,
+                              player: item,
+                            })
                           }
                           className={styles.smallButton}
                           small
