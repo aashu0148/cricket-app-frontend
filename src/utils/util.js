@@ -12,6 +12,7 @@ export const handleNumericInputKeyDown = (event) => {
   if (
     key === "Backspace" ||
     key === "Tab" ||
+    key === "-" ||
     key === "Delete" ||
     key.toLowerCase() === "arrowleft" ||
     key.toLowerCase() === "arrowright" ||
@@ -20,7 +21,7 @@ export const handleNumericInputKeyDown = (event) => {
     (event.ctrlKey && (key == "v" || key == "V")) ||
     (event.metaKey && (key == "v" || key == "V"))
   )
-    return;
+    return false;
 
   if (!/[0-9.]/.test(key)) {
     event.returnValue = false;

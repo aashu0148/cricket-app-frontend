@@ -38,6 +38,8 @@ function Matches({ completedMatches = [], players = [] }) {
     });
   }, [players, completedMatches]);
 
+  console.log(parsedMatches);
+
   return (
     <div className={styles.container}>
       <p className="heading">Matches</p>

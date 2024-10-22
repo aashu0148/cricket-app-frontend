@@ -142,20 +142,16 @@ export default function EditScoringSystem({ createMode = false }) {
           battingErrors[`runMilestoneBonus_${index}_runsUpto`] =
             "Milestone runs must be a positive number.";
         }
-        if (isNaN(milestone.points) || milestone.points < 0) {
-          battingErrors[`runMilestoneBonus_${index}_points`] =
-            "Milestone points must be a positive number.";
-        }
       });
 
       if (battingData.runMilestoneBonus.negativeRunsExemptPositions) {
         const invalidPositions =
           battingData.runMilestoneBonus.negativeRunsExemptPositions.filter(
-            (pos) => isNaN(pos) || pos < 1 || pos > 11
+            (pos) => isNaN(pos) || pos < 1 || pos > 12
           );
         if (invalidPositions.length > 0) {
           battingErrors.negativeRunsExemptPositions =
-            "Positions must be integers between 1 and 11.";
+            "Positions must be integers between 1 and 12.";
         }
       }
     }
@@ -164,11 +160,11 @@ export default function EditScoringSystem({ createMode = false }) {
       battingData.strikeRateBonus.multiplierRanges.forEach((range, index) => {
         if (
           !range.battingPositions.every(
-            (pos) => !isNaN(pos) && pos >= 1 && pos <= 11
+            (pos) => !isNaN(pos) && pos >= 1 && pos <= 12
           )
         ) {
           battingErrors[`strikeRateBonus_${index}_battingPositions`] =
-            "Batting positions must be integers between 1 and 11.";
+            "Batting positions must be integers between 1 and 12.";
         }
         if (isNaN(range.minBalls) || range.minBalls < 1) {
           battingErrors[`strikeRateBonus_${index}_minBalls`] =
@@ -191,18 +187,18 @@ export default function EditScoringSystem({ createMode = false }) {
         if (
           isNaN(wicket.minBattingPosition) ||
           wicket.minBattingPosition < 1 ||
-          wicket.minBattingPosition > 11
+          wicket.minBattingPosition > 12
         ) {
           bowlingErrors[`wicketPoints_${index}_minBattingPosition`] =
-            "Minimum batting position must be between 1 and 11.";
+            "Minimum batting position must be between 1 and 12.";
         }
         if (
           isNaN(wicket.maxBattingPosition) ||
           wicket.maxBattingPosition < wicket.minBattingPosition ||
-          wicket.maxBattingPosition > 11
+          wicket.maxBattingPosition > 12
         ) {
           bowlingErrors[`wicketPoints_${index}_maxBattingPosition`] =
-            "Maximum batting position must be greater than or equal to minimum batting position, and no more than 11.";
+            "Maximum batting position must be greater than or equal to minimum batting position, and no more than 12.";
         }
         if (isNaN(wicket.points) || wicket.points < 0) {
           bowlingErrors[`wicketPoints_${index}_points`] =
