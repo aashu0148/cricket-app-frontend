@@ -28,6 +28,7 @@ function EditContestModal({
   onClose,
   tournamentName = "",
   onSuccess,
+  tournamentEndDate = "",
 }) {
   const [values, setValues] = useState({
     name: contestDetails.name || "",
@@ -157,6 +158,7 @@ function EditContestModal({
                     setValues((p) => ({ ...p, draftRoundStartDate: e }))
                   }
                   defaultDate={values.draftRoundStartDate}
+                  maxDate={new Date(tournamentEndDate)}
                 />
                 <InputControl
                   value={values.draftRoundStartTime}

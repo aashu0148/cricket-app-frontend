@@ -41,7 +41,7 @@
       width: 140px;
       flex-grow: 1;
       border-radius: 10px;
-      padding: $spacing-sm;
+      padding: $spacing-xs;
       border: 1px solid $bg-200;
       background-color: $bg-100;
       display: flex;
@@ -49,6 +49,40 @@
       align-items: center;
       gap: $spacing-xs;
       position: relative;
+
+      .roleIcon {
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding: $spacing-xxs;
+        border-radius: 50%;
+
+        svg {
+          height: 18px;
+          width: 18px;
+          color: $primary;
+        }
+      }
+
+      .info {
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: $spacing-xxs;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        border-radius: 50%;
+
+        &:hover {
+          background-color: $bg;
+        }
+
+        svg {
+          height: 16px;
+          width: 16px;
+        }
+      }
 
       .pickedImage {
         display: flex;

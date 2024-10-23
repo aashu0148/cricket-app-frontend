@@ -140,6 +140,7 @@ function ContestPage() {
       {showEditContestModal && (
         <EditContestModal
           contestDetails={contestDetails}
+          tournamentEndDate={tournamentDetails.endDate}
           tournamentName={tournamentDetails.longName}
           onClose={() => setShowEditContestModal(false)}
           onSuccess={() => {

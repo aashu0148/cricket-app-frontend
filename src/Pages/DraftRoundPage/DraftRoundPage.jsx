@@ -173,7 +173,11 @@ function DraftRoundPage() {
     if (contestDetails.draftRound)
       setContestDetails((p) => ({
         ...p,
-        draftRound: { ...p.draftRound, currentTurn: roomStatuses.turn },
+        draftRound: {
+          ...p.draftRound,
+          currentTurn: roomStatuses.turn,
+          turnTimestamp: roomStatuses.turnTimestamp,
+        },
       }));
   }, [roomStatuses.turn, roomStatuses.turnDir]);
 
@@ -299,6 +303,10 @@ function DraftRoundPage() {
             roomStatuses.started ? contestDetails.draftRound?.currentTurn : ""
           }
           turnDir={roomStatuses.turnDir}
+          lastTurnTimestamp={
+            roomStatuses.turnTimestamp ||
+            contestDetails.draftRound?.turnTimestamp
+          }
         />
 
         <PlayersPool

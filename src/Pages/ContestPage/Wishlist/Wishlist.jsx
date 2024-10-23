@@ -22,6 +22,7 @@ import {
 } from "@/apis/contests";
 import { playerRoleEnum } from "@/utils/enums";
 import { dragIcon } from "@/utils/svgs";
+import { capitalizeText } from "@/utils/util";
 
 import styles from "./Wishlist.module.scss";
 
@@ -86,7 +87,7 @@ function Wishlist({
           ? selectedRoleType.includes(p.player.role)
           : true
       )
-      .map((p) => p.player);
+      .map((p) => ({ ...p.player, ...(p.squad || {}) }));
   }, [allPlayers, selectedRoleType]);
 
   const handleAddNewPlayer = async (playerId) => {
@@ -192,7 +193,9 @@ function Wishlist({
           options={parsedPlayers
             .filter((p) => !currentPlayers.some((e) => e.player._id === p._id))
             .map((p) => ({
-              label: `${p.slug.split("-").join(" ")} [${p.playingRole || "_"}]`,
+              label: capitalizeText(
+                `${p.slug.split("-").join(" ")} [_tn]`
+              ).replace("_tn", p.teamName),
               value: p._id,
             }))
             .sort((a, b) => (a.label < b.label ? -1 : 1))}

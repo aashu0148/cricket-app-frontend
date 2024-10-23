@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react";
-import { X } from "react-feather";
+import { Info, X } from "react-feather";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 
@@ -7,10 +7,13 @@ import InputControl from "@/Components/InputControl/InputControl";
 import Img from "@/Components/Img/Img";
 import Button from "@/Components/Button/Button";
 import Checkbox from "@/Components/Checkbox/Checkbox";
+import PlayerDetailsModal from "./PlayerDetailsModal/PlayerDetailsModal";
 
 import { useDraftRound } from "../util/DraftRoundContext";
 import { playerRoleEnum, socketEventsEnum } from "@/utils/enums";
 import { sleep } from "@/utils/util";
+import { ballIcon, batBallIcon, batIcon } from "@/utils/svgs";
+import { getTooltipAttributes } from "@/utils/tooltip";
 
 import styles from "./PlayersPool.module.scss";
 
@@ -22,6 +25,10 @@ function PlayersPool({ teams = [], players = [], playerPoints = [] }) {
   const [searchInput, setSearchInput] = useState("");
   const [picking, setPicking] = useState(false);
   const [selectedRoleType, setSelectedRoleType] = useState([]);
+  const [playerDetailsModal, setPlayerDetailsModal] = useState({
+    playerId: "",
+    showModal: false,
+  });
 
   const parsedPlayers = useMemo(() => {
     const allPlayers = [...players]
@@ -72,6 +79,13 @@ function PlayersPool({ teams = [], players = [], playerPoints = [] }) {
 
   return (
     <div className={styles.container}>
+      {playerDetailsModal.showModal && (
+        <PlayerDetailsModal
+          playerId={playerDetailsModal.playerId}
+          onClose={() => setPlayerDetailsModal({ showModal: false })}
+        />
+      )}
+
       <p className="heading">Tournament Players</p>
 
       <div className={styles.search}>
@@ -139,6 +153,31 @@ function PlayersPool({ teams = [], players = [], playerPoints = [] }) {
               }`}
               key={item._id}
             >
+              <div
+                className={styles.roleIcon}
+                {...getTooltipAttributes({ text: item.player.role })}
+              >
+                {item.player.role === playerRoleEnum.BATTER
+                  ? batIcon
+                  : item.player.role === playerRoleEnum.BOWLER
+                  ? ballIcon
+                  : item.player.role === playerRoleEnum.ALLROUNDER
+                  ? batBallIcon
+                  : ""}
+              </div>
+
+              <div
+                className={styles.info}
+                onClick={() =>
+                  setPlayerDetailsModal({
+                    showModal: true,
+                    playerId: item.player._id,
+                  })
+                }
+              >
+                <Info />
+              </div>
+
               {item.pickedBy?._id && (
                 <div className={styles.pickedImage}>
                   <Img
@@ -161,9 +200,7 @@ function PlayersPool({ teams = [], players = [], playerPoints = [] }) {
                   {item.player.slug.split("-").join(" ")}
                 </p>
 
-                <p className={styles.score}>
-                  {item.player.role.toLowerCase() || "_"}
-                </p>
+                <p className={styles.score}>({item.squad?.teamName})</p>
                 <p className={styles.score}>
                   score: <span>{item.points || "_"}</span>
                 </p>

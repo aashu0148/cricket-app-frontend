@@ -3,13 +3,38 @@ import React, { useMemo, useState } from "react";
 import Button from "@/Components/Button/Button";
 import InputControl from "@/Components/InputControl/InputControl";
 import ScrapePlayer from "./ScrapePlayer/ScrapePlayer";
+import Img from "@/Components/Img/Img";
 
 import { searchPlayerByName } from "@/apis/players";
 
 import styles from "./PlayersPage.module.scss";
-import Img from "@/Components/Img/Img";
 
-function StatsTable({ statData = [] }) {
+const cricketStats = [
+  { key: "format", label: "Format" },
+  { key: "mat", label: "Matches" },
+  { key: "inns", label: "Innings" },
+  { key: "no", label: "Not Out" },
+  { key: "runs", label: "Runs" },
+  { key: "hs", label: "High Score" },
+  { key: "ave", label: "Average" },
+  { key: "bf", label: "Balls Faced" },
+  { key: "100s", label: "100s" },
+  { key: "50s", label: "50s" },
+  { key: "4s", label: "Fours" },
+  { key: "6s", label: "Sixes" },
+  { key: "format", label: "Format" },
+  { key: "mat", label: "Matches" },
+  { key: "inns", label: "Innings" },
+  { key: "runs", label: "Runs" },
+  { key: "ave", label: "Average" },
+  { key: "balls", label: "Balls Bowled" },
+  { key: "wkts", label: "Wickets" },
+  { key: "bbi", label: "Best Inning" },
+  { key: "bbm", label: "Best Match" },
+  { key: "econ", label: "Economy" },
+];
+
+export function PlayerStatsTable({ statData = [] }) {
   const allKeys = useMemo(() => {
     return statData
       .map((e) => Object.keys(e))
@@ -23,7 +48,7 @@ function StatsTable({ statData = [] }) {
       <thead>
         <tr>
           {allKeys.map((k) => (
-            <th key={k}>{k}</th>
+            <th key={k}>{cricketStats.find((e) => e.key === k)?.label || k}</th>
           ))}
         </tr>
       </thead>
@@ -114,7 +139,7 @@ function PlayersPage() {
               <div key={stat._id} className={styles.playerStats}>
                 <p className={styles.title}>{stat.heading}</p>
 
-                <StatsTable statData={stat.data} />
+                <PlayerStatsTable statData={stat.data} />
               </div>
             ))}
           </div>

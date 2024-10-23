@@ -1,21 +1,14 @@
 @import "@/styles/variables";
 
-.playersContainer {
-  display: flex;
-  flex-wrap: wrap;
-  gap: $spacing-sm;
-}
-
-.playerCard {
-  width: 100%;
-  flex-grow: 1;
-  background-color: $bg-100;
-  border-radius: $spacing-xs;
-  padding: $spacing-md;
+.container {
   display: flex;
   flex-direction: column;
+  gap: $spacing-md;
+  padding: $spacing-md;
+  width: 800px;
+  max-width: 100%;
 
-  .playerHeader {
+  .information {
     display: flex;
     align-items: center;
     gap: $spacing-sm;
@@ -52,7 +45,7 @@
     }
   }
 
-  .playerStats {
+  .stats {
     margin-top: $spacing-md;
     display: flex;
     flex-direction: column;
@@ -60,50 +53,9 @@
     max-width: 100%;
     overflow-x: auto;
 
-    // &:last-child {
-    //   margin-top: auto;
-    // }
-
     .title {
       font-size: $text-sm;
       color: $color-title;
     }
-  }
-}
-
-.statsTable {
-  width: 100%;
-  border-collapse: collapse;
-  border-radius: 8px;
-  overflow: hidden;
-
-  th,
-  td {
-    padding: $spacing-xs;
-    text-align: center;
-    font-size: $text-xs;
-  }
-
-  th {
-    background-color: $bg-200;
-    color: $color-title;
-    font-weight: 600;
-    text-transform: capitalize;
-  }
-
-  tr {
-    background-color: $bg-100;
-  }
-
-  td {
-    color: $color-desc;
-  }
-
-  tbody tr td:first-child {
-    font-weight: 600;
-  }
-
-  tr:nth-child(odd) {
-    background-color: $bg;
   }
 }

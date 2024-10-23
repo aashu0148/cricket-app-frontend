@@ -26,6 +26,7 @@ export const DraftRoundProvider = ({ children }) => {
     connected: true,
     turn: "",
     turnDir: "",
+    turnTimestamp: "",
     status: "",
     started: false,
     completed: false,
@@ -86,7 +87,7 @@ export const DraftRoundProvider = ({ children }) => {
  * @returns {{
  * socket:object,
  * roomStatuses:{
- * connected:boolean,started:boolean,status:string,turn:string,turnDir:string,completed:boolean
+ * connected:boolean,started:boolean,status:string,turn:string,turnTimestamp:number,turnDir:string,completed:boolean
  * },
  *  room:{
  *   name: string,

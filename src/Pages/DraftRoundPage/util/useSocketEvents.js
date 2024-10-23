@@ -87,6 +87,7 @@ function useSocketEvents() {
         ...prev,
         turn: data?.userId,
         turnDir: data?.turnDir,
+        turnTimestamp: data?.turnTimestamp,
       }));
     });
 

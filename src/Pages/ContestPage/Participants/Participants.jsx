@@ -15,6 +15,7 @@ function Participants({
   playerPoints = [],
   activeTurnUserId = "",
   turnDir = "",
+  lastTurnTimestamp = "",
   completedMatches = [],
 }) {
   const [targetDate, setTargetDate] = useState(new Date());
@@ -83,7 +84,10 @@ function Participants({
   }, [selectedPLayerIdForBreakdown, participants, completedMatches]);
 
   useEffect(() => {
-    setTargetDate(new Date(Date.now() + 119 * 1000)); // around 120 sec
+    const lastTurnOn = lastTurnTimestamp
+      ? new Date(lastTurnTimestamp).getTime()
+      : Date.now();
+    setTargetDate(new Date(lastTurnOn + 119 * 1000)); // around 120 sec
   }, [activeTurnUserId, turnDir]);
 
   return (
