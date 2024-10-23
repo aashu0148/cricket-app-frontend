@@ -23,7 +23,7 @@ function StatsTable({ statData = [] }) {
       <thead>
         <tr>
           {allKeys.map((k) => (
-            <th>{k}</th>
+            <th key={k}>{k}</th>
           ))}
         </tr>
       </thead>
@@ -31,7 +31,7 @@ function StatsTable({ statData = [] }) {
         {statData.map((stat, index) => (
           <tr key={index}>
             {allKeys.map((k) => (
-              <td>{stat[k] || "_"}</td>
+              <td key={k}>{stat[k] || "_"}</td>
             ))}
           </tr>
         ))}

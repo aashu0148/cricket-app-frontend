@@ -212,7 +212,9 @@ function Participants({
               <div className={styles.matches}>
                 {selectedPlayerBreakdown.matches.map((match) => (
                   <div key={match._id} className={styles.match}>
-                    <p className={styles.title}>{match.title}</p>
+                    <p className={styles.title} title={match.title}>
+                      {match.title}
+                    </p>
                     <div className={styles.teams}>
                       <div className={styles.team}>
                         <Img

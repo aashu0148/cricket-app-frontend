@@ -366,6 +366,16 @@ export function sleep(time = 1000) {
 
 export const isEmojiPresentInString = (str) => /\p{Emoji}/u.test(str);
 
+export function capitalizeText(text) {
+  return text
+    .split(" ") // Split the text into an array of words
+    .map((word) => {
+      // Capitalize the first letter and concatenate with the rest of the word
+      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+    })
+    .join(" ");
+}
+
 /**
  *
  * @param {Array} teams
@@ -390,7 +400,9 @@ export const parseTeamsForScorePoints = (teams = [], playerPoints = []) => {
         return item;
       });
 
-      const pointsArr = players.map((e) => e.points || 0).sort();
+      const pointsArr = players
+        .map((e) => e.points || 0)
+        .sort((a, b) => (a > b ? -1 : 1));
 
       const teamPoints = pointsArr
         .slice(0, numberOfTopPlayersToInclude)

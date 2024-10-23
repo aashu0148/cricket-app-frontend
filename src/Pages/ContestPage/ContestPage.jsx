@@ -299,14 +299,14 @@ function ContestPage() {
           )}
         </div>
 
-        {currentUserTeam && (
+        {
           <div className={styles.mainRight}>
             {isDraftRoundCompleted ? (
               <LeaderBoard
                 teams={contestDetails.teams}
                 playerPoints={playerPoints}
               />
-            ) : (
+            ) : currentUserTeam ? (
               <>
                 <p className={`heading`}>Wishlist</p>
                 <Wishlist
@@ -338,9 +338,11 @@ function ContestPage() {
                   }
                 />{" "}
               </>
+            ) : (
+              ""
             )}
           </div>
-        )}
+        }
       </div>
     </div>
   );

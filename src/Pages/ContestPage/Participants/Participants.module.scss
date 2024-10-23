@@ -214,8 +214,12 @@
 
       .title {
         text-align: center;
-        font-size: $text-sm;
+        font-size: $text-xs;
         font-weight: 500;
+        text-transform: capitalize;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
       }
 
       .teams {
@@ -256,6 +260,7 @@
       }
 
       .text {
+        margin-top: $spacing-xs;
         font-size: $text-sm;
         text-align: center;
         line-height: 1.3;

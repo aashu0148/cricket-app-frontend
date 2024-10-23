@@ -1,11 +1,11 @@
 import React, { useMemo, useState } from "react";
 import { ChevronDown, ChevronRight } from "react-feather";
 
-import PlayerSmallCard, {
-  FillerPlayerSmallCard,
-} from "@/Components/PlayerSmallCard/PlayerSmallCard";
+import Img from "@/Components/Img/Img";
 
 import { playerRoleEnum } from "@/utils/enums";
+import { capitalizeText } from "@/utils/util";
+import { ballIcon, batBallIcon, batIcon } from "@/utils/svgs";
 
 import styles from "./Matches.module.scss";
 
@@ -18,7 +18,11 @@ function Matches({ completedMatches = [], players = [] }) {
         const matchingPlayer =
           players.find((item) => item.player._id === p.player) || {};
 
-        return { ...matchingPlayer.player, ...p };
+        return {
+          ...matchingPlayer.player,
+          ...p,
+          ...(matchingPlayer.squad || {}),
+        };
       });
 
       const batters = newPlayerPoints
@@ -31,14 +35,41 @@ function Matches({ completedMatches = [], players = [] }) {
         .filter((e) => e.role === playerRoleEnum.ALLROUNDER)
         .sort((a, b) => (a.slug < b.slug ? -1 : 1));
 
+      const allPoints = [...batters, ...allRounders, ...bowlers];
+      const allBreakdownLabels = allPoints
+        .reduce(
+          (acc, curr) => [
+            ...acc,
+            ...(curr?.breakdown?.length
+              ? curr.breakdown.map((e) => e.label)
+              : []),
+          ],
+          []
+        )
+        .filter((e, i, self) => self.indexOf(e) === i);
+
       return {
         ...e,
-        playerPoints: [...batters, ...allRounders, ...bowlers],
+        playerPoints: allPoints,
+        breakdownLabels: allBreakdownLabels,
       };
     });
   }, [players, completedMatches]);
 
-  console.log(parsedMatches);
+  const getPlayerNameCell = (player) => {
+    return (
+      <td className={styles.name}>
+        {player.role === playerRoleEnum.BATTER
+          ? batIcon
+          : player.role === playerRoleEnum.ALLROUNDER
+          ? batBallIcon
+          : player.role === playerRoleEnum.BOWLER
+          ? ballIcon
+          : ""}
+        {player.slug.split("-").join(" ")} <span>[{player.teamName}]</span>
+      </td>
+    );
+  };
 
   return (
     <div className={styles.container}>
@@ -64,7 +95,10 @@ function Matches({ completedMatches = [], players = [] }) {
             >
               <div className={styles.left}>
                 <p className={styles.title}>
-                  {match.slug.split("-").join(" ")}
+                  {capitalizeText(match.slug.split("-").join(" ")).replace(
+                    "Vs",
+                    "vs"
+                  )}
                 </p>
               </div>
 
@@ -78,15 +112,73 @@ function Matches({ completedMatches = [], players = [] }) {
             </div>
 
             {selectedMatches.includes(match._id) && (
-              <div className={styles.players}>
-                {match.playerPoints.map((player) => (
-                  <PlayerSmallCard key={player._id} playerData={player} />
-                ))}
+              <>
+                <div className={styles.teams}>
+                  <div className={styles.team}>
+                    <Img
+                      isEspnImage
+                      usePlaceholderImageOnError
+                      src={match.teams[0].image}
+                      alt={match.teams[0].name}
+                    />
+                    <span className={styles.name}>{match.teams[0].name}</span>
+                  </div>
+                  <span className={styles.vs}>vs</span>
+                  <div className={styles.team}>
+                    <Img
+                      isEspnImage
+                      usePlaceholderImageOnError
+                      src={match.teams[1].image}
+                      alt={match.teams[1].name}
+                    />
+                    <span className={styles.name}>{match.teams[1].name}</span>
+                  </div>
+                </div>
 
-                {new Array(5).fill(1).map((_, i) => (
-                  <FillerPlayerSmallCard key={i} />
-                ))}
-              </div>
+                <div className={styles.tableOuter}>
+                  <div className={styles.overlayTable}>
+                    <table className={styles.table}>
+                      <thead>
+                        <tr>
+                          <th>Name</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {match.playerPoints.map((player) => (
+                          <tr key={player._id}>{getPlayerNameCell(player)}</tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                  <table className={styles.table}>
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Total</th>
+                        {match.breakdownLabels.map((label) => (
+                          <th key={label}>{label}</th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {match.playerPoints.map((player) => (
+                        <tr key={player._id}>
+                          {getPlayerNameCell(player)}
+                          <td>{player.points}</td>
+                          {match.breakdownLabels?.map((label) => (
+                            <td key={label}>
+                              {
+                                player.breakdown.find((e) => e.label === label)
+                                  ?.points
+                              }
+                            </td>
+                          ))}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </>
             )}
           </div>
         ))}

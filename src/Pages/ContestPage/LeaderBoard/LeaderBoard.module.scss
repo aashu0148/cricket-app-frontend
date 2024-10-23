@@ -1,6 +1,9 @@
 @import "@/styles/variables";
 
 .container {
+  position: sticky;
+  top: 0;
+
   .teams {
     display: flex;
     flex-direction: column;
