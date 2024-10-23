@@ -44,7 +44,9 @@ function BreadCrumbs({ className = "", style = {}, links = [], onClick }) {
             className={`${styles.item} ${item.static ? "" : styles.link}`}
             onClick={(e) => (item.static ? "" : onClick(e, item.value))}
           >
-            {item.label}
+            {item.label?.length > 40
+              ? item.label.slice(0, 38) + "..."
+              : item.label}
           </span>
           {i === links.length - 1 ? (
             ""

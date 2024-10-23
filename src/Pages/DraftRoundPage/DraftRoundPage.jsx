@@ -214,14 +214,14 @@ function DraftRoundPage() {
         <BreadCrumbs
           links={[
             {
-              label:
-                isMobileView || !tournamentDetails.longName
-                  ? "Tournaments"
-                  : tournamentDetails.longName,
+              label: "Tournaments",
               value: "tournaments",
             },
             {
-              label: "Contests",
+              label:
+                isMobileView || !tournamentDetails.longName
+                  ? "Contests"
+                  : tournamentDetails.longName,
               value: "contests",
             },
             {

@@ -42,7 +42,6 @@ function ContestsPage() {
 
   const fetchContests = async () => {
     const res = await getJoinableContestsOfTournament(params.tournamentId);
-    setLoadingPage(false);
     if (!res) return;
 
     setAllContests(res.data);
@@ -55,13 +54,18 @@ function ContestsPage() {
     setJoinedContests(res.data);
   };
 
+  const fetchInitialData = async () => {
+    await fetchContests();
+    await fetchJoinedContests();
+    await fetchTournamentDetails();
+    setLoadingPage(false);
+  };
+
   useEffect(() => {
-    fetchContests();
-    fetchJoinedContests();
-    fetchTournamentDetails();
+    fetchInitialData();
   }, []);
 
-  const allContestsTab = (
+  const allContestsTab = allContests.length ? (
     <div className={`cards`}>
       {allContests.map((item) => (
         <ContestCard
@@ -83,6 +87,8 @@ function ContestsPage() {
         />
       ))}
     </div>
+  ) : (
+    <p className="title">No Context present!</p>
   );
 
   const joinedContestsTab = (

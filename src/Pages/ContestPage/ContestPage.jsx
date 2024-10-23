@@ -33,6 +33,7 @@ function ContestPage() {
   const navigate = useNavigate();
   const params = useParams();
   const userDetails = useSelector((s) => s.user);
+  const isMobileView = useSelector((s) => s.root.isMobileView);
   const { tournamentId, contestId } = params;
 
   const [loading, setLoading] = useState(true);
@@ -163,7 +164,10 @@ function ContestPage() {
             value: "tournaments",
           },
           {
-            label: "Contests",
+            label:
+              isMobileView || !tournamentDetails.longName
+                ? "Contests"
+                : tournamentDetails.longName,
             value: "contests",
           },
           {

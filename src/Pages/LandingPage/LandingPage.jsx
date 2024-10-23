@@ -18,13 +18,7 @@ import Shapes from "./Shapes";
 import Card from "./Card/Card";
 import Button from "@/Components/Button/Button";
 
-import {
-  features,
-  details,
-  testimonials,
-  FAQs,
-  generalCopy,
-} from "./landingCopy.jsx";
+import { features, testimonials, FAQs, generalCopy } from "./landingCopy.jsx";
 import image from "@/assets/images/batsman.png";
 import aboutImage from "@/assets/images/about-us.png";
 import LineAnimate from "@/Components/LineAnimate/LineAnimate";
@@ -123,17 +117,20 @@ function Features() {
   return (
     <div className={styles.featuresSection}>
       <Shapes
-        hideRing
-        hidePlus
+        hideHalf
         hideCircle
         shapeStyles={{
-          half: {
-            top: isMobileView ? "5%" : "4%",
-            left: isMobileView ? "3%" : "15%",
-          },
           triangle: {
-            top: "5%",
-            right: isMobileView ? "50px" : "300px",
+            top: "3%",
+            right: isMobileView ? "20px" : "300px",
+          },
+          ring: {
+            top: isMobileView ? "-10px" : "-2%",
+            left: isMobileView ? "5px" : "5%",
+          },
+          plus: {
+            top: isMobileView ? "-10px" : "10%",
+            right: isMobileView ? "5px" : "5%",
           },
         }}
       />
@@ -185,24 +182,6 @@ function Testimonials() {
 
   return (
     <div className={styles.testimonialSection}>
-      <Shapes
-        hideHalf
-        hideCircle
-        shapeStyles={{
-          triangle: {
-            top: "3%",
-            right: isMobileView ? "20px" : "300px",
-          },
-          ring: {
-            top: isMobileView ? "-10px" : "10%",
-            left: isMobileView ? "5px" : "5%",
-          },
-          plus: {
-            top: isMobileView ? "-10px" : "10%",
-            right: isMobileView ? "5px" : "5%",
-          },
-        }}
-      />
       <div className={styles.generalHeading}>
         <div className={styles.generalHeadingContent}>
           <div className="flex-col-xxs align-center">
@@ -361,7 +340,7 @@ function LandingPage() {
 
       <Features />
 
-      <Testimonials />
+      {/* <Testimonials /> */}
 
       <FaQ />
 

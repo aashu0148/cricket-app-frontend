@@ -115,6 +115,7 @@
       .overlayTable {
         position: absolute;
         background-color: $primary-200;
+        z-index: 40;
       }
 
       .table {
