@@ -6,6 +6,7 @@ export const applicationRoutes = {
   auth: "/auth",
   tournaments: "/tournaments",
   profile: "/profile",
+  faq: "/faq",
   adminTournament: "/admin/tournaments",
   scoringSystem: "/admin/scoring-systems",
   players: "/admin/players",

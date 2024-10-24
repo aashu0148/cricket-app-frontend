@@ -24,6 +24,7 @@ import ScoringSystem from "./Pages/Admin/ScoringSystem/ScoringSystem";
 import EditScoringSystem from "./Pages/Admin/ScoringSystem/EditScoringSystem/EditScoringSystem";
 import PlayersPage from "./Pages/Admin/PlayersPage/PlayersPage";
 import ScoringSystemView from "./Pages/ScoringSystemView/ScoringSystemView";
+import FaqPage from "./Pages/FaqPage/FaqPage";
 
 // Utils
 import { getCurrentUser } from "./apis/user";
@@ -166,6 +167,10 @@ function App() {
             {/* all routes of normal users will be defined here */}
             <Route path={applicationRoutes.home} element={<HomePage />} />
             <Route path={applicationRoutes.profile} element={<ProfilePage />} />
+            <Route
+              path={applicationRoutes.faq}
+              element={<FaqPage />}
+            />
             <Route
               path={applicationRoutes.tournaments}
               element={<TournamentsPage />}

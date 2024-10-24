@@ -129,9 +129,13 @@ function ContestPage() {
     setCompletedTournamentMatches(tournament.completedMatches || []);
   };
 
-  useEffect(() => {
-    fetchTournamentDetails();
+  const fetchInitial = async () => {
+    await fetchTournamentDetails();
     fetchContestDetails();
+  };
+
+  useEffect(() => {
+    fetchInitial();
   }, []);
 
   return loading ? (

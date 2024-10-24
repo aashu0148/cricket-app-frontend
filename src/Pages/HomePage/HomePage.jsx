@@ -75,9 +75,16 @@ function HomePage() {
         <p className="heading">Available Tournaments</p>
 
         <div className={`cards ${styles.cards}`}>
-          {allTournaments.map((tournament) => (
-            <TournamentCard key={tournament._id} tournamentData={tournament} />
-          ))}
+          {allTournaments.length ? (
+            allTournaments.map((tournament) => (
+              <TournamentCard
+                key={tournament._id}
+                tournamentData={tournament}
+              />
+            ))
+          ) : (
+            <p>No Tournaments Present</p>
+          )}
         </div>
       </section>
     </div>
