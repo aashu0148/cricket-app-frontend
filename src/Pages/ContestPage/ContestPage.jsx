@@ -138,8 +138,6 @@ function ContestPage() {
     fetchInitial();
   }, []);
 
-  console.log(tournamentDetails);
-
   return loading ? (
     <PageLoader fullPage />
   ) : (
