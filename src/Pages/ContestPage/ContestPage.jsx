@@ -138,6 +138,8 @@ function ContestPage() {
     fetchInitial();
   }, []);
 
+  console.log(tournamentDetails);
+
   return loading ? (
     <PageLoader fullPage />
   ) : (
@@ -276,7 +278,18 @@ function ContestPage() {
                 Join this Contest
               </Button>
             ) : (
-              ""
+              <div className={styles.information}>
+                <label>Scoring system:</label>
+                <a
+                  href={applicationRoutes.viewScoringSystem(
+                    tournamentDetails.scoringSystem
+                  )}
+                  target="_blank"
+                  className="link"
+                >
+                  view
+                </a>
+              </div>
             )}
           </div>
 

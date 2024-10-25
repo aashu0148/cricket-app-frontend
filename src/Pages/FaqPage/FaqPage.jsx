@@ -13,11 +13,15 @@ function FaqPage() {
             <p className="title">{item.question}</p>
 
             {item.jsx ? (
-              item.jsx
+              <div style={{ color: "var(--var-color-label)" }}>{item.jsx}</div>
             ) : (
               <p
                 className="text"
-                style={{ lineHeight: "1.5", color: "var(--var-color-label)" }}
+                style={{
+                  whiteSpace: "pre-wrap",
+                  lineHeight: "1.5",
+                  color: "var(--var-color-label)",
+                }}
               >
                 {item.answer}
               </p>

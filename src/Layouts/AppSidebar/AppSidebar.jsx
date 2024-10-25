@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { LogOut } from "react-feather";
+import { LogOut, HelpCircle } from "react-feather";
 import { useNavigate } from "react-router-dom";
 
 import Logo from "@/Components/Navbar/Logo";
@@ -79,6 +79,18 @@ function AppSidebar({ className = "", onRouteClick }) {
       </div>
 
       <div className={styles.bottomBar}>
+        <div
+          className={styles.faq}
+          onClick={(e) =>
+            handleAppNavigation(e, navigate, applicationRoutes.faq)
+          }
+        >
+          <div>
+            <HelpCircle />
+          </div>
+          <p>FAQs</p>
+        </div>
+
         <div className={`${styles.profile}`}>
           <div
             className={`${styles.left} route-profile`}

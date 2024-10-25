@@ -20,6 +20,9 @@
   }
 
   .section {
+    width: 1100px;
+    max-width: 100%;
+    margin: 0 auto;
     margin-bottom: $spacing-lg;
 
     h2 {
@@ -34,7 +37,7 @@
       border-radius: $spacing-sm;
       padding: $spacing-md;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-      margin-bottom: $spacing-sm;
+      margin-bottom: $spacing-md;
       margin-top: $spacing-xs;
 
       h3 {
@@ -50,14 +53,36 @@
         margin-bottom: $spacing-sm;
       }
 
+      .bigList {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-md;
+
+        ul {
+          margin-bottom: 0;
+        }
+
+        .title {
+          list-style: decimal;
+          font-size: $text-md;
+          font-weight: 500;
+          color: $color-desc;
+          margin-bottom: 0;
+        }
+
+        p {
+          margin-bottom: 0;
+        }
+      }
+
       ul {
         list-style-type: none;
-        padding-left: 0;
+        padding-left: $spacing-sm;
         margin-bottom: $spacing-sm;
 
         li {
-          font-size: $text-md;
-          color: $color-desc;
+          list-style: circle;
+          font-weight: 400;
           margin-bottom: $spacing-xs;
         }
       }

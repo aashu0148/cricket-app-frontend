@@ -35,7 +35,45 @@ function Matches({ completedMatches = [], players = [] }) {
         .filter((e) => e.role === playerRoleEnum.ALLROUNDER)
         .sort((a, b) => (a.slug < b.slug ? -1 : 1));
 
-      const allPoints = [...batters, ...allRounders, ...bowlers];
+      const allPoints = [...batters, ...allRounders, ...bowlers].map(
+        (player) => {
+          let battingPoints = 0;
+          let bowlingPoints = 0;
+
+          player.breakdown.forEach((stat) => {
+            if (
+              [
+                "Runs",
+                "Fours",
+                "Sixes",
+                "Runs scored milestone",
+                "Strike rate bonus",
+              ].some((e) => e.toLowerCase() === stat.label.toLowerCase())
+            ) {
+              battingPoints += stat.points;
+            }
+            if (
+              [
+                "Catch",
+                "Stumping",
+                "Runout",
+                "Dot ball",
+                "Economy rate",
+                "Wicket",
+              ].some((e) => e.toLowerCase() === stat.label.toLowerCase())
+            ) {
+              bowlingPoints += stat.points;
+            }
+          });
+
+          return {
+            ...player,
+            battingPoints,
+            bowlingPoints,
+          };
+        }
+      );
+
       const allBreakdownLabels = allPoints
         .reduce(
           (acc, curr) => [
@@ -113,25 +151,31 @@ function Matches({ completedMatches = [], players = [] }) {
 
             {selectedMatches.includes(match._id) && (
               <>
-                <div className={styles.teams}>
-                  <div className={styles.team}>
-                    <Img
-                      isEspnImage
-                      usePlaceholderImageOnError
-                      src={match.teams[0].image}
-                      alt={match.teams[0].name}
-                    />
-                    <span className={styles.name}>{match.teams[0].name}</span>
-                  </div>
-                  <span className={styles.vs}>vs</span>
-                  <div className={styles.team}>
-                    <Img
-                      isEspnImage
-                      usePlaceholderImageOnError
-                      src={match.teams[1].image}
-                      alt={match.teams[1].name}
-                    />
-                    <span className={styles.name}>{match.teams[1].name}</span>
+                <div
+                  className="flex-col-xs"
+                  style={{ padding: "0 var(--var-spacing-sm)" }}
+                >
+                  <p>Average Match Scoring Rate: {match.amsr}</p>
+                  <div className={styles.teams}>
+                    <div className={styles.team}>
+                      <Img
+                        isEspnImage
+                        usePlaceholderImageOnError
+                        src={match.teams[0].image}
+                        alt={match.teams[0].name}
+                      />
+                      <span className={styles.name}>{match.teams[0].name}</span>
+                    </div>
+                    <span className={styles.vs}>vs</span>
+                    <div className={styles.team}>
+                      <Img
+                        isEspnImage
+                        usePlaceholderImageOnError
+                        src={match.teams[1].image}
+                        alt={match.teams[1].name}
+                      />
+                      <span className={styles.name}>{match.teams[1].name}</span>
+                    </div>
                   </div>
                 </div>
 
@@ -155,6 +199,8 @@ function Matches({ completedMatches = [], players = [] }) {
                       <tr>
                         <th>Name</th>
                         <th>Total</th>
+                        <th>Batting</th>
+                        <th>Bowling</th>
                         {match.breakdownLabels.map((label) => (
                           <th key={label}>{label}</th>
                         ))}
@@ -165,6 +211,8 @@ function Matches({ completedMatches = [], players = [] }) {
                         <tr key={player._id}>
                           {getPlayerNameCell(player)}
                           <td>{player.points}</td>
+                          <td>{player.battingPoints}</td>
+                          <td>{player.bowlingPoints}</td>
                           {match.breakdownLabels?.map((label) => (
                             <td key={label}>
                               {
