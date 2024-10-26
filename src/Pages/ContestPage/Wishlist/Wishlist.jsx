@@ -77,7 +77,7 @@ function Wishlist({
   const [removing, setRemoving] = useState([]);
   const [selectedRoleType, setSelectedRoleType] = useState([]);
   const [playersOrder, setPlayersOrder] = useState(
-    currentPlayers.map((p) => p.player._id)
+    currentPlayers.map((p) => p.player?._id)
   );
 
   const parsedPlayers = useMemo(() => {
@@ -91,7 +91,7 @@ function Wishlist({
   }, [allPlayers, selectedRoleType]);
 
   const handleAddNewPlayer = async (playerId) => {
-    const player = allPlayers.find((e) => e._id === playerId);
+    const player = allPlayers.find((e) => e.player?._id === playerId)?.player;
     if (!player) return;
 
     const res = await addPlayerToWishlist({
@@ -100,7 +100,7 @@ function Wishlist({
     });
     if (!res) return;
 
-    toast.success(`${player.slug.split("-").join(" ")} added successfully`);
+    toast.success(`${player?.slug.split("-").join(" ")} added successfully`);
     onPlayerAdded(player);
   };
 
@@ -145,7 +145,7 @@ function Wishlist({
   };
 
   useEffect(() => {
-    setPlayersOrder(currentPlayers.map((p) => p.player._id));
+    setPlayersOrder(currentPlayers.map((p) => p._id));
   }, [currentPlayers]);
 
   return (
@@ -191,7 +191,7 @@ function Wishlist({
 
         <InputSelect
           options={parsedPlayers
-            .filter((p) => !currentPlayers.some((e) => e.player._id === p._id))
+            .filter((p) => !currentPlayers.some((e) => e._id === p._id))
             .map((p) => ({
               label: capitalizeText(
                 `${p.slug.split("-").join(" ")} [_tn]`
@@ -216,9 +216,7 @@ function Wishlist({
               strategy={verticalListSortingStrategy}
             >
               {playersOrder.map((playerId) => {
-                const player = currentPlayers.find(
-                  (p) => p.player._id === playerId
-                );
+                const player = currentPlayers.find((p) => p._id === playerId);
                 if (!player) return null; // happens when we remove a player and its updated in currentPlayers but not in playersOrder for one particular render cycle
 
                 return (
