@@ -5,6 +5,7 @@ export const applicationRoutes = {
   landing: "/",
   auth: "/auth",
   tournaments: "/tournaments",
+  tournamentMatches : "/admin/tournaments/matches",
   profile: "/profile",
   faq: "/faq",
   adminTournament: "/admin/tournaments",

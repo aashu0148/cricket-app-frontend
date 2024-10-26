@@ -138,3 +138,42 @@ export const addPlayerToTournament = async (id, payload) => {
     },
   });
 };
+
+export const getAllTournamentInfo = async () => {
+  const path = "/tournaments/short";
+
+  return await makeApiCall({
+    functionName: "getAllTournamentInfo",
+    defaultErrorMessage: "Failed to get Tournaments Information",
+    fetchWrapperOptions: {
+      path,
+    },
+  });
+};
+
+export const getAllMatchesForTournament = async (tournamentId) => {
+  const path = `/matches/tournament/${tournamentId}`;
+
+  return await makeApiCall({
+    functionName: "getAllMatchesForTournament",
+    defaultErrorMessage: "Failed to get matches for Tournament",
+    fetchWrapperOptions: {
+      path,
+    },
+  });
+};
+
+
+export const deleteMatch = async (matchId) => {
+  const path = `/matches/${matchId}`;
+
+  return await makeApiCall({
+    functionName: "deleteMatch",
+    defaultErrorMessage: "Failed to delete the match",
+    fetchWrapperOptions: {
+      path,
+      requestType : "DELETE"
+    },
+  });
+};
+

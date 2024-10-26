@@ -1,0 +1,18 @@
+@import "@/styles/variables";
+
+.title {
+  font-size: $text-2xl;
+  color: $color-title;
+  font-weight: 500;
+}
+
+.matchSection {
+  .allMatches {
+    width: 100%;
+    margin-top: $spacing-md;
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-sm;
+  }
+  
+}

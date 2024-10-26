@@ -1,0 +1,66 @@
+@import "@/styles/variables";
+
+.matchCard {
+  align-self: stretch;
+  flex-grow: 1;
+  width: 280px;
+  background-color: $bg-100;
+  border-radius: 10px;
+  padding: $spacing-sm;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+  position: relative;
+
+  .deleteIcon {
+    position: absolute;
+    right: 2%;
+    color: $red;
+  }
+
+  .date {
+    text-align: center;
+    font-size: $text-sm;
+    color: $color-desc;
+    font-weight: 600;
+  }
+
+  .matchTeams {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    justify-content: center;
+
+    .team {
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-xs;
+      align-items: center;
+
+      img {
+        height: 35px;
+        width: 55px;
+        border-radius: 5px;
+        overflow: hidden;
+        object-fit: cover;
+      }
+
+      .name {
+        font-size: $text-sm;
+        text-align: center;
+        font-weight: 600;
+      }
+    }
+
+    .vs {
+      font-weight: bold;
+      font-size: $text-lg;
+    }
+  }
+
+  .matchStatus {
+    text-align: center;
+    font-size: $text-xs;
+    color: $color-desc;
+  }
+}

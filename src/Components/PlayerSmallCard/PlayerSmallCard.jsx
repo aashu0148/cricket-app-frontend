@@ -3,7 +3,6 @@ import { X } from "react-feather";
 
 import Img from "@/Components/Img/Img";
 import Spinner from "../Spinner/Spinner";
-import Button from "../Button/Button";
 
 import { playerRoleEnum } from "@/utils/enums";
 import { ballIcon, batBallIcon, batIcon } from "@/utils/svgs";

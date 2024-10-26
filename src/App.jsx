@@ -31,6 +31,7 @@ import { getCurrentUser } from "./apis/user";
 import actionTypes from "./store/actionTypes";
 import { applicationRoutes } from "./utils/constants";
 import { getAppToken } from "./utils/util";
+import TournamentMatches from "./Pages/Admin/TournamentMatches/TournamentMatches";
 
 function App() {
   const userDetails = useSelector((state) => state.user);
@@ -155,6 +156,8 @@ function App() {
               element={<EditScoringSystem createMode />}
             />
             <Route path={applicationRoutes.players} element={<PlayersPage />} />
+            
+            <Route path = {applicationRoutes.tournamentMatches} element={<TournamentMatches/>}/>
           </Route>
 
           <Route

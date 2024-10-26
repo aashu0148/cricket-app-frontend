@@ -42,6 +42,7 @@ function AppLayout({ adminLayout = false }) {
     <PageLoader fullPage />
   ) : (
     <RoutesProvider useAdminRoutes={adminLayout}>
+      
       <div className={styles.container}>
         <div className={styles.sidebarOuter}>
           <AppSidebar className={styles.sidebar} />

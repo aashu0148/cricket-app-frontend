@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 
 import { Home } from "react-feather";
 import { applicationRoutes } from "@/utils/constants";
-import { adminIcon, batsmanIcon, championCup, scoringIcon } from "@/utils/svgs";
+import { adminIcon, batsmanIcon, championCup, matchIcon, scoringIcon } from "@/utils/svgs";
 
 const RoutesContext = createContext();
 
@@ -28,6 +28,12 @@ export const RoutesProvider = ({ useAdminRoutes = false, children }) => {
       value: applicationRoutes.players,
       label: "Players",
       link: applicationRoutes.players,
+    },
+    {
+      icon: matchIcon,
+      value: applicationRoutes.tournamentMatches,
+      label: "Matches",
+      link: applicationRoutes.tournamentMatches,
     },
   ].filter((item) => item);
 
