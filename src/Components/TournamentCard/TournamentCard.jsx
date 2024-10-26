@@ -117,13 +117,14 @@ function TournamentCard({
         </p>
       </div>
 
+      {console.log(allMatches)}
       <div className={styles.section}>
         <h3 className={`heading`}>Matches:</h3>
 
         <div className={`${styles.matchCards}`}>
           {allMatches
             .sort((a, b) =>
-              new Date(a.startDate) < new Date(b.startDate) ? 1 : -1
+              new Date(a.startDate) < new Date(b.startDate) ? -1 : 1
             )
             .map((match) => (
               <div key={match.matchId} className={styles.matchCard}>
