@@ -5,31 +5,50 @@ import Modal from "@/Components/Modal/Modal";
 import Button from "@/Components/Button/Button";
 import InputControl from "@/Components/InputControl/InputControl";
 
-import { scrapeAndStorePlayerData } from "@/apis/players";
+import {
+  scrapeAndStorePlayerData,
+  scrapeAndStoreSquadData,
+} from "@/apis/players";
 import { validateUrl } from "@/utils/util";
 
 function ScrapePlayer({ onClose }) {
-  const [espnUrl, setEspnUrl] = useState("");
+  const [states, setStates] = useState({
+    player: "",
+    squad: "",
+  });
   const [errorsMsg, setErrorsMsg] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
   const handleSubmit = async () => {
-    if (!validateUrl(espnUrl)) return setErrorsMsg("Invalid url");
-    if (!espnUrl.includes("espncricinfo.com"))
+    console.log("states yes", states, errorsMsg)
+    if (!validateUrl(states.player) && !validateUrl(states.squad))
+      return setErrorsMsg("Invalid url");
+    if (
+      !states.player.includes("espncricinfo.com") &&
+      !states.squad.includes("espncricinfo.com")
+    )
       return setErrorsMsg("invalid ESPN URL");
-    if (!espnUrl.includes("cricketers"))
-      return setErrorsMsg("invalid player URL");
 
     setErrorsMsg("");
 
     setSubmitting(true);
-    const res = await scrapeAndStorePlayerData({
-      url: espnUrl,
-    });
+
+    const res = states.player
+      ? await scrapeAndStorePlayerData({
+          url: states.player,
+        })
+      : states.squad
+      ? await scrapeAndStoreSquadData({
+          squadUrl: states.squad,
+        })
+      : false;
+
     setSubmitting(false);
     if (!res) return;
 
-    toast.success("Player added to database successfully");
+    toast.success(
+      `${states.player ? "Player" : "Squad"} added to database successfully`
+    );
     onClose();
   };
 
@@ -42,9 +61,24 @@ function ScrapePlayer({ onClose }) {
           <InputControl
             label="ESPN Player URL"
             placeholder="Enter URL"
-            value={espnUrl}
+            value={states.player}
             error={errorsMsg}
-            onChange={(e) => setEspnUrl(e.target.value)}
+            onChange={(e) =>
+              setStates((prev) => ({ ...prev, player: e.target.value }))
+            }
+          />
+
+          <h2 className="heading" style={{ textAlign: "center" }}>
+            OR
+          </h2>
+          <InputControl
+            label="Squad ESPN URL"
+            placeholder="Enter URL"
+            value={states.squad}
+            error={errorsMsg}
+            onChange={(e) =>
+              setStates((prev) => ({ ...prev, squad: e.target.value }))
+            }
           />
         </div>
 

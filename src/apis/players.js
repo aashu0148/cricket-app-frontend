@@ -14,7 +14,22 @@ export const scrapeAndStorePlayerData = async (payload) => {
   });
 };
 
-// 2. Search Player by Name
+
+// 2. Scrape and Store Squad Data from ESPN
+export const scrapeAndStoreSquadData = async (payload) => {
+  const path = "/players/scrape/squad";
+
+  return await makeApiCall({
+    functionName: "scrapeAndStoreSquadData",
+    defaultErrorMessage: "Failed to scrape and store squad data",
+    fetchWrapperOptions: {
+      path,
+      payload,
+    },
+  });
+};
+
+// 3. Search Player by Name
 export const searchPlayerByName = async (name, tid = "") => {
   const path = `/players/search?name=${name}&tournamentId=${tid}`;
 
@@ -27,7 +42,7 @@ export const searchPlayerByName = async (name, tid = "") => {
   });
 };
 
-// 3. Get Player by ID
+// 4. Get Player by ID
 export const getPlayerById = async (playerId) => {
   const path = `/players/${playerId}`;
 
