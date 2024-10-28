@@ -68,7 +68,7 @@ export default function TournamentMatches() {
           <InputSelect
             placeholder="Select any Tournament"
             options={allTournaments.map((item) => ({
-              label: item.longName,
+              label: item.longName + `(${item.season})`,
               value: item._id,
             }))}
             onChange={(e) => {
