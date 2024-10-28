@@ -20,7 +20,6 @@ function ScrapePlayer({ onClose }) {
   const [submitting, setSubmitting] = useState(false);
 
   const handleSubmit = async () => {
-    console.log("states yes", states, errorsMsg)
     if (!validateUrl(states.player) && !validateUrl(states.squad))
       return setErrorsMsg("Invalid url");
     if (
@@ -30,9 +29,7 @@ function ScrapePlayer({ onClose }) {
       return setErrorsMsg("invalid ESPN URL");
 
     setErrorsMsg("");
-
     setSubmitting(true);
-
     const res = states.player
       ? await scrapeAndStorePlayerData({
           url: states.player,
@@ -42,7 +39,6 @@ function ScrapePlayer({ onClose }) {
           squadUrl: states.squad,
         })
       : false;
-
     setSubmitting(false);
     if (!res) return;
 

@@ -3,7 +3,6 @@ import {
   createTournament,
   deleteTournament,
   getAllTournaments,
-  refreshTournament,
 } from "@/apis/tournament";
 
 import styles from "./AllTournaments.module.scss";
@@ -30,7 +29,6 @@ export default function AllTournaments() {
 
   async function fetchTournaments() {
     const res = await getAllTournaments();
-
     setLoading(false);
 
     if (!res) return;
@@ -40,7 +38,7 @@ export default function AllTournaments() {
       upcoming: new Date(t.startDate) > new Date(),
     }));
     result.sort((a, b) =>
-      new Date(a.startDate) < new Date(b.startDate) ? -1 : 1
+      new Date(a.startDate) > new Date(b.startDate) ? -1 : 1
     );
     setAllTournaments(result);
   }
