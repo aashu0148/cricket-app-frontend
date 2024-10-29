@@ -4,7 +4,6 @@ import {
   ChevronLeft,
   ChevronRight,
   ChevronUp,
-  Facebook,
   Instagram,
   Linkedin,
   Star,
@@ -18,7 +17,13 @@ import Shapes from "./Shapes";
 import Card from "./Card/Card";
 import Button from "@/Components/Button/Button";
 
-import { features, testimonials, FAQs, generalCopy } from "./landingCopy.jsx";
+import {
+  features,
+  testimonials,
+  FAQs,
+  generalCopy,
+  scoringSystemLink,
+} from "./landingCopy.jsx";
 import image from "@/assets/images/batsman.png";
 import aboutImage from "@/assets/images/about-us.png";
 import LineAnimate from "@/Components/LineAnimate/LineAnimate";
@@ -69,6 +74,13 @@ function Hero() {
             }
           >
             Get Started
+          </Button>
+
+          <Button
+            outlineButton
+            onClick={() => window.open(scoringSystemLink, "_blank")}
+          >
+            Scoring System
           </Button>
         </div>
       </div>

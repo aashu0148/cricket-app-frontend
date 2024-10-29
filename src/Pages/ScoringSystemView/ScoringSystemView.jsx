@@ -94,15 +94,21 @@ const ScoringSystemView = () => {
                 on the total runs they score:
               </p>
               <ul>
-                {batting.runMilestoneBonus.milestones
-                  .sort((a, b) => (a.runsUpto > b.runsUpto ? -1 : 1))
-                  .map((milestone) => (
-                    <li key={milestone._id}>
-                      runs {">="}
-                      <strong>{milestone.runsUpto} </strong>:{" "}
-                      <strong>{milestone.points} points</strong>
-                    </li>
-                  ))}
+                {batting.runMilestoneBonus.milestones.map((milestone, i) => (
+                  <li key={milestone._id}>
+                    runs {/* {milestone.runsUpto == 0 ? "= " : "<= "} */}
+                    <strong>
+                      {i > 0
+                        ? `${
+                            batting.runMilestoneBonus.milestones[i - 1]
+                              .runsUpto + 1
+                          } - `
+                        : ""}{" "}
+                      {milestone.runsUpto}{" "}
+                    </strong>
+                    : <strong>{milestone.points} points</strong>
+                  </li>
+                ))}
               </ul>
               <p>
                 There will be no negative runs scored milestone bonus for

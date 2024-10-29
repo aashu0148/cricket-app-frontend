@@ -12,6 +12,10 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { applicationRoutes } from "@/utils/constants";
 
+const scoringSystemLink = applicationRoutes.viewScoringSystem(
+  "66ed6313dc9c0352f77b6f63"
+);
+
 const generalCopy = {
   about: {
     shoulder:
@@ -164,11 +168,7 @@ This aims to nullify any unforeseen injuries/drop of form for a player in your t
     question: "What is your 'superior scoring system?'",
     jsx: (
       <>
-        <a
-          className="link"
-          href={applicationRoutes.viewScoringSystem("66ed6313dc9c0352f77b6f63")}
-          target="_blank"
-        >
+        <a className="link" href={scoringSystemLink} target="_blank">
           This link
         </a>{" "}
         will explain our scoring system in greater detail.
@@ -183,4 +183,11 @@ To be on the conservative side, we think 60-90 minutes is enough to finish the e
   },
 ];
 
-export { generalCopy, features, details, testimonials, FAQs };
+export {
+  generalCopy,
+  features,
+  details,
+  testimonials,
+  FAQs,
+  scoringSystemLink,
+};
