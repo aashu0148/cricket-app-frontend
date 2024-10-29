@@ -257,10 +257,16 @@ const ScoringSystemView = () => {
                     </strong>
                     , <br />
                     Points: <strong>{wicket.points}</strong>, <br />
-                    Runs Cap for extra points:{" "}
-                    <strong>{wicket.runsCapForIncrementingPoints}</strong>,
-                    Incremented Points:{" "}
-                    <strong>{wicket.incrementedPoints}</strong>
+                    {wicket.incrementedPoints > 0 ? (
+                      <>
+                        If a batter crosses{" "}
+                        <strong>{wicket.runsCapForIncrementingPoints}</strong>{" "}
+                        runs, the bowler is entitled to{" "}
+                        <strong>{wicket.incrementedPoints}</strong> extra points
+                      </>
+                    ) : (
+                      ""
+                    )}
                   </li>
                 ))}
               </ul>
