@@ -43,7 +43,7 @@ const ScoringSystemView = () => {
         <h2>Batting</h2>
 
         <div className={styles.card}>
-          <h3>Average Scoring Rate (A.M.S.R)</h3>
+          <h3>Average Match Scoring Rate (A.M.S.R)</h3>
           <p>
             Calculate the average scoring rate of the match: For example, if 300
             runs are scored in 40 overs in the match, then the average scoring
