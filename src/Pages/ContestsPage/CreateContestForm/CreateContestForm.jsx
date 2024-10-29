@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { toast } from "react-hot-toast";
+import { useSelector } from "react-redux";
 
 import InputControl from "@/Components/InputControl/InputControl";
 import DatePicker from "@/Components/DatePicker/DatePicker";
@@ -13,6 +14,7 @@ import { createContest } from "@/apis/contests";
 import styles from "./CreateContestForm.module.scss";
 
 function CreateContestForm({ tournamentData = {}, onSuccess }) {
+  const isMobileView = useSelector((state) => state.root.isMobileView);
   const [values, setValues] = useState({
     name: "",
     description: "",
@@ -145,6 +147,7 @@ function CreateContestForm({ tournamentData = {}, onSuccess }) {
                 onChange={(e) =>
                   setValues((p) => ({ ...p, draftRoundStartDate: e }))
                 }
+                startFromRight={!isMobileView}
               />
               <InputControl
                 value={values.draftRoundStartTime}

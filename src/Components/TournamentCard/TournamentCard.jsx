@@ -12,7 +12,7 @@ import { getDateFormatted, handleAppNavigation } from "@/utils/util";
 import { applicationRoutes } from "@/utils/constants";
 import {
   deleteTournament,
-  insertMatchResultsIfNeededToTournament,
+  refreshTournament,
   updateTournament,
 } from "@/apis/tournament";
 import { getTooltipAttributes } from "@/utils/tooltip";
@@ -37,7 +37,7 @@ function TournamentCard({
       "Results will be refreshed in background, check after few minutes please"
     );
 
-    await insertMatchResultsIfNeededToTournament(tournamentData._id);
+    await refreshTournament(tournamentData._id);
   }
 
   async function handleDelete() {
@@ -130,7 +130,7 @@ function TournamentCard({
             ))}
 
           {new Array(4).fill(1).map((_, i) => (
-              <FillerMatchCard key={i} />
+            <FillerMatchCard key={i} />
           ))}
         </div>
       </div>
@@ -150,7 +150,7 @@ function TournamentCard({
                 })}
                 onClick={handleResultsRefresh}
               >
-                Refresh results
+                Refresh Tournament
               </Button>
             )}
 

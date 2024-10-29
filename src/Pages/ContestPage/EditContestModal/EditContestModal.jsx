@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { toast } from "react-hot-toast";
+import { useSelector } from "react-redux";
 
 import InputControl from "@/Components/InputControl/InputControl";
 import DatePicker from "@/Components/DatePicker/DatePicker";
@@ -30,6 +31,8 @@ function EditContestModal({
   onSuccess,
   tournamentEndDate = "",
 }) {
+  const isMobileView = useSelector((s) => s.root.isMobileView);
+
   const [values, setValues] = useState({
     name: contestDetails.name || "",
     description: contestDetails.description || "",
@@ -159,6 +162,7 @@ function EditContestModal({
                   }
                   defaultDate={values.draftRoundStartDate}
                   maxDate={new Date(tournamentEndDate)}
+                  startFromRight={!isMobileView}
                 />
                 <InputControl
                   value={values.draftRoundStartTime}
