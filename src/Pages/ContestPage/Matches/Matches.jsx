@@ -34,45 +34,51 @@ function Matches({ completedMatches = [], players = [] }) {
       const allRounders = newPlayerPoints
         .filter((e) => e.role === playerRoleEnum.ALLROUNDER)
         .sort((a, b) => (a.slug < b.slug ? -1 : 1));
+      const remaining = newPlayerPoints
+        .filter((e) => !Object.values(playerRoleEnum).includes(e.role))
+        .sort((a, b) => (a.slug < b.slug ? -1 : 1));
 
-      const allPoints = [...batters, ...allRounders, ...bowlers].map(
-        (player) => {
-          let battingPoints = 0;
-          let bowlingPoints = 0;
+      const allPoints = [
+        ...batters,
+        ...allRounders,
+        ...bowlers,
+        ...remaining,
+      ].map((player) => {
+        let battingPoints = 0;
+        let bowlingPoints = 0;
 
-          player.breakdown.forEach((stat) => {
-            if (
-              [
-                "Runs",
-                "Fours",
-                "Sixes",
-                "Runs scored milestone",
-                "Strike rate bonus",
-              ].some((e) => e.toLowerCase() === stat.label.toLowerCase())
-            ) {
-              battingPoints += stat.points;
-            }
-            if (
-              [
-                "Catch",
-                "Stumping",
-                "Runout",
-                "Dot ball",
-                "Economy rate",
-                "Wicket",
-              ].some((e) => e.toLowerCase() === stat.label.toLowerCase())
-            ) {
-              bowlingPoints += stat.points;
-            }
-          });
+        player.breakdown.forEach((stat) => {
+          if (
+            [
+              "Runs",
+              "Fours",
+              "Sixes",
+              "Runs scored milestone",
+              "Strike rate bonus",
+            ].some((e) => e.toLowerCase() === stat.label.toLowerCase())
+          ) {
+            battingPoints += stat.points;
+          }
+          if (
+            [
+              "Catch",
+              "Stumping",
+              "Runout",
+              "Dot ball",
+              "Economy rate",
+              "Wicket",
+            ].some((e) => e.toLowerCase() === stat.label.toLowerCase())
+          ) {
+            bowlingPoints += stat.points;
+          }
+        });
 
-          return {
-            ...player,
-            battingPoints,
-            bowlingPoints,
-          };
-        }
-      );
+        return {
+          ...player,
+          battingPoints,
+          bowlingPoints,
+        };
+      });
 
       const allBreakdownLabels = allPoints
         .reduce(

@@ -12,6 +12,8 @@ import Notifications from "./Notifications/Notifications";
 import Chat from "./Chat/Chat";
 import PlayersPool from "./PlayersPool/PlayersPool";
 import DraftRoundCompleted from "./DraftRoundCompleted";
+import InfoMessage from "./InfoMessage/InfoMessage";
+import DraftPageInfoModal from "./DraftPageInfoModal/DraftPageInfoModal";
 
 import { getContestById } from "@/apis/contests";
 import { getTournamentById } from "@/apis/tournament";
@@ -48,8 +50,15 @@ function DraftRoundPage() {
   const userDetails = useSelector((s) => s.user);
   const isMobileView = useSelector((s) => s.root.isMobileView);
   useSocketEvents();
-  const { socket, roomStatuses, chatUnreadCount } = useDraftRound();
+  const {
+    socket,
+    notifications,
+    roomStatuses,
+    chatUnreadCount,
+    setRoomStatuses,
+  } = useDraftRound();
 
+  const removeNotificationTimeout = useRef(null);
   const [activeTab, setActiveTab] = useState(tabsEnum.wishlist);
   const [loading, setLoading] = useState(true);
   const [showDraftRoundCompleted, setShowDraftRoundCompleted] = useState(false);
@@ -57,6 +66,11 @@ function DraftRoundPage() {
   const [tournamentDetails, setTournamentDetails] = useState({});
   const [playerPoints, setPlayerPoints] = useState([]);
   const [tournamentPlayers, setTournamentPlayers] = useState([]);
+  const [notificationMsg, setNotificationMsg] = useState({
+    show: false,
+    message: "",
+  });
+  const [showHowItWorks, setShowHowItWorks] = useState(false);
 
   const { tournamentId, contestId } = params;
   const currentUserTeam = contestDetails.teams?.length
@@ -130,8 +144,13 @@ function DraftRoundPage() {
     socket.on(socketEventsEnum.paused, (data) => {
       setContestDetails((p) => ({
         ...p,
-        draftRound: { ...p.draftRound, paused: data.paused || true },
+        draftRound: {
+          ...p.draftRound,
+          paused: data.paused || true,
+          turnTimestamp: null,
+        },
       }));
+      setRoomStatuses((p) => ({ ...p, turnTimestamp: null }));
     });
 
     socket.on(socketEventsEnum.resumed, (data) => {
@@ -182,6 +201,25 @@ function DraftRoundPage() {
   }, [roomStatuses.turn, roomStatuses.turnDir]);
 
   useEffect(() => {
+    if (notifications.length) {
+      const lastMsg = notifications[notifications.length - 1].title;
+
+      if (lastMsg && !lastMsg.endsWith("turn!")) {
+        clearTimeout(removeNotificationTimeout.current);
+
+        setNotificationMsg({
+          show: true,
+          message: lastMsg,
+        });
+
+        removeNotificationTimeout.current = setTimeout(() => {
+          setNotificationMsg({ show: false });
+        }, 4000);
+      }
+    }
+  }, [notifications]);
+
+  useEffect(() => {
     handleSocketEvents();
 
     return () => {
@@ -209,6 +247,9 @@ function DraftRoundPage() {
   ) : (
     <div className={`${styles.container}`}>
       {showDraftRoundCompleted && <DraftRoundCompleted />}
+      {showHowItWorks && (
+        <DraftPageInfoModal onClose={() => setShowHowItWorks(false)} />
+      )}
 
       <div className={styles.mainLeft}>
         <BreadCrumbs
@@ -257,17 +298,26 @@ function DraftRoundPage() {
           <div className="spacious-head">
             <p className="heading">Draft Round</p>
 
-            {contestDetails.createdBy?._id === userDetails._id ? (
-              contestDetails.draftRound.paused ? (
-                <Button onClick={handleResumeDraftRound}>Resume round</Button>
+            <div className="flex gap-md">
+              <p
+                className="text-button"
+                onClick={() => setShowHowItWorks(true)}
+              >
+                How it works
+              </p>
+
+              {contestDetails.createdBy?._id === userDetails._id ? (
+                contestDetails.draftRound.paused ? (
+                  <Button onClick={handleResumeDraftRound}>Resume round</Button>
+                ) : (
+                  <Button onClick={handlePauseDraftRound} outlineButton>
+                    Pause round
+                  </Button>
+                )
               ) : (
-                <Button onClick={handlePauseDraftRound} outlineButton>
-                  Pause round
-                </Button>
-              )
-            ) : (
-              ""
-            )}
+                ""
+              )}
+            </div>
           </div>
           {!roomStatuses.connected && (
             <div className={styles.information}>
@@ -295,6 +345,14 @@ function DraftRoundPage() {
             <p>{contestDetails.createdBy?.name}</p>
           </div>
         </div>
+
+        {notificationMsg.show ? (
+          <InfoMessage message={notificationMsg.message} />
+        ) : (
+          <div>
+            <div style={{ height: "43px" }} />
+          </div>
+        )}
 
         <Participants
           playerPoints={playerPoints}

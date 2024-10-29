@@ -277,6 +277,18 @@
   }
 }
 
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+  padding-left: $spacing-md;
+
+  li {
+    line-height: 1.7;
+    color: $color-desc;
+  }
+}
+
 .key-value {
   display: flex;
   gap: $spacing-xs;

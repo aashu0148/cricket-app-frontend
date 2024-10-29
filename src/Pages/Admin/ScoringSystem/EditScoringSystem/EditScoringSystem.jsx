@@ -299,6 +299,13 @@ export default function EditScoringSystem({ createMode = false }) {
       fieldingErrors.directHitRunOutPoints =
         "Direct hit run-out points must be a positive number.";
     }
+    if (
+      isNaN(fieldingData.assistedRunOutPoints) ||
+      fieldingData.assistedRunOutPoints < 0
+    ) {
+      fieldingErrors.assistedRunOutPoints =
+        "Assisted run-out points must be a positive number.";
+    }
 
     const isNormalError = Object.keys(errs).length > 0;
     const isBattingError = Object.keys(battingErrors).length > 0;
@@ -1211,6 +1218,19 @@ export default function EditScoringSystem({ createMode = false }) {
               }))
             }
             error={errors.fielding.directHitRunOutPoints}
+          />
+          <InputControl
+            placeholder="Type here"
+            numericInput
+            label="Assisted Run Out Points"
+            value={fieldingData.assistedRunOutPoints}
+            onChange={(e) =>
+              setFieldingData((prev) => ({
+                ...prev,
+                assistedRunOutPoints: e.target.valueAsNumber,
+              }))
+            }
+            error={errors.fielding.assistedRunOutPoints}
           />
         </div>
       </div>

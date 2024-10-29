@@ -87,8 +87,9 @@ function Participants({
     const lastTurnOn = lastTurnTimestamp
       ? new Date(lastTurnTimestamp).getTime()
       : Date.now();
+
     setTargetDate(new Date(lastTurnOn + 119 * 1000)); // around 120 sec
-  }, [activeTurnUserId, turnDir]);
+  }, [activeTurnUserId, turnDir, lastTurnTimestamp]);
 
   return (
     <div className={`flex-col-xs ${styles.container}`}>
