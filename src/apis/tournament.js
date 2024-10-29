@@ -84,6 +84,7 @@ export const refreshTournament = async (id) => {
     defaultErrorMessage: "Failed to refresh tournament",
     fetchWrapperOptions: {
       path,
+      requestType: "POST",
     },
   });
 };
@@ -163,7 +164,6 @@ export const getAllMatchesForTournament = async (tournamentId) => {
   });
 };
 
-
 export const deleteMatch = async (matchId) => {
   const path = `/matches/${matchId}`;
 
@@ -172,8 +172,7 @@ export const deleteMatch = async (matchId) => {
     defaultErrorMessage: "Failed to delete the match",
     fetchWrapperOptions: {
       path,
-      requestType : "DELETE"
+      requestType: "DELETE",
     },
   });
 };
-

@@ -277,7 +277,7 @@ function DraftRoundPage() {
 
           <div className={styles.information}>
             <label>Status:</label>
-            <p>{roomStatuses.status}</p>
+            <p style={{ textTransform: "capitalize" }}>{roomStatuses.status}</p>
           </div>
 
           <div className={styles.information}>
