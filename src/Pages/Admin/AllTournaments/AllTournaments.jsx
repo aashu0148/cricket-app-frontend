@@ -106,6 +106,7 @@ export default function AllTournaments() {
           {allTournaments.map((tournament) => (
             <TournamentCard
               key={tournament._id}
+              showMatchSchedules
               tournamentData={tournament}
               onEdit={handleEditTournament}
               onDeleted={fetchTournaments}
