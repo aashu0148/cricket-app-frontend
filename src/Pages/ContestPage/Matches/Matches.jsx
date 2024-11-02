@@ -110,7 +110,7 @@ function Matches({ completedMatches = [], players = [] }) {
           : player.role === playerRoleEnum.BOWLER
           ? ballIcon
           : ""}
-        {player.slug.split("-").join(" ")} <span>[{player.teamName}]</span>
+        {player.slug?.split("-")?.join(" ")} <span>[{player.teamName}]</span>
       </td>
     );
   };
