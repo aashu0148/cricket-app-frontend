@@ -6,6 +6,8 @@ import PageNotFound from "@/Components/PageNotFound/PageNotFound";
 import Logo from "@/Components/Navbar/Logo";
 
 import { getScoringSystemById } from "@/apis/scoringSystem";
+import batsman from "@/assets/images/batsman.jpg";
+import keeper from "@/assets/images/keeper.jpg";
 
 import styles from "./ScoringSystemView.module.scss";
 
@@ -38,33 +40,46 @@ const ScoringSystemView = () => {
       <Logo />
       <h1 className={styles.title}>{name} Scoring System</h1>
 
-      {/* Batting Section */}
-      <div className={styles.section}>
-        <h2>Batting</h2>
-
+      <div className={styles.main}>
         <div className={styles.card}>
           <h3>Average Match Scoring Rate (A.M.S.R)</h3>
           <p>
             Calculate the average scoring rate of the match: For example, if 300
             runs are scored in 40 overs in the match, then the average scoring
-            rate is (300/240) which is 1.25. The average scoring rate should
-            always be capped off at two decimal points. This is the baseline
-            figure to calculate the Batting Strike Rate Bonus & the Bowling
-            Economy Rate Bonus.
+            rate is (300/240) which is 1.25. The average match scoring rate
+            (A.M.S.R) should always be capped off at two decimal points. This is
+            the baseline figure to calculate the Batting Strike Rate Bonus & the
+            Bowling Economy Rate Bonus.
           </p>
         </div>
 
-        <div className={styles.card}>
+        {/* Batting Section */}
+        <div className={styles.section}>
+          <div className={styles.head}>
+            <h2>Batting points</h2>
+
+            <div className={styles.image}>
+              <img src={batsman} alt="Batsman" />{" "}
+            </div>
+          </div>
+
           <ul className={styles.bigList}>
             <div className="flex-col-xs">
-              <li className={styles.title}>Run Points:</li>
-              <p>
-                1 run =<strong>{batting.runPoints} point</strong>
-              </p>
+              <li className={styles.title}>Run:</li>
+
+              <ul>
+                {batting.run.map((rule) => (
+                  <li style={{ listStyle: "circle" }} key={rule._id}>
+                    If A.M.S.R is between (<strong>{rule.minRate}</strong> and{" "}
+                    <strong>{rule.maxRate}</strong>) runs per ball then, every
+                    run: {rule.points} points
+                  </li>
+                ))}
+              </ul>
             </div>
 
             <div className="flex-col-xs">
-              <li className={styles.title}>Boundary Points:</li>
+              <li className={styles.title}>Boundary:</li>
               <p>
                 Batters earn extra points for hitting boundaries (fours and
                 sixes). These points are determined based on the match's Average
@@ -74,9 +89,8 @@ const ScoringSystemView = () => {
               <ul>
                 {batting.boundaryPoints.map((boundary) => (
                   <li style={{ listStyle: "circle" }} key={boundary._id}>
-                    If the average scoring rate of the match is between (
-                    <strong>{boundary.minRate}</strong> and{" "}
-                    <strong>{boundary.maxRate}</strong>) runs per ball then,
+                    If A.M.S.R is between (<strong>{boundary.minRate}</strong>{" "}
+                    and <strong>{boundary.maxRate}</strong>) runs per ball then,
                     <br />
                     Every four hit: {boundary.four} points
                     <br />
@@ -96,17 +110,15 @@ const ScoringSystemView = () => {
               <ul>
                 {batting.runMilestoneBonus.milestones.map((milestone, i) => (
                   <li key={milestone._id}>
-                    runs {/* {milestone.runsUpto == 0 ? "= " : "<= "} */}
-                    <strong>
-                      {i > 0
-                        ? `${
-                            batting.runMilestoneBonus.milestones[i - 1]
-                              .runsUpto + 1
-                          } - `
-                        : ""}{" "}
-                      {milestone.runsUpto}{" "}
-                    </strong>
-                    : <strong>{milestone.points} points</strong>
+                    ({" "}
+                    {i > 0
+                      ? `${
+                          batting.runMilestoneBonus.milestones[i - 1].runsUpto +
+                          1
+                        } - `
+                      : ""}{" "}
+                    {milestone.runsUpto} ) runs :{" "}
+                    <strong>{milestone.points} points</strong>
                   </li>
                 ))}
               </ul>
@@ -133,7 +145,7 @@ const ScoringSystemView = () => {
               <p>
                 Multiplier * (Runs Scored - (X * Balls))
                 <br />
-                Here X is the average scoring rate of the match.
+                Here X is the average match scoring rate (A.M.S.R)
                 <br />
                 The multiplier depends on the number of balls the batter faces
                 in the match and their batting position.
@@ -194,13 +206,17 @@ const ScoringSystemView = () => {
             </div>
           </ul>
         </div>
-      </div>
 
-      {/* Bowling Section */}
-      <div className={styles.section}>
-        <h2>Bowling</h2>
+        {/* Bowling Section */}
+        <div className={styles.section}>
+          <div className={styles.head}>
+            <h2>Bowling points</h2>
 
-        <div className={styles.card}>
+            <div className={styles.image}>
+              <img src={keeper} alt="Batsman" />{" "}
+            </div>
+          </div>
+
           <ul className={styles.bigList}>
             {/* Economy Rate Bonus */}
             <div className="flex-col-xs">
@@ -213,7 +229,7 @@ const ScoringSystemView = () => {
               <p>
                 Multiplier * ((X * Balls) - Runs Conceded)
                 <br />
-                Here X is the average scoring rate of the match.
+                Here X is the average match scoring rate (A.M.S.R)
                 <br />
                 The multiplier is dependent on the number of balls bowled by the
                 bowler in the match.
@@ -242,7 +258,7 @@ const ScoringSystemView = () => {
 
             {/* Wicket Points */}
             <div className="flex-col-xs">
-              <li className={styles.title}>Wicket Points:</li>
+              <li className={styles.title}>Wicket:</li>
               <p>
                 Bowlers earn points for each wicket taken, and the points vary
                 based on the dismissed batter's batting position. The following
@@ -272,9 +288,24 @@ const ScoringSystemView = () => {
               </ul>
             </div>
 
+            <div className="flex-col-xs">
+              <li className={styles.title}>Wicket Points Multiplier:</li>
+
+              <ul>
+                {bowling.wicketPointsMultiplier.map((rule) => (
+                  <li style={{ listStyle: "circle" }} key={rule._id}>
+                    If A.M.S.R is between (<strong>{rule.minRate}</strong> and{" "}
+                    <strong>{rule.maxRate}</strong>) then final wicket points
+                    will be (<strong> {rule.multiplier} * X</strong>), where X
+                    is above calculated wicket points
+                  </li>
+                ))}
+              </ul>
+            </div>
+
             {/* Dot Ball Points */}
             <div className="flex-col-xs">
-              <li className={styles.title}>Dot Ball Points:</li>
+              <li className={styles.title}>Dot Ball:</li>
               <p>
                 Bowlers earn points for delivering dot balls (balls that result
                 in no runs scored by the batting team). The points awarded
@@ -282,7 +313,7 @@ const ScoringSystemView = () => {
               </p>
               {bowling.dotBallPoints.map((dotBall) => (
                 <p key={dotBall._id}>
-                  If the average scoring rate of the match is between{" "}
+                  If A.M.S.R is between{" "}
                   <strong>
                     ( {dotBall.minRate} and {dotBall.maxRate})
                   </strong>{" "}
@@ -314,30 +345,41 @@ const ScoringSystemView = () => {
             </div>
           </ul>
         </div>
-      </div>
 
-      {/* Fielding Section */}
-      <div className={styles.section}>
-        <h2>Fielding</h2>
+        {/* Fielding Section */}
+        <div className={styles.section}>
+          <div className={styles.head}>
+            <h2>Fielding points</h2>
 
-        <div className={styles.card}>
-          <p>
-            Fielders earn points for their contributions in the field, including
-            catches, stumpings, and direct-hit run-outs. The points awarded for
-            fielding actions are as follows:
-          </p>
+            <div className={styles.image}>
+              <img src={keeper} alt="Batsman" />{" "}
+            </div>
+          </div>
 
-          <p>
-            <strong>Catches:</strong> {fielding.catchPoints} points per catch
-          </p>
-          <p>
-            <strong>Stumpings:</strong> {fielding.stumpingPoints} points per
-            stumping
-          </p>
-          <p>
-            <strong>Direct-hit Run Outs:</strong>{" "}
-            {fielding.directHitRunOutPoints} points per direct-hit run-out
-          </p>
+          <ul className={styles.bigList}>
+            <div className="flex-col-xs">
+              <p>
+                Fielders earn points for their contributions in the field,
+                including catches, stumpings, and direct-hit run-outs. The
+                points awarded for fielding actions are as follows:
+              </p>
+
+              <p>
+                <strong>Catches:</strong> {fielding.catchPoints} points
+              </p>
+              <p>
+                <strong>Stumpings:</strong> {fielding.stumpingPoints} points
+              </p>
+              <p>
+                <strong>Direct-hit Run Outs:</strong>{" "}
+                {fielding.directHitRunOutPoints} points
+              </p>
+              <p>
+                <strong>Assisted Run Outs:</strong>{" "}
+                {fielding.assistedRunOutPoints} points
+              </p>
+            </div>
+          </ul>
         </div>
       </div>
     </div>

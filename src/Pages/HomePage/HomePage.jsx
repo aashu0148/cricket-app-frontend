@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 import PageLoader from "@/Components/PageLoader/PageLoader";
 import TournamentCard from "@/Components/TournamentCard/TournamentCard";
@@ -10,6 +11,8 @@ import { getJoinedActiveContests } from "@/apis/contests";
 import styles from "./HomePage.module.scss";
 
 function HomePage() {
+  const userDetails = useSelector((s) => s.user);
+
   const [allTournaments, setAllTournaments] = useState([]);
   const [joinedContests, setJoinedContests] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -47,6 +50,10 @@ function HomePage() {
     <PageLoader fullPage />
   ) : (
     <div className={`page-container ${styles.container}`}>
+      <p className="heading-big" style={{ fontWeight: "400" }}>
+        Welcome {userDetails.name}
+      </p>
+
       {joinedContests.length > 0 && (
         <section className={styles.section}>
           <p className="heading">Joined Contests</p>
