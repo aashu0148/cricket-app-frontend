@@ -35,6 +35,17 @@
   flex-direction: column;
   justify-content: center;
 
+  .saveHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background-color: $bg;
+    padding: $spacing-xs;
+  }
+
   .section {
     margin-bottom: 2rem;
     position: relative;

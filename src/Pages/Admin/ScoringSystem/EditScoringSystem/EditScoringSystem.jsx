@@ -111,8 +111,21 @@ export default function EditScoringSystem({ createMode = false }) {
     if (!systemName) errs.name = "Enter system name";
 
     // Batting validation
-    if (isNaN(battingData.runPoints) || battingData.runPoints < 0) {
-      battingErrors.runPoints = "Run points must be a positive number.";
+    if (battingData.run) {
+      battingData.run.forEach((rule, index) => {
+        if (isNaN(rule.minRate) || rule.minRate < 0) {
+          battingErrors[`run_${index}_minRate`] =
+            "Minimum rate must be 0 or higher.";
+        }
+        if (isNaN(rule.maxRate) || rule.maxRate < rule.minRate) {
+          battingErrors[`run_${index}_maxRate`] =
+            "Maximum rate must be greater than or equal to the minimum rate.";
+        }
+        if (isNaN(rule.points) || rule.points < 0) {
+          battingErrors[`run_${index}_points`] =
+            "Points must be a positive number.";
+        }
+      });
     }
 
     if (battingData.boundaryPoints) {
@@ -218,6 +231,22 @@ export default function EditScoringSystem({ createMode = false }) {
         ) {
           bowlingErrors[`wicketPoints_${index}_incrementedPoints`] =
             "Incremented points must be a positive number.";
+        }
+      });
+    }
+    if (bowlingData.wicketPointsMultiplier) {
+      bowlingData.wicketPointsMultiplier.forEach((rule, index) => {
+        if (isNaN(rule.minRate) || rule.minRate < 0) {
+          battingErrors[`wicketPointsMultiplier_${index}_minRate`] =
+            "Minimum rate must be 0 or higher.";
+        }
+        if (isNaN(rule.maxRate) || rule.maxRate < rule.minRate) {
+          battingErrors[`wicketPointsMultiplier_${index}_maxRate`] =
+            "Maximum rate must be greater than or equal to the minimum rate.";
+        }
+        if (isNaN(rule.multiplier) || rule.multiplier < 0) {
+          battingErrors[`wicketPointsMultiplier_${index}_multiplier`] =
+            "Multiplier must be a positive number.";
         }
       });
     }
@@ -401,22 +430,84 @@ export default function EditScoringSystem({ createMode = false }) {
   const battingSection = (
     <div className={styles.section}>
       <h2 className={styles.mainHeading}>Batting</h2>
+
       <div className={styles.subSection}>
-        <InputControl
-          placeholder="Type here"
-          numericInput
-          label="Run points"
-          value={battingData.runPoints}
-          onChange={(e) =>
-            setBattingData((prev) => ({
-              ...prev,
-              runPoints: e.target.valueAsNumber,
+        <h3 className={styles.subHeading}>Run Points</h3>
+        {battingData.run?.map((run, index) => (
+          <div key={index} className={styles.subSection_row}>
+            <InputControl
+              placeholder="Type here"
+              numericInput
+              label="Points"
+              value={run.points}
+              onChange={(e) =>
+                handleBattingChange({
+                  val: e.target.valueAsNumber,
+                  field: "run",
+                  subField: "points",
+                  index,
+                })
+              }
+              error={errors.batting[`run_${index}_points`]}
+            />
+            <InputControl
+              placeholder="Type here"
+              numericInput
+              label="Min A.M.S.R"
+              value={run.minRate}
+              onChange={(e) =>
+                handleBattingChange({
+                  val: e.target.valueAsNumber,
+                  field: "run",
+                  subField: "minRate",
+                  index,
+                })
+              }
+              error={errors.batting[`run_${index}_minRate`]}
+            />
+            <InputControl
+              placeholder="Type here"
+              numericInput
+              label="Max A.M.S.R"
+              value={run.maxRate}
+              onChange={(e) =>
+                handleBattingChange({
+                  val: e.target.valueAsNumber,
+                  field: "run",
+                  subField: "maxRate",
+                  index,
+                })
+              }
+              error={errors.batting[`run_${index}_maxRate`]}
+            />
+            <div
+              className={`icon ${styles.deleteIcon}`}
+              onClick={() =>
+                setBattingData((p) => ({
+                  ...p,
+                  run: p.run.filter((_e, i) => i !== index),
+                }))
+              }
+            >
+              <Trash2 color="red" />
+            </div>
+          </div>
+        ))}
+        <Button
+          className={styles.link}
+          onClick={() =>
+            setBattingData((p) => ({
+              ...p,
+              run: [...p.run, {}],
             }))
           }
-          error={errors.batting.runPoints}
-          labelInfo={infoTexts.runPoints}
-        />
+          outlineButton
+        >
+          + ADD
+        </Button>
+      </div>
 
+      <div className={styles.subSection}>
         <h3 className={styles.subHeading}>Boundary Points</h3>
         {battingData.boundaryPoints?.map((boundary, index) => (
           <div key={index} className={styles.subSection_row}>
@@ -886,6 +977,86 @@ export default function EditScoringSystem({ createMode = false }) {
       </div>
 
       <div className={styles.subSection}>
+        <h3 className={styles.subHeading}>Wicket Points Multiplier</h3>
+        {bowlingData.wicketPointsMultiplier?.map((rule, index) => (
+          <div key={index} className={styles.subSection_row}>
+            <InputControl
+              placeholder="Type here"
+              numericInput
+              label="Multiplier"
+              value={rule.multiplier}
+              onChange={(e) =>
+                handleBowlingChange({
+                  val: e.target.valueAsNumber,
+                  field: "wicketPointsMultiplier",
+                  subField: "multiplier",
+                  index,
+                })
+              }
+              error={
+                errors.batting[`wicketPointsMultiplier_${index}_multiplier`]
+              }
+            />
+            <InputControl
+              placeholder="Type here"
+              numericInput
+              label="Min A.M.S.R"
+              value={rule.minRate}
+              onChange={(e) =>
+                handleBowlingChange({
+                  val: e.target.valueAsNumber,
+                  field: "wicketPointsMultiplier",
+                  subField: "minRate",
+                  index,
+                })
+              }
+              error={errors.batting[`wicketPointsMultiplier_${index}_minRate`]}
+            />
+            <InputControl
+              placeholder="Type here"
+              numericInput
+              label="Max A.M.S.R"
+              value={rule.maxRate}
+              onChange={(e) =>
+                handleBowlingChange({
+                  val: e.target.valueAsNumber,
+                  field: "wicketPointsMultiplier",
+                  subField: "maxRate",
+                  index,
+                })
+              }
+              error={errors.batting[`wicketPointsMultiplier_${index}_maxRate`]}
+            />
+            <div
+              className={`icon ${styles.deleteIcon}`}
+              onClick={() =>
+                setBowlingData((p) => ({
+                  ...p,
+                  wicketPointsMultiplier: p.wicketPointsMultiplier.filter(
+                    (_e, i) => i !== index
+                  ),
+                }))
+              }
+            >
+              <Trash2 color="red" />
+            </div>
+          </div>
+        ))}
+        <Button
+          className={styles.link}
+          onClick={() =>
+            setBowlingData((p) => ({
+              ...p,
+              wicketPointsMultiplier: [...p.wicketPointsMultiplier, {}],
+            }))
+          }
+          outlineButton
+        >
+          + ADD
+        </Button>
+      </div>
+
+      <div className={styles.subSection}>
         <h3 className={styles.subHeading}>Dot Ball Points</h3>
         {bowlingData.dotBallPoints?.map((dotBall, index) => (
           <div key={dotBall._id + index} className={styles.subSection_row}>
@@ -1290,19 +1461,7 @@ export default function EditScoringSystem({ createMode = false }) {
         </div>
       </div>
 
-      <InputControl
-        placeholder="Enter system name"
-        value={systemName}
-        onChange={(e) => setSystemName(e.target.value)}
-        label="Scoring System Name"
-        error={errors.name}
-      />
-
-      {battingSection}
-      {bowlingSection}
-      {fieldingSection}
-
-      <div className="footer spacious-head">
+      <div className={`${styles.saveHeader}`}>
         <Button
           cancelButton
           onClick={() => navigate(applicationRoutes.scoringSystem)}
@@ -1315,9 +1474,21 @@ export default function EditScoringSystem({ createMode = false }) {
           disabled={submitting}
           useSpinnerWhenDisabled
         >
-          {createMode ? "Create" : "Submit"}
+          {createMode ? "Create" : "Save"}
         </Button>
       </div>
+
+      <InputControl
+        placeholder="Enter system name"
+        value={systemName}
+        onChange={(e) => setSystemName(e.target.value)}
+        label="Scoring System Name"
+        error={errors.name}
+      />
+
+      {battingSection}
+      {bowlingSection}
+      {fieldingSection}
     </div>
   );
 }
