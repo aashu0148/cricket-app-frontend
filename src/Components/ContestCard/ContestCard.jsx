@@ -19,6 +19,15 @@ import { applicationRoutes } from "@/utils/constants";
 
 import styles from "./ContestCard.module.scss";
 
+export function FillerContestCard() {
+  return (
+    <div
+      className={styles.container}
+      style={{ padding: "0", opacity: "0", pointerEvents: "none" }}
+    />
+  );
+}
+
 function ContestCard({ className = "", contestData, onJoined }) {
   const navigate = useNavigate();
 

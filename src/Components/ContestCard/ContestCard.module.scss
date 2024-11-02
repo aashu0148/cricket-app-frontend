@@ -1,10 +1,12 @@
 @import "@/styles/variables";
 
 .container {
+  width: 380px;
+  flex-grow: 1;
   padding: $spacing-md;
   display: flex;
   flex-direction: column;
-  gap: $spacing-lg;
+  gap: $spacing-md;
   border-radius: 10px;
   background-color: $bg-200;
 
@@ -58,7 +60,7 @@
     white-space: pre-wrap;
 
     display: -webkit-box;
-    -webkit-line-clamp: 6;
+    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -104,6 +106,46 @@
         font-size: $text-sm;
         font-weight: 500;
         color: $color-title;
+      }
+    }
+  }
+
+  @media (max-width: $breakpoint-md) {
+    width: 350px;
+    padding: $spacing-sm;
+    gap: $spacing-sm;
+
+    .title {
+      font-size: $text-lg;
+    }
+
+    .privateTag {
+      svg {
+        height: 14px;
+        width: 14px;
+      }
+
+      p {
+        font-size: $text-xs;
+      }
+    }
+
+    .tournament {
+      font-size: $text-sm;
+    }
+
+    .desc {
+      font-size: $text-xs;
+      -webkit-line-clamp: 4;
+    }
+
+    .information {
+      label {
+        font-size: $text-xs;
+      }
+
+      p {
+        font-size: $text-sm;
       }
     }
   }

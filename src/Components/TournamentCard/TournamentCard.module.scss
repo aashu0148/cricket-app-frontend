@@ -47,6 +47,24 @@
   }
 
   .section {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
+
+    & > h3 {
+      font-size: $text-lg;
+    }
+
+    .contestCards {
+      display: flex;
+      gap: $spacing-sm;
+      flex-wrap: wrap;
+
+      .contestCard {
+        background-color: $bg;
+      }
+    }
+
     .matchCards {
       width: 100%;
       height: 360px;

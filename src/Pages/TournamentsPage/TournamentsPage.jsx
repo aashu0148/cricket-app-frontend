@@ -38,7 +38,11 @@ function TournamentsPage() {
 
       <div className={`cards gap-2xl`}>
         {allTournaments.map((tournament) => (
-          <TournamentCard key={tournament._id} tournamentData={tournament} />
+          <TournamentCard
+            key={tournament._id}
+            showMatchSchedules
+            tournamentData={tournament}
+          />
         ))}
       </div>
     </div>

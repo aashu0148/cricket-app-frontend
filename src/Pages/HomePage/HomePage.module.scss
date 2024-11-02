@@ -1,6 +1,18 @@
 @import "@/styles/variables";
 
 .container {
+  .greetingsBox {
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .greetings {
+    font-size: $text-3xl;
+    font-weight: 500;
+    width: fit-content;
+  }
+
   .section {
     display: flex;
     flex-direction: column;
@@ -14,6 +26,12 @@
         width: 400px;
         align-self: stretch;
       }
+    }
+  }
+
+  @media (max-width: $breakpoint-md) {
+    .greetings {
+      font-size: $text-xl;
     }
   }
 }

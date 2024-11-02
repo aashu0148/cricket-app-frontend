@@ -9,6 +9,7 @@ import { getOngoingUpcomingTournaments } from "@/apis/tournament";
 import { getJoinedActiveContests } from "@/apis/contests";
 
 import styles from "./HomePage.module.scss";
+import LineAnimate from "@/Components/LineAnimate/LineAnimate";
 
 function HomePage() {
   const userDetails = useSelector((s) => s.user);
@@ -50,9 +51,12 @@ function HomePage() {
     <PageLoader fullPage />
   ) : (
     <div className={`page-container ${styles.container}`}>
-      <p className="heading-big" style={{ fontWeight: "400" }}>
-        Welcome {userDetails.name}
-      </p>
+      <div className={styles.greetingsBox}>
+        <p className={styles.greetings} style={{ fontWeight: "400" }}>
+          Welcome, {userDetails.name}!
+        </p>
+        <LineAnimate style={{ width: "90px" }} />
+      </div>
 
       {joinedContests.length > 0 && (
         <section className={styles.section}>

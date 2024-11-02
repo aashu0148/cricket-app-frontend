@@ -18,10 +18,12 @@ import {
 import { getTooltipAttributes } from "@/utils/tooltip";
 
 import styles from "./TournamentCard.module.scss";
+import ContestCard, { FillerContestCard } from "../ContestCard/ContestCard";
 
 function TournamentCard({
   tournamentData = {},
   isAdmin = false,
+  showMatchSchedules = false,
   onEdit,
   onDeleted,
 }) {
@@ -64,7 +66,7 @@ function TournamentCard({
     setIsActive(tournamentData.active);
   }, [tournamentData.active]);
 
-  const { season, longName, startDate, endDate, allMatches } = tournamentData;
+  const { longName, startDate, endDate, allMatches } = tournamentData;
 
   const isCompleted = new Date(tournamentData.endDate) < new Date();
   const isUpcoming = new Date(tournamentData.startDate) > new Date();
@@ -104,7 +106,7 @@ function TournamentCard({
                 )
               }
             >
-              Explore Contests
+              Explore All Contests
             </Button>
           )}
         </div>
@@ -117,23 +119,45 @@ function TournamentCard({
         </p>
       </div>
 
-      <div className={styles.section}>
-        <h3 className={`heading`}>Matches:</h3>
+      {tournamentData.featuredLeagues?.length > 0 && (
+        <div className={styles.section}>
+          <h3 className={`heading`}>Featured Contests</h3>
 
-        <div className={`${styles.matchCards}`}>
-          {allMatches
-            .sort((a, b) =>
-              new Date(a.startDate) < new Date(b.startDate) ? -1 : 1
-            )
-            .map((match) => (
-              <MatchCard key={match.matchId} matchData={match} />
+          <div className={styles.contestCards}>
+            {tournamentData.featuredLeagues?.map((contest) => (
+              <ContestCard
+                key={contest._id}
+                contestData={contest}
+                className={styles.contestCard}
+              />
             ))}
 
-          {new Array(4).fill(1).map((_, i) => (
-            <FillerMatchCard key={i} />
-          ))}
+            {new Array(3).fill(1).map((_, i) => (
+              <FillerContestCard key={i} />
+            ))}
+          </div>
         </div>
-      </div>
+      )}
+
+      {showMatchSchedules && (
+        <div className={styles.section}>
+          <h3 className={`heading`}>Matches Schedule</h3>
+
+          <div className={`${styles.matchCards}`}>
+            {allMatches
+              .sort((a, b) =>
+                new Date(a.startDate) < new Date(b.startDate) ? -1 : 1
+              )
+              .map((match) => (
+                <MatchCard key={match.matchId} matchData={match} />
+              ))}
+
+            {new Array(4).fill(1).map((_, i) => (
+              <FillerMatchCard key={i} />
+            ))}
+          </div>
+        </div>
+      )}
 
       {isAdmin && (
         <div className="spacious-head">
