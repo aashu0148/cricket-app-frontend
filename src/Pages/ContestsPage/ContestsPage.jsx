@@ -88,7 +88,7 @@ function ContestsPage() {
       ))}
     </div>
   ) : (
-    <p className="title">No Context present!</p>
+    <p className="title">No Contests present!</p>
   );
 
   const joinedContestsTab = (
