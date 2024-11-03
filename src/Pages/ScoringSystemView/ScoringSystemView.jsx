@@ -44,12 +44,10 @@ const ScoringSystemView = () => {
         <div className={styles.card}>
           <h3>Average Match Scoring Rate (A.M.S.R)</h3>
           <p>
-            Calculate the average scoring rate of the match: For example, if 300
-            runs are scored in 40 overs in the match, then the average scoring
-            rate is (300/240) which is 1.25. The average match scoring rate
-            (A.M.S.R) should always be capped off at two decimal points. This is
-            the baseline figure to calculate the Batting Strike Rate Bonus & the
-            Bowling Economy Rate Bonus.
+            If 300 runs are scored in full 40 overs in the match, then the
+            average scoring rate is (300/240) which is 1.25 runs per ball, this
+            becomes the average match scoring rate (A.M.S.R). This is the
+            baseline figure to calculate Batting & Bowling points.
           </p>
         </div>
 
@@ -65,7 +63,7 @@ const ScoringSystemView = () => {
 
           <ul className={styles.bigList}>
             <div className="flex-col-xs">
-              <li className={styles.title}>Run:</li>
+              <li className={styles.title}>Run points:</li>
 
               <ul>
                 {batting.run.map((rule) => (
@@ -82,8 +80,7 @@ const ScoringSystemView = () => {
               <li className={styles.title}>Boundary:</li>
               <p>
                 Batters earn extra points for hitting boundaries (fours and
-                sixes). These points are determined based on the match's Average
-                Match Scoring Rate (A.M.S.R):
+                sixes).
               </p>
 
               <ul>
@@ -101,11 +98,11 @@ const ScoringSystemView = () => {
             </div>
 
             <div className="flex-col-xs">
-              <li className={styles.title}>Runs scored milestone bonus:</li>
+              <li className={styles.title}>Run milestone bonus:</li>
               <p>
-                Players earn milestone bonuses for reaching certain run
-                thresholds during their innings. These bonuses are awarded based
-                on the total runs they score:
+                Players earn milestone bonuses for reaching certain run points
+                threshold during their innings. These bonuses are awarded based
+                on the total run points they score:
               </p>
               <ul>
                 {batting.runMilestoneBonus.milestones.map((milestone, i) => (
@@ -113,18 +110,18 @@ const ScoringSystemView = () => {
                     ({" "}
                     {i > 0
                       ? `${
-                          batting.runMilestoneBonus.milestones[i - 1].runsUpto +
-                          1
+                          batting.runMilestoneBonus.milestones[i - 1]
+                            .runPointsUpto + 1
                         } - `
                       : ""}{" "}
-                    {milestone.runsUpto} ) runs :{" "}
+                    {milestone.runPointsUpto} ) runs :{" "}
                     <strong>{milestone.points} points</strong>
                   </li>
                 ))}
               </ul>
               <p>
-                There will be no negative runs scored milestone bonus for
-                batters batting in positions{" "}
+                There will be no negative run milestone bonus for batters
+                batting in positions{" "}
                 <strong>
                   {batting.runMilestoneBonus.negativeRunsExemptPositions.join(
                     ", "
