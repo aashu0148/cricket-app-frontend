@@ -114,7 +114,7 @@ const ScoringSystemView = () => {
                             .runPointsUpto + 1
                         } - `
                       : ""}{" "}
-                    {milestone.runPointsUpto} ) runs :{" "}
+                    {milestone.runPointsUpto} ) run points :{" "}
                     <strong>{milestone.points} points</strong>
                   </li>
                 ))}
