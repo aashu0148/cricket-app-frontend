@@ -611,7 +611,7 @@ export default function EditScoringSystem({ createMode = false }) {
             <InputControl
               placeholder="Type here"
               numericInput
-              label="Runs-points Upto"
+              label="Run-points Upto"
               value={milestone.runPointsUpto}
               onChange={(e) =>
                 handleBattingChange({

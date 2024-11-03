@@ -46,14 +46,15 @@ function Matches({ completedMatches = [], players = [] }) {
       ].map((player) => {
         let battingPoints = 0;
         let bowlingPoints = 0;
+        let fieldingPoints = 0;
 
         player.breakdown.forEach((stat) => {
           if (
             [
-              "Runs",
+              "Run points",
               "Fours",
               "Sixes",
-              "Runs scored milestone",
+              "Run milestone",
               "Strike rate bonus",
             ].some((e) => e.toLowerCase() === stat.label.toLowerCase())
           ) {
@@ -61,22 +62,27 @@ function Matches({ completedMatches = [], players = [] }) {
           }
           if (
             [
-              "Catch",
-              "Stumping",
-              "Runout",
               "Dot ball",
-              "Economy rate",
+              "Economy rate bonus",
               "Wicket",
+              "Wicket milestone",
             ].some((e) => e.toLowerCase() === stat.label.toLowerCase())
           ) {
             bowlingPoints += stat.points;
+          }
+          if (
+            ["Catch", "Stumping", "Runout"].some(
+              (e) => e.toLowerCase() === stat.label.toLowerCase()
+            )
+          ) {
+            fieldingPoints += stat.points;
           }
         });
 
         return {
           ...player,
           battingPoints,
-          bowlingPoints,
+          bowlingPoints: bowlingPoints + fieldingPoints,
         };
       });
 
@@ -92,10 +98,28 @@ function Matches({ completedMatches = [], players = [] }) {
         )
         .filter((e, i, self) => self.indexOf(e) === i);
 
+      const order = [
+        "Run points",
+        "Run milestone",
+        "Fours",
+        "Sixes",
+        "Strike rate bonus",
+        "Wicket",
+        "Wicket milestone",
+        "Economy rate bonus",
+        "Dot ball",
+        "Catch",
+        "Run out",
+        "Stumping",
+      ];
+      const remainingLabels = allBreakdownLabels.filter(
+        (e) => !order.some((item) => item.toLowerCase() === e.toLowerCase())
+      );
+
       return {
         ...e,
         playerPoints: allPoints,
-        breakdownLabels: allBreakdownLabels,
+        breakdownLabels: [...order, ...remainingLabels],
       };
     });
   }, [players, completedMatches]);

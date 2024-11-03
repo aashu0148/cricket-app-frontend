@@ -174,20 +174,25 @@ function Participants({
             </div>
             <div className={styles.playersOuter}>
               <div className={styles.players}>
-                {selectedTeam.players.map((player) => (
-                  <PlayerSmallCard
-                    key={player._id}
-                    playerData={player}
-                    isPlayerBreakdownAllowed={completedMatches.length > 0}
-                    isBreakdownVisible={
-                      selectedPLayerIdForBreakdown === player._id
-                    }
-                    onShowBreakdown={() =>
-                      setSelectedPlayerIdForBreakdown(player._id)
-                    }
-                    onHideBreakdown={() => setSelectedPlayerIdForBreakdown("")}
-                  />
-                ))}
+                {selectedTeam.players
+                  .map((e) => ({ ...e, points: e.points || 0 }))
+                  .sort((a, b) => (a.points > b.points ? -1 : 1))
+                  .map((player) => (
+                    <PlayerSmallCard
+                      key={player._id}
+                      playerData={player}
+                      isPlayerBreakdownAllowed={completedMatches.length > 0}
+                      isBreakdownVisible={
+                        selectedPLayerIdForBreakdown === player._id
+                      }
+                      onShowBreakdown={() =>
+                        setSelectedPlayerIdForBreakdown(player._id)
+                      }
+                      onHideBreakdown={() =>
+                        setSelectedPlayerIdForBreakdown("")
+                      }
+                    />
+                  ))}
 
                 {new Array(6).fill(1).map((_, i) => (
                   <FillerPlayerSmallCard key={i} />
