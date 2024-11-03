@@ -30,8 +30,8 @@ const infoTexts = {
       "The maximum average match scoring rate (A.M.S.R.) used to determine the bonus for boundaries.",
   },
   runMilestoneBonus: {
-    runsUpto:
-      "Defines the upper limit of runs for the first milestone where a bonus is applied.",
+    runPointsUpto:
+      "Defines the upper limit of run points for the first milestone where a bonus is applied.",
     points: "Bonus points awarded for reaching the first run milestone.",
     negativeRunsExemptPositions:
       "Batters in these positions will not have negative points for scoring below 10 runs.",
@@ -151,8 +151,8 @@ export default function EditScoringSystem({ createMode = false }) {
 
     if (battingData.runMilestoneBonus) {
       battingData.runMilestoneBonus.milestones.forEach((milestone, index) => {
-        if (isNaN(milestone.runsUpto) || milestone.runsUpto < 0) {
-          battingErrors[`runMilestoneBonus_${index}_runsUpto`] =
+        if (isNaN(milestone.runPointsUpto) || milestone.runPointsUpto < 0) {
+          battingErrors[`runMilestoneBonus_${index}_runPointsUpto`] =
             "Milestone runs must be a positive number.";
         }
       });
@@ -611,20 +611,20 @@ export default function EditScoringSystem({ createMode = false }) {
             <InputControl
               placeholder="Type here"
               numericInput
-              label="Runs Upto"
-              value={milestone.runsUpto}
+              label="Runs-points Upto"
+              value={milestone.runPointsUpto}
               onChange={(e) =>
                 handleBattingChange({
                   val: e.target.valueAsNumber,
                   field: "milestones",
-                  subField: "runsUpto",
+                  subField: "runPointsUpto",
                   index,
                   multipleFields: true,
                   secondField: "runMilestoneBonus",
                 })
               }
-              labelInfo={infoTexts.runMilestoneBonus?.runsUpto}
-              error={errors.batting[`runMilestoneBonus_${index}_runsUpto`]}
+              labelInfo={infoTexts.runMilestoneBonus?.runPointsUpto}
+              error={errors.batting[`runMilestoneBonus_${index}_runPointsUpto`]}
             />
             <InputControl
               placeholder="Type here"
