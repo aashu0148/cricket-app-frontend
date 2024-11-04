@@ -6,6 +6,7 @@ import { Edit2 } from "react-feather";
 import Button from "../Button/Button";
 import Toggle from "../Toggle/Toggle";
 import ConfirmDeleteModal from "../ConfirmDeleteModal/ConfirmDeleteModal";
+import ContestCard, { FillerContestCard } from "../ContestCard/ContestCard";
 import MatchCard, { FillerMatchCard } from "../MatchCard/MatchCard";
 
 import { getDateFormatted, handleAppNavigation } from "@/utils/util";
@@ -18,7 +19,6 @@ import {
 import { getTooltipAttributes } from "@/utils/tooltip";
 
 import styles from "./TournamentCard.module.scss";
-import ContestCard, { FillerContestCard } from "../ContestCard/ContestCard";
 
 function TournamentCard({
   tournamentData = {},

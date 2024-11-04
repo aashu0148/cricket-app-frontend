@@ -34,11 +34,11 @@ function ContestCard({ className = "", contestData, onJoined }) {
   const userDetails = useSelector((s) => s.user);
   const [showJoinContestModal, setShowJoinContestModal] = useState(false);
   const [joining, setJoining] = useState(false);
+  const [contestJoined, setContentJoined] = useState(
+    contestData.teams.some((t) => t.owner?._id === userDetails._id)
+  );
 
   const isOwner = contestData.createdBy?._id === userDetails._id;
-  const isJoined =
-    contestData.createdBy?._id === userDetails._id ||
-    contestData.teams.some((t) => t.owner?._id === userDetails._id);
   const isDraftRoundStarted =
     new Date(contestData.draftRound?.startDate) < new Date();
 
@@ -53,6 +53,8 @@ function ContestCard({ className = "", contestData, onJoined }) {
 
     toast.success("Contest joined successfully");
     if (onJoined) onJoined(res.data);
+
+    setContentJoined(true);
   };
 
   return (
@@ -124,7 +126,7 @@ function ContestCard({ className = "", contestData, onJoined }) {
           </p>
         </div> */}
 
-        {isJoined ? (
+        {contestJoined ? (
           <Button
             outlineButton
             onClick={(e) =>
