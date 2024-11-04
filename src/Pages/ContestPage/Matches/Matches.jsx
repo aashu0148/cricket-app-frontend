@@ -82,7 +82,8 @@ function Matches({ completedMatches = [], players = [] }) {
         return {
           ...player,
           battingPoints,
-          bowlingPoints: bowlingPoints + fieldingPoints,
+          bowlingPoints,
+          fieldingPoints,
         };
       });
 
