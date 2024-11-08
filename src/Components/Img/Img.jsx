@@ -19,35 +19,26 @@ function Img({
   if (!src) src = "";
 
   const originsUsed = useRef({
-    o1: false,
+    o1: isEspnImage ? true : false,
     o2: false,
   });
-  const [imageSrc, setImageSrc] = useState(src);
+  const [imageSrc, setImageSrc] = useState(
+    isEspnImage ? imageOrigins.o1 + src : src
+  );
 
   const computeImageOnError = () => {
-    let newSrc = imageSrc;
+    let newSrc = imageSrc || "";
 
-    if (isEspnImage) {
-      if (originsUsed.current.o1) {
-        newSrc = newSrc.replace(imageOrigins.o1, "");
-        newSrc = imageOrigins.o2 + newSrc;
-        originsUsed.current.o2 = true;
-      }
+    if (isEspnImage && !originsUsed.current.o2) {
+      newSrc = newSrc.replace(imageOrigins.o1, "");
+      newSrc = imageOrigins.o2 + newSrc;
+      originsUsed.current.o2 = true;
     } else if (usePLaceholderUserImageOnError) newSrc = userProfileIcon;
     else if (usePlaceholderImageOnError) newSrc = placeholderImage;
     else if (onError) onError(e);
 
     setImageSrc(newSrc);
   };
-
-  useEffect(() => {
-    if (isEspnImage) {
-      setImageSrc(imageOrigins.o1 + src);
-      originsUsed.current.o1 = true;
-    }
-
-    setImageSrc();
-  }, []);
 
   return (
     <img
