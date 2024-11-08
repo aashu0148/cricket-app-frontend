@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { Clock, Lock } from "react-feather";
 import { useSelector } from "react-redux";
@@ -56,6 +56,12 @@ function ContestCard({ className = "", contestData, onJoined }) {
 
     setContentJoined(true);
   };
+
+  useEffect(() => {
+    setContentJoined(
+      contestData.teams.some((t) => t.owner?._id === userDetails._id)
+    );
+  }, [contestData.teams]);
 
   return (
     <div className={`${className || ""} ${styles.container}`}>

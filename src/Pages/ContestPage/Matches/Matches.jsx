@@ -13,116 +13,118 @@ function Matches({ completedMatches = [], players = [] }) {
   const [selectedMatches, setSelectedMatches] = useState([]);
 
   const parsedMatches = useMemo(() => {
-    return completedMatches.map((e) => {
-      const newPlayerPoints = e.playerPoints.map((p) => {
-        const matchingPlayer =
-          players.find((item) => item.player._id === p.player) || {};
+    return completedMatches
+      .map((e) => {
+        const newPlayerPoints = e.playerPoints.map((p) => {
+          const matchingPlayer =
+            players.find((item) => item.player._id === p.player) || {};
 
-        return {
-          ...matchingPlayer.player,
-          ...p,
-          ...(matchingPlayer.squad || {}),
-        };
-      });
-
-      const batters = newPlayerPoints
-        .filter((e) => e.role === playerRoleEnum.BATTER)
-        .sort((a, b) => (a.slug < b.slug ? -1 : 1));
-      const bowlers = newPlayerPoints
-        .filter((e) => e.role === playerRoleEnum.BOWLER)
-        .sort((a, b) => (a.slug < b.slug ? -1 : 1));
-      const allRounders = newPlayerPoints
-        .filter((e) => e.role === playerRoleEnum.ALLROUNDER)
-        .sort((a, b) => (a.slug < b.slug ? -1 : 1));
-      const remaining = newPlayerPoints
-        .filter((e) => !Object.values(playerRoleEnum).includes(e.role))
-        .sort((a, b) => (a.slug < b.slug ? -1 : 1));
-
-      const allPoints = [
-        ...batters,
-        ...allRounders,
-        ...bowlers,
-        ...remaining,
-      ].map((player) => {
-        let battingPoints = 0;
-        let bowlingPoints = 0;
-        let fieldingPoints = 0;
-
-        player.breakdown.forEach((stat) => {
-          if (
-            [
-              "Run points",
-              "Fours",
-              "Sixes",
-              "Run milestone",
-              "Strike rate bonus",
-            ].some((e) => e.toLowerCase() === stat.label.toLowerCase())
-          ) {
-            battingPoints += stat.points;
-          }
-          if (
-            [
-              "Dot ball",
-              "Economy rate bonus",
-              "Wicket",
-              "Wicket milestone",
-            ].some((e) => e.toLowerCase() === stat.label.toLowerCase())
-          ) {
-            bowlingPoints += stat.points;
-          }
-          if (
-            ["Catch", "Stumping", "Runout"].some(
-              (e) => e.toLowerCase() === stat.label.toLowerCase()
-            )
-          ) {
-            fieldingPoints += stat.points;
-          }
+          return {
+            ...matchingPlayer.player,
+            ...p,
+            ...(matchingPlayer.squad || {}),
+          };
         });
 
+        const batters = newPlayerPoints
+          .filter((e) => e.role === playerRoleEnum.BATTER)
+          .sort((a, b) => (a.slug < b.slug ? -1 : 1));
+        const bowlers = newPlayerPoints
+          .filter((e) => e.role === playerRoleEnum.BOWLER)
+          .sort((a, b) => (a.slug < b.slug ? -1 : 1));
+        const allRounders = newPlayerPoints
+          .filter((e) => e.role === playerRoleEnum.ALLROUNDER)
+          .sort((a, b) => (a.slug < b.slug ? -1 : 1));
+        const remaining = newPlayerPoints
+          .filter((e) => !Object.values(playerRoleEnum).includes(e.role))
+          .sort((a, b) => (a.slug < b.slug ? -1 : 1));
+
+        const allPoints = [
+          ...batters,
+          ...allRounders,
+          ...bowlers,
+          ...remaining,
+        ].map((player) => {
+          let battingPoints = 0;
+          let bowlingPoints = 0;
+          let fieldingPoints = 0;
+
+          player.breakdown.forEach((stat) => {
+            if (
+              [
+                "Run points",
+                "Fours",
+                "Sixes",
+                "Run milestone",
+                "Strike rate bonus",
+              ].some((e) => e.toLowerCase() === stat.label.toLowerCase())
+            ) {
+              battingPoints += stat.points;
+            }
+            if (
+              [
+                "Dot ball",
+                "Economy rate bonus",
+                "Wicket",
+                "Wicket milestone",
+              ].some((e) => e.toLowerCase() === stat.label.toLowerCase())
+            ) {
+              bowlingPoints += stat.points;
+            }
+            if (
+              ["Catch", "Stumping", "Runout"].some(
+                (e) => e.toLowerCase() === stat.label.toLowerCase()
+              )
+            ) {
+              fieldingPoints += stat.points;
+            }
+          });
+
+          return {
+            ...player,
+            battingPoints,
+            bowlingPoints,
+            fieldingPoints,
+          };
+        });
+
+        const allBreakdownLabels = allPoints
+          .reduce(
+            (acc, curr) => [
+              ...acc,
+              ...(curr?.breakdown?.length
+                ? curr.breakdown.map((e) => e.label)
+                : []),
+            ],
+            []
+          )
+          .filter((e, i, self) => self.indexOf(e) === i);
+
+        const order = [
+          "Run points",
+          "Run milestone",
+          "Fours",
+          "Sixes",
+          "Strike rate bonus",
+          "Wicket",
+          "Wicket milestone",
+          "Economy rate bonus",
+          "Dot ball",
+          "Catch",
+          "Run out",
+          "Stumping",
+        ];
+        const remainingLabels = allBreakdownLabels.filter(
+          (e) => !order.some((item) => item.toLowerCase() === e.toLowerCase())
+        );
+
         return {
-          ...player,
-          battingPoints,
-          bowlingPoints,
-          fieldingPoints,
+          ...e,
+          playerPoints: allPoints,
+          breakdownLabels: [...order, ...remainingLabels],
         };
-      });
-
-      const allBreakdownLabels = allPoints
-        .reduce(
-          (acc, curr) => [
-            ...acc,
-            ...(curr?.breakdown?.length
-              ? curr.breakdown.map((e) => e.label)
-              : []),
-          ],
-          []
-        )
-        .filter((e, i, self) => self.indexOf(e) === i);
-
-      const order = [
-        "Run points",
-        "Run milestone",
-        "Fours",
-        "Sixes",
-        "Strike rate bonus",
-        "Wicket",
-        "Wicket milestone",
-        "Economy rate bonus",
-        "Dot ball",
-        "Catch",
-        "Run out",
-        "Stumping",
-      ];
-      const remainingLabels = allBreakdownLabels.filter(
-        (e) => !order.some((item) => item.toLowerCase() === e.toLowerCase())
-      );
-
-      return {
-        ...e,
-        playerPoints: allPoints,
-        breakdownLabels: [...order, ...remainingLabels],
-      };
-    });
+      })
+      .sort((a, b) => (new Date(a.startDate) < new Date(b.startDate) ? -1 : 1));
   }, [players, completedMatches]);
 
   const getPlayerNameCell = (player) => {

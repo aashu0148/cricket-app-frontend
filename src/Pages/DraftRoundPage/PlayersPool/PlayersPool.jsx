@@ -17,7 +17,12 @@ import { getTooltipAttributes } from "@/utils/tooltip";
 
 import styles from "./PlayersPool.module.scss";
 
-function PlayersPool({ teams = [], players = [], playerPoints = [] }) {
+function PlayersPool({
+  currentTurnUserId = "",
+  teams = [],
+  players = [],
+  playerPoints = [],
+}) {
   const userDetails = useSelector((s) => s.user);
   const { contestId } = useParams();
 
@@ -96,7 +101,6 @@ function PlayersPool({ teams = [], players = [], playerPoints = [] }) {
             <div
               className={`icon ${styles.icon}`}
               onClick={() => {
-                console.log("click");
                 setSearchInput("");
               }}
             >
@@ -212,7 +216,10 @@ function PlayersPool({ teams = [], players = [], playerPoints = [] }) {
                 </Button>
               ) : (
                 <Button
-                  disabled={picking}
+                  disabled={
+                    picking ||
+                    (currentTurnUserId && currentTurnUserId !== userDetails._id)
+                  }
                   useSpinnerWhenDisabled={item.player._id === picking}
                   small
                   onClick={() => handlePickClick(item.player)}

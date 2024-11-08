@@ -371,6 +371,9 @@ function DraftRoundPage() {
           players={tournamentPlayers}
           playerPoints={playerPoints}
           teams={contestDetails.teams}
+          currentTurnUserId={
+            roomStatuses.started ? contestDetails.draftRound?.currentTurn : ""
+          }
         />
       </div>
 

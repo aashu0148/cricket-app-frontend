@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 
 import userProfileIcon from "@/assets/profile-icon.png";
 import placeholderImage from "@/assets/images/placeholder.jpg";
