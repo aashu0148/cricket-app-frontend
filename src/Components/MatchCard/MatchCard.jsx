@@ -14,14 +14,22 @@ export function FillerMatchCard() {
   );
 }
 
-export default function MatchCard({ matchData, showDeleteIcon = false, handleDelete , isDeleting}) {
+export default function MatchCard({
+  matchData,
+  showDeleteIcon = false,
+  handleDelete,
+  isDeleting,
+}) {
   return (
     <div className={styles.matchCard}>
       <p className={styles.date}>{getDateFormatted(matchData.startDate)}</p>
 
       {showDeleteIcon && (
-        <div className={`${styles.deleteIcon} delete-icon`} onClick={handleDelete}>
-          {isDeleting ? <Spinner small/> : <Trash2 />}
+        <div
+          className={`${styles.deleteIcon} delete-icon`}
+          onClick={handleDelete}
+        >
+          {isDeleting ? <Spinner small /> : <Trash2 />}
         </div>
       )}
 

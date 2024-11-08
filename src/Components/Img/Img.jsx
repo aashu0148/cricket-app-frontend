@@ -1,10 +1,12 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import userProfileIcon from "@/assets/profile-icon.png";
 import placeholderImage from "@/assets/images/placeholder.jpg";
-import { espnOrigin } from "@/utils/constants";
 
-const imgOriginStr = "https://p.imgci.com";
+const imageOrigins = {
+  o1: "https://img1.hscicdn.com/image/upload",
+  o2: "https://p.imgci.com",
+};
 function Img({
   usePlaceholderImageOnError = false,
   usePLaceholderUserImageOnError = false,
@@ -16,26 +18,45 @@ function Img({
 }) {
   if (!src) src = "";
 
-  const usingEspnOrigin = useRef(false);
-  if (isEspnImage) {
-    if (usingEspnOrigin.current) {
-      src = src.replace(imgOriginStr, "");
-      src = espnOrigin + src;
-    } else src = imgOriginStr + src;
-  }
+  const originsUsed = useRef({
+    o1: false,
+    o2: false,
+  });
+  const [imageSrc, setImageSrc] = useState(src);
 
-  function handleError(e) {
-    if (isEspnImage && !usingEspnOrigin.current) {
-      src = src.replace(imgOriginStr, "");
-      src = espnOrigin + src;
-      e.target.src = src;
-      usingEspnOrigin.current = true;
-    } else if (usePLaceholderUserImageOnError) e.target.src = userProfileIcon;
-    else if (usePlaceholderImageOnError) e.target.src = placeholderImage;
+  const computeImageOnError = () => {
+    let newSrc = imageSrc;
+
+    if (isEspnImage) {
+      if (originsUsed.current.o1) {
+        newSrc = newSrc.replace(imageOrigins.o1, "");
+        newSrc = imageOrigins.o2 + newSrc;
+        originsUsed.current.o2 = true;
+      }
+    } else if (usePLaceholderUserImageOnError) newSrc = userProfileIcon;
+    else if (usePlaceholderImageOnError) newSrc = placeholderImage;
     else if (onError) onError(e);
-  }
 
-  return <img src={src} alt={alt || ""} onError={handleError} {...props} />;
+    setImageSrc(newSrc);
+  };
+
+  useEffect(() => {
+    if (isEspnImage) {
+      setImageSrc(imageOrigins.o1 + src);
+      originsUsed.current.o1 = true;
+    }
+
+    setImageSrc();
+  }, []);
+
+  return (
+    <img
+      src={imageSrc}
+      alt={alt || ""}
+      onError={computeImageOnError}
+      {...props}
+    />
+  );
 }
 
 export default Img;
