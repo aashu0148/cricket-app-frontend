@@ -33,6 +33,7 @@ import {
 import { getTournamentById } from "@/apis/tournament";
 
 import styles from "./ContestPage.module.scss";
+import DraftPageInfoModal from "../DraftRoundPage/DraftPageInfoModal/DraftPageInfoModal";
 
 function ContestPage() {
   const navigate = useNavigate();
@@ -52,6 +53,7 @@ function ContestPage() {
   const [joiningContest, setJoiningContest] = useState(false);
   const [playerPoints, setPlayerPoints] = useState([]);
   const [teamNameInput, setTeamNameInput] = useState("");
+  const [showHowItWorks, setShowHowItWorks] = useState(false);
 
   const currentUserTeam = contestDetails.teams?.length
     ? contestDetails.teams.find((e) => e.owner?._id === userDetails._id)
@@ -165,6 +167,9 @@ function ContestPage() {
           onJoin={handleJoinContest}
         />
       )}
+      {showHowItWorks && (
+        <DraftPageInfoModal onClose={() => setShowHowItWorks(false)} />
+      )}
 
       <BreadCrumbs
         links={[
@@ -214,20 +219,28 @@ function ContestPage() {
                 )}
               </div>
 
-              <span
-                className={"share"}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  shareContest({
-                    tid: tournamentDetails._id,
-                    contestId: contestDetails._id,
-                    ownerName: contestDetails.createdBy?.name,
-                    password: contestDetails.password,
-                  });
-                }}
-              >
-                <Share2 />
-              </span>
+              <div className="flex gap-md">
+                <p
+                  className="text-button"
+                  onClick={() => setShowHowItWorks(true)}
+                >
+                  How it works
+                </p>
+                <span
+                  className={"share"}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    shareContest({
+                      tid: tournamentDetails._id,
+                      contestId: contestDetails._id,
+                      ownerName: contestDetails.createdBy?.name,
+                      password: contestDetails.password,
+                    });
+                  }}
+                >
+                  <Share2 />
+                </span>
+              </div>
             </div>
             <p className="desc" style={{ whiteSpace: "pre-wrap" }}>
               <Linkify
