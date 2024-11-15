@@ -277,6 +277,25 @@
   }
 }
 
+.share {
+  display: flex;
+  align-items: center;
+  padding: $spacing-xxs;
+  transition: 200ms;
+  border-radius: 50%;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $bg-100;
+  }
+
+  svg {
+    height: 18px;
+    width: 18px;
+    color: $primary;
+  }
+}
+
 .list {
   display: flex;
   flex-direction: column;

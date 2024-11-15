@@ -22,7 +22,7 @@ const generalCopy = {
       "Join the ultimate fantasy cricket experience, tailored for true fans of the game.",
     heading: "Tailored for true fans of the game",
     description:
-      "Our app revolutionizes fantasy cricket with a unique draft system. The snake draft system ensures each player is exclusive to a team. Compete with up to 8 teams in your contest, with a squad of 15 players, with your best XI delivering the points. Our app scoring system has been designed to revamp the age-old fantasy scoring system to provide a new, improved fantasy scoring system.",
+      "Our app revolutionizes fantasy cricket with a unique draft system. The snake draft system ensures each player is exclusive to a team. Compete with up to 6 teams in your contest, with a squad of 15 players, with your best XI delivering the points. Our app scoring system has been designed to revamp the age-old fantasy scoring system to provide a new, improved fantasy scoring system.",
   },
   features: {
     shoulder:
@@ -65,41 +65,29 @@ const details = [
 ];
 
 const features = [
-  // {
-  //   mainText: "Live Scoring Updates",
-  //   subText:
-  //     "Stay updated with real-time scoring and player performance tracking during every match.",
-  //   icon: faClock,
-  // },
   {
-    mainText: "Custom Draft System",
+    mainText: "Redefining Fantasy Scoring",
+    subText:
+      "Our advanced scoring system rewards real game impact like never before. Experience fair, skill-based scoring that brings you closer to the game.",
+    icon: faKey,
+  },
+  {
+    mainText: "Draft System",
     subText:
       "Create your fantasy team with a unique snake draft, ensuring no two users pick the same player.",
     icon: faCloudBolt,
   },
   {
-    mainText: "User-Friendly Design",
+    mainText: "Season-Long Fantasy Challenge",
     subText:
-      "Designed with simplicity in mind, our app ensures an easy and intuitive experience for all users.",
-    icon: faKey,
+      "One team for the entire tournament—no daily changes needed. Plan for the long haul, and play strategically.",
+    icon: faClock,
   },
   {
-    mainText: "Clean Interface",
+    mainText: "Detailed Analysis",
     subText:
-      "Navigate effortlessly with an intuitive interface designed for smooth user experience.",
-    icon: faCode,
-  },
-  // {
-  //   mainText: "Player Stats at a Glance",
-  //   subText:
-  //     "Access player profiles with historical performance stats to make informed selections.",
-  //   icon: faEye,
-  // },
-  {
-    mainText: "Exciting Contests",
-    subText:
-      "Join contests with friends or compete with global users in unlimited fantasy cricket contests.",
-    icon: faCamera,
+      "NGain deep insights into every player's game with our comprehensive point-by-point analysis to understand exactly how each score was earned. ",
+    icon: faEye,
   },
 ];
 
@@ -127,59 +115,89 @@ const testimonials = [
 const FAQs = [
   {
     question: "What's different about this fantasy app?",
-    answer: `Regular fantasy cricket apps have an outdated scoring system, especially for T20s. It lacks the context of the match and gives undue weightage to the absolute runs scored by a batter or wickets taken by a bowler. It is a restrictive fantasy playing style where most users end up vying for the same group of players. T20 cricket is more nuanced than that, a team has different roles for different players and we believe fantasy cricket needs to take the next step to address those performances and give them appropriate weightage. 
+    answer: `Most fantasy cricket apps use an outdated scoring system that lacks T20 context, focusing mainly on total runs and wickets. This approach restricts player choice, with most users selecting from a small group of players. T20 cricket is more nuanced than that, a team has different roles for different players and we believe fantasy cricket needs to take the next step to address those performances and give them appropriate weightage. We respect our users' cricketing knowledge by offering a system that rewards nuanced performances, making the experience more engaging. `,
+  },
+  {
+    question: "How do you reward different roles?",
+    answer: `Our points system recognizes each player's role, giving fair weight to finishers and middle-over bowlers—not just top-order batters or death-over bowlers.
 
-Most users tend to pick batters who bat in the top four positions for their side, while this makes sense because they end up facing the bulk of the deliveries and therefore have a chance to score more runs, the role of the finisher is highly downplayed in fantasy cricket although it is one of the most sought after roles by the team management in an auction/selection meeting. 
+Most users select top-order batters, as they get more deliveries and score more runs. However, the finisher’s role often goes unrecognized in fantasy cricket, despite its high value in real-life games.
 
-Similarly, most users tend to pick bowlers who bowl at the death because they offer good value to pick up 'cheap wickets', whereas it could be a spell of 0-15 in 4 overs in the middle-overs which made those wickets possible in the first place. 
-Most cricket fantasy apps undermine the match context in which those performances came, for example, the value of a dot ball and low economy rate should be higher in a high-scoring match whereas the same should hold true for a high strike rate innings in a low-scoring match. 
+Similarly, most users choose death-over bowlers for their ‘easy wickets,’ while middle-overs bowlers who build pressure with economical spells are overlooked. Our system balances these contributions.
 
-A performance of 50 off 40 balls by an opening batter is generally considered a very good outing in fantasy cricket but in a high-scoring T20 match with team totals above 200, that could be a match losing innings. We, at Cric Maestro, aim to balance these performances and give you the true worth of a player's performance. 
+A spell of 0-15 in 4 overs finally has a place in fantasy cricket.`,
+  },
+  {
+    question: "What makes your scoring unique in T20s",
+    answer: `We factor in match context—like valuing high strike rates in low-scoring games or low economy rates in high totals—to reflect each performance’s impact.
 
-If you think a particular player is a match-winner but doesn't get enough credit, chances are you will see him do very well in our points scoring system. We want to respect the cricketing intelligence of our audience and give them options that make them think which in turn makes this a more wholesome experience. `,
+For example, a score of 50 off 40 balls by an opener might seem impressive in regular fantasy, but in a high-scoring T20 with team totals over 200, this could be a match-losing innings. Our system balances these performances to reflect their true impact.`,
   },
   {
     question: "Why is a draft system better than the regular fantasy one?",
-    answer: `Over the course of playing many fantasy tournaments, we realised that there is a tremendous amount of homogeneity in every user's team and that takes the joy away from playing. 
-
-    No body wants to be part of a contest where seven of the eight users have captained Virat Kohli while having six-seven same players. 
-
-Much like the real world, once you draft a player into your team here, that player is 'yours'. You are likely to be way more invested in that player's performance and we have found that it makes for a great experience while watching the tournament. There's absolutely no confilct of interest here.`,
-  },
-  {
-    question: "What is a snake draft?",
-    answer: `A snake draft is a format commonly used in fantasy sports contests. In this type of draft, the pick order reverses after each round.
-
-Here’s how it works:
-
-In the first round, teams or participants select players in a set order (e.g., User 1 picks first, followed by User 2, User 3, and so on).
-In the second round, the order is reversed. So, the team that picked last in the first round will pick first in the second round (e.g., User 3 picks first, then User 2, and finally User 1).
-This alternating pattern continues for all rounds.
-
-The advantage of a snake draft is that it balances the advantage of having the first pick, as the teams picking later in the first round get to pick earlier in the following round. It helps to level the playing field, ensuring no single participant gets an unfair advantage by consistently picking first in every round.`,
+    answer: `In most fantasy leagues, team compositions are nearly identical across users. Much like the real world, once you draft a player into your team, that player is 'yours'. This adds excitement, as you become more invested in each player’s performance, enhancing the tournament-watching experience.`,
   },
   {
     question: "So I only pick my team once for the entire tournament?",
-    answer: `That's right, once you pick your team of 15 players, you are all set for the tournament and only the top 11 point-scoring players from your team will end up contributing to your team's score. 
+    answer: `Yes! Once you pick your team of 15 players, you’re all set for the tournament. Only the top 11 point-scoring players contribute to your team’s score, so unforeseen injuries or form dips won’t ruin your chances.
 
-This aims to nullify any unforeseen injuries/drop of form for a player in your team. It is also a busy world and we are sure you have better things to do than to fret about setting your team before a deadline on every matchday. Pick, chill and don't repeat.`,
+Plus, you won’t have to worry about setting your lineup before every matchday. Pick, relax, and enjoy the game!
+`,
   },
   {
-    question: "What is your 'superior scoring system?'",
+    question: "Can I see the actual scoring system?",
     jsx: (
       <>
+        You can view our scoring system details here{" "}
         <a className="link" href={scoringSystemLink} target="_blank">
-          This link
+          Scoring System
         </a>{" "}
-        will explain our scoring system in greater detail.
       </>
     ),
   },
   {
-    question: "How long is a draft supposed to last?",
-    answer: `As with most other things, it is completely dependent on you and the group that you are playing with. Each user will get a 2-minute time window to make a pick, if you are certain about your choices, you can rush through the draft process but we realise that this gets trickier once the top options are exhausted. 
-
-To be on the conservative side, we think 60-90 minutes is enough to finish the entire draft process. `,
+    question: "How long does a draft take?",
+    answer: `This is completely dependent on you and the group that you are playing with. Each user has a 2-minute window per pick. If your choices are clear, you can move quickly, though the process may slow down as top players are chosen. Generally, we estimate 30-60 minutes for a full draft.`,
+  },
+  {
+    question: "What happens if I miss my draft time?",
+    answer: `If you miss the draft or are unable to join at the start, the app will auto-pick players based on your wishlist in the pre-draft page. `,
+  },
+  {
+    question: "Can I play for free, or are there entry fees?",
+    answer: `All contests are completely free to join. Our goal is to make this exciting new way of playing fantasy cricket accessible to as many fans as possible.`,
+  },
+  {
+    question: "How do I start a contest with friends?",
+    answer: `To start a contest, simply create a new contest on the app and invite friends to join. You have to set a particular date and time for the draft. `,
+  },
+  {
+    question: "How are points updated?",
+    answer: `Our app updates points at the end of every match. `,
+  },
+  {
+    question: "What if a match is shortened due to weather?",
+    answer: `Points will be awarded based on the amount of play that has taken place in the match. `,
+  },
+  {
+    question: "Can I trade players with other teams?",
+    answer: `Currently, once a player is drafted, they remain with that team for the tournament. This exclusivity increases the strategic challenge and engagement in the draft format.`,
+  },
+  {
+    question: "Is there a limit on the number of participants in a contest?",
+    answer: `A maximum of six teams cane take part in the draft to ensure there are enough quality players available for everyone to achieve a balanced team.`,
+  },
+  {
+    question: "Can I join multiple contests at the same time?",
+    answer: `Yes, you can join multiple leagues and draft separate teams in each. Each league’s draft is independent, so your team in one league won’t affect others.`,
+  },
+  {
+    question: "Is there any cap on the player roles within a team?",
+    answer: `You can be as varied as you please in your team selection. There's nothing stopping you from having a team full of bowlers or batters. `,
+  },
+  {
+    question: "What if a match goes into a Super Over?",
+    answer: `In the event of a Super Over, points are not awarded as per typical play. However, your players’ points from the regular match play are fully counted.`,
   },
 ];
 

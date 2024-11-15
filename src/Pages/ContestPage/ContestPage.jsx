@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { useSelector } from "react-redux";
-import { Edit2 } from "react-feather";
+import { Edit2, Share2 } from "react-feather";
 import Linkify from "react-linkify";
 
 import PageLoader from "@/Components/PageLoader/PageLoader";
@@ -16,8 +16,13 @@ import Button from "@/Components/Button/Button";
 import JoinProtectedContestModal from "@/Components/ContestCard/JoinProtectedContestModal";
 import InputControl from "@/Components/InputControl/InputControl";
 import Matches from "./Matches/Matches";
+import Info from "@/Components/Info/Info";
 
-import { handleAppNavigation, parsePlayersForSquadDetails } from "@/utils/util";
+import {
+  handleAppNavigation,
+  parsePlayersForSquadDetails,
+  shareContest,
+} from "@/utils/util";
 import { applicationRoutes, colors } from "@/utils/constants";
 import { contestTypeEnum } from "@/utils/enums";
 import {
@@ -195,17 +200,34 @@ function ContestPage() {
 
       <div className={styles.main}>
         <div className={styles.mainLeft}>
-          <div className="flex-col-xs">
-            <div className="flex">
-              <p className="heading-big">{contestDetails.name}</p>
-              {contestDetails.createdBy?._id === userDetails._id && (
-                <div
-                  className="icon"
-                  onClick={() => setShowEditContestModal(true)}
-                >
-                  <Edit2 />
-                </div>
-              )}
+          <div className="flex-col-xs" style={{ paddingRight: "10px" }}>
+            <div className="spacious-head">
+              <div className="flex">
+                <p className="heading-big">{contestDetails.name}</p>
+                {contestDetails.createdBy?._id === userDetails._id && (
+                  <div
+                    className="icon"
+                    onClick={() => setShowEditContestModal(true)}
+                  >
+                    <Edit2 />
+                  </div>
+                )}
+              </div>
+
+              <span
+                className={"share"}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  shareContest({
+                    tid: tournamentDetails._id,
+                    contestId: contestDetails._id,
+                    ownerName: contestDetails.createdBy?.name,
+                    password: contestDetails.password,
+                  });
+                }}
+              >
+                <Share2 />
+              </span>
             </div>
             <p className="desc" style={{ whiteSpace: "pre-wrap" }}>
               <Linkify
@@ -328,7 +350,10 @@ function ContestPage() {
               />
             ) : currentUserTeam ? (
               <>
-                <p className={`heading`}>Wishlist</p>
+                <div className="flex">
+                  <p className={`heading`}>Wishlist</p>
+                  <Info infoTooltip="The wishlist is a prioritized list of players a user hopes to draft or acquire for their fantasy team. You can create this wishlist to keep track of your preferred players before or during the draft. If you get timed out during your turn, the system will try to auto pick the highest available player from your wishlist." />
+                </div>
                 <Wishlist
                   currentPlayers={currentUserTeam.wishlist}
                   contestId={contestDetails._id}

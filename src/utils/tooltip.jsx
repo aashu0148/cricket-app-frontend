@@ -16,6 +16,8 @@ export const getTooltipAttributes = ({
         color: "white",
         fontSize: "14px",
         minWidth: "20px",
+        lineHeight: "1.7",
+        maxWidth: "min(80vw, 440px)",
         ...textStyle,
       }}
       className={textClassName}

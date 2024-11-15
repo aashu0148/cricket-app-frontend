@@ -63,7 +63,7 @@ function Hero() {
       <div className={styles.heroSection__left}>
         <h1>
           The ultimate cricket fantasy experience for{" "}
-          <span className="gradient-text">serious cricket fans</span>
+          <span className="gradient-text">serious fans</span>
         </h1>
         <p>A draft-based fantasy cricket app with superior scoring system</p>
         <div className={styles.heroSection__buttonContainer}>
@@ -149,7 +149,7 @@ function Features() {
       <div className={styles.generalHeading}>
         <div className={styles.generalHeadingContent}>
           <div className="flex-col-xxs align-center">
-            <h1>Awesome Features</h1>
+            <h1>Unique Features</h1>
             <LineAnimate className="mb-3" />
           </div>
           <p>{generalCopy.features.shoulder}</p>
@@ -348,9 +348,9 @@ function LandingPage() {
         ))}
       </div> */}
 
-      <About />
-
       <Features />
+
+      <About />
 
       {/* <Testimonials /> */}
 

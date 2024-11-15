@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 
 import Img from "@/Components/Img/Img";
+import Info from "@/Components/Info/Info";
 
 import { parseTeamsForScorePoints } from "@/utils/util";
 
@@ -14,7 +15,12 @@ function LeaderBoard({ teams = [], playerPoints = [] }) {
 
   return (
     <div className={`page-container ${styles.container}`}>
-      <p className="heading">Leader Board</p>
+      <div className="flex">
+        <p className="heading">Leader Board</p>
+        <Info
+          infoTooltip={` A team’s score is determined by the points from its top 11 players.`}
+        />
+      </div>
 
       <div className={styles.teams}>
         <div

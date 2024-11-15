@@ -14,6 +14,7 @@ import Spinner from "@/Components/Spinner/Spinner";
 import InputSelect from "@/Components/InputControl/InputSelect/InputSelect";
 import Img from "@/Components/Img/Img";
 import Checkbox from "@/Components/Checkbox/Checkbox";
+import Info from "@/Components/Info/Info";
 
 import {
   addPlayerToWishlist,
@@ -151,7 +152,10 @@ function Wishlist({
   return (
     <div className={`${className || ""} ${styles.container}`}>
       <div className="flex-col-xs">
-        <label className="label">Add to Wishlist</label>
+        <div className="flex">
+          <label className="label">Add to Wishlist</label>
+          <Info infoTooltip="The wishlist is a prioritized list of players a user hopes to draft or acquire for their fantasy team. You can create this wishlist to keep track of your preferred players before or during the draft. If you get timed out during your turn, the system will try to auto pick the highest available player from your wishlist." />
+        </div>
 
         <div className={styles.filter}>
           <Checkbox

@@ -225,7 +225,7 @@ export const validatePassword = (pass) => {
 };
 
 export const validateUrl = (str) => {
-  if(!str) return;
+  if (!str) return;
   const res = str.match(
     /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g
   );
@@ -433,3 +433,25 @@ export function parsePlayersForSquadDetails(players = [], allSquads = []) {
     };
   });
 }
+
+export const shareContest = async (
+  { tid, contestId, ownerName = "", password = "" },
+  copyUrlToClipboard = true
+) => {
+  const url = `${window.location.origin}/tournaments/${tid}/contests/${contestId}`;
+  const shareObj = {
+    title: `Checkout this contest from ${ownerName}`,
+    text: `Join in to play the contest. ${
+      password ? ` Password: ${password}` : ""
+    }`,
+    url,
+  };
+
+  const fullText = `${shareObj.title}\n\n${shareObj.text}\n\n${shareObj.url}`;
+  const mobileView = window.innerWidth < 700;
+
+  if (window.navigator.share && mobileView)
+    await window.navigator.share(shareObj);
+
+  if (copyUrlToClipboard) copyToClipboard(mobileView ? url : fullText);
+};

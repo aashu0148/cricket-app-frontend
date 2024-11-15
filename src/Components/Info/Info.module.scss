@@ -1,0 +1,31 @@
+@import "@/styles/variables";
+
+.infoButton {
+  width: fit-content;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  padding: $spacing-xxs;
+  transition: 200ms;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $bg-100;
+  }
+
+  svg {
+    height: 16px;
+    width: 16px;
+  }
+}
+
+.infoModal {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+
+  .information {
+    font-size: $text-md;
+    line-height: 1.7;
+  }
+}

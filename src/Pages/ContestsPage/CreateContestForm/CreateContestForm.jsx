@@ -164,6 +164,9 @@ function CreateContestForm({ tournamentData = {}, onSuccess }) {
           </div>
         </div>
       </div>
+      <p className="desc" style={{ textAlign: "center" }}>
+        Only a maximum number of 6 teams can play in one contest
+      </p>
 
       <div className="footer">
         <Button
