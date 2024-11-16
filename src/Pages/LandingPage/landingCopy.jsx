@@ -18,8 +18,7 @@ const scoringSystemLink = applicationRoutes.viewScoringSystem(
 
 const generalCopy = {
   about: {
-    shoulder:
-      "Join the ultimate fantasy cricket experience, tailored for true fans of the game.",
+    shoulder: "",
     heading: "Tailored for true fans of the game",
     description:
       "Our app revolutionizes fantasy cricket with a unique draft system. The snake draft system ensures each player is exclusive to a team. Compete with up to 6 teams in your contest, with a squad of 15 players, with your best XI delivering the points. Our app scoring system has been designed to revamp the age-old fantasy scoring system to provide a new, improved fantasy scoring system.",
@@ -86,7 +85,7 @@ const features = [
   {
     mainText: "Detailed Analysis",
     subText:
-      "NGain deep insights into every player's game with our comprehensive point-by-point analysis to understand exactly how each score was earned. ",
+      "Gain deep insights into every player's game with our comprehensive point-by-point analysis to understand exactly how each score was earned. ",
     icon: faEye,
   },
 ];
@@ -148,9 +147,9 @@ Plus, you won’t have to worry about setting your lineup before every matchday.
     question: "Can I see the actual scoring system?",
     jsx: (
       <>
-        You can view our scoring system details here{" "}
+        You can view our scoring system details{" "}
         <a className="link" href={scoringSystemLink} target="_blank">
-          Scoring System
+          here
         </a>{" "}
       </>
     ),

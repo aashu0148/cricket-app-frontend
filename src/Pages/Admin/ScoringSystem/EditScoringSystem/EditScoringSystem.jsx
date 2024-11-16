@@ -30,8 +30,7 @@ const infoTexts = {
       "The maximum average match scoring rate (A.M.S.R.) used to determine the bonus for boundaries.",
   },
   runMilestoneBonus: {
-    runPointsUpto:
-      "Defines the upper limit of run points for the first milestone where a bonus is applied.",
+    runs: "Defines the upper limit of runs for the milestone where a bonus is applied.",
     points: "Bonus points awarded for reaching the first run milestone.",
     negativeRunsExemptPositions:
       "Batters in these positions will not have negative points for scoring below 10 runs.",
@@ -151,9 +150,18 @@ export default function EditScoringSystem({ createMode = false }) {
 
     if (battingData.runMilestoneBonus) {
       battingData.runMilestoneBonus.milestones.forEach((milestone, index) => {
-        if (isNaN(milestone.runPointsUpto) || milestone.runPointsUpto < 0) {
-          battingErrors[`runMilestoneBonus_${index}_runPointsUpto`] =
+        if (isNaN(milestone.runs) || milestone.runs < 0) {
+          battingErrors[`runMilestoneBonus_${index}_runs`] =
             "Milestone runs must be a positive number.";
+        }
+        if (
+          !milestone.battingPositions.every(
+            (pos) => !isNaN(pos) && pos >= 1 && pos <= 12
+          ) ||
+          !milestone.battingPositions.length
+        ) {
+          battingErrors[`runMilestoneBonus_${index}_battingPositions`] =
+            "Batting positions must be integers between 1 and 12.";
         }
       });
 
@@ -174,7 +182,8 @@ export default function EditScoringSystem({ createMode = false }) {
         if (
           !range.battingPositions.every(
             (pos) => !isNaN(pos) && pos >= 1 && pos <= 12
-          )
+          ) ||
+          !range.battingPositions.length
         ) {
           battingErrors[`strikeRateBonus_${index}_battingPositions`] =
             "Batting positions must be integers between 1 and 12.";
@@ -607,58 +616,104 @@ export default function EditScoringSystem({ createMode = false }) {
       <div className={styles.subSection}>
         <h3 className={styles.subHeading}>Run Milestone Bonus</h3>
         {battingData.runMilestoneBonus?.milestones?.map((milestone, index) => (
-          <div key={milestone._id} className={styles.subSection_row}>
-            <InputControl
-              placeholder="Type here"
-              numericInput
-              label="Run-points Upto"
-              value={milestone.runPointsUpto}
-              onChange={(e) =>
-                handleBattingChange({
-                  val: e.target.valueAsNumber,
-                  field: "milestones",
-                  subField: "runPointsUpto",
-                  index,
-                  multipleFields: true,
-                  secondField: "runMilestoneBonus",
-                })
-              }
-              labelInfo={infoTexts.runMilestoneBonus?.runPointsUpto}
-              error={errors.batting[`runMilestoneBonus_${index}_runPointsUpto`]}
-            />
-            <InputControl
-              placeholder="Type here"
-              numericInput
-              label="Points"
-              value={milestone.points}
-              onChange={(e) =>
-                handleBattingChange({
-                  val: e.target.valueAsNumber,
-                  field: "milestones",
-                  subField: "points",
-                  index,
-                  multipleFields: true,
-                  secondField: "runMilestoneBonus",
-                })
-              }
-              labelInfo={infoTexts.runMilestoneBonus?.points}
-              error={errors.batting[`runMilestoneBonus_${index}_points`]}
-            />
-            <div
-              className={`icon ${styles.deleteIcon}`}
-              onClick={() =>
-                setBattingData((p) => ({
-                  ...p,
-                  runMilestoneBonus: {
-                    ...p.runMilestoneBonus,
-                    milestones: p.runMilestoneBonus.milestones.filter(
-                      (_, i) => i !== index
-                    ),
-                  },
-                }))
-              }
-            >
-              <Trash2 color="red" />
+          <div key={milestone._id} className="flex-col-xs">
+            <div className="flex-col-xs">
+              <label className="label flex align-center">
+                Batting positions{" "}
+                <span
+                  className={`icon ${styles.info}`}
+                  {...getTooltipAttributes({
+                    text: infoTexts.strikeRateBonus?.battingPositions,
+                  })}
+                >
+                  <Info />
+                </span>
+              </label>
+
+              <SimpleArrayEdit
+                array={
+                  battingData.runMilestoneBonus?.milestones[index]
+                    ?.battingPositions
+                }
+                onChange={(arr) =>
+                  setBattingData((p) => ({
+                    ...p,
+                    runMilestoneBonus: {
+                      ...p.runMilestoneBonus,
+                      milestones: p.runMilestoneBonus?.milestones.map((e, i) =>
+                        i === index ? { ...e, battingPositions: arr } : e
+                      ),
+                    },
+                  }))
+                }
+              />
+
+              {errors.batting[
+                `runMilestoneBonus_${index}_battingPositions`
+              ] && (
+                <p className="error-msg" style={{ textAlign: "start" }}>
+                  {
+                    errors.batting[
+                      `runMilestoneBonus_${index}_battingPositions`
+                    ]
+                  }
+                </p>
+              )}
+            </div>
+
+            <div key={milestone._id} className={styles.subSection_row}>
+              <InputControl
+                placeholder="Type here"
+                numericInput
+                label="Runs Scored"
+                value={milestone.runs}
+                onChange={(e) =>
+                  handleBattingChange({
+                    val: e.target.valueAsNumber,
+                    field: "milestones",
+                    subField: "runs",
+                    index,
+                    multipleFields: true,
+                    secondField: "runMilestoneBonus",
+                  })
+                }
+                labelInfo={infoTexts.runMilestoneBonus?.runs}
+                error={errors.batting[`runMilestoneBonus_${index}_runs`]}
+              />
+              <InputControl
+                placeholder="Type here"
+                numericInput
+                label="Points"
+                value={milestone.points}
+                onChange={(e) =>
+                  handleBattingChange({
+                    val: e.target.valueAsNumber,
+                    field: "milestones",
+                    subField: "points",
+                    index,
+                    multipleFields: true,
+                    secondField: "runMilestoneBonus",
+                  })
+                }
+                labelInfo={infoTexts.runMilestoneBonus?.points}
+                error={errors.batting[`runMilestoneBonus_${index}_points`]}
+              />
+              <div
+                className={`icon ${styles.deleteIcon}`}
+                onClick={() =>
+                  setBattingData((p) => ({
+                    ...p,
+                    runMilestoneBonus: {
+                      ...p.runMilestoneBonus,
+                      milestones: p.runMilestoneBonus.milestones.filter(
+                        (_, i) => i !== index
+                      ),
+                    },
+                  }))
+                }
+              >
+                <Trash2 color="red" />
+              </div>
             </div>
           </div>
         ))}
@@ -757,7 +812,7 @@ export default function EditScoringSystem({ createMode = false }) {
               />
 
               {errors.batting[`strikeRateBonus_${index}_battingPositions`] && (
-                <p className="error-msg">
+                <p className="error-msg" style={{ textAlign: "start" }}>
                   {errors.batting[`strikeRateBonus_${index}_battingPositions`]}
                 </p>
               )}

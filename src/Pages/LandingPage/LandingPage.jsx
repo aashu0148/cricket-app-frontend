@@ -103,7 +103,7 @@ function About() {
             <LineAnimate className="mb-3" />
           </div>
 
-          <p>{generalCopy.about.shoulder}</p>
+          {/* <p>{generalCopy.about.shoulder}</p> */}
         </div>
       </div>
       <div className={styles.aboutSection_below}>
@@ -152,7 +152,7 @@ function Features() {
             <h1>Unique Features</h1>
             <LineAnimate className="mb-3" />
           </div>
-          <p>{generalCopy.features.shoulder}</p>
+          {/* <p>{generalCopy.features.shoulder}</p> */}
         </div>
       </div>
       <div className={styles.featuresSection_Cards}>

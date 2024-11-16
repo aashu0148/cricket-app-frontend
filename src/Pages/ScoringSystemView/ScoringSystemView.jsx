@@ -100,24 +100,20 @@ const ScoringSystemView = () => {
             <div className="flex-col-xs">
               <li className={styles.title}>Run milestone bonus:</li>
               <p>
-                Players earn milestone bonuses for reaching certain run points
+                Players earn milestone bonuses for reaching certain runs
                 threshold during their innings. These bonuses are awarded based
-                on the total run points they score:
+                on the total runs they score:
               </p>
               <ul>
-                {batting.runMilestoneBonus.milestones.map((milestone, i) => (
-                  <li key={milestone._id}>
-                    ({" "}
-                    {i > 0
-                      ? `${
-                          batting.runMilestoneBonus.milestones[i - 1]
-                            .runPointsUpto + 1
-                        } - `
-                      : ""}{" "}
-                    {milestone.runPointsUpto} ) run points :{" "}
-                    <strong>{milestone.points} points</strong>
-                  </li>
-                ))}
+                {batting.runMilestoneBonus.milestones
+                  .sort((a, b) => (a.runs < b.runs ? -1 : 1))
+                  .map((milestone, i) => (
+                    <li key={milestone._id}>
+                      upto {milestone.runs} runs while batting in (
+                      {milestone.battingPositions.join(", ")}) positions :{" "}
+                      <strong>{milestone.points} points</strong>
+                    </li>
+                  ))}
               </ul>
               <p>
                 There will be no negative run milestone bonus for batters
