@@ -119,7 +119,7 @@ const ScoringSystemView = () => {
                 There will be no negative run milestone bonus for batters
                 batting in positions{" "}
                 <strong>
-                  {batting.runMilestoneBonus.negativeRunsExemptPositions.join(
+                  {batting.runMilestoneBonus.negativePointsExemptPositions.join(
                     ", "
                   )}
                 </strong>{" "}

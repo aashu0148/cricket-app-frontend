@@ -32,7 +32,7 @@ const infoTexts = {
   runMilestoneBonus: {
     runs: "Defines the upper limit of runs for the milestone where a bonus is applied.",
     points: "Bonus points awarded for reaching the first run milestone.",
-    negativeRunsExemptPositions:
+    negativePointsExemptPositions:
       "Batters in these positions will not have negative points for scoring below 10 runs.",
   },
   strikeRateBonus: {
@@ -165,13 +165,13 @@ export default function EditScoringSystem({ createMode = false }) {
         }
       });
 
-      if (battingData.runMilestoneBonus.negativeRunsExemptPositions) {
+      if (battingData.runMilestoneBonus.negativePointsExemptPositions) {
         const invalidPositions =
-          battingData.runMilestoneBonus.negativeRunsExemptPositions.filter(
+          battingData.runMilestoneBonus.negativePointsExemptPositions.filter(
             (pos) => isNaN(pos) || pos < 1 || pos > 12
           );
         if (invalidPositions.length > 0) {
-          battingErrors.negativeRunsExemptPositions =
+          battingErrors.negativePointsExemptPositions =
             "Positions must be integers between 1 and 12.";
         }
       }
@@ -201,6 +201,17 @@ export default function EditScoringSystem({ createMode = false }) {
             "Multiplier must be a positive number.";
         }
       });
+
+      if (battingData.strikeRateBonus.negativePointsExemptPositions) {
+        const invalidPositions =
+          battingData.strikeRateBonus.negativePointsExemptPositions.filter(
+            (pos) => isNaN(pos) || pos < 1 || pos > 12
+          );
+        if (invalidPositions.length > 0) {
+          battingErrors["strikeRateBonus_negativePointsExemptPositions"] =
+            "Positions must be integers between 1 and 12.";
+        }
+      }
     }
 
     // Bowling validation
@@ -616,7 +627,11 @@ export default function EditScoringSystem({ createMode = false }) {
       <div className={styles.subSection}>
         <h3 className={styles.subHeading}>Run Milestone Bonus</h3>
         {battingData.runMilestoneBonus?.milestones?.map((milestone, index) => (
-          <div key={milestone._id} className="flex-col-xs">
+          <div
+            key={milestone._id}
+            className="flex-col-xs"
+            style={{ gap: "2px", marginBottom: "4px" }}
+          >
             <div className="flex-col-xs">
               <label className="label flex align-center">
                 Batting positions{" "}
@@ -738,20 +753,20 @@ export default function EditScoringSystem({ createMode = false }) {
           <span
             className={`icon ${styles.info}`}
             {...getTooltipAttributes({
-              text: infoTexts.runMilestoneBonus?.negativeRunsExemptPositions,
+              text: infoTexts.runMilestoneBonus?.negativePointsExemptPositions,
             })}
           >
             <Info />
           </span>
         </h3>
         <SimpleArrayEdit
-          array={battingData.runMilestoneBonus?.negativeRunsExemptPositions}
+          array={battingData.runMilestoneBonus?.negativePointsExemptPositions}
           onChange={(arr) =>
             setBattingData((p) => ({
               ...p,
               runMilestoneBonus: {
                 ...p.runMilestoneBonus,
-                negativeRunsExemptPositions: arr,
+                negativePointsExemptPositions: arr,
               },
             }))
           }
@@ -776,6 +791,34 @@ export default function EditScoringSystem({ createMode = false }) {
           }
           labelInfo={infoTexts.strikeRateBonus?.minBallsRequired}
         />
+        <h3 className={styles.subHeading}>
+          Negative Points Exempt positions for Strike Rate Bonus
+          {/* <span
+            className={`icon ${styles.info}`}
+            {...getTooltipAttributes({
+              text: infoTexts.strikeRateBonus?.negativePointsExemptPositions,
+            })}
+          >
+            <Info />
+          </span> */}
+        </h3>
+        <SimpleArrayEdit
+          array={battingData.strikeRateBonus?.negativePointsExemptPositions}
+          onChange={(arr) =>
+            setBattingData((p) => ({
+              ...p,
+              strikeRateBonus: {
+                ...p.strikeRateBonus,
+                negativePointsExemptPositions: arr,
+              },
+            }))
+          }
+        />
+        {errors.batting["strikeRateBonus_negativePointsExemptPositions"] && (
+          <p className="error-msg">
+            {errors.batting["strikeRateBonus_negativePointsExemptPositions"]}
+          </p>
+        )}
         <h3 className={styles.subHeading}>Multiplier Ranges</h3>
         {battingData.strikeRateBonus?.multiplierRanges?.map((range, index) => (
           <div key={range._id + index} className="flex-col-xxs">
