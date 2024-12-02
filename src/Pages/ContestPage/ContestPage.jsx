@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { Edit2, Share2 } from "react-feather";
@@ -16,6 +16,7 @@ import Button from "@/Components/Button/Button";
 import JoinProtectedContestModal from "@/Components/ContestCard/JoinProtectedContestModal";
 import InputControl from "@/Components/InputControl/InputControl";
 import Matches from "./Matches/Matches";
+import DraftPageInfoModal from "../DraftRoundPage/DraftPageInfoModal/DraftPageInfoModal";
 import Info from "@/Components/Info/Info";
 
 import {
@@ -33,14 +34,15 @@ import {
 import { getTournamentById } from "@/apis/tournament";
 
 import styles from "./ContestPage.module.scss";
-import DraftPageInfoModal from "../DraftRoundPage/DraftPageInfoModal/DraftPageInfoModal";
 
 function ContestPage() {
   const navigate = useNavigate();
   const params = useParams();
+  const location=useLocation()
   const userDetails = useSelector((s) => s.user);
   const isMobileView = useSelector((s) => s.root.isMobileView);
   const { tournamentId, contestId } = params;
+
 
   const [loading, setLoading] = useState(true);
   const [contestDetails, setContestDetails] = useState({});

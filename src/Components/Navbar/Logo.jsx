@@ -25,9 +25,9 @@ function Logo({
       onClick={(e) => (staticLogo ? "" : handleAppNavigation(e, navigate, "/"))}
     >
       <div className={styles.image}>
-        <img src={logo} alt="Cric Maestro" />
+        <img src={logo} alt="Dashout Cricket" />
       </div>
-      {onlyImage ? "" : <p className={styles.text}>Cric Maestro</p>}
+      {onlyImage ? "" : <p className={styles.text}>Dashout Cricket</p>}
     </div>
   );
 }
