@@ -8,6 +8,7 @@ import {
   Linkedin,
   Star,
   Twitter,
+  Youtube,
 } from "react-feather";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -283,18 +284,18 @@ function FaQ() {
 function ContactUs() {
   const socialMedia = [
     {
-      icon: <Linkedin />,
-      link: "",
-      label: "Linkedin",
+      icon: <Youtube />,
+      link: "https://youtube.com/@dashoutcricket",
+      label: "Youtube",
     },
-    {
-      icon: <Twitter />,
-      link: "",
-      label: "Twitter",
-    },
+    // {
+    //   icon: <Twitter />,
+    //   link: "",
+    //   label: "Twitter",
+    // },
     {
       icon: <Instagram />,
-      link: "",
+      link: "https://www.instagram.com/dashoutcricket",
       label: "Instagram",
     },
   ];
