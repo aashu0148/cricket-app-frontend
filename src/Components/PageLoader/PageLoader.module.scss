@@ -7,7 +7,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: $spacing-sm;
+  gap: $spacing-xxs;
   justify-content: center;
 
   &.fullPage {
@@ -16,7 +16,7 @@
   }
 
   .loader {
-    width: 45px;
+    width: 35px;
     aspect-ratio: 1;
     position: relative;
   }
@@ -31,33 +31,36 @@
   .loader:after {
     animation-delay: -2s;
   }
+
+  --shadow: 20px;
+
   @keyframes l5 {
     0% {
-      inset: 0 25px 25px 0;
+      inset: 0 var(--shadow) var(--shadow) 0;
     }
     12.5% {
-      inset: 0 25px 0 0;
+      inset: 0 var(--shadow) 0 0;
     }
     25% {
-      inset: 25px 25px 0 0;
+      inset: var(--shadow) var(--shadow) 0 0;
     }
     37.5% {
-      inset: 25px 0 0 0;
+      inset: var(--shadow) 0 0 0;
     }
     50% {
-      inset: 25px 0 0 25px;
+      inset: var(--shadow) 0 0 var(--shadow);
     }
     62.5% {
-      inset: 0 0 0 25px;
+      inset: 0 0 0 var(--shadow);
     }
     75% {
-      inset: 0 0 25px 25px;
+      inset: 0 0 var(--shadow) var(--shadow);
     }
     87.5% {
-      inset: 0 0 25px 0;
+      inset: 0 0 var(--shadow) 0;
     }
     100% {
-      inset: 0 25px 25px 0;
+      inset: 0 var(--shadow) var(--shadow) 0;
     }
   }
 }

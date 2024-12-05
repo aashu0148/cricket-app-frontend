@@ -24,8 +24,14 @@
   .logo {
     width: 100%;
     gap: 0;
+    align-items: center;
     justify-content: center;
     padding: $spacing-md $spacing-2xs;
+
+    img {
+      height: 45px;
+      width: 45px;
+    }
 
     p {
       width: 0;
@@ -235,7 +241,7 @@
   align-items: flex-start;
 
   .logo {
-    gap: $spacing-sm;
+    gap: $spacing-xs;
     justify-content: flex-start;
 
     p {
