@@ -17,6 +17,7 @@ function Participants({
   turnDir = "",
   lastTurnTimestamp = "",
   completedMatches = [],
+  allPlayersWithPoints = [],
 }) {
   const [targetDate, setTargetDate] = useState(new Date());
   const [selectedTeamOwnerId, setSelectedTeamOwnerId] = useState("");
@@ -30,10 +31,12 @@ function Participants({
     if (!team) return { owner: {}, players: [] };
 
     const mappedPlayers = team.players
-      .map((p) => ({
-        ...p,
-        points: playerPoints.find((e) => e.player === p._id)?.points,
-      }))
+      .map((p) => {
+        const playerId = p?._id || p;
+        const player = allPlayersWithPoints.find((e) => e._id === playerId);
+        if (!player) return p;
+        return player;
+      })
       .sort((a, b) => (a.points > b.points ? -1 : 1));
 
     return {
@@ -180,6 +183,7 @@ function Participants({
                   .map((player) => (
                     <PlayerSmallCard
                       key={player._id}
+                      showCountry
                       playerData={player}
                       isPlayerBreakdownAllowed={completedMatches.length > 0}
                       isBreakdownVisible={

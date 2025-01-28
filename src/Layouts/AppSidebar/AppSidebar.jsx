@@ -98,7 +98,7 @@ function AppSidebar({ className = "", onRouteClick }) {
               handleAppNavigation(e, navigate, applicationRoutes.profile)
             }
           >
-            <div className={styles.image}>
+            <div className={`${styles.image} size-[42px]`}>
               <img
                 src={userDetails.profileImage || ""}
                 alt={userDetails.name}
@@ -106,7 +106,7 @@ function AppSidebar({ className = "", onRouteClick }) {
               />
             </div>
 
-            <p className={styles.name}>{userDetails.name}dtfbsatrfgrt</p>
+            <p className={styles.name}>{userDetails.name}</p>
           </div>
 
           <div className={styles.right}>

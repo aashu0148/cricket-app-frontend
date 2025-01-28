@@ -176,7 +176,7 @@ Plus, you won’t have to worry about setting your lineup before every matchday.
   },
   {
     question: "What if a match is shortened due to weather?",
-    answer: `Points will be awarded based on the amount of play that has taken place in the match. `,
+    answer: `No points will be awarded if there's no result in the match or if it is abandoned.`,
   },
   {
     question: "Can I trade players with other teams?",

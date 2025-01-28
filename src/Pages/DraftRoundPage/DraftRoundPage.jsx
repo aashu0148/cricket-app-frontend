@@ -22,6 +22,7 @@ import { applicationRoutes } from "@/utils/constants";
 import { socketEventsEnum } from "@/utils/enums";
 import useSocketEvents from "./util/useSocketEvents";
 import { useDraftRound } from "./util/DraftRoundContext";
+import useContestStats from "@/utils/hooks/useContestStats";
 
 import styles from "./DraftRoundPage.module.scss";
 
@@ -71,6 +72,12 @@ function DraftRoundPage() {
     message: "",
   });
   const [showHowItWorks, setShowHowItWorks] = useState(false);
+
+  const { participantWiseMatchWise, allPlayersWithPoints } = useContestStats({
+    tournamentPlayers: tournamentDetails.players,
+    completedMatches: tournamentDetails.completedMatches,
+    teams: contestDetails.teams,
+  });
 
   const { tournamentId, contestId } = params;
   const currentUserTeam = contestDetails.teams?.length
@@ -127,6 +134,11 @@ function DraftRoundPage() {
       endDate: tournament.endDate,
       season: tournament.season,
       scoringSystem: tournament.scoringSystem,
+      completedMatches: tournament.completedMatches || [],
+      players: parsePlayersForSquadDetails(
+        tournament.players,
+        tournament.allSquads
+      ),
     });
   };
 
@@ -365,6 +377,7 @@ function DraftRoundPage() {
             roomStatuses.turnTimestamp ||
             contestDetails.draftRound?.turnTimestamp
           }
+          allPlayersWithPoints={allPlayersWithPoints}
         />
 
         <PlayersPool

@@ -127,9 +127,13 @@ function Matches({ completedMatches = [], players = [] }) {
       .sort((a, b) => (new Date(a.startDate) < new Date(b.startDate) ? -1 : 1));
   }, [players, completedMatches]);
 
-  const getPlayerNameCell = (player) => {
+  const getPlayerNameCell = (player, i) => {
     return (
-      <td className={styles.name}>
+      <td
+        className={`sticky left-0 ${
+          i % 2 === 0 ? "bg-primary-200" : "bg-100"
+        } ${styles.name}`}
+      >
         {player.role === playerRoleEnum.BATTER
           ? batIcon
           : player.role === playerRoleEnum.ALLROUNDER
@@ -213,24 +217,11 @@ function Matches({ completedMatches = [], players = [] }) {
                 </div>
 
                 <div className={styles.tableOuter}>
-                  <div className={styles.overlayTable}>
-                    <table className={styles.table}>
-                      <thead>
-                        <tr>
-                          <th>Name</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {match.playerPoints.map((player) => (
-                          <tr key={player._id}>{getPlayerNameCell(player)}</tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                  <table className={styles.table}>
+                  <div className={styles.overlayTable}></div>
+                  <table className={`${styles.table}`}>
                     <thead>
                       <tr>
-                        <th>Name</th>
+                        <th className="sticky left-0 bg-primary-200">Name</th>
                         <th>Total</th>
                         <th>Batting</th>
                         <th>Bowling</th>
@@ -240,22 +231,25 @@ function Matches({ completedMatches = [], players = [] }) {
                       </tr>
                     </thead>
                     <tbody>
-                      {match.playerPoints.map((player) => (
-                        <tr key={player._id}>
-                          {getPlayerNameCell(player)}
-                          <td>{player.points}</td>
-                          <td>{player.battingPoints}</td>
-                          <td>{player.bowlingPoints}</td>
-                          {match.breakdownLabels?.map((label) => (
-                            <td key={label}>
-                              {
-                                player.breakdown.find((e) => e.label === label)
-                                  ?.points
-                              }
-                            </td>
-                          ))}
-                        </tr>
-                      ))}
+                      {match.playerPoints
+                        .sort((a, b) => b.points - a.points)
+                        .map((player, i) => (
+                          <tr key={player._id}>
+                            {getPlayerNameCell(player, i)}
+                            <td>{player.points}</td>
+                            <td>{player.battingPoints}</td>
+                            <td>{player.bowlingPoints}</td>
+                            {match.breakdownLabels?.map((label) => (
+                              <td key={label}>
+                                {
+                                  player.breakdown.find(
+                                    (e) => e.label === label
+                                  )?.points
+                                }
+                              </td>
+                            ))}
+                          </tr>
+                        ))}
                     </tbody>
                   </table>
                 </div>

@@ -32,17 +32,18 @@ import {
   updateContestTeamName,
 } from "@/apis/contests";
 import { getTournamentById } from "@/apis/tournament";
+import useContestStats from "@/utils/hooks/useContestStats";
 
 import styles from "./ContestPage.module.scss";
+import { ScrollArea } from "@/Components/ui/scroll-area";
 
 function ContestPage() {
   const navigate = useNavigate();
   const params = useParams();
-  const location=useLocation()
+  const location = useLocation();
   const userDetails = useSelector((s) => s.user);
   const isMobileView = useSelector((s) => s.root.isMobileView);
   const { tournamentId, contestId } = params;
-
 
   const [loading, setLoading] = useState(true);
   const [contestDetails, setContestDetails] = useState({});
@@ -56,6 +57,12 @@ function ContestPage() {
   const [playerPoints, setPlayerPoints] = useState([]);
   const [teamNameInput, setTeamNameInput] = useState("");
   const [showHowItWorks, setShowHowItWorks] = useState(false);
+
+  const { participantWiseMatchWise, allPlayersWithPoints } = useContestStats({
+    tournamentPlayers: tournamentDetails.players,
+    completedMatches: completedTournamentMatches,
+    teams: contestDetails.teams,
+  });
 
   const currentUserTeam = contestDetails.teams?.length
     ? contestDetails.teams.find((e) => e.owner?._id === userDetails._id)
@@ -346,6 +353,7 @@ function ContestPage() {
             participants={contestDetails.teams}
             playerPoints={playerPoints}
             completedMatches={completedTournamentMatches}
+            allPlayersWithPoints={allPlayersWithPoints}
           />
 
           {isDraftRoundCompleted && (
@@ -356,10 +364,12 @@ function ContestPage() {
           )}
         </div>
 
-        {
-          <div className={styles.mainRight}>
+        <div className={`sticky top-0 h-screen  ${styles.mainRight}`}>
+          <ScrollArea>
             {isDraftRoundCompleted ? (
               <LeaderBoard
+                participantWiseMatchWise={participantWiseMatchWise}
+                completedMatches={completedTournamentMatches}
                 teams={contestDetails.teams}
                 playerPoints={playerPoints}
               />
@@ -401,8 +411,8 @@ function ContestPage() {
             ) : (
               ""
             )}
-          </div>
-        }
+          </ScrollArea>
+        </div>
       </div>
     </div>
   );

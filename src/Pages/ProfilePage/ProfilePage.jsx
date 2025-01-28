@@ -51,9 +51,9 @@ function ProfilePage() {
     const finalContests = res.data
       .map((c) => {
         const tournamentData = res2.data.find(
-          (t) => t._id === c.tournament._id
+          (t) => t._id === c.tournament?._id
         );
-        if (!tournamentData.completed) return null;
+        if (!tournamentData?.completed) return null;
 
         const fullPlayers = tournamentData.players;
         const teams = c.teams.map((e) => ({

@@ -59,7 +59,7 @@ function PlayerSmallCard({
         </p>
         {showCountry && (
           <p className={styles.score}>
-            <span>{playerData.country}</span>
+            <span>({playerData.teamName || playerData.country})</span>
           </p>
         )}
 

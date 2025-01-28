@@ -4,12 +4,12 @@ import { useSelector } from "react-redux";
 import PageLoader from "@/Components/PageLoader/PageLoader";
 import TournamentCard from "@/Components/TournamentCard/TournamentCard";
 import ContestCard from "@/Components/ContestCard/ContestCard";
+import LineAnimate from "@/Components/LineAnimate/LineAnimate";
 
 import { getOngoingUpcomingTournaments } from "@/apis/tournament";
 import { getJoinedActiveContests } from "@/apis/contests";
 
 import styles from "./HomePage.module.scss";
-import LineAnimate from "@/Components/LineAnimate/LineAnimate";
 
 function HomePage() {
   const userDetails = useSelector((s) => s.user);
@@ -39,7 +39,7 @@ function HomePage() {
     const res = await getJoinedActiveContests();
     if (!res) return;
 
-    setJoinedContests(res.data);
+    setJoinedContests(res.data.filter((e) => !e.tournament?.completed));
   }
 
   useEffect(() => {
