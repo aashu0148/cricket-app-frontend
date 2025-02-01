@@ -17,7 +17,7 @@ import AllTournaments from "./Pages/Admin/AllTournaments/AllTournaments";
 import TournamentsPage from "./Pages/TournamentsPage/TournamentsPage";
 import ContestsPage from "./Pages/ContestsPage/ContestsPage";
 import ProfilePage from "./Pages/ProfilePage/ProfilePage";
-import ContestPage from "./Pages/ContestPage/ContestPage";
+import ContestPage from "./Pages/ContestPage";
 import DraftRoundPage from "./Pages/DraftRoundPage/DraftRoundPage";
 import { DraftRoundProvider } from "./Pages/DraftRoundPage/util/DraftRoundContext";
 import ScoringSystem from "./Pages/Admin/ScoringSystem/ScoringSystem";
@@ -156,8 +156,11 @@ function App() {
               element={<EditScoringSystem createMode />}
             />
             <Route path={applicationRoutes.players} element={<PlayersPage />} />
-            
-            <Route path = {applicationRoutes.tournamentMatches} element={<TournamentMatches/>}/>
+
+            <Route
+              path={applicationRoutes.tournamentMatches}
+              element={<TournamentMatches />}
+            />
           </Route>
 
           <Route
@@ -170,10 +173,7 @@ function App() {
             {/* all routes of normal users will be defined here */}
             <Route path={applicationRoutes.home} element={<HomePage />} />
             <Route path={applicationRoutes.profile} element={<ProfilePage />} />
-            <Route
-              path={applicationRoutes.faq}
-              element={<FaqPage />}
-            />
+            <Route path={applicationRoutes.faq} element={<FaqPage />} />
             <Route
               path={applicationRoutes.tournaments}
               element={<TournamentsPage />}

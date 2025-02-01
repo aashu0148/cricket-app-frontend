@@ -190,3 +190,18 @@ export const updateContestTeamName = async (contestId, payload) => {
     },
   });
 };
+
+export const leaveContest = async (contestId) => {
+  const path = `/leagues/leave`;
+
+  return await makeApiCall({
+    functionName: "leaveContest",
+    defaultErrorMessage: "Failed to leave Contest",
+    fetchWrapperOptions: {
+      path,
+      payload: {
+        leagueId: contestId,
+      },
+    },
+  });
+};

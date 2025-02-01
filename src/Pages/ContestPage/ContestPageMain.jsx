@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import {
+  useLocation,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { Edit2, Share2 } from "react-feather";
@@ -18,6 +23,9 @@ import InputControl from "@/Components/InputControl/InputControl";
 import Matches from "./Matches/Matches";
 import DraftPageInfoModal from "../DraftRoundPage/DraftPageInfoModal/DraftPageInfoModal";
 import Info from "@/Components/Info/Info";
+import { ScrollArea } from "@/Components/ui/scroll-area";
+import ContestTabs from "./ContestTabs";
+import ShareContest from "./ShareContest";
 
 import {
   handleAppNavigation,
@@ -29,34 +37,49 @@ import { contestTypeEnum } from "@/utils/enums";
 import {
   getContestById,
   joinContest,
+  leaveContest,
   updateContestTeamName,
 } from "@/apis/contests";
-import { getTournamentById } from "@/apis/tournament";
 import useContestStats from "@/utils/hooks/useContestStats";
+import { useContest } from "./utils/context";
+import { CONTEST_PAGE_TABS } from "./utils/constants";
+import useConfettiAnimation from "@/utils/hooks/useConfettiAnimation";
 
 import styles from "./ContestPage.module.scss";
-import { ScrollArea } from "@/Components/ui/scroll-area";
+import ConfirmDeleteModal from "@/Components/ConfirmDeleteModal/ConfirmDeleteModal";
 
-function ContestPage() {
+function ContestPageMain() {
   const navigate = useNavigate();
   const params = useParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const location = useLocation();
+
+  const { play } = useConfettiAnimation();
   const userDetails = useSelector((s) => s.user);
   const isMobileView = useSelector((s) => s.root.isMobileView);
   const { tournamentId, contestId } = params;
 
-  const [loading, setLoading] = useState(true);
-  const [contestDetails, setContestDetails] = useState({});
-  const [tournamentDetails, setTournamentDetails] = useState({});
-  const [completedTournamentMatches, setCompletedTournamentMatches] = useState(
-    []
-  );
+  const {
+    contestDetails,
+    tournamentDetails,
+    completedTournamentMatches,
+    playerPoints,
+    isFetchingContest,
+    isDraftRoundCompleted,
+    isDraftRoundStarted,
+    activeTab,
+    showShareModal,
+    setShowShareModal,
+    setContestDetails,
+    refetchContest,
+  } = useContest();
+
   const [showEditContestModal, setShowEditContestModal] = useState(false);
   const [showJoinContestModal, setShowJoinContestModal] = useState(false);
   const [joiningContest, setJoiningContest] = useState(false);
-  const [playerPoints, setPlayerPoints] = useState([]);
   const [teamNameInput, setTeamNameInput] = useState("");
   const [showHowItWorks, setShowHowItWorks] = useState(false);
+  const [showConfirmLeave, setShowConfirmLeave] = useState(false);
 
   const { participantWiseMatchWise, allPlayersWithPoints } = useContestStats({
     tournamentPlayers: tournamentDetails.players,
@@ -67,9 +90,10 @@ function ContestPage() {
   const currentUserTeam = contestDetails.teams?.length
     ? contestDetails.teams.find((e) => e.owner?._id === userDetails._id)
     : null;
-  const isDraftRoundCompleted = contestDetails.draftRound?.completed;
-  const draftRoundStarted =
-    new Date() > new Date(contestDetails.draftRound?.startDate);
+  const isUserContestOwner =
+    (typeof contestDetails.createdBy === "string"
+      ? contestDetails.createdBy
+      : contestDetails.createdBy?._id) === userDetails._id;
 
   const handleTeamNameInputBlur = async () => {
     const currName =
@@ -95,7 +119,7 @@ function ContestPage() {
   const handleJoinContest = async (pass = "") => {
     setJoiningContest(true);
     const res = await joinContest(contestId, {
-      contestId,
+      leagueId: contestId,
       password: pass,
     });
     setJoiningContest(false);
@@ -103,58 +127,51 @@ function ContestPage() {
 
     toast.success("Contest joined successfully");
     setContestDetails(res.data);
-    fetchContestDetails();
+    refetchContest();
   };
 
-  const fetchContestDetails = async () => {
-    const res = await getContestById(contestId);
-    setLoading(false);
+  async function handleLeaveContest() {
+    setShowConfirmLeave(false);
+    const res = await leaveContest(contestDetails._id);
     if (!res) return;
 
-    setContestDetails(res.data);
+    toast.success("Contest left successfully");
+    navigate(applicationRoutes.contests(tournamentDetails._id));
+  }
 
-    if (res.data?.teams) {
-      const userTeam = res.data.teams.find(
-        (e) => e.owner?._id === userDetails._id
-      );
-      setTeamNameInput(userTeam?.name || "");
-    }
-  };
+  function checkForNew() {
+    const isNew = searchParams.get("new") === "true";
+    if (!isNew) return;
 
-  const fetchTournamentDetails = async () => {
-    const res = await getTournamentById(tournamentId);
-    if (!res) return;
-
-    // lets not fill whole tournament into state, its pretty big and we wont be using it whole
-    const tournament = res.data;
-    setPlayerPoints(tournament.playerPoints);
-    setTournamentDetails({
-      _id: tournament._id,
-      name: tournament.name,
-      longName: tournament.longName,
-      active: tournament.active,
-      startDate: tournament.startDate,
-      endDate: tournament.endDate,
-      season: tournament.season,
-      scoringSystem: tournament.scoringSystem,
-      players: parsePlayersForSquadDetails(
-        tournament.players,
-        tournament.allSquads
-      ),
-    });
-    setCompletedTournamentMatches(tournament.completedMatches || []);
-  };
-
-  const fetchInitial = async () => {
-    await fetchTournamentDetails();
-    fetchContestDetails();
-  };
+    setShowShareModal(true);
+    play(); // play confetti animation
+    setSearchParams(
+      (prev) => {
+        prev.delete("new");
+        return prev;
+      },
+      { replace: true }
+    );
+  }
 
   useEffect(() => {
-    fetchInitial();
-  }, []);
+    if (isFetchingContest) return;
 
-  return loading ? (
+    checkForNew();
+  }, [isFetchingContest]);
+
+  useEffect(() => {
+    if (!isFetchingContest) {
+      if (contestDetails?.teams) {
+        const userTeam = contestDetails.teams.find(
+          (e) => e.owner?._id === userDetails._id
+        );
+        setTeamNameInput(userTeam?.name || "");
+      }
+    }
+  }, [isFetchingContest]);
+
+  return isFetchingContest ? (
     <PageLoader fullPage />
   ) : (
     <div className={`page-container ${styles.container}`}>
@@ -178,6 +195,18 @@ function ContestPage() {
       )}
       {showHowItWorks && (
         <DraftPageInfoModal onClose={() => setShowHowItWorks(false)} />
+      )}
+      {showShareModal && (
+        <ShareContest onClose={() => setShowShareModal(false)} />
+      )}
+      {showConfirmLeave && (
+        <ConfirmDeleteModal
+          heading={`Leave the contest ?`}
+          description={`Are you sure you want to leave this contest? Since you are the admin, the earliest joined member will become the new admin. If no one is there in this contest then the next person to join will become admin. This action cannot be undone, please be sure.`}
+          buttonText="Leave"
+          onClose={() => setShowConfirmLeave(false)}
+          onDelete={handleLeaveContest}
+        />
       )}
 
       <BreadCrumbs
@@ -235,20 +264,6 @@ function ContestPage() {
                 >
                   How it works
                 </p>
-                <span
-                  className={"share"}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    shareContest({
-                      tid: tournamentDetails._id,
-                      contestId: contestDetails._id,
-                      ownerName: contestDetails.createdBy?.name,
-                      password: contestDetails.password,
-                    });
-                  }}
-                >
-                  <Share2 />
-                </span>
               </div>
             </div>
             <p className="desc" style={{ whiteSpace: "pre-wrap" }}>
@@ -286,7 +301,7 @@ function ContestPage() {
               <div className={styles.information}>
                 <label>Draft Round:</label>
 
-                {draftRoundStarted ? (
+                {isDraftRoundStarted ? (
                   <Button
                     onClick={(e) =>
                       handleAppNavigation(
@@ -301,13 +316,13 @@ function ContestPage() {
                 ) : (
                   <Countdown
                     onCountdownComplete={() => {
-                      fetchContestDetails();
+                      refetchContest();
                     }}
                     targetDate={contestDetails.draftRound?.startDate}
                   />
                 )}
               </div>
-            ) : !draftRoundStarted && !currentUserTeam ? (
+            ) : !isDraftRoundStarted && !currentUserTeam ? (
               <Button
                 disabled={joiningContest}
                 useSpinnerWhenDisabled
@@ -333,6 +348,28 @@ function ContestPage() {
                 </a>
               </div>
             )}
+
+            <div
+              className="w-fit flex gap-1 items-center cursor-pointer"
+              onClick={() => setShowShareModal(true)}
+            >
+              <p className="text-primary font-medium">Share with friends</p>
+
+              <span className={"share"}>
+                <Share2 />
+              </span>
+            </div>
+
+            {!isDraftRoundStarted && isUserContestOwner ? (
+              <p
+                onClick={() => setShowConfirmLeave(true)}
+                className="text-red-500 font-medium text-sm w-fit cursor-pointer hover:underline"
+              >
+                Leave contest ?
+              </p>
+            ) : (
+              ""
+            )}
           </div>
 
           {currentUserTeam && (
@@ -349,18 +386,23 @@ function ContestPage() {
             </div>
           )}
 
-          <Participants
-            participants={contestDetails.teams}
-            playerPoints={playerPoints}
-            completedMatches={completedTournamentMatches}
-            allPlayersWithPoints={allPlayersWithPoints}
-          />
+          <ContestTabs />
 
-          {isDraftRoundCompleted && (
+          {activeTab === CONTEST_PAGE_TABS.PARTICIPANTS ? (
+            <Participants
+              participants={contestDetails.teams}
+              playerPoints={playerPoints}
+              completedMatches={completedTournamentMatches}
+              allPlayersWithPoints={allPlayersWithPoints}
+            />
+          ) : activeTab === CONTEST_PAGE_TABS.MATCHES &&
+            isDraftRoundCompleted ? (
             <Matches
               players={tournamentDetails.players}
               completedMatches={completedTournamentMatches}
             />
+          ) : (
+            ""
           )}
         </div>
 
@@ -418,4 +460,4 @@ function ContestPage() {
   );
 }
 
-export default ContestPage;
+export default ContestPageMain;

@@ -25,7 +25,7 @@ function ConfirmDeleteModal({
         )}
 
         {description ? (
-          <p className={styles.desc}>{description}</p>
+          <p className={` whitespace-pre-wrap ${styles.desc}`}>{description}</p>
         ) : (
           <p className={styles.desc}>
             It will be permanently deleted and can not be recovered. Are you

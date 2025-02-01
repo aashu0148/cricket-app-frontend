@@ -96,7 +96,7 @@ function Participants({
 
   return (
     <div className={`flex-col-xs ${styles.container}`}>
-      <p className="heading">Participants</p>
+      {/* <p className="heading">Participants</p> */}
 
       <div className={`cards ${styles.cards}`}>
         {participants.map((team) => (

@@ -33,7 +33,7 @@ const infoTexts = {
     runs: "Defines the upper limit of runs for the milestone where a bonus is applied.",
     points: "Bonus points awarded for reaching the first run milestone.",
     negativePointsExemptPositions:
-      "Batters in these positions will not have negative points for scoring below 10 runs.",
+      "Batters in these positions will not have negative points for scoring runs less than runs you mention in the next field. ",
   },
   strikeRateBonus: {
     minBallsRequired:
@@ -646,6 +646,7 @@ export default function EditScoringSystem({ createMode = false }) {
               </label>
 
               <SimpleArrayEdit
+                options={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]}
                 array={
                   battingData.runMilestoneBonus?.milestones[index]
                     ?.battingPositions
@@ -749,7 +750,7 @@ export default function EditScoringSystem({ createMode = false }) {
         </Button>
 
         <h3 className={styles.subHeading}>
-          Negative Runs Exempt positions
+          Negative points Exempt positions
           <span
             className={`icon ${styles.info}`}
             {...getTooltipAttributes({
@@ -760,6 +761,7 @@ export default function EditScoringSystem({ createMode = false }) {
           </span>
         </h3>
         <SimpleArrayEdit
+          options={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]}
           array={battingData.runMilestoneBonus?.negativePointsExemptPositions}
           onChange={(arr) =>
             setBattingData((p) => ({
@@ -767,6 +769,25 @@ export default function EditScoringSystem({ createMode = false }) {
               runMilestoneBonus: {
                 ...p.runMilestoneBonus,
                 negativePointsExemptPositions: arr,
+              },
+            }))
+          }
+        />
+
+        <InputControl
+          placeholder="Type here"
+          numericInput
+          label="Negative points Exempt for non-out batter with runs"
+          value={
+            battingData.runMilestoneBonus
+              ?.negativePointsExemptNotOutBatterWithRuns
+          }
+          onChange={(e) =>
+            setBattingData((prev) => ({
+              ...prev,
+              runMilestoneBonus: {
+                ...prev.runMilestoneBonus,
+                negativePointsExemptNotOutBatterWithRuns: arr,
               },
             }))
           }
@@ -803,6 +824,7 @@ export default function EditScoringSystem({ createMode = false }) {
           </span> */}
         </h3>
         <SimpleArrayEdit
+          options={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]}
           array={battingData.strikeRateBonus?.negativePointsExemptPositions}
           onChange={(arr) =>
             setBattingData((p) => ({
@@ -836,6 +858,7 @@ export default function EditScoringSystem({ createMode = false }) {
               </label>
 
               <SimpleArrayEdit
+                options={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]}
                 array={
                   battingData.strikeRateBonus?.multiplierRanges[index]
                     ?.battingPositions

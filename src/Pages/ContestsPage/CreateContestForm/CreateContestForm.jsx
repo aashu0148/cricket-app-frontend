@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { toast } from "react-hot-toast";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import InputControl from "@/Components/InputControl/InputControl";
 import DatePicker from "@/Components/DatePicker/DatePicker";
@@ -12,8 +13,11 @@ import { contestTypeEnum } from "@/utils/enums";
 import { createContest } from "@/apis/contests";
 
 import styles from "./CreateContestForm.module.scss";
+import { applicationRoutes } from "@/utils/constants";
 
 function CreateContestForm({ tournamentData = {}, onSuccess }) {
+  const navigate = useNavigate();
+
   const isMobileView = useSelector((state) => state.root.isMobileView);
   const [values, setValues] = useState({
     name: "",
@@ -72,6 +76,9 @@ function CreateContestForm({ tournamentData = {}, onSuccess }) {
     setSubmitting(false);
     if (!res) return;
 
+    navigate(
+      `${applicationRoutes.contest(tournamentData._id, res.data?._id)}?new=true`
+    );
     if (onSuccess) onSuccess(res.data);
     toast.success("Contest created successfully");
   };

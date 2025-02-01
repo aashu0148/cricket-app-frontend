@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import PageLoader from "@/Components/PageLoader/PageLoader";
 import CreateContestForm from "./CreateContestForm/CreateContestForm";
@@ -13,6 +13,7 @@ import { getTournamentById } from "@/apis/tournament";
 import { parsePlayersForSquadDetails } from "@/utils/util";
 
 import styles from "./ContestsPage.module.scss";
+import { applicationRoutes } from "@/utils/constants";
 
 const tabsEnum = {
   all: "all",
@@ -20,6 +21,7 @@ const tabsEnum = {
   create: "create",
 };
 function ContestsPage() {
+  const navigate = useNavigate();
   const params = useParams();
   const [loadingPage, setLoadingPage] = useState(true);
   const [activeTab, setActiveTab] = useState(tabsEnum.all);
@@ -72,9 +74,15 @@ function ContestsPage() {
           className={styles.contestCard}
           key={item._id}
           contestData={item}
-          onJoined={() => {
-            fetchContests();
-            fetchJoinedContests();
+          onJoined={({ _id: contestId }) => {
+            // fetchContests();
+            // fetchJoinedContests();
+            navigate(
+              `${applicationRoutes.contest(
+                tournamentDetails._id,
+                contestId
+              )}?new=true`
+            );
           }}
         />
       ))}

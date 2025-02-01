@@ -115,3 +115,50 @@ export interface PlayerSquad {
   squad?: SquadBase;
   _id: string;
 }
+
+export interface Tournament {
+  _id: string;
+  active: boolean;
+  allMatches: MatchBase[];
+  allSquads: SquadBase[];
+  completed: boolean;
+  createdAt: string;
+  endDate: string;
+  longName: string;
+  name: string;
+  ojectId: string;
+  playerPoints: PlayerPoints[];
+  players: { player: string | PlayerDetails; squadId: string }[];
+  slug: string;
+  scoringSystem: string;
+  season: string;
+  startDate: string;
+  updatedAt: string;
+}
+
+export interface Contest {
+  _id: string;
+  createdBy: string | UserBase;
+  password?: string;
+  createdAt: string;
+  description: string;
+  draftRound: {
+    completed: boolean;
+    currentTurn: string;
+    paused: boolean;
+    startDate: string;
+    turnDir: string;
+    turnTimestamp: number;
+  };
+  name: string;
+  teams: {
+    joinedAt: string;
+    owner: string | UserBase;
+    players: (string | PlayerDetails)[];
+    wishlist: string[];
+    _id: string;
+  }[];
+  tournament: string | Tournament;
+  type: string;
+  updatedAt: string;
+}

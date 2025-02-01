@@ -1,0 +1,8 @@
+export enum CONTEST_PAGE_TABS {
+  PARTICIPANTS = "Participants",
+  MATCHES = "Matches",
+}
+export const CONTEST_PAGE_TABS_LIST = [
+  CONTEST_PAGE_TABS.PARTICIPANTS,
+  CONTEST_PAGE_TABS.MATCHES,
+];

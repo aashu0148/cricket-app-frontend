@@ -1,4 +1,4 @@
-import confettiGif from "assets/images/confetti.gif";
+import confettiGif from "@/assets/images/confetti.gif";
 
 function useConfettiAnimation(timer = 5000) {
   function playAnimation() {

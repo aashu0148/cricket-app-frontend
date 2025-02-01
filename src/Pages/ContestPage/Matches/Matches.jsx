@@ -148,7 +148,7 @@ function Matches({ completedMatches = [], players = [] }) {
 
   return (
     <div className={styles.container}>
-      <p className="heading">Matches</p>
+      {/* <p className="heading">Matches</p> */}
 
       <div className={styles.matches}>
         {parsedMatches.map((match) => (
