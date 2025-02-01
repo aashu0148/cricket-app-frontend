@@ -406,7 +406,7 @@ function ContestPageMain() {
           )}
         </div>
 
-        <div className={`sticky top-0 h-screen  ${styles.mainRight}`}>
+        <div className={`sticky top-0 max-h-screen  ${styles.mainRight}`}>
           <ScrollArea>
             {isDraftRoundCompleted ? (
               <LeaderBoard
