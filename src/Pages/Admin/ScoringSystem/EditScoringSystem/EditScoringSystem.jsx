@@ -175,6 +175,17 @@ export default function EditScoringSystem({ createMode = false }) {
             "Positions must be integers between 1 and 12.";
         }
       }
+
+      if (
+        isNaN(
+          battingData.runMilestoneBonus.negativePointsExemptNotOutBatterWithRuns
+        ) ||
+        battingData.runMilestoneBonus.negativePointsExemptNotOutBatterWithRuns <
+          0
+      ) {
+        battingErrors.negativePointsExemptNotOutBatterWithRuns =
+          "Runs must be a integer";
+      }
     }
 
     if (battingData.strikeRateBonus) {
@@ -782,12 +793,14 @@ export default function EditScoringSystem({ createMode = false }) {
             battingData.runMilestoneBonus
               ?.negativePointsExemptNotOutBatterWithRuns
           }
+          error={errors.batting.negativePointsExemptNotOutBatterWithRuns}
           onChange={(e) =>
             setBattingData((prev) => ({
               ...prev,
               runMilestoneBonus: {
                 ...prev.runMilestoneBonus,
-                negativePointsExemptNotOutBatterWithRuns: arr,
+                negativePointsExemptNotOutBatterWithRuns:
+                  parseInt(e.target.value) || "",
               },
             }))
           }
