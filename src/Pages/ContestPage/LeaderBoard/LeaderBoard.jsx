@@ -49,12 +49,14 @@ function LeaderBoard({
       }
     });
 
-    return data.map((e) => ({
-      ...e,
-      matches: e.matches.sort((a, b) =>
-        new Date(a.match?.startDate) > new Date(b.match?.startDate) ? 1 : -1
-      ),
-    }));
+    return data
+      .map((e) => ({
+        ...e,
+        matches: e.matches.sort((a, b) =>
+          new Date(a.match?.startDate) > new Date(b.match?.startDate) ? 1 : -1
+        ),
+      }))
+      .sort((a, b) => b.team?.teamPoints - a.team?.teamPoints);
   }, [parsedTeams]);
 
   return (

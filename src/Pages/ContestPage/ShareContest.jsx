@@ -4,11 +4,7 @@ import Button from "@/Components/Button/Button";
 import { shareContest } from "@/utils/util";
 import { useContest } from "./utils/context";
 
-interface Props {
-  onClose: () => void;
-}
-
-function ShareContest({ onClose }: Props) {
+function ShareContest({ onClose }) {
   const { tournamentDetails, contestDetails } = useContest();
 
   const handleShare = async () => {
