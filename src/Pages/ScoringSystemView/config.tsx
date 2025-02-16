@@ -65,7 +65,7 @@ export const additionalRunsMilestone: TableStructure = {
     <p className="text-sm">
       Note: There are no negative points for batters in positions 8-11 or for
       those
-      <span className="font-bold"> not out </span> with less than 20 runs.
+      <span className="font-semibold"> not out </span> with less than 20 runs.
     </p>
   ),
 };
@@ -81,7 +81,14 @@ export const battingStrikeRateMultipliers: TableStructure = {
     ["7-11", "10-30", "2.0"],
     ["7-11", "31+", "1.5"],
   ],
-  note: "Bonus applies only if the batter faces 10+ balls. No negative points if the batter is not out in a winning chase or for batters in positions 8-11.",
+  note: (
+    <p className="text-sm">
+      Note: Bonus applies only if the batter faces{" "}
+      <span className="font-semibold"> 10+ balls. </span> No negative points if
+      the batter is not out in a winning chase or for batters in positions{" "}
+      <span className="font-semibold"> 8-11. </span>
+    </p>
+  ),
 };
 
 export const bowlingEconomyRateMultipliers: TableStructure = {
