@@ -171,8 +171,6 @@ function ContestPageMain() {
     }
   }, [isFetchingContest]);
 
-  console.log({ tournamentDetails });
-
   return isFetchingContest ? (
     <PageLoader fullPage />
   ) : (
@@ -185,7 +183,7 @@ function ContestPageMain() {
           onClose={() => setShowEditContestModal(false)}
           onSuccess={() => {
             setShowEditContestModal(false);
-            fetchContestDetails();
+            refetchContest();
           }}
         />
       )}
