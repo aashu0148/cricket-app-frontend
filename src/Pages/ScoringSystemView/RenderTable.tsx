@@ -7,7 +7,7 @@ import {
   TableRow,
 } from "@/Components/ui/table";
 
-import { TableStructure } from "./config";
+import { TableStructure } from "./utility/constants";
 
 const RenderTable = ({ table }: { table: TableStructure }) => {
   const { headers, rows, exceptions, note } = table;

@@ -17,6 +17,7 @@ import { applicationRoutes } from "@/utils/constants";
 import { getTooltipAttributes } from "@/utils/tooltip";
 
 import styles from "./EditScoringSystem.module.scss";
+import InputSelect from "@/Components/InputControl/InputSelect/InputSelect";
 
 const infoTexts = {
   runPoints:
@@ -86,9 +87,21 @@ const infoTexts = {
   },
 };
 
+const systemTypeOptions = [
+  {
+    label: "ODI",
+    value: "odi",
+  },
+  {
+    label: "T20",
+    value: "t20",
+  },
+];
+
 export default function EditScoringSystem({ createMode = false }) {
   const { scoringId } = useParams();
   const navigate = useNavigate();
+  const [systemType, setSystemType] = useState("t20");
   const [systemName, setSystemName] = useState("");
   const [loadingPage, setLoadingPage] = useState(true);
   const [battingData, setBattingData] = useState({});
@@ -391,12 +404,14 @@ export default function EditScoringSystem({ createMode = false }) {
     const res = createMode
       ? await createScoringSystem({
           name: systemName,
+          type: systemType,
           batting: battingData,
           bowling: bowlingData,
           fielding: fieldingData,
         })
       : await updateScoringSystem(scoringId, {
           name: systemName,
+          type: systemType,
           batting: battingData,
           bowling: bowlingData,
           fielding: fieldingData,
@@ -413,6 +428,7 @@ export default function EditScoringSystem({ createMode = false }) {
     setLoadingPage(false);
     if (!res) return;
 
+    setSystemType(res.data?.type);
     setSystemName(res.data?.name);
     setBattingData(res.data.batting);
     setBowlingData(res.data.bowling);
@@ -1618,6 +1634,14 @@ export default function EditScoringSystem({ createMode = false }) {
         onChange={(e) => setSystemName(e.target.value)}
         label="Scoring System Name"
         error={errors.name}
+      />
+
+      <InputSelect
+        placeholder="Select type"
+        options={systemTypeOptions}
+        value={systemTypeOptions.find((e) => e.value === systemType)}
+        onChange={(e) => setSystemType(e.value)}
+        label="Scoring System Type"
       />
 
       {battingSection}

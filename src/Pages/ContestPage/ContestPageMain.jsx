@@ -171,6 +171,8 @@ function ContestPageMain() {
     }
   }, [isFetchingContest]);
 
+  console.log({ tournamentDetails });
+
   return isFetchingContest ? (
     <PageLoader fullPage />
   ) : (
@@ -339,7 +341,7 @@ function ContestPageMain() {
                 <label>Scoring system:</label>
                 <a
                   href={applicationRoutes.viewScoringSystem(
-                    tournamentDetails.scoringSystem
+                    tournamentDetails.scoringSystem?.type
                   )}
                   target="_blank"
                   className="link"

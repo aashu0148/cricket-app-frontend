@@ -12,9 +12,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { applicationRoutes } from "@/utils/constants";
 
-const scoringSystemLink = applicationRoutes.viewScoringSystem(
-  "66ed6313dc9c0352f77b6f63"
-);
+const scoringSystemLink = applicationRoutes.viewScoringSystem("t20");
 
 const generalCopy = {
   about: {

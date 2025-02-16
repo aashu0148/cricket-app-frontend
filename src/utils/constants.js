@@ -5,7 +5,7 @@ export const applicationRoutes = {
   landing: "/",
   auth: "/auth",
   tournaments: "/tournaments",
-  tournamentMatches : "/admin/tournaments/matches",
+  tournamentMatches: "/admin/tournaments/matches",
   profile: "/profile",
   faq: "/faq",
   adminTournament: "/admin/tournaments",
@@ -25,7 +25,7 @@ export const applicationRoutes = {
     `/tournaments/${tournamentId || ":tournamentId"}/contests/${
       contestId || ":contestId"
     }/draft-round`,
-  viewScoringSystem: (systemId = "") => `/scoring-systems/${systemId || ":id"}`,
+  viewScoringSystem: (type = "") => `/scoring-systems/${type || ":id"}`,
 };
 
 const commonColors = {

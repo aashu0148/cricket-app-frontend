@@ -84,19 +84,6 @@ export default function ScoringSystem() {
               </p>
             </div>
             <div className="flex" style={{ justifyContent: "space-between" }}>
-              <Button
-                outlineButton
-                onClick={(e) =>
-                  handleAppNavigation(
-                    e,
-                    navigate,
-                    applicationRoutes.viewScoringSystem(item._id)
-                  )
-                }
-              >
-                <Eye />
-              </Button>
-
               <div className={`footer ${styles.buttonContainer}`}>
                 <Button
                   onClick={() => handleCopySystem(item)}
