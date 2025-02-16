@@ -819,7 +819,7 @@ export default function EditScoringSystem({ createMode = false }) {
               ...prev,
               strikeRateBonus: {
                 ...prev.strikeRateBonus,
-                minBallsRequired: e.target.valuesAsNumber,
+                minBallsRequired: e.target.valueAsNumber,
               },
             }))
           }
@@ -1281,7 +1281,7 @@ export default function EditScoringSystem({ createMode = false }) {
               ...prev,
               economyRateBonus: {
                 ...prev.economyRateBonus,
-                minBowledBallsRequired: e.target.valuesAsNumber,
+                minBowledBallsRequired: e.target.valueAsNumber,
               },
             }))
           }

@@ -162,3 +162,94 @@ export interface Contest {
   type: string;
   updatedAt: string;
 }
+
+export interface ScoringSystem {
+  name: string;
+
+  // Batting Points
+  batting: {
+    run: Array<{
+      points: number;
+      minRate: number;
+      maxRate: number;
+    }>;
+
+    boundaryPoints: Array<{
+      minRate: number;
+      maxRate: number;
+      four: number;
+      six: number;
+    }>;
+
+    runMilestoneBonus: {
+      milestones: Array<{
+        battingPositions: number[];
+        runs: number;
+        points: number;
+      }>;
+      negativePointsExemptPositions: number[];
+      negativePointsExemptNotOutBatterWithRuns: number;
+    };
+
+    strikeRateBonus: {
+      multiplierRanges: Array<{
+        battingPositions: number[];
+        minBalls: number;
+        maxBalls: number;
+        multiplier: number;
+      }>;
+      negativePointsExemptPositions: number[];
+      minBallsRequired: number;
+    };
+  };
+
+  // Bowling Points
+  bowling: {
+    wicketPoints: Array<{
+      minBattingPosition: number;
+      maxBattingPosition: number;
+      points: number;
+      runsCapForIncrementingPoints?: number;
+      incrementedPoints?: number;
+    }>;
+
+    wicketPointsMultiplier: Array<{
+      minRate: number;
+      maxRate: number;
+      multiplier: number;
+    }>;
+
+    dotBallPoints: Array<{
+      minRate: number;
+      maxRate: number;
+      points: number;
+    }>;
+
+    wicketMilestoneBonus: Array<{
+      minWickets: number;
+      maxWickets: number;
+      points: number;
+    }>;
+
+    economyRateBonus: {
+      multiplierRanges: Array<{
+        minBallsBowled: number;
+        maxBallsBowled: number;
+        multiplier: number;
+      }>;
+      minBowledBallsRequired: number;
+    };
+  };
+
+  // Fielding Points
+  fielding: {
+    catchPoints: number;
+    stumpingPoints: number;
+    directHitRunOutPoints: number;
+    assistedRunOutPoints: number;
+  };
+
+  // Timestamps from mongoose
+  createdAt?: Date;
+  updatedAt?: Date;
+}
