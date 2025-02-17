@@ -30,6 +30,7 @@ export const DraftRoundProvider = ({ children }) => {
     status: "",
     started: false,
     completed: false,
+    inactiveUsers: [],
   });
   const [notifications, setNotifications] = useState([]);
   const [room, setRoom] = useState({
@@ -87,7 +88,7 @@ export const DraftRoundProvider = ({ children }) => {
  * @returns {{
  * socket:object,
  * roomStatuses:{
- * connected:boolean,started:boolean,status:string,turn:string,turnTimestamp:number,turnDir:string,completed:boolean
+ * connected:boolean,started:boolean,status:string,turn:string,turnTimestamp:number,turnDir:string,completed:boolean, inactiveUsers:Array<string>
  * },
  *  room:{
  *   name: string,

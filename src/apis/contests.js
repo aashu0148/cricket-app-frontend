@@ -205,3 +205,18 @@ export const leaveContest = async (contestId) => {
     },
   });
 };
+
+export const makeUserActiveInDraftRound = async (contestId) => {
+  const path = `/leagues/draft/active`;
+
+  return await makeApiCall({
+    functionName: "makeUserActiveInDraftRound",
+    defaultErrorMessage: "Failed to make user active",
+    fetchWrapperOptions: {
+      path,
+      payload: {
+        leagueId: contestId,
+      },
+    },
+  });
+};

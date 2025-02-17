@@ -15,7 +15,7 @@ import DraftRoundCompleted from "./DraftRoundCompleted";
 import InfoMessage from "./InfoMessage/InfoMessage";
 import DraftPageInfoModal from "./DraftPageInfoModal/DraftPageInfoModal";
 
-import { getContestById } from "@/apis/contests";
+import { getContestById, makeUserActiveInDraftRound } from "@/apis/contests";
 import { getTournamentById } from "@/apis/tournament";
 import { handleAppNavigation, parsePlayersForSquadDetails } from "@/utils/util";
 import { applicationRoutes } from "@/utils/constants";
@@ -86,6 +86,7 @@ function DraftRoundPage() {
   const isDraftRoundCompleted = contestDetails.draftRound?.completed;
   const draftRoundStarted =
     new Date() > new Date(contestDetails.draftRound?.startDate);
+  const isUserInactive = roomStatuses.inactiveUsers?.includes(userDetails._id);
 
   const handlePauseDraftRound = () => {
     if (!socket) return;
@@ -192,6 +193,17 @@ function DraftRoundPage() {
         ),
       }));
     });
+  }
+
+  async function handleMakeUserActive() {
+    const res = await makeUserActiveInDraftRound(contestId);
+    if (!res) return;
+
+    setRoomStatuses((p) => ({
+      ...p,
+      inactiveUsers: p.inactiveUsers?.filter((e) => e !== userDetails._id),
+    }));
+    toast.success("You can now pick players");
   }
 
   useEffect(() => {
@@ -365,6 +377,21 @@ function DraftRoundPage() {
             <div style={{ height: "43px" }} />
           </div>
         )}
+
+        {isUserInactive ? (
+          <InfoMessage
+            jsx={
+              <div className="flex gap-2 items-center">
+                <p className="text-red-500 font-semibold">
+                  Auto pick is ON for you
+                </p>
+                <Button small outlineButton onClick={handleMakeUserActive}>
+                  Turn OFF
+                </Button>
+              </div>
+            }
+          />
+        ) : null}
 
         <Participants
           playerPoints={playerPoints}

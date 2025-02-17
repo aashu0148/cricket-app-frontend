@@ -38,6 +38,7 @@ function useSocketEvents() {
     socket.off(socketEventsEnum.turnUpdate);
     socket.off(socketEventsEnum.draftRoundCompleted);
     socket.off(socketEventsEnum.roundStatusUpdate);
+    socket.off(socketEventsEnum.updateDraftRoundObject);
   }
 
   function handleSocketEvents() {
@@ -96,6 +97,15 @@ function useSocketEvents() {
         ...prev,
         ...data,
         started: data.isStarted,
+      }));
+    });
+
+    socket.on(socketEventsEnum.updateDraftRoundObject, (data) => {
+      if (!data.startDate || !data.inactiveUsers) return;
+
+      setRoomStatuses((prev) => ({
+        ...prev,
+        ...data,
       }));
     });
   }

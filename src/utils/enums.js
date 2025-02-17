@@ -24,6 +24,7 @@ const socketEventsEnum = {
   paused: "paused",
   resumeRound: "resume-round",
   resumed: "resumed",
+  updateDraftRoundObject: "update-draft-round-object",
 };
 
 const playerRoleEnum = {

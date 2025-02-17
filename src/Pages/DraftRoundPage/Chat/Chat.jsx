@@ -25,7 +25,7 @@ function Message({ chat = {}, isOnRightSide = false, isConcurrent = false }) {
       style={{ marginTop: isConcurrent ? "" : "10px" }}
     >
       {!isConcurrent ? (
-        <div className={styles.image}>
+        <div className={`${styles.image} min-w-[22px] lg:min-w-[26px]`}>
           <Img
             usePLaceholderUserImageOnError
             src={chat.user?.profileImage}
