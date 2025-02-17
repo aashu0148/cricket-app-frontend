@@ -112,6 +112,10 @@ function DraftRoundPage() {
     if (!res) return;
 
     setContestDetails(res.data);
+    setRoomStatuses((p) => ({
+      ...p,
+      inactiveUsers: res.data?.draftRound?.inactiveUsers || [],
+    }));
   };
 
   const fetchTournamentDetails = async () => {
