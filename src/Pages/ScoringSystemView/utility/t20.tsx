@@ -93,7 +93,7 @@ export const t20ScoringSystemData: {
     },
 
     [FIELDS.BOWLING_ECONOMY_RATE_MULTIPLIERS]: {
-      tableName: "Bowling Economy Rate Bonus",
+      tableName: "Multipliers",
       formula:
         "Economy Rate Bonus=Multiplier × ((A.M.S.R × Balls Bowled) − Runs Conceded)",
       headers: ["Balls Bowled", "Multiplier"],

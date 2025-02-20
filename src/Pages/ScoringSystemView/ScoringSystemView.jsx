@@ -108,6 +108,17 @@ const ScoringSystemView = () => {
           <RenderTable
             table={scoringSystem.tables[FIELDS.WICKET_MILESTONE_BONUS]}
           />
+
+          <div className="flex flex-col gap-1 ">
+            <h2 className="text-lg lg:text-xl font-medium pl-4">
+              Bowling Economy Rate Bonus
+            </h2>
+            <RenderTable
+              table={
+                scoringSystem.tables[FIELDS.BOWLING_ECONOMY_RATE_MULTIPLIERS]
+              }
+            />
+          </div>
         </div>
 
         <Separator />
