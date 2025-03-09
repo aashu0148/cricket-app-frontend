@@ -85,6 +85,7 @@ export default function EditTournamentModal({
         player: e.player._id,
         squadId: e.squadId,
       })),
+      endDate: new Date(new Date(tournamentDetails.endDate).setHours(23)),
     };
     delete body.allMatches;
     delete body.allSquads;
