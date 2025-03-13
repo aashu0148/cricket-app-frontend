@@ -209,7 +209,7 @@ export default function EditTournamentModal({
                 options={allScoringSystems}
                 placeholder="Select a Scoring System"
                 value={allScoringSystems.find(
-                  (item) => item.value === tournamentDetails?.scoringSystem
+                  (item) => item.value === tournamentDetails?.scoringSystem?._id
                 )}
                 onChange={(e) => handleChange("scoringSystem", e.value)}
                 error={errors.scoringSystem}

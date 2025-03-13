@@ -12,8 +12,13 @@ function PlayersPool({ players = [], onPlayersUpdate }) {
   const [inputStr, setInputStr] = useState("");
 
   const availablePlayersPool = useMemo(() => {
-    return players.filter((e) =>
-      new RegExp(`${inputStr}`, "gi").test(e.player.fullName)
+    const searchRegex = new RegExp(`${inputStr}`, "gi");
+    return players.filter(
+      (e) =>
+        searchRegex.test(e.player?.fullName) ||
+        searchRegex.test(e.player?.country) ||
+        searchRegex.test(e.player?.teamName) ||
+        searchRegex.test(e.squad?.teamName)
     );
   }, [inputStr, players]);
 
