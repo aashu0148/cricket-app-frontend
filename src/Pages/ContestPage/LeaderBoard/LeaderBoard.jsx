@@ -53,7 +53,7 @@ function LeaderBoard({
       .map((e) => ({
         ...e,
         matches: e.matches.sort((a, b) =>
-          new Date(a.match?.startDate) > new Date(b.match?.startDate) ? 1 : -1
+          new Date(a.teamPoints) < new Date(b.teamPoints) ? 1 : -1
         ),
       }))
       .sort((a, b) => b.team?.teamPoints - a.team?.teamPoints);
