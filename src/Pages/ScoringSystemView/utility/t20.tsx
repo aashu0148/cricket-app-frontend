@@ -83,11 +83,14 @@ export const t20ScoringSystemData: {
         ["6-11", "11+", "3.0"],
       ],
       note: (
-        <p className="text-sm">
-          Note: Strike Rate Bonus applies for batters in positions 1-5 when they have faced 5+ balls. For batters in positions 6 and below, it applies when they have faced 3+ balls   </span> 
-        No negative points if the batter is not out in a winning chase or for batters in positions <span className="font-semibold"> 8-11. </span>
-        </p>
-      ),
+  <p className="text-sm">
+    Note: Strike Rate Bonus applies for batters in positions 1-5 when they have faced{" "}
+    <span className="font-semibold">5+ balls.</span> For batters in positions 6 and below, it applies when they have faced{" "}
+    <span className="font-semibold">3+ balls.</span>{" "}
+    No negative points if the batter is not out in a winning chase or for batters in positions{" "}
+    <span className="font-semibold">8-11.</span>
+  </p>
+),
     },
 
     [FIELDS.BOWLING_ECONOMY_RATE_MULTIPLIERS]: {
