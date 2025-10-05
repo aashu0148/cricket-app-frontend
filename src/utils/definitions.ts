@@ -253,3 +253,51 @@ export interface ScoringSystem {
   createdAt?: Date;
   updatedAt?: Date;
 }
+
+// Admin Team Management Types
+export interface AdminTeam {
+  _id: string;
+  name?: string;
+  owner: UserBase;
+  players: PlayerDetails[];
+  joinedAt: string;
+  wishlist: string[];
+}
+
+export interface AdminLeagueDetails {
+  _id: string;
+  name: string;
+  description: string;
+  type: string;
+  tournament: {
+    _id: string;
+    name: string;
+    longName: string;
+    players: string[];
+  };
+  createdBy: UserBase;
+  teams: AdminTeam[];
+  draftRound: {
+    completed: boolean;
+    paused: boolean;
+    startDate: string;
+    currentTurn?: string;
+    turnTimestamp?: number;
+    turnDir: string;
+    inactiveUsers: string[];
+  };
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface AdminAddPlayerPayload {
+  leagueId: string;
+  teamId: string;
+  playerId: string;
+}
+
+export interface AdminRemovePlayerPayload {
+  leagueId: string;
+  teamId: string;
+  playerId: string;
+}

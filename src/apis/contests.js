@@ -220,3 +220,31 @@ export const makeUserActiveInDraftRound = async (contestId) => {
     },
   });
 };
+
+// Admin APIs for team management
+export const adminAddPlayerToTeam = async (payload) => {
+  const path = "/leagues/admin/add-player";
+
+  return await makeApiCall({
+    functionName: "adminAddPlayerToTeam",
+    defaultErrorMessage: "Failed to add player to team",
+    fetchWrapperOptions: {
+      path,
+      payload,
+    },
+  });
+};
+
+export const adminRemovePlayerFromTeam = async (payload) => {
+  const path = "/leagues/admin/remove-player";
+
+  return await makeApiCall({
+    functionName: "adminRemovePlayerFromTeam",
+    defaultErrorMessage: "Failed to remove player from team",
+    fetchWrapperOptions: {
+      path,
+      requestType: "DELETE",
+      payload,
+    },
+  });
+};

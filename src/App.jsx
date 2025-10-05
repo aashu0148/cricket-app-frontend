@@ -32,6 +32,7 @@ import actionTypes from "./store/actionTypes";
 import { applicationRoutes } from "./utils/constants";
 import { getAppToken } from "./utils/util";
 import TournamentMatches from "./Pages/Admin/TournamentMatches/TournamentMatches";
+import ContestTeamManagement from "./Pages/Admin/ContestTeamManagement/ContestTeamManagement";
 
 function App() {
   const userDetails = useSelector((state) => state.user);
@@ -160,6 +161,10 @@ function App() {
             <Route
               path={applicationRoutes.tournamentMatches}
               element={<TournamentMatches />}
+            />
+            <Route
+              path={applicationRoutes.contestTeamManagement}
+              element={<ContestTeamManagement />}
             />
           </Route>
 

@@ -3,7 +3,14 @@ import { useSelector } from "react-redux";
 
 import { Home } from "react-feather";
 import { applicationRoutes } from "@/utils/constants";
-import { adminIcon, batsmanIcon, championCup, matchIcon, scoringIcon } from "@/utils/svgs";
+import {
+  adminIcon,
+  batsmanIcon,
+  championCup,
+  matchIcon,
+  scoringIcon,
+} from "@/utils/svgs";
+import { UserRoundPen } from "lucide-react";
 
 const RoutesContext = createContext();
 
@@ -34,6 +41,12 @@ export const RoutesProvider = ({ useAdminRoutes = false, children }) => {
       value: applicationRoutes.tournamentMatches,
       label: "Matches",
       link: applicationRoutes.tournamentMatches,
+    },
+    {
+      icon: <UserRoundPen className="size-3" />,
+      value: applicationRoutes.contestTeamManagement,
+      label: "Team Management",
+      link: applicationRoutes.contestTeamManagement,
     },
   ].filter((item) => item);
 
