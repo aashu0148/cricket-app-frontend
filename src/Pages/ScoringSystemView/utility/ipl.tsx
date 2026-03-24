@@ -64,7 +64,7 @@ export const iplScoringSystemData: {
           Note: Applies when the batter has faced{" "}
           <span className="font-semibold">3 or more balls.</span> No negative
           strike rate points if the batter is not out in a winning chase or for
-          batters in positions <span className="font-semibold">8–11.</span>
+          batters in positions <span className="font-semibold">9–11.</span>
         </p>
       ),
     },
