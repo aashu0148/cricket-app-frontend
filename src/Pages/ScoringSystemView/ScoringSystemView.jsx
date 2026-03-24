@@ -10,12 +10,13 @@ import batsman from "@/assets/images/batsman.jpg";
 import keeper from "@/assets/images/keeper.jpg";
 import { t20ScoringSystemData } from "./utility/t20";
 import { odiScoringSystemData } from "./utility/odi";
+import { iplScoringSystemData } from "./utility/ipl";
 import { FIELDS } from "./utility/constants";
 import { applicationRoutes } from "@/utils/constants";
 
 import styles from "./ScoringSystemView.module.scss";
 
-const TABS = ["t20", "odi"];
+const TABS = ["ipl", "t20", "odi"];
 const ScoringSystemView = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -25,9 +26,15 @@ const ScoringSystemView = () => {
       ? "t20"
       : id.toLowerCase().trim() === "odi"
       ? "odi"
+      : id.toLowerCase().trim() === "ipl"
+      ? "ipl"
       : "t20";
   const scoringSystem =
-    tab === "t20" ? t20ScoringSystemData : odiScoringSystemData;
+    tab === "t20"
+      ? t20ScoringSystemData
+      : tab === "odi"
+      ? odiScoringSystemData
+      : iplScoringSystemData;
 
   return (
     <div className={`gap-5 flex flex-col ${styles.scoringSystemContainer}`}>
@@ -82,9 +89,11 @@ const ScoringSystemView = () => {
           <RenderTable
             table={scoringSystem.tables[FIELDS.RUN_MILESTONE_BONUS]}
           />
-          <RenderTable
-            table={scoringSystem.tables[FIELDS.ADDITIONAL_RUNS_MILESTONE]}
-          />
+          {scoringSystem.tables[FIELDS.ADDITIONAL_RUNS_MILESTONE] && (
+            <RenderTable
+              table={scoringSystem.tables[FIELDS.ADDITIONAL_RUNS_MILESTONE]}
+            />
+          )}
 
           <div className="flex flex-col gap-4">
             <h2 className="text-lg lg:text-xl font-medium pl-4">
@@ -105,9 +114,11 @@ const ScoringSystemView = () => {
           <h2 className="text-lg lg:text-xl font-medium">3. Bowling Points</h2>
           <RenderTable table={scoringSystem.tables[FIELDS.WICKET_POINTS]} />
           <RenderTable table={scoringSystem.tables[FIELDS.DOT_BALL_POINTS]} />
-          <RenderTable
-            table={scoringSystem.tables[FIELDS.WICKET_MILESTONE_BONUS]}
-          />
+          {scoringSystem.tables[FIELDS.WICKET_MILESTONE_BONUS] && (
+            <RenderTable
+              table={scoringSystem.tables[FIELDS.WICKET_MILESTONE_BONUS]}
+            />
+          )}
 
           <div className="flex flex-col gap-1 ">
             <h2 className="text-lg lg:text-xl font-medium pl-4">
