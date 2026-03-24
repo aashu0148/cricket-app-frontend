@@ -75,10 +75,10 @@ export const iplScoringSystemData: {
       rows: [
         ["1–5", "25"],
         ["6", "20"],
-        ["7", "15"],
-        ["8–11", "10"],
+        ["7–8", "15"],
+        ["9–11", "10"],
       ],
-      note: "If a batter in positions 6–7 scores 20+ runs, their wicket is worth 25 points. If a batter in positions 8–11 scores 20+ runs, their wicket is worth 20 points.",
+      note: "If a batter in positions 6–8 scores 20+ runs, their wicket is worth 25 points. If a batter in positions 9–11 scores 20+ runs, their wicket is worth 20 points.",
     },
 
     [FIELDS.DOT_BALL_POINTS]: {
